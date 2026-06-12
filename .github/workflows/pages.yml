@@ -1,0 +1,41 @@
+name: 部署法說會觀測站
+
+on:
+  push:
+    branches: [master]
+  schedule:
+    - cron: "0 20 * * *"   # UTC 20:00 = 台北 04:00，等 Railway pipeline（台北 01:00）跑完後重建資料
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests beautifulsoup4 lxml python-dotenv notion-client
+      - name: 從 Notion 與 MOPS 重建網站資料
+        env:
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+          NOTION_PARENT_ID: ${{ secrets.NOTION_PARENT_ID }}
+        run: python site/build_data.py
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site/public
+      - id: deployment
+        uses: actions/deploy-pages@v4
