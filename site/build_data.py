@@ -4,6 +4,8 @@
   site/public/list.json                清單（不含逐字稿，首頁用；每筆含 market_cap）
   site/public/detail/{code}_{date}.json 單筆完整資料（含逐字稿，詳細頁用）
   site/public/upcoming.json            MOPS 公告場次（2026-01 起～下月，行事曆用）
+  site/public/c/{id}.html              每場法說會的純靜態頁（SEO 用，完整內容在 HTML）
+  site/public/sitemap.xml、robots.txt   搜尋引擎收錄
 
 市值（億元）來源：TWSE / TPEx OpenAPI，當日快取於 site/.mcap_cache.json。
 
@@ -191,6 +193,153 @@ def fetch_upcoming() -> list[dict]:
     return items
 
 
+# ---------- SEO：靜態頁、sitemap、robots ----------
+
+SITE_BASE = "https://slzzzper666.github.io/investor-relations"
+STATIC_DIR = PUBLIC_DIR / "c"
+
+
+def _esc(t: str) -> str:
+    return (t.replace("&", "&amp;").replace("<", "&lt;")
+            .replace(">", "&gt;").replace('"', "&quot;"))
+
+
+def _summary_html(summary: str) -> str:
+    """重點摘要欄位：首行是一句話總結，其後是「• 」開頭的條列。"""
+    lines = [ln.strip() for ln in summary.split("\n") if ln.strip()]
+    if not lines:
+        return ""
+    html = f"<p class='lede'>{_esc(lines[0])}</p>"
+    bullets = [ln.lstrip('• ').strip() for ln in lines[1:] if ln.startswith('•')]
+    if bullets:
+        html += "<ul>" + "".join(f"<li>{_esc(b)}</li>" for b in bullets) + "</ul>"
+    return html
+
+
+def _transcript_html(transcript: str) -> str:
+    paras = [ln.strip() for ln in transcript.split("\n") if ln.strip()]
+    return "".join(f"<p>{_esc(p)}</p>" for p in paras)
+
+
+def render_static_page(d: dict) -> str:
+    """單場法說會的純靜態 HTML（內容直接在 DOM，供搜尋引擎完整收錄）。"""
+    title = f"{d['company']}（{d['code']}）法說會逐字稿與 AI 分析｜{d['date']}"
+    one_liner = d["summary"].split("\n")[0].strip() if d["summary"] else ""
+    desc = _esc((one_liner or f"{d['company']} {d['date']} 法人說明會重點整理")[:150])
+    url = f"{SITE_BASE}/c/{d['id']}.html"
+
+    links = []
+    if d["pdf_url"]:
+        links.append(f"<a href='{_esc(d['pdf_url'])}' rel='nofollow'>簡報 PDF</a>")
+    if d["video_url"]:
+        links.append(f"<a href='{_esc(d['video_url'])}' rel='nofollow'>法說會影音</a>")
+    links.append(f"<a href='../detail.html?id={d['id']}'>互動介面開啟</a>")
+
+    ai_block = ""
+    if d["ai_view"]:
+        ai_block = ("<h2>AI 觀點與未來方向</h2>"
+                    + "".join(f"<p>{_esc(p.strip())}</p>"
+                              for p in d["ai_view"].split("\n") if p.strip()))
+
+    transcript_block = ""
+    if d["transcript"]:
+        transcript_block = (
+            "<h2>完整逐字稿</h2><details><summary>展開逐字稿"
+            f"（{len(d['transcript']):,} 字）</summary>"
+            f"{_transcript_html(d['transcript'])}</details>")
+
+    jsonld = json.dumps({
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": title,
+        "datePublished": d["date"],
+        "inLanguage": "zh-Hant-TW",
+        "author": {"@type": "Organization", "name": "法說會觀測站"},
+        "publisher": {"@type": "Organization", "name": "法說會觀測站"},
+        "mainEntityOfPage": url,
+    }, ensure_ascii=False)
+
+    return f"""<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{_esc(title)}｜法說會觀測站</title>
+<meta name="description" content="{desc}">
+<link rel="canonical" href="{url}">
+<meta property="og:type" content="article">
+<meta property="og:title" content="{_esc(title)}">
+<meta property="og:description" content="{desc}">
+<meta property="og:url" content="{url}">
+<meta property="og:site_name" content="法說會觀測站">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {{ --bg:#0B0E13; --ink:#E9E4D8; --dim:#9A937F; --amber:#D9A441; }}
+  * {{ box-sizing:border-box }}
+  body {{ margin:0; background:var(--bg); color:var(--ink);
+         font:16px/1.85 "Noto Sans TC",sans-serif; }}
+  .page {{ max-width:760px; margin:0 auto; padding:32px 20px 64px; }}
+  .site {{ font-family:"IBM Plex Mono",monospace; font-size:13px;
+           color:var(--dim); text-decoration:none; letter-spacing:.08em; }}
+  .site:hover {{ color:var(--amber) }}
+  h1 {{ font-family:"Noto Serif TC",serif; font-size:28px; line-height:1.4;
+        margin:18px 0 4px; }}
+  h2 {{ font-family:"Noto Serif TC",serif; font-size:20px; margin:36px 0 12px;
+        padding-top:18px; border-top:1px solid #232838; }}
+  .meta {{ font-family:"IBM Plex Mono",monospace; font-size:13px;
+           color:var(--dim); }}
+  .lede {{ font-size:18px; border-left:3px solid var(--amber);
+           padding-left:14px; }}
+  ul {{ padding-left:22px }} li {{ margin:6px 0 }}
+  a {{ color:var(--amber) }}
+  .links a {{ margin-right:18px }}
+  details summary {{ cursor:pointer; color:var(--amber); margin-bottom:12px }}
+  footer {{ margin-top:48px; font-size:13px; color:var(--dim);
+            border-top:1px solid #232838; padding-top:16px; }}
+</style>
+<script type="application/ld+json">{jsonld}</script>
+</head>
+<body>
+<div class="page">
+<a class="site" href="../">← 法說會觀測站</a>
+<h1>{_esc(d['company'])}（{_esc(d['code'])}）法人說明會</h1>
+<p class="meta">{d['date']}</p>
+<h2>重點摘要</h2>
+{_summary_html(d['summary'])}
+{ai_block}
+<p class="links">{'　'.join(links)}</p>
+{transcript_block}
+<footer>逐字稿由語音辨識產生、摘要與觀點由 AI 彙整，內容僅供研究參考，不構成投資建議。資料來源：公開資訊觀測站（MOPS）與各公司公開影音。</footer>
+</div>
+</body>
+</html>"""
+
+
+def write_seo_files(list_items: list[dict], details: list[dict]) -> None:
+    if STATIC_DIR.exists():
+        shutil.rmtree(STATIC_DIR)
+    STATIC_DIR.mkdir(parents=True)
+    for d in details:
+        (STATIC_DIR / f"{d['id']}.html").write_text(
+            render_static_page(d), encoding="utf-8")
+
+    urls = [f"{SITE_BASE}/"]
+    urls += [f"{SITE_BASE}/c/{it['id']}.html" for it in list_items]
+    entries = "\n".join(
+        f"  <url><loc>{u}</loc></url>" for u in urls)
+    (PUBLIC_DIR / "sitemap.xml").write_text(
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        f"{entries}\n</urlset>\n", encoding="utf-8")
+
+    (PUBLIC_DIR / "robots.txt").write_text(
+        f"User-agent: *\nAllow: /\n\nSitemap: {SITE_BASE}/sitemap.xml\n",
+        encoding="utf-8")
+    print(f"SEO：{len(details)} 個靜態頁、sitemap {len(urls)} 條、robots.txt")
+
+
 # ---------- 市值（億元） ----------
 
 def _num(value) -> float:
@@ -292,9 +441,11 @@ def main() -> None:
 
     used_ids: set[str] = set()
     list_items: list[dict] = []
+    details: list[dict] = []
     for it in items:
         it_id = make_id(it, used_ids)
         detail = {"id": it_id, **it}
+        details.append(detail)
         (DETAIL_DIR / f"{it_id}.json").write_text(
             json.dumps(detail, ensure_ascii=False), encoding="utf-8")
         list_items.append({
@@ -331,6 +482,8 @@ def main() -> None:
     upcoming_path = PUBLIC_DIR / "upcoming.json"
     upcoming_path.write_text(json.dumps(upcoming_payload, ensure_ascii=False),
                              encoding="utf-8")
+
+    write_seo_files(list_items, details)
 
     print(f"共 {len(list_items)} 筆")
     for li in list_items:
