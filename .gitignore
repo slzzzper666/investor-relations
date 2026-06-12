@@ -1,0 +1,8 @@
+.env
+__pycache__/
+*.pyc
+data/
+*.log
+.venv/
+venv/
+site/.mcap_cache.json

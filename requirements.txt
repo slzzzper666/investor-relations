@@ -1,0 +1,9 @@
+requests
+beautifulsoup4
+lxml
+yt-dlp
+python-dotenv
+tzdata
+imageio-ffmpeg
+google-genai
+notion-client

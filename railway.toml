@@ -1,0 +1,12 @@
+# Railway 部署設定 — 法說會自動整理系統
+# Cron Job 模式：每天定時跑一次 main.py，跑完即結束（不常駐）
+
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+# 每天台北時間 01:00（= UTC 17:00），處理「台北時間的昨天」的法說會
+cronSchedule = "0 17 * * *"
+# cron job 執行完就結束，不要自動重啟
+restartPolicyType = "NEVER"

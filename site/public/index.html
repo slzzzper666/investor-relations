@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>法說會觀測站｜台股法人說明會逐字稿與 AI 分析</title>
+<meta name="description" content="台灣上市櫃公司法人說明會的逐字稿、重點摘要與 AI 觀點，每日自動更新，可依公司名稱、股票代號與月份查詢。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<div class="tape" role="status">
+  <span class="tape-dot" aria-hidden="true"></span>
+  <span id="tape-meta">資料載入中</span>
+</div>
+
+<header class="masthead">
+  <div class="wrap">
+    <p class="eyebrow">IR Conference Archive · TWSE / TPEx</p>
+    <h1>法說會觀測站</h1>
+    <p class="standfirst">台灣上市櫃公司法人說明會的逐字稿、重點摘要與 AI 觀點，每日自動彙整歸檔。</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="view-tabs" role="tablist" aria-label="檢視切換">
+    <button type="button" id="tab-list" class="view-tab is-active" role="tab" aria-selected="true" aria-controls="ledger">列表</button>
+    <button type="button" id="tab-calendar" class="view-tab" role="tab" aria-selected="false" aria-controls="calendar">行事曆</button>
+  </div>
+
+  <section class="controls" id="controls" aria-label="搜尋與篩選">
+    <div class="field field-grow">
+      <label for="q">搜尋公司</label>
+      <input id="q" type="search" placeholder="公司名稱或股票代號，例如：倉佑、1568" autocomplete="off">
+    </div>
+    <div class="field">
+      <label for="month">月份</label>
+      <select id="month">
+        <option value="">全部月份</option>
+      </select>
+    </div>
+    <p class="count mono" id="count" role="status" aria-live="polite"></p>
+  </section>
+
+  <section id="ledger" class="ledger" aria-label="法說會清單"></section>
+
+  <div id="empty" class="empty" hidden>
+    <p>沒有符合條件的法說會。</p>
+    <p class="empty-hint">清除搜尋字詞，或改選「全部月份」再試一次。</p>
+  </div>
+  <div id="load-error" class="empty" hidden>
+    <p>清單載入失敗。</p>
+    <p class="empty-hint">請確認 list.json 是否已由 build_data.py 產出，並透過 HTTP 伺服器開啟本頁。</p>
+  </div>
+
+  <section id="calendar" class="calendar" hidden aria-label="法說會行事曆">
+    <div class="cal-nav">
+      <button type="button" class="cal-more" id="cal-prev">載入上個月</button>
+    </div>
+    <div id="cal-months"></div>
+    <div class="cal-nav">
+      <button type="button" class="cal-more" id="cal-next">載入下個月</button>
+    </div>
+  </section>
+</main>
+
+<div id="day-modal" class="day-modal" hidden>
+  <div class="day-modal-backdrop" id="modal-backdrop"></div>
+  <div class="day-modal-panel" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <header class="day-modal-head">
+      <div>
+        <h2 id="modal-title"></h2>
+        <p class="day-modal-meta mono" id="modal-meta"></p>
+      </div>
+      <button type="button" class="day-modal-close" id="modal-close" aria-label="關閉">&times;</button>
+    </header>
+    <div class="day-modal-list" id="modal-list"></div>
+    <p class="day-modal-hint" id="modal-hint" hidden>較淡場次為尚未收錄的未來法說會，會後將自動彙整逐字稿與摘要。</p>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>資料來源：公開資訊觀測站（MOPS）與各公司公開影音。逐字稿由語音辨識產生、摘要與觀點由 AI 彙整，內容僅供研究參考，不構成投資建議。</p>
+    <p class="mono" id="footer-meta"></p>
+  </div>
+</footer>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

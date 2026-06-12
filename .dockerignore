@@ -1,0 +1,19 @@
+# 金鑰絕不進映像
+.env
+
+# 本地虛擬環境與快取
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# 執行期產物
+data/
+*.log
+
+# 部署文件不需進映像
+DEPLOY.md
+README.md
+run_daily.bat
+.git/
+.gitignore
