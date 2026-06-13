@@ -198,6 +198,18 @@ def fetch_upcoming() -> list[dict]:
 SITE_BASE = "https://slzzzper666.github.io/investor-relations"
 STATIC_DIR = PUBLIC_DIR / "c"
 
+# robots.txt：歡迎帶流量的搜尋引擎，封鎖 AI 訓練與大量採集機器人
+SEARCH_BOTS = ("Googlebot", "Bingbot", "DuckDuckBot", "Applebot")
+BLOCKED_BOTS = (
+    "GPTBot", "OAI-SearchBot", "ChatGPT-User", "Google-Extended", "CCBot",
+    "ClaudeBot", "anthropic-ai", "PerplexityBot", "Bytespider", "Amazonbot",
+    "Applebot-Extended", "meta-externalagent", "FacebookBot", "Diffbot",
+    "Omgilibot", "DataForSeoBot", "ImagesiftBot",
+    "AhrefsBot", "SemrushBot", "MJ12bot", "DotBot", "PetalBot",
+)
+COPYRIGHT = ("© 2026 法說會觀測站　本站彙整內容禁止未經授權之大量擷取、"
+             "轉載或商業利用，違者將依法處理。")
+
 
 def _esc(t: str) -> str:
     return (t.replace("&", "&amp;").replace("<", "&lt;")
@@ -311,7 +323,7 @@ def render_static_page(d: dict) -> str:
 {ai_block}
 <p class="links">{'　'.join(links)}</p>
 {transcript_block}
-<footer>逐字稿由語音辨識產生、摘要與觀點由 AI 彙整，內容僅供研究參考，不構成投資建議。資料來源：公開資訊觀測站（MOPS）與各公司公開影音。</footer>
+<footer>逐字稿由語音辨識產生、摘要與觀點由 AI 彙整，內容僅供研究參考，不構成投資建議。資料來源：公開資訊觀測站（MOPS）與各公司公開影音。<br>{COPYRIGHT}</footer>
 </div>
 </body>
 </html>"""
@@ -334,10 +346,17 @@ def write_seo_files(list_items: list[dict], details: list[dict]) -> None:
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         f"{entries}\n</urlset>\n", encoding="utf-8")
 
-    (PUBLIC_DIR / "robots.txt").write_text(
-        f"User-agent: *\nAllow: /\n\nSitemap: {SITE_BASE}/sitemap.xml\n",
-        encoding="utf-8")
-    print(f"SEO：{len(details)} 個靜態頁、sitemap {len(urls)} 條、robots.txt")
+    lines = ["# 搜尋引擎歡迎收錄（帶來自然流量）"]
+    for b in SEARCH_BOTS:
+        lines += [f"User-agent: {b}", "Allow: /", ""]
+    lines += ["# 封鎖 AI 訓練爬蟲與大量採集 / SEO 掃描機器人"]
+    for b in BLOCKED_BOTS:
+        lines += [f"User-agent: {b}", "Disallow: /", ""]
+    lines += ["# 其餘維持一般可見", "User-agent: *", "Allow: /", "",
+              f"Sitemap: {SITE_BASE}/sitemap.xml", ""]
+    (PUBLIC_DIR / "robots.txt").write_text("\n".join(lines), encoding="utf-8")
+    print(f"SEO：{len(details)} 個靜態頁、sitemap {len(urls)} 條、"
+          f"robots.txt（封鎖 {len(BLOCKED_BOTS)} 種爬蟲）")
 
 
 # ---------- 市值（億元） ----------
