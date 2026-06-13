@@ -1,6 +1,7 @@
 """讀取 .env 設定，集中管理所有金鑰與參數。"""
 import os
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 from dotenv import load_dotenv
 
@@ -21,3 +22,11 @@ TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "")
 DISCORD_WEBHOOK_URL = os.getenv("DISCORD_WEBHOOK_URL", "")
 NOTION_API_KEY = os.getenv("NOTION_API_KEY", "")
 NOTION_PARENT_ID = os.getenv("NOTION_PARENT_ID", "")  # 既有 Notion 資料庫的 ID
+
+# ── 財報雷達子系統（radar）：選用 API key 與時區 ──────────
+FRED_API_KEY = os.getenv("FRED_API_KEY", "")
+ALPHA_VANTAGE_KEY = os.getenv("ALPHA_VANTAGE_KEY", "")
+
+TZ_TAIPEI = ZoneInfo("Asia/Taipei")
+TZ_US_EAST = ZoneInfo("America/New_York")
+TZ_UTC = ZoneInfo("UTC")

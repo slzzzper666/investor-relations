@@ -5,7 +5,7 @@
 涵蓋上市(sii)與上櫃(otc)，依日期過濾出目標日的法說會。
 """
 from dataclasses import dataclass, field
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 
 from bs4 import BeautifulSoup
@@ -116,6 +116,30 @@ def get_conferences(target: date) -> list[Conference]:
         log.info("MOPS %s：當月 %d 筆，%s 共 %d 筆",
                  market, len(month_rows), target.isoformat(), len(day_rows))
         confs.extend(day_rows)
+    return confs
+
+
+def get_conferences_in_range(start: date, end: date) -> list[Conference]:
+    """抓取 start~end 區間（含上市+上櫃）的所有法說會。
+
+    供財報雷達子系統產生台股行事曆用：自動涵蓋跨月份，依代號+日期去重。
+    """
+    months: list[date] = []
+    cur = start.replace(day=1)
+    while cur <= end:
+        months.append(cur)
+        cur = (cur.replace(day=28) + timedelta(days=4)).replace(day=1)
+
+    seen: set[tuple[str, date]] = set()
+    confs: list[Conference] = []
+    for market in ("sii", "otc"):
+        for m in months:
+            for c in _fetch_month(market, m):
+                if start <= c.date <= end and (c.stock_code, c.date) not in seen:
+                    seen.add((c.stock_code, c.date))
+                    confs.append(c)
+    log.info("MOPS 區間 %s~%s：法說會共 %d 場", start.isoformat(), end.isoformat(),
+             len(confs))
     return confs
 
 

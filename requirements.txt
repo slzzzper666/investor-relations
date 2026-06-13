@@ -7,3 +7,5 @@ tzdata
 imageio-ffmpeg
 google-genai
 notion-client
+pandas
+yfinance
