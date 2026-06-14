@@ -39,9 +39,27 @@
   robots.txt、OG 標籤、JSON-LD 結構化資料
 - Google Search Console 已驗證、sitemap 已提交
 
-## 進行中
-- 六月補課：221 場中已完成 51 場（含 6/11 全部 21 場），其餘約 170 場
-  由每天 15:30 的本機任務在免費額度內逐日補完
+## 進行中：歷史補檔（2026-06-13 起）
+
+用本地資源大規模回補過去法說會，不靠雲端 API 額度：
+- **STT＝本地 faster-whisper large-v3**（`USE_LOCAL_WHISPER=1`，僅本機 .env；Railway 維持雲端）。
+  GPU 點不起來（驅動 472.80 太舊、僅支援 CUDA 11.4，新版 ctranslate2 要 CUDA 12），
+  目前跑 **CPU**（約 0.5–1x 即時）。要 GPU 提速 5–10 倍須更新 NVIDIA 驅動（待授權）。
+- **分析＝Groq llama**（Gemini 免費額度今日歸零；已讓 PDF 路徑也能走 Groq）。
+- `backfill_history.py`：市值大→小、月份新→舊，約 1700 場待補，連續失敗 15 次熔斷。
+  以 `backfill_run.bat` 經 Start-Process 常駐執行（關掉對話也會跑）。
+- 進度：processed.json 從 51 → 103+ 持續增加。
+
+### 已修正
+- media.py 只認 `.mp4` → 現也認 `.mp3/.m4a` 等（第一金等 irconference .mp3 之前被漏）。
+- analyze.py：PDF 場次新增 Groq llama 備援；Gemini 全耗盡時直接跳 Groq。
+- 體檢：逐字稿 0 異常；分析 102 筆僅 2 佔位（第一金已重跑修復、全家餐飲無來源無法補）。
+
+### 待辦提醒
+- 補一批後重建網站資料（或等每日 04:00 Action）。
+- 想提速：授權更新 NVIDIA 驅動 → GPU Whisper 快 5–10 倍。
+- 本機程式改動（local whisper / Groq PDF 備援 / .mp3 修正）尚未 commit/push，
+  Railway 雲端仍跑舊版（待一併檢視 radar 子系統後再 push）。
 
 ## 待辦 / 未來計畫
 - [ ] 觀察 Search Console 收錄狀況（預計 1～2 週開始收錄）

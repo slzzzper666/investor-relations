@@ -35,9 +35,16 @@
 </header>
 
 <main class="wrap">
-  <div class="view-tabs" role="tablist" aria-label="檢視切換">
+  <nav class="cat-tabs" role="tablist" aria-label="市場分類">
+    <button type="button" id="cat-tw" class="cat-tab is-active" role="tab" aria-selected="true">台股</button>
+    <button type="button" id="cat-us" class="cat-tab" role="tab" aria-selected="false">美股</button>
+    <button type="button" id="cat-macro" class="cat-tab" role="tab" aria-selected="false">總經</button>
+  </nav>
+
+  <div class="view-tabs" id="view-tabs" role="tablist" aria-label="檢視切換">
     <button type="button" id="tab-list" class="view-tab is-active" role="tab" aria-selected="true" aria-controls="ledger">列表</button>
     <button type="button" id="tab-calendar" class="view-tab" role="tab" aria-selected="false" aria-controls="calendar">行事曆</button>
+    <button type="button" id="tab-future" class="view-tab" role="tab" aria-selected="false" aria-controls="future" hidden>未來</button>
   </div>
 
   <section class="controls" id="controls" aria-label="搜尋與篩選">
@@ -60,6 +67,10 @@
     <p>沒有符合條件的法說會。</p>
     <p class="empty-hint">清除搜尋字詞，或改選「全部月份」再試一次。</p>
   </div>
+  <div id="cat-pending" class="empty" hidden>
+    <p id="cat-pending-msg">資料建置中</p>
+    <p class="empty-hint">此分類即將上線，敬請期待。</p>
+  </div>
   <div id="load-error" class="empty" hidden>
     <p>清單載入失敗。</p>
     <p class="empty-hint">請確認 list.json 是否已由 build_data.py 產出，並透過 HTTP 伺服器開啟本頁。</p>
@@ -74,6 +85,8 @@
       <button type="button" class="cal-more" id="cal-next">載入下個月</button>
     </div>
   </section>
+
+  <section id="future" class="future" hidden aria-label="總經未來展望"></section>
 </main>
 
 <div id="day-modal" class="day-modal" hidden>

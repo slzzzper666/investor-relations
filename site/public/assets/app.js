@@ -45,7 +45,30 @@
   var calFirst = null;     // 已渲染的最早月份 {y, m}
   var calLast = null;      // 已渲染的最晚月份 {y, m}
   var currentView = "list";
+  var currentCat = "tw";
   var lastFocus = null;
+
+  /* 三大市場分類：台股（既有）、美股、總經。
+     美股版面同台股；總經多一個「未來」檢視。資料尚未建置時顯示佔位。 */
+  var CATS = {
+    tw:    { list: "list.json",       upcoming: "upcoming.json",
+             views: ["list", "calendar"], label: "台股" },
+    us:    { list: "us_list.json",    upcoming: "us_upcoming.json",
+             views: ["list", "calendar"], label: "美股" },
+    macro: { list: "macro_list.json", upcoming: "macro_upcoming.json",
+             views: ["list", "calendar", "future"], label: "總經" }
+  };
+  var CAT_KEY = "ir-cat";
+  var dataCache = {};   // cat -> { data, up }
+
+  var elCatTw = document.getElementById("cat-tw");
+  var elCatUs = document.getElementById("cat-us");
+  var elCatMacro = document.getElementById("cat-macro");
+  var elViewTabs = document.getElementById("view-tabs");
+  var elTabFuture = document.getElementById("tab-future");
+  var elFuture = document.getElementById("future");
+  var elCatPending = document.getElementById("cat-pending");
+  var elCatPendingMsg = document.getElementById("cat-pending-msg");
 
   function pad2(n) { return (n < 10 ? "0" : "") + n; }
 
@@ -317,21 +340,41 @@
 
   /* ---------- 檢視切換 ---------- */
 
+  function renderFuture() {
+    if (elFuture.getAttribute("data-built")) return;
+    elFuture.innerHTML =
+      '<div class="empty"><p>總經未來展望建置中</p>' +
+      '<p class="empty-hint">最新數據、歷史走勢，以及 AI 對股市／債市／房市的' +
+      '分析與預期即將上線。</p></div>';
+  }
+
   function applyView() {
-    var cal = currentView === "calendar";
-    elControls.hidden = cal;
-    elCalendar.hidden = !cal;
-    elLedger.hidden = cal;
-    if (cal) {
-      elEmpty.hidden = true;
-    } else if (dataReady) {
+    if (!dataReady) return;   // 佔位狀態由 showCategoryPending 控制
+    var isList = currentView === "list";
+    var isCal = currentView === "calendar";
+    var isFuture = currentView === "future";
+
+    elControls.hidden = !isList;
+    elLedger.hidden = !isList;
+    elCalendar.hidden = !isCal;
+    elFuture.hidden = !isFuture;
+    elCatPending.hidden = true;
+
+    if (isList) {
       applyFilters();
+    } else {
+      elEmpty.hidden = true;
     }
-    elTabList.classList.toggle("is-active", !cal);
-    elTabList.setAttribute("aria-selected", String(!cal));
-    elTabCalendar.classList.toggle("is-active", cal);
-    elTabCalendar.setAttribute("aria-selected", String(cal));
-    if (cal && dataReady && !calBuilt) buildCalendar();
+
+    elTabList.classList.toggle("is-active", isList);
+    elTabList.setAttribute("aria-selected", String(isList));
+    elTabCalendar.classList.toggle("is-active", isCal);
+    elTabCalendar.setAttribute("aria-selected", String(isCal));
+    elTabFuture.classList.toggle("is-active", isFuture);
+    elTabFuture.setAttribute("aria-selected", String(isFuture));
+
+    if (isCal && !calBuilt) buildCalendar();
+    if (isFuture) renderFuture();
   }
 
   function setView(view) {
@@ -349,45 +392,96 @@
     });
   }
 
-  Promise.all([
-    fetchJson("list.json"),
-    fetchJson("upcoming.json").catch(function () { return null; })
-  ])
-    .then(function (results) {
-      var data = results[0];
-      var up = results[1];
-      allItems = data.items || [];
-      upcomingItems = (up && up.items) || [];
-
-      elTape.textContent = "最後更新 " + data.generated_at +
-        "（台北時間）· 收錄 " + allItems.length + " 場法說會" +
-        (upcomingItems.length ? " · MOPS 公告 " + upcomingItems.length + " 場" : "");
-      elFooterMeta.textContent = "BUILD " + data.generated_at + " · " +
-        allItems.length + " RECORDS";
-
-      // 月份選單（新→舊）
-      var seen = {};
-      allItems.forEach(function (it) {
-        var ym = (it.date || "").slice(0, 7);
-        if (/^\d{4}-\d{2}$/.test(ym) && !seen[ym]) {
-          seen[ym] = true;
-          var opt = document.createElement("option");
-          opt.value = ym;
-          opt.textContent = monthLabel(ym);
-          elMonth.appendChild(opt);
-        }
-      });
-
-      buildEvents();
-      dataReady = true;
-      calBuilt = false;
-      render(allItems);
-      applyView();
-    })
-    .catch(function () {
-      elTape.textContent = "資料載入失敗";
-      elError.hidden = false;
+  function populateMonths() {
+    while (elMonth.options.length > 1) elMonth.remove(1);  // 保留「全部月份」
+    var seen = {};
+    allItems.forEach(function (it) {
+      var ym = (it.date || "").slice(0, 7);
+      if (/^\d{4}-\d{2}$/.test(ym) && !seen[ym]) {
+        seen[ym] = true;
+        var opt = document.createElement("option");
+        opt.value = ym;
+        opt.textContent = monthLabel(ym);
+        elMonth.appendChild(opt);
+      }
     });
+  }
+
+  function applyCategoryData(bundle) {
+    var data = bundle.data;
+    var up = bundle.up;
+    allItems = data.items || [];
+    upcomingItems = (up && up.items) || [];
+
+    elCatPending.hidden = true;
+    elError.hidden = true;
+    elViewTabs.hidden = false;
+
+    elTape.textContent = "最後更新 " + data.generated_at +
+      "（台北時間）· " + CATS[currentCat].label + " 收錄 " +
+      allItems.length + " 場" +
+      (upcomingItems.length ? " · 公告 " + upcomingItems.length + " 場" : "");
+    elFooterMeta.textContent = "BUILD " + data.generated_at + " · " +
+      allItems.length + " RECORDS";
+
+    elQ.value = "";
+    elMonth.value = "";
+    populateMonths();
+    buildEvents();
+    dataReady = true;
+    calBuilt = false;
+    elCalMonths.innerHTML = "";
+    render(allItems);
+    applyView();
+  }
+
+  function showCategoryPending(cat) {
+    dataReady = false;
+    allItems = [];
+    upcomingItems = [];
+    elLedger.innerHTML = "";
+    elLedger.hidden = true;
+    elCalendar.hidden = true;
+    elFuture.hidden = true;
+    elControls.hidden = true;
+    elEmpty.hidden = true;
+    elError.hidden = true;
+    elViewTabs.hidden = true;
+    elCount.textContent = "";
+    elCatPendingMsg.textContent = CATS[cat].label + " 資料建置中";
+    elCatPending.hidden = false;
+    elTape.textContent = CATS[cat].label + " · 即將上線";
+  }
+
+  function updateCatTabs() {
+    [["tw", elCatTw], ["us", elCatUs], ["macro", elCatMacro]].forEach(function (p) {
+      var on = currentCat === p[0];
+      p[1].classList.toggle("is-active", on);
+      p[1].setAttribute("aria-selected", String(on));
+    });
+    elTabFuture.hidden = CATS[currentCat].views.indexOf("future") === -1;
+  }
+
+  function loadCategory(cat) {
+    if (!CATS[cat]) cat = "tw";
+    currentCat = cat;
+    try { localStorage.setItem(CAT_KEY, cat); } catch (e) { /* 無痕模式 */ }
+    updateCatTabs();
+    if (CATS[cat].views.indexOf(currentView) === -1) currentView = "list";
+
+    if (dataCache[cat]) { applyCategoryData(dataCache[cat]); return; }
+
+    elTape.textContent = CATS[cat].label + " 載入中";
+    Promise.all([
+      fetchJson(CATS[cat].list),
+      fetchJson(CATS[cat].upcoming).catch(function () { return null; })
+    ]).then(function (results) {
+      dataCache[cat] = { data: results[0], up: results[1] };
+      applyCategoryData(dataCache[cat]);
+    }).catch(function () {
+      showCategoryPending(cat);
+    });
+  }
 
   /* ---------- 事件 ---------- */
 
@@ -396,6 +490,11 @@
 
   elTabList.addEventListener("click", function () { setView("list"); });
   elTabCalendar.addEventListener("click", function () { setView("calendar"); });
+  elTabFuture.addEventListener("click", function () { setView("future"); });
+
+  elCatTw.addEventListener("click", function () { loadCategory("tw"); });
+  elCatUs.addEventListener("click", function () { loadCategory("us"); });
+  elCatMacro.addEventListener("click", function () { loadCategory("macro"); });
 
   elCalPrev.addEventListener("click", function () {
     if (!calBuilt) return;
@@ -424,9 +523,11 @@
     if (ev.key === "Escape") closeModal();
   });
 
-  // 還原上次選擇的檢視
+  // 還原上次選擇的分類與檢視
   try {
+    var savedCat = localStorage.getItem(CAT_KEY);
+    if (savedCat && CATS[savedCat]) currentCat = savedCat;
     if (localStorage.getItem(VIEW_KEY) === "calendar") currentView = "calendar";
   } catch (e) { /* 無痕模式 */ }
-  applyView();
+  loadCategory(currentCat);
 })();

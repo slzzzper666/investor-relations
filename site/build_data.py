@@ -17,23 +17,31 @@ import os
 import re
 import shutil
 import sys
+import time
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
+import requests
+import urllib3
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 from notion_client import Client
+
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 BASE_DIR = Path(__file__).resolve().parent          # site/
 ROOT_DIR = BASE_DIR.parent                          # 專案根目錄
 PUBLIC_DIR = BASE_DIR / "public"
 DETAIL_DIR = PUBLIC_DIR / "detail"
 MCAP_CACHE = BASE_DIR / ".mcap_cache.json"
+FIN_CACHE = BASE_DIR / ".fin_cache.json"
+PE_CACHE = BASE_DIR / ".pe_cache.json"
 
 # 重用 ir 套件（MOPS 端點常數、ROC 日期解析、含 Proxy 偵測的 Session）
 sys.path.insert(0, str(ROOT_DIR))
 from ir.mops import AJAX_URL, _parse_date  # noqa: E402
 from ir.net import get_session             # noqa: E402
+from ir.radar.tw import _ccsi, _pct_change, _single_quarter  # noqa: E402
 
 TAIPEI = timezone(timedelta(hours=8))
 
@@ -46,6 +54,9 @@ TWSE_SHARES_URL = "https://openapi.twse.com.tw/v1/opendata/t187ap03_L"
 TPEX_PRICE_URL = ("https://www.tpex.org.tw/openapi/v1/"
                   "tpex_mainboard_daily_close_quotes")
 TPEX_SHARES_URL = "https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap03_O"
+TWSE_PE_URL = "https://openapi.twse.com.tw/v1/exchangeReport/BWIBBU_ALL"
+TPEX_PE_URL = ("https://www.tpex.org.tw/openapi/v1/"
+               "tpex_mainboard_peratio_analysis")
 
 ROC_DATE_RE = re.compile(r"\d{2,3}/\d{1,2}/\d{1,2}")
 
@@ -233,6 +244,43 @@ def _transcript_html(transcript: str) -> str:
     return "".join(f"<p>{_esc(p)}</p>" for p in paras)
 
 
+def _pct_str(v) -> str:
+    """年增/季增百分比 → '（年增 +12.3%）'樣式用的帶號字串；無值回空。"""
+    if v is None:
+        return ""
+    return f"{'+' if v >= 0 else ''}{v:.1f}%"
+
+
+def _fin_static_html(fin: dict | None) -> str:
+    """純靜態頁的財報數據區塊（文字版，供 SEO 收錄）。"""
+    if not fin:
+        return ""
+    rows = []
+    if fin.get("market_cap"):
+        rows.append(f"<li>市值：約 {fin['market_cap']:,} 億元</li>")
+    if fin.get("revenue") is not None:
+        sub = [s for s in (
+            f"年增 {_pct_str(fin.get('revenue_yoy'))}" if fin.get("revenue_yoy") is not None else "",
+            f"季增 {_pct_str(fin.get('revenue_qoq'))}" if fin.get("revenue_qoq") is not None else "",
+        ) if s]
+        tail = f"（{' ／ '.join(sub)}）" if sub else ""
+        rows.append(f"<li>單季營收：{fin['revenue']:,.2f} 億元{tail}</li>")
+    if fin.get("eps") is not None:
+        tail = (f"（年增 {_pct_str(fin.get('eps_yoy'))}）"
+                if fin.get("eps_yoy") is not None else "")
+        rows.append(f"<li>單季 EPS：{fin['eps']:.2f} 元{tail}</li>")
+    if fin.get("gross_margin") is not None:
+        rows.append(f"<li>毛利率：{fin['gross_margin']:.1f}%</li>")
+    if fin.get("pe") is not None:
+        rows.append(f"<li>本益比：{fin['pe']:.1f} 倍</li>")
+    if fin.get("capex") is not None:
+        rows.append(f"<li>單季資本支出：{fin['capex']:,.2f} 億元</li>")
+    if not rows:
+        return ""
+    return (f"<h2>最新財報數據（{_esc(fin.get('period', ''))}）</h2>"
+            f"<ul>{''.join(rows)}</ul>")
+
+
 def render_static_page(d: dict) -> str:
     """單場法說會的純靜態 HTML（內容直接在 DOM，供搜尋引擎完整收錄）。"""
     title = f"{d['company']}（{d['code']}）法說會逐字稿與 AI 分析｜{d['date']}"
@@ -321,6 +369,7 @@ def render_static_page(d: dict) -> str:
 <p class="meta">{d['date']}</p>
 <h2>重點摘要</h2>
 {_summary_html(d['summary'])}
+{_fin_static_html(d.get('financials'))}
 {ai_block}
 <p class="links">{'　'.join(links)}</p>
 {transcript_block}
@@ -437,6 +486,203 @@ def fetch_market_caps() -> dict[str, int]:
     return caps
 
 
+# ---------- 本益比（隨股價每日變動，當日快取） ----------
+
+def fetch_pe_ratios() -> dict[str, float]:
+    """全市場本益比表（code -> PE），當日快取。
+
+    上市：TWSE BWIBBU_ALL；上櫃：TPEx 個股本益比分析。
+    PE ≤ 0 或無值（虧損 / 無資料）一律略過。
+    """
+    today = datetime.now(TAIPEI).strftime("%Y-%m-%d")
+    if PE_CACHE.exists():
+        try:
+            cached = json.loads(PE_CACHE.read_text(encoding="utf-8"))
+            if cached.get("date") == today and cached.get("pe"):
+                print(f"本益比：使用當日快取（{len(cached['pe'])} 檔）")
+                return cached["pe"]
+        except (ValueError, KeyError):
+            pass
+
+    s = get_session()
+
+    def grab(url: str, code_key: str, pe_key: str, desc: str) -> dict:
+        try:
+            try:
+                data = s.get(url, timeout=60).json()
+            except requests.exceptions.SSLError:
+                data = s.get(url, timeout=60, verify=False).json()  # TPEx 憑證偶發
+        except Exception as exc:  # noqa: BLE001
+            print(f"本益比來源 {desc} 失敗：{exc}")
+            return {}
+        out = {}
+        for row in data:
+            code = str(row.get(code_key, "")).strip()
+            pe = _num(row.get(pe_key))
+            if re.fullmatch(r"\d{4}", code) and pe > 0:
+                out[code] = round(pe, 2)
+        print(f"本益比來源 {desc}：{len(out)} 檔")
+        return out
+
+    pes: dict[str, float] = {}
+    pes.update(grab(TWSE_PE_URL, "Code", "PEratio", "上市"))
+    pes.update(grab(TPEX_PE_URL, "SecuritiesCompanyCode",
+                    "PriceEarningRatio", "上櫃"))
+    print(f"本益比表：{len(pes)} 檔")
+    if pes:
+        PE_CACHE.write_text(json.dumps({"date": today, "pe": pes}),
+                            encoding="utf-8")
+    return pes
+
+
+# ---------- 個股財報快照（詳細頁右欄） ----------
+
+def _load_fin_cache() -> dict:
+    if FIN_CACHE.exists():
+        try:
+            return json.loads(FIN_CACHE.read_text(encoding="utf-8"))
+        except ValueError:
+            pass
+    return {}
+
+
+def _target_quarter(today) -> tuple[int, int]:
+    """依台股法定財報截止日，推算目前最可能已公布的最新一季 (ROC 年, 季)。"""
+    roc = today.year - 1911
+    md = (today.month, today.day)
+    if md >= (11, 14):
+        return roc, 3
+    if md >= (8, 14):
+        return roc, 2
+    if md >= (5, 15):
+        return roc, 1
+    if md >= (3, 31):
+        return roc - 1, 4
+    return roc - 1, 3
+
+
+def _parse_capex_num(s: str) -> float | None:
+    """'-11,091,192' 或 '(11,091,192)' → float（仟元，含正負號）。"""
+    t = str(s).strip().replace(",", "")
+    if not t or t in ("-", "--"):
+        return None
+    neg = t.startswith("(") and t.endswith(")")
+    t = t.strip("()")
+    try:
+        v = float(t)
+    except ValueError:
+        return None
+    return -v if neg else v
+
+
+CAPEX_URL = "https://mopsov.twse.com.tw/mops/web/ajax_t164sb05"
+
+
+def _capex_cumulative(code: str, roc_year: int, season: int) -> float | None:
+    """舊版 MOPS 現金流量表 → 累計『取得不動產、廠房及設備』（仟元，含號）。"""
+    try:
+        r = get_session().post(CAPEX_URL, data={
+            "encodeURIComponent": "1", "step": "1", "firstin": "1", "off": "1",
+            "queryName": "co_id", "inpuType": "co_id", "TYPEK": "all",
+            "isnew": "false", "co_id": code, "year": str(roc_year),
+            "season": f"{season:02d}",
+        }, timeout=30)
+        r.raise_for_status()
+    except requests.RequestException:
+        return None
+    finally:
+        time.sleep(1)
+    soup = BeautifulSoup(r.text, "lxml")
+    for tr in soup.find_all("tr"):
+        cells = [td.get_text(strip=True) for td in tr.find_all("td")]
+        if not cells:
+            continue
+        label = cells[0]
+        if "不動產" in label and "設備" in label and (
+                "取得" in label or "購置" in label):
+            for c in cells[1:]:
+                v = _parse_capex_num(c)
+                if v is not None:
+                    return v
+    return None
+
+
+def fetch_tw_financials(code: str, cache: dict) -> dict | None:
+    """單檔台股最新一季財報快照（季靜態：營收/EPS/毛利率/CapEx + YoY、QoQ）。
+
+    取材自 MOPS t163sb01（損益表）與舊版 t164sb05（現金流量表）；
+    皆採累計相減算單季。依目標季快取於 .fin_cache.json，同季不重打。
+    市值、本益比為股價型（每日變動），不在此處，於組裝階段注入。
+    回 None＝非四碼代號或該季資料尚未公布。
+    """
+    if not re.fullmatch(r"\d{4}", code or ""):
+        return None
+
+    today = datetime.now(TAIPEI).date()
+    ty, ts = _target_quarter(today)
+    cached = cache.get(code)
+    if cached and cached.get("v") == 2 and cached.get("period_key") == [ty, ts]:
+        return cached.get("data")
+
+    # 候選：目標季 → 再退一季（部分公司公布較晚）
+    older = (ty, ts - 1) if ts > 1 else (ty - 1, 4)
+    for y, s in (ty, ts), older:
+        try:
+            cur = _ccsi(code, y, s)
+            if not cur:
+                continue
+            rev, eps = _single_quarter(code, y, s)
+            rev_ly, eps_ly = _single_quarter(code, y - 1, s)
+            rev_pq = (_single_quarter(code, y - 1, 4)
+                      if s == 1 else _single_quarter(code, y, s - 1))[0]
+        except Exception as exc:  # noqa: BLE001
+            print(f"財報 {code} {y}Q{s} 抓取失敗：{exc}")
+            continue
+        if eps is None and rev is None:
+            continue
+
+        # 毛利率（單季）：單季毛利 / 單季營收。金控/證券無營業毛利 → None
+        gross_margin = None
+        g_cur = cur.get("gross")
+        if g_cur is not None and rev not in (None, 0):
+            g_single = (g_cur if s == 1
+                        else (g_cur - _ccsi(code, y, s - 1).get("gross", 0)
+                              if _ccsi(code, y, s - 1).get("gross") is not None
+                              else None))
+            if g_single is not None:
+                gross_margin = round(g_single / rev * 100, 1)
+
+        # CapEx（單季，億元，取絕對值＝當季資本支出規模）
+        capex = None
+        try:
+            c_cur = _capex_cumulative(code, y, s)
+            if c_cur is not None:
+                if s == 1:
+                    c_single = c_cur
+                else:
+                    c_prev = _capex_cumulative(code, y, s - 1)
+                    c_single = c_cur - c_prev if c_prev is not None else None
+                if c_single is not None:
+                    capex = round(abs(c_single) / 1e5, 2)  # 仟元→億元
+        except Exception as exc:  # noqa: BLE001
+            print(f"CapEx {code} {y}Q{s} 抓取失敗：{exc}")
+
+        data = {
+            "period": f"{y + 1911} Q{s}",
+            "eps": eps,
+            "eps_yoy": _pct_change(eps, eps_ly),
+            "eps_last_year": eps_ly,
+            "revenue": round(rev / 1e5, 2) if rev is not None else None,  # 仟元→億元
+            "revenue_yoy": _pct_change(rev, rev_ly),
+            "revenue_qoq": _pct_change(rev, rev_pq),
+            "gross_margin": gross_margin,
+            "capex": capex,
+        }
+        cache[code] = {"v": 2, "period_key": [ty, ts], "data": data}
+        return data
+    return None
+
+
 def main() -> None:
     if not NOTION_API_KEY or not NOTION_PARENT_ID:
         raise SystemExit("缺少 NOTION_API_KEY / NOTION_PARENT_ID（.env）")
@@ -453,11 +699,14 @@ def main() -> None:
 
     upcoming = fetch_upcoming()
     caps = fetch_market_caps()
+    pes = fetch_pe_ratios()
+    fin_cache = _load_fin_cache()
 
     PUBLIC_DIR.mkdir(parents=True, exist_ok=True)
-    if DETAIL_DIR.exists():
-        shutil.rmtree(DETAIL_DIR)
-    DETAIL_DIR.mkdir(parents=True)
+    DETAIL_DIR.mkdir(parents=True, exist_ok=True)
+    for f in DETAIL_DIR.glob("*.json"):  # 只清台股，保留美股 us-* 由 build_us.py 管
+        if not f.name.startswith("us-"):
+            f.unlink()
 
     used_ids: set[str] = set()
     list_items: list[dict] = []
@@ -465,6 +714,12 @@ def main() -> None:
     for it in items:
         it_id = make_id(it, used_ids)
         detail = {"id": it_id, **it}
+        fin = fetch_tw_financials(it["code"], fin_cache)
+        if fin is not None:
+            fin = {**fin,  # 股價型數據每日變動，組裝時注入
+                   "market_cap": caps.get(it["code"]) or None,
+                   "pe": pes.get(it["code"])}
+        detail["financials"] = fin
         details.append(detail)
         (DETAIL_DIR / f"{it_id}.json").write_text(
             json.dumps(detail, ensure_ascii=False), encoding="utf-8")
@@ -481,6 +736,11 @@ def main() -> None:
             "has_transcript": bool(it["transcript"]),
             "transcript_chars": len(it["transcript"]),
         })
+
+    FIN_CACHE.write_text(json.dumps(fin_cache, ensure_ascii=False),
+                         encoding="utf-8")
+    fin_n = sum(1 for d in details if d.get("financials"))
+    print(f"財報快照：{fin_n}/{len(details)} 筆有最新一季數據")
 
     generated_at = datetime.now(TAIPEI).strftime("%Y-%m-%d %H:%M")
     payload = {

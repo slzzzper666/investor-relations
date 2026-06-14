@@ -23,6 +23,9 @@ DISCORD_WEBHOOK_URL = os.getenv("DISCORD_WEBHOOK_URL", "")
 NOTION_API_KEY = os.getenv("NOTION_API_KEY", "")
 NOTION_PARENT_ID = os.getenv("NOTION_PARENT_ID", "")  # 既有 Notion 資料庫的 ID
 
+# 本地 Whisper（僅本機補檔用；Railway 雲端不設此旗標、維持走 Groq/Gemini）
+USE_LOCAL_WHISPER = bool(os.getenv("USE_LOCAL_WHISPER", ""))
+
 # ── 財報雷達子系統（radar）：選用 API key 與時區 ──────────
 FRED_API_KEY = os.getenv("FRED_API_KEY", "")
 ALPHA_VANTAGE_KEY = os.getenv("ALPHA_VANTAGE_KEY", "")

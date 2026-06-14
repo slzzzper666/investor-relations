@@ -22,15 +22,16 @@ log = get_logger("ir.media")
 FFMPEG = imageio_ffmpeg.get_ffmpeg_exe()
 
 _YT_RE = re.compile(r"(youtube\.com/watch|youtu\.be/|youtube\.com/live)")
-_MP4_RE = re.compile(r"\.mp4$", re.IGNORECASE)
+# 直接可下載的音/視訊檔（irconference 有 .mp4 也有 .mp3）
+_MEDIA_RE = re.compile(r"\.(mp4|mp3|m4a|wav|mov|avi|wmv)$", re.IGNORECASE)
 
 
 def _pick_source(conf: Conference) -> tuple[str, str] | None:
     """回傳 (kind, url)，kind ∈ {direct, youtube}；找不到回傳 None。"""
-    mp4s = [u for u in conf.video_urls if _MP4_RE.search(u)]
-    if mp4s:
-        ch = [u for u in mp4s if "_ch" in u.lower()]
-        return ("direct", (ch or mp4s)[0])
+    media = [u for u in conf.video_urls if _MEDIA_RE.search(u)]
+    if media:
+        ch = [u for u in media if "_ch" in u.lower()]
+        return ("direct", (ch or media)[0])
     yts = [u for u in conf.video_urls if _YT_RE.search(u)]
     if yts:
         return ("youtube", yts[0])

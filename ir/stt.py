@@ -44,8 +44,71 @@ def _upload_and_wait(client: genai.Client, path: Path):
     return f
 
 
+_local_model = None
+
+
+def _add_cuda_dll_dirs():
+    """把 pip 安裝的 CUDA 12 runtime/cuBLAS/cuDNN DLL 目錄加入搜尋路徑（GPU 必要）。
+
+    ctranslate2 載 DLL 同時依賴 PATH 與 add_dll_directory，兩者都加。
+    """
+    import os
+    import sysconfig
+    site = Path(sysconfig.get_paths()["purelib"])
+    dirs = []
+    for sub in ("cuda_runtime", "cublas", "cudnn"):
+        d = site / "nvidia" / sub / "bin"
+        if d.is_dir():
+            dirs.append(str(d))
+            try:
+                os.add_dll_directory(str(d))
+            except OSError:
+                pass
+    if dirs:
+        os.environ["PATH"] = os.pathsep.join(dirs) + os.pathsep + os.environ.get("PATH", "")
+
+
+def _get_local_model():
+    """載入本地 Whisper large-v3（單例，整個程序共用）。GPU 失敗退 CPU。"""
+    global _local_model
+    if _local_model is not None:
+        return _local_model
+    _add_cuda_dll_dirs()
+    from faster_whisper import WhisperModel
+    for device, compute in (("cuda", "float16"), ("cpu", "int8")):
+        try:
+            _local_model = WhisperModel(
+                "large-v3", device=device, compute_type=compute, cpu_threads=8)
+            log.info("本地 Whisper large-v3 已載入（device=%s）", device)
+            return _local_model
+        except Exception as e:
+            log.warning("本地 Whisper device=%s 載入失敗：%s", device, str(e)[:150])
+    raise RuntimeError("本地 Whisper 無法載入")
+
+
+def _transcribe_local(audio_path: Path) -> str:
+    model = _get_local_model()
+    # 不強制語言：自動偵測。法說會多為中文，但部分（-KY、國際科技股）為英語，
+    # 強制 zh 會把英語音檔轉成亂碼。
+    segments, info = model.transcribe(
+        str(audio_path), beam_size=1,
+        vad_filter=True, vad_parameters=dict(min_silence_duration_ms=500))
+    text = "".join(seg.text for seg in segments).strip()
+    if len(text) < 100:
+        raise RuntimeError(f"逐字稿過短（{len(text)} 字），疑似轉錄失敗")
+    log.info("本地逐字稿完成：%s（音檔 %.0fs，%d 字）",
+             audio_path.name, info.duration, len(text))
+    return _collapse_loops(text)
+
+
 def transcribe(audio_path: Path) -> str:
     """音檔 → 繁體中文逐字稿。失敗丟例外。"""
+    if getattr(config, "USE_LOCAL_WHISPER", False):
+        try:
+            return _transcribe_local(audio_path)
+        except Exception as e:
+            log.warning("本地 Whisper 失敗，改用雲端 STT：%s", e)
+
     if config.GROQ_API_KEY:
         try:
             size_mb = audio_path.stat().st_size / 1e6
@@ -123,10 +186,8 @@ def _transcribe_groq(audio_path: Path) -> str:
             "https://api.groq.com/openai/v1/audio/transcriptions",
             headers={"Authorization": f"Bearer {config.GROQ_API_KEY}"},
             files={"file": (audio_path.name, fh, "audio/mpeg")},
-            data={"model": "whisper-large-v3-turbo", "language": "zh",
-                  "response_format": "text",
-                  # 提示語偏置：讓 Whisper 輸出繁體（台灣用語）
-                  "prompt": "以下是台灣上市櫃公司法人說明會的繁體中文逐字稿。"},
+            data={"model": "whisper-large-v3-turbo",
+                  "response_format": "text"},  # 不強制語言，自動偵測中／英
             timeout=600,
         )
     r.raise_for_status()

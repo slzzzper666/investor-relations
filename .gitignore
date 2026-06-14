@@ -6,3 +6,4 @@ data/
 .venv/
 venv/
 site/.mcap_cache.json
+site/.pe_cache.json

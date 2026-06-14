@@ -212,6 +212,10 @@ def _ccsi(code: str, year: int, season: int) -> dict:
         if "基本每股盈餘" in item:
             out["eps"] = _parse_num(val)
             break
+    for item, val in rows.items():  # 毛利率用（金控/證券無此科目）
+        if "營業毛利" in item:
+            out["gross"] = _parse_num(val)
+            break
     _ccsi_cache[key] = out
     return out
 

@@ -6,7 +6,7 @@
   python radar.py --test       立即執行一次完整測試（行事曆 + 結果）
   python radar.py --calendar   只推播行事曆（今日～下週五）
   python radar.py --result     只抓最新結果並推播
-  python radar.py --daemon     常駐：08:00 台北時間推行事曆，每 15 分鐘輪詢結果
+  python radar.py --daemon     常駐：07:00 台北時間推行事曆，每 15 分鐘輪詢結果
 """
 import argparse
 import json
@@ -100,7 +100,7 @@ def run_daemon() -> None:
     last_calendar_date = None
     while True:
         now = datetime.now(config.TZ_TAIPEI)
-        if now.hour == 8 and last_calendar_date != now.date():
+        if now.hour == 7 and last_calendar_date != now.date():
             _safe(run_calendar, "行事曆任務")
             last_calendar_date = now.date()
         _safe(run_results, "結果任務")

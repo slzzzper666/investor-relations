@@ -28,6 +28,11 @@ _RETRYABLE_CODES = {429, 500, 502, 503, 504}
 _exhausted: set[str] = set()
 
 
+def all_exhausted() -> bool:
+    """所有 Gemini 模型今日額度都耗盡時回 True（讓呼叫端直接走 Groq）。"""
+    return all(m in _exhausted for m in MODEL_CHAIN)
+
+
 def generate_with_retry(client, *, attempts: int = 3, **kwargs):
     """generate_content 包裝：每個模型最多重試 attempts 次，429 即換下一個模型。
 

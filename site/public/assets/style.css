@@ -17,6 +17,8 @@
   --amber:     #D9A14A;
   --amber-dim: #8A6A33;
   --red:       #C8504B;
+  --up:        #D2564F;   /* 台股漲紅：年增/季增為正 */
+  --down:      #4FA88B;   /* 台股跌綠：年增/季增為負 */
   --serif: "Noto Serif TC", "PMingLiU", serif;
   --sans:  "Noto Sans TC", "Microsoft JhengHei", sans-serif;
   --mono:  "IBM Plex Mono", "Consolas", monospace;
@@ -125,6 +127,36 @@ a { color: inherit; }
   font-size: 15px;
 }
 
+/* ---------- 市場分類（台股／美股／總經） ---------- */
+
+.cat-tabs {
+  display: flex;
+  gap: 8px;
+  margin-top: 30px;
+}
+
+.cat-tab {
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 9px 24px;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s, background-color 0.15s;
+}
+
+.cat-tab:hover { color: var(--text); border-color: #303a4c; }
+
+.cat-tab.is-active {
+  color: var(--amber);
+  border-color: var(--amber-dim);
+  background: var(--panel-2);
+}
+
 /* ---------- 檢視切換 ---------- */
 
 .view-tabs {
@@ -133,6 +165,8 @@ a { color: inherit; }
   margin-top: 26px;
   border-bottom: 1px solid var(--line);
 }
+
+.cat-tabs + .view-tabs { margin-top: 16px; }
 
 .view-tab {
   font-family: var(--mono);
@@ -670,6 +704,30 @@ a.m-row:hover {
 }
 .btn:hover .arrow { color: var(--amber); }
 
+.lang-toggle {
+  display: inline-flex;
+  margin-top: 22px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.lang-btn {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  background: var(--panel);
+  border: none;
+  padding: 7px 16px;
+  cursor: pointer;
+  transition: color 0.15s, background-color 0.15s;
+}
+
+.lang-btn + .lang-btn { border-left: 1px solid var(--line); }
+.lang-btn:hover { color: var(--text); }
+.lang-btn.on { color: #14110A; background: var(--amber); }
+
 .doc-section { padding: 36px 0 8px; }
 
 .doc-section + .doc-section { border-top: 1px solid var(--line-soft); margin-top: 28px; }
@@ -827,6 +885,152 @@ a.m-row:hover {
   transition: color 0.15s;
 }
 .doc-foot-nav a:hover { color: var(--amber); }
+
+/* ---------- 詳細頁：兩欄（內文 ＋ 財報數據） ---------- */
+
+.doc-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 312px;
+  gap: 48px;
+  align-items: start;
+  padding-top: 4px;
+}
+
+.doc-body > article { min-width: 0; }
+
+.fin-panel {
+  position: sticky;
+  top: 24px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 20px 20px 16px;
+}
+
+.fin-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  padding-bottom: 13px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.fin-title {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 0.08em;
+}
+
+.fin-period { font-size: 12px; letter-spacing: 0.04em; color: var(--amber); }
+
+.fin-cards { display: flex; flex-direction: column; gap: 10px; }
+
+.fin-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--panel-2);
+  border: 1px solid var(--line-soft);
+  border-radius: 5px;
+  padding: 13px 14px;
+}
+
+.fin-icon {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  color: var(--amber);
+  margin-top: 3px;
+}
+
+.fin-icon svg { width: 100%; height: 100%; display: block; }
+
+.fin-body { min-width: 0; }
+
+.fin-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.fin-value {
+  font-family: var(--mono);
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.25;
+  margin-top: 3px;
+  color: var(--text);
+}
+
+.fin-unit { font-size: 13px; color: var(--muted); }
+
+.fin-deltas { display: flex; flex-wrap: wrap; gap: 6px 12px; margin-top: 6px; }
+
+.fin-delta { font-family: var(--mono); font-size: 12px; letter-spacing: 0.02em; }
+.fin-delta.up { color: var(--up); }
+.fin-delta.down { color: var(--down); }
+
+.fin-empty {
+  color: var(--faint);
+  font-size: 13px;
+  line-height: 1.75;
+  padding: 6px 0 4px;
+}
+
+.fin-mini {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(78px, 1fr));
+  gap: 1px;
+  margin-top: 10px;
+  background: var(--line-soft);
+  border: 1px solid var(--line-soft);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.fin-mini-item {
+  background: var(--panel-2);
+  padding: 11px 6px;
+  text-align: center;
+}
+
+.fin-mini-label {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  color: var(--faint);
+}
+
+.fin-mini-value {
+  font-family: var(--mono);
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  margin-top: 4px;
+  color: var(--text);
+}
+
+.fin-note {
+  margin-top: 14px;
+  font-size: 11px;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+  color: var(--faint);
+}
+
+@media (max-width: 900px) {
+  .doc-body { grid-template-columns: 1fr; gap: 0; }
+  .fin-panel {
+    position: static;
+    order: -1;               /* 手機：財報數據移到內文上方 */
+    margin: 4px 0 28px;
+  }
+}
 
 /* ---------- 響應式 ---------- */
 
