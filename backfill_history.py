@@ -2,10 +2,11 @@
 
 策略：
   - 月份由新到舊（6→1 月），同月內依市值由大到小（重要公司先補）
-  - 沿用 main.process_one：下載音檔→本地 Whisper 逐字稿→AI 分析→Notion
+  - 只做：下載音檔→本地 Whisper 逐字稿→存檔備料（不分析、不標記完成）
+  - AI 分析改由 Claude 額度處理：claude_prep.py 出批 → Claude 分析 → claude_push.py 進 Notion
+    （Gemini/Groq 免費額度不足，故分析全走 Claude）
   - 不推播 TG/DC（歷史資料，避免洗版）
-  - 幾乎不耗 Claude token（轉錄在本地 GPU/CPU、分析走既有 Gemini/Groq）
-  - 已處理者自動跳過，可隨時中斷後重跑接續
+  - 逐字稿已備檔者自動跳過，可隨時中斷後重跑接續
 
 用法：
   .venv\\Scripts\\python backfill_history.py
@@ -88,7 +89,7 @@ def main() -> None:
     log.info("===== 歷史補檔開始：待處理 %d 場 =====", len(work))
     processed = _load_processed()
     ok = fail = banked = consec = 0
-    quota_dead = False
+    quota_dead = True  # 一律只轉逐字稿備檔；AI 分析交給 Claude（claude_prep/push）
     for i, conf in enumerate(work, 1):
         key = f"{conf.stock_code}_{conf.date.isoformat()}"
         log.info("[%d/%d] %s %s（%s）%s", i, len(work), conf.stock_code,
