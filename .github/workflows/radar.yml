@@ -1,0 +1,40 @@
+name: 財報雷達每日推播
+
+on:
+  schedule:
+    - cron: "0 23 * * *"   # UTC 23:00 = 台北 07:00
+  workflow_dispatch:        # 可在 Actions 頁手動觸發測試
+
+concurrency:
+  group: radar
+  cancel-in-progress: false
+
+jobs:
+  radar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # 持久化 data/：推播去重狀態(radar_state.json)與營收預期(us_estimates.json)跨日保留
+      - name: 還原 radar 狀態快取
+        uses: actions/cache@v4
+        with:
+          path: data
+          key: radar-data-${{ github.run_id }}
+          restore-keys: |
+            radar-data-
+
+      - name: 安裝相依套件
+        run: pip install requests beautifulsoup4 lxml python-dotenv tzdata pandas yfinance
+
+      - name: 執行財報雷達(行事曆 + 結果)
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+          ALPHA_VANTAGE_KEY: ${{ secrets.ALPHA_VANTAGE_KEY }}
+        run: python radar.py --test
