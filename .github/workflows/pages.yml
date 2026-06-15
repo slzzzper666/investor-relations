@@ -27,13 +27,15 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install requests beautifulsoup4 lxml python-dotenv notion-client yfinance pandas
+      - run: pip install requests beautifulsoup4 lxml python-dotenv notion-client yfinance pandas google-genai
       - name: 從 Notion 與 MOPS 重建網站資料
         env:
           NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
           NOTION_PARENT_ID: ${{ secrets.NOTION_PARENT_ID }}
         run: python site/build_data.py
-      - name: 建置總經未來頁資料（yfinance 市場數據 + FRED 經濟數據）
+      - name: 建置總經未來頁資料（yfinance 市場數據 + FRED 經濟數據 + Gemini AI 分析）
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: python site/build_macro.py
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

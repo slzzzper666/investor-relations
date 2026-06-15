@@ -30,8 +30,11 @@ import yfinance as yf    # noqa: E402
 BASE_DIR = Path(__file__).resolve().parent      # site/
 ROOT_DIR = BASE_DIR.parent                       # 專案根
 PUBLIC_DIR = BASE_DIR / "public"
-# AI 分析來源（由 Claude 定期撰寫）——放 site/ 隨 repo 提交，CI 才讀得到
+# AI 分析的「基準版」（Claude 手寫）——Gemini 自動生成失敗時的安全網。
+# 放 site/ 隨 repo 提交，CI 才讀得到。
 AI_FILE = BASE_DIR / "macro_ai.json"
+
+sys.path.insert(0, str(ROOT_DIR))   # 讓 build_macro 能 import ir.*
 
 TAIPEI = timezone(timedelta(hours=8))
 
@@ -205,12 +208,25 @@ def _months_ago(date_str: str, months: int) -> str:
 
 
 def load_ai() -> dict:
+    """讀手寫基準版 macro_ai.json（Gemini 失敗時的安全網）。"""
     if AI_FILE.exists():
         try:
             return json.loads(AI_FILE.read_text(encoding="utf-8"))
         except ValueError:
             print("macro_ai.json 解析失敗，AI 區塊留空")
     return {}
+
+
+def build_ai(groups: list[dict], econ: list[dict]) -> dict:
+    """優先用 Gemini 依即時數字自動生成；失敗則退回手寫基準版。"""
+    try:
+        from ir.macro_ai import generate_macro_ai
+        ai = generate_macro_ai(groups, econ)
+        print("  AI：Gemini 自動生成成功")
+        return ai
+    except Exception as e:  # noqa: BLE001
+        print(f"  AI：Gemini 生成失敗（{type(e).__name__}: {e}），改用手寫基準版")
+        return load_ai()
 
 
 def main() -> None:
@@ -225,16 +241,19 @@ def main() -> None:
     print("[經濟數據 FRED]")
     econ = fetch_econ()
 
-    ai = load_ai()
     generated_at = datetime.now(TAIPEI).strftime("%Y-%m-%d %H:%M")
     n_items = sum(len(g["items"]) for g in groups)
     PUBLIC_DIR.mkdir(parents=True, exist_ok=True)
     out = PUBLIC_DIR / "macro_future.json"
 
     # 保護：yfinance 當日被限流、抓到的指標過少時，不以殘缺資料覆蓋既有好版本
+    # （也避免拿殘缺數字去餵 AI 生成誤導性分析）
     if n_items < 6 and out.exists():
         print(f"⚠ 僅抓到 {n_items} 指標（疑似來源限流），保留既有 macro_future.json 不覆蓋")
         return
+
+    print("[AI 分析]")
+    ai = build_ai(groups, econ)
 
     payload = {
         "generated_at": generated_at,
