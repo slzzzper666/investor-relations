@@ -752,16 +752,30 @@ def main() -> None:
     list_path.write_text(json.dumps(payload, ensure_ascii=False),
                          encoding="utf-8")
 
-    for u in upcoming:
-        u["market_cap"] = caps.get(u["code"], 0)
-    upcoming_payload = {
-        "generated_at": generated_at,
-        "count": len(upcoming),
-        "items": upcoming,
-    }
     upcoming_path = PUBLIC_DIR / "upcoming.json"
-    upcoming_path.write_text(json.dumps(upcoming_payload, ensure_ascii=False),
-                             encoding="utf-8")
+    # MOPS（mops.twse.com.tw）在雲端資料中心 IP 會連線逾時（同 Investing/FRED），
+    # 抓到 0／遠少於既有版本時，保留已提交的 upcoming.json，
+    # 避免行事曆的「未收錄場次（淡色）」整批消失。本機（家用 IP）建好後提交即可。
+    prev_count = 0
+    if upcoming_path.exists():
+        try:
+            prev_count = json.loads(
+                upcoming_path.read_text(encoding="utf-8")).get("count", 0)
+        except (ValueError, OSError):
+            prev_count = 0
+    if prev_count > 0 and len(upcoming) < prev_count * 0.8:
+        print(f"upcoming：本次僅抓到 {len(upcoming)} 筆（疑似 MOPS 擋雲端 IP），"
+              f"保留既有已提交的 {prev_count} 筆，不覆蓋")
+    else:
+        for u in upcoming:
+            u["market_cap"] = caps.get(u["code"], 0)
+        upcoming_payload = {
+            "generated_at": generated_at,
+            "count": len(upcoming),
+            "items": upcoming,
+        }
+        upcoming_path.write_text(json.dumps(upcoming_payload, ensure_ascii=False),
+                                 encoding="utf-8")
 
     write_seo_files(list_items, details)
 
@@ -771,7 +785,7 @@ def main() -> None:
               f"  市值 {li['market_cap']:,} 億"
               f"  逐字稿 {li['transcript_chars']:,} 字")
     no_cap = sum(1 for li in list_items if not li["market_cap"]) \
-        + sum(1 for u in upcoming if not u["market_cap"])
+        + sum(1 for u in upcoming if not u.get("market_cap"))
     print(f"list.json：{list_path}（{list_path.stat().st_size:,} bytes）")
     print(f"detail/：{len(list_items)} 個檔案")
     print(f"upcoming.json：{len(upcoming)} 筆 MOPS 公告場次"
