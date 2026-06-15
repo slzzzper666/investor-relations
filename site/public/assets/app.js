@@ -55,12 +55,13 @@
              views: ["list", "calendar"], label: "台股" },
     us:    { list: "us_list.json",    upcoming: "us_upcoming.json",
              views: ["list", "calendar"], label: "美股" },
-    macro: { future: "macro_future.json",
-             views: ["future"], label: "總經" }
+    macro: { future: "macro_future.json", calendar: "macro_upcoming.json",
+             views: ["future", "calendar"], label: "總經" }
   };
   var CAT_KEY = "ir-cat";
   var dataCache = {};   // cat -> { data, up }
-  var macroData = null; // 總經未來頁資料（macro_future.json）
+  var macroData = null;    // 總經未來頁資料（macro_future.json）
+  var macroEvents = [];    // 總經行事曆事件（macro_upcoming.json）
 
   var elCatTw = document.getElementById("cat-tw");
   var elCatUs = document.getElementById("cat-us");
@@ -178,8 +179,32 @@
 
   /* ---------- 行事曆資料 ---------- */
 
+  /* 總經行事曆：把 macro_upcoming.json 的經濟數據事件放進月曆 */
+  function buildMacroEvents() {
+    macroEvents.forEach(function (e) {
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(e.date)) return;
+      if (!eventsByDate[e.date]) eventsByDate[e.date] = [];
+      eventsByDate[e.date].push({
+        kind: "macro", date: e.date, time: e.time || "",
+        country: e.country || "", name: e.name || "",
+        previous: e.previous || "", forecast: e.forecast || "",
+        impact: e.impact || 0,
+        company: (e.country ? e.country + " " : "") + (e.name || ""),
+        code: "", id: "", mcap: 0
+      });
+    });
+    // 每日依重要度高→低，再依公布時間
+    Object.keys(eventsByDate).forEach(function (d) {
+      eventsByDate[d].sort(function (a, b) {
+        if ((b.impact || 0) !== (a.impact || 0)) return (b.impact || 0) - (a.impact || 0);
+        return (a.time || "") < (b.time || "") ? -1 : 1;
+      });
+    });
+  }
+
   function buildEvents() {
     eventsByDate = {};
+    if (currentCat === "macro") { buildMacroEvents(); return; }
     var seen = {};
 
     function add(evt) {
@@ -215,6 +240,9 @@
 
   /* ---------- 行事曆渲染 ---------- */
 
+  function calUnit() { return currentCat === "macro" ? "筆" : "場"; }
+  function calNoun() { return currentCat === "macro" ? "數據" : "法說會"; }
+
   function monthEventCount(y, m) {
     var prefix = y + "-" + pad2(m);
     var n = 0;
@@ -239,8 +267,13 @@
       var cls = "cal-cell" + (dateStr === todayStr ? " is-today" : "");
       var inner = '<span class="cal-day-num">' + d + "</span>";
       evts.slice(0, MAX_PER_CELL).forEach(function (e) {
-        inner += '<span class="cal-evt' + (e.id ? "" : " is-pending") + '">' +
-          esc(e.company) + "</span>";
+        if (e.kind === "macro") {
+          inner += '<span class="cal-evt cal-macro imp' + (e.impact || 1) + '">' +
+            esc(e.company) + "</span>";
+        } else {
+          inner += '<span class="cal-evt' + (e.id ? "" : " is-pending") + '">' +
+            esc(e.company) + "</span>";
+        }
       });
       if (evts.length > MAX_PER_CELL) {
         inner += '<span class="cal-overflow">+' +
@@ -249,8 +282,8 @@
       if (evts.length) {
         cells.push(
           '<button type="button" class="' + cls + '" data-date="' + dateStr +
-          '" aria-label="' + m + " 月 " + d + " 日，" + evts.length +
-          ' 場法說會" aria-haspopup="dialog">' + inner + "</button>");
+          '" aria-label="' + m + " 月 " + d + " 日，" + evts.length + " " +
+          calUnit() + calNoun() + '" aria-haspopup="dialog">' + inner + "</button>");
       } else {
         cells.push('<span class="' + cls + '">' + inner + "</span>");
       }
@@ -264,7 +297,8 @@
       '<section class="cal-month">' +
         '<header class="cal-month-head">' +
           "<h2>" + y + " 年 " + m + " 月</h2>" +
-          '<span class="cal-month-meta mono">' + (n ? n + " 場" : "無場次") + "</span>" +
+          '<span class="cal-month-meta mono">' +
+            (n ? n + " " + calUnit() : "無" + calNoun()) + "</span>" +
         "</header>" +
         '<div class="cal-weekdays" aria-hidden="true">' +
           WEEKDAY_HEADS.map(function (w) { return "<span>" + w + "</span>"; }).join("") +
@@ -301,6 +335,17 @@
   /* ---------- 當日場次視窗 ---------- */
 
   function modalRowHtml(e) {
+    if (e.kind === "macro") {
+      var vals = [];
+      if (e.forecast) vals.push("預期 " + esc(e.forecast));
+      if (e.previous) vals.push("前值 " + esc(e.previous));
+      return '<div class="m-row m-macro imp' + (e.impact || 1) + '">' +
+        '<span class="m-country">' + esc(e.country) + "</span>" +
+        '<span class="m-name">' + esc(e.name) + "</span>" +
+        '<span class="m-time mono">' + esc(e.time) + "</span>" +
+        '<span class="m-fc mono">' + vals.join("　") + "</span>" +
+      "</div>";
+    }
     var cap = e.mcap > 0
       ? e.mcap.toLocaleString("zh-Hant-TW") + " 億"
       : "";
@@ -322,9 +367,10 @@
     var d = new Date(dateStr + "T00:00:00");
     elModalTitle.textContent = (d.getMonth() + 1) + " 月 " + d.getDate() + " 日";
     elModalMeta.textContent = dateStr + " · " + WEEKDAYS[d.getDay()] + " · " +
-      evts.length + " 場";
+      evts.length + " " + calUnit();
     elModalList.innerHTML = evts.map(modalRowHtml).join("");
-    elModalHint.hidden = !evts.some(function (e) { return !e.id; });
+    elModalHint.hidden = currentCat === "macro" ||
+      !evts.some(function (e) { return !e.id; });
     lastFocus = document.activeElement;
     elModal.hidden = false;
     document.body.classList.add("modal-open");
@@ -562,29 +608,35 @@
     elViewTabs.hidden = views.length <= 1;
   }
 
-  /* 總經未來頁：載入 macro_future.json 並渲染儀表板（不走列表／行事曆） */
-  function showMacro(d) {
-    dataReady = true;
-    elControls.hidden = true;
-    elLedger.hidden = true;
-    elCalendar.hidden = true;
-    elCatPending.hidden = true;
+  /* 總經：未來儀表板（future）＋ 數據行事曆（calendar），由 applyView 依檢視路由 */
+  function showMacro() {
+    allItems = [];
+    upcomingItems = [];
     elError.hidden = true;
-    elEmpty.hidden = true;
+    elCatPending.hidden = true;
+    elViewTabs.hidden = CATS.macro.views.length <= 1;
+    dataReady = true;
+    calBuilt = false;
+    elCalMonths.innerHTML = "";
+    buildEvents();   // currentCat==="macro" → 走 buildMacroEvents
+    elTape.textContent = "總經 ・ 股市／債市／房市 ＋ 數據行事曆 · 更新 " +
+      ((macroData && macroData.generated_at) || "");
+    elFooterMeta.textContent = "MACRO " +
+      ((macroData && macroData.generated_at) || "");
     elCount.textContent = "";
-    elFuture.hidden = false;
-    elTape.textContent = "總經 ・ 股市／債市／房市觀察 · 更新 " +
-      (d.generated_at || "");
-    elFooterMeta.textContent = "MACRO " + (d.generated_at || "");
-    renderFuture(d);
+    applyView();
   }
 
   function loadMacro() {
-    if (macroData) { showMacro(macroData); return; }
+    if (macroData) { showMacro(); return; }
     elTape.textContent = "總經 載入中";
-    fetchJson(CATS.macro.future).then(function (d) {
-      macroData = d;
-      showMacro(d);
+    Promise.all([
+      fetchJson(CATS.macro.future),
+      fetchJson(CATS.macro.calendar).catch(function () { return { items: [] }; })
+    ]).then(function (res) {
+      macroData = res[0];
+      macroEvents = (res[1] && res[1].items) || [];
+      showMacro();
     }).catch(function () { showCategoryPending("macro"); });
   }
 
@@ -593,9 +645,9 @@
     currentCat = cat;
     try { localStorage.setItem(CAT_KEY, cat); } catch (e) { /* 無痕模式 */ }
     updateCatTabs();
-    // 總經固定走未來頁；台股／美股保留使用者的列表／行事曆選擇
-    if (cat !== "macro" && CATS[cat].views.indexOf(currentView) === -1) {
-      currentView = "list";
+    // 檢視收斂到該分類支援的範圍（總經無「列表」、台美股無「未來」）
+    if (CATS[cat].views.indexOf(currentView) === -1) {
+      currentView = CATS[cat].views[0];
     }
 
     if (cat === "macro") { loadMacro(); return; }

@@ -1283,6 +1283,29 @@ a.m-row:hover {
   .mx-val { font-size: 21px; }
 }
 
+/* 總經數據行事曆：事件 chip 依重要度上色（★3 琥珀、★2 次之） */
+.cal-evt.cal-macro {
+  color: var(--muted);
+  border-left: 2px solid var(--line);
+  padding-left: 4px;
+  opacity: 1;
+}
+.cal-evt.cal-macro.imp2 { color: var(--text); border-left-color: var(--amber-dim); }
+.cal-evt.cal-macro.imp3 { color: var(--amber); border-left-color: var(--amber); }
+
+/* 當日視窗的總經數據列 */
+.m-row.m-macro {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 3px 10px;
+}
+.m-row.m-macro .m-country { font-size: 15px; }
+.m-row.m-macro .m-name { flex: 1 1 auto; min-width: 0; color: var(--text); }
+.m-row.m-macro .m-time { color: var(--muted); font-size: 12.5px; }
+.m-row.m-macro .m-fc { flex-basis: 100%; color: var(--faint); font-size: 12.5px; }
+.m-row.m-macro.imp3 .m-name { color: var(--amber); }
+
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
 }

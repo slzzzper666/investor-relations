@@ -207,6 +207,35 @@ def _months_ago(date_str: str, months: int) -> str:
     return f"{y:04d}-{m:02d}"
 
 
+def fetch_macro_calendar() -> list[dict]:
+    """即將公布的總經數據（與 radar 推 TG/DC 同源：Investing.com）。
+
+    Investing.com 擋雲端資料中心 IP → 雲端會抓到 0；由 main 的保護機制保留
+    本機（家用 IP）建好並提交的 macro_upcoming.json。
+    """
+    from datetime import date, timedelta
+    try:
+        from ir.radar import macro as radar_macro
+        evs = radar_macro.fetch_calendar(date.today(),
+                                         date.today() + timedelta(days=75))
+    except Exception as e:  # noqa: BLE001
+        print(f"  總經行事曆抓取失敗（{type(e).__name__}: {e}）")
+        return []
+    items = []
+    for e in evs:
+        items.append({
+            "date": e.dt_taipei.strftime("%Y-%m-%d"),
+            "time": e.dt_taipei.strftime("%H:%M"),
+            "country": e.country,
+            "name": e.name,
+            "previous": e.previous or "",
+            "forecast": e.forecast or "",
+            "impact": e.impact,
+        })
+    items.sort(key=lambda x: (x["date"], x["time"]))
+    return items
+
+
 def load_ai() -> dict:
     """讀手寫基準版 macro_ai.json（Gemini 失敗時的安全網）。"""
     if AI_FILE.exists():
@@ -266,6 +295,25 @@ def main() -> None:
     print(f"已寫入 {out}（{out.stat().st_size:,} bytes）："
           f"{len(groups)} 類 {n_items} 指標、經濟數據 {len(econ)} 筆、"
           f"AI {'有' if ai.get('ai') else '無'}")
+
+    # 總經行事曆（即將公布的數據；Investing.com 擋雲端 → 抓到 0 就保留既有）
+    print("[總經行事曆]")
+    cal = fetch_macro_calendar()
+    cal_path = PUBLIC_DIR / "macro_upcoming.json"
+    prev_count = 0
+    if cal_path.exists():
+        try:
+            prev_count = json.loads(
+                cal_path.read_text(encoding="utf-8")).get("count", 0)
+        except (ValueError, OSError):
+            prev_count = 0
+    if not cal and prev_count > 0:
+        print(f"  抓到 0 筆（疑似 Investing 擋雲端 IP），保留既有 {prev_count} 筆")
+    else:
+        cal_path.write_text(
+            json.dumps({"generated_at": generated_at, "count": len(cal),
+                        "items": cal}, ensure_ascii=False), encoding="utf-8")
+        print(f"  總經行事曆：{len(cal)} 筆")
 
 
 if __name__ == "__main__":
