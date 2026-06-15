@@ -134,9 +134,7 @@ def main():
     log.info("白名單 %d 檔", len(whitelist))
 
     DETAIL_DIR.mkdir(parents=True, exist_ok=True)
-    for f in DETAIL_DIR.glob("us-*.json"):
-        f.unlink()
-
+    # 不刪既有 us-* detail（保留歷史回補的場次）；本次抓到的新增/更新即可
     list_items, details = build_reported(whitelist)
     for d in details:
         (DETAIL_DIR / f"{d['id']}.json").write_text(
@@ -144,10 +142,23 @@ def main():
 
     upcoming = build_upcoming(whitelist)
 
+    # us_list.json 由「全部」us-* detail 檔重建（含歷史回補），日期新→舊
+    all_items = []
+    for f in DETAIL_DIR.glob("us-*.json"):
+        dd = json.loads(f.read_text(encoding="utf-8"))
+        all_items.append({
+            "id": dd["id"], "code": dd["code"], "company": dd["company"],
+            "company_en": dd.get("company_en") or dd["code"], "date": dd["date"],
+            "market_cap": 0, "pdf_url": "", "video_url": "",
+            "summary": dd["summary"], "ai_view": dd["ai_view"],
+            "has_transcript": False, "transcript_chars": 0,
+        })
+    all_items.sort(key=lambda x: (x["date"], x["code"]), reverse=True)
+
     generated_at = datetime.now(TAIPEI).strftime("%Y-%m-%d %H:%M")
     (PUBLIC_DIR / "us_list.json").write_text(
-        json.dumps({"generated_at": generated_at, "count": len(list_items),
-                    "items": list_items}, ensure_ascii=False), encoding="utf-8")
+        json.dumps({"generated_at": generated_at, "count": len(all_items),
+                    "items": all_items}, ensure_ascii=False), encoding="utf-8")
     (PUBLIC_DIR / "us_upcoming.json").write_text(
         json.dumps({"generated_at": generated_at, "count": len(upcoming),
                     "items": upcoming}, ensure_ascii=False), encoding="utf-8")

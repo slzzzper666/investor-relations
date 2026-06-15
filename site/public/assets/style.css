@@ -1278,6 +1278,44 @@ a.m-row:hover {
   color: var(--faint);
 }
 
+.mx-mo {
+  border: 1px solid var(--line-soft);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  background: var(--surface, rgba(255, 255, 255, 0.02));
+}
+.mx-mo > summary {
+  cursor: pointer;
+  padding: 12px 14px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  list-style: none;
+}
+.mx-mo > summary::-webkit-details-marker { display: none; }
+.mx-mo > summary::before {
+  content: "▸";
+  color: var(--amber);
+  margin-right: 4px;
+  transition: transform 0.15s;
+  display: inline-block;
+}
+.mx-mo[open] > summary::before { transform: rotate(90deg); }
+.mx-mo-date { color: var(--amber); font-size: 13px; flex: 0 0 auto; }
+.mx-mo-sum { color: var(--text); font-size: 14px; flex: 1 1 240px; }
+.mx-mo-body {
+  padding: 4px 14px 14px 30px;
+  border-top: 1px solid var(--line-soft);
+}
+.mx-mo-body p {
+  margin: 10px 0 0;
+  font-size: 13.5px;
+  line-height: 1.85;
+  color: var(--muted);
+}
+.mx-mo-body b { color: var(--amber-dim, var(--amber)); margin-right: 2px; }
+
 @media (max-width: 560px) {
   .mx-cards { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
   .mx-val { font-size: 21px; }
@@ -1305,6 +1343,14 @@ a.m-row:hover {
 .m-row.m-macro .m-time { color: var(--muted); font-size: 12.5px; }
 .m-row.m-macro .m-fc { flex-basis: 100%; color: var(--faint); font-size: 12.5px; }
 .m-row.m-macro.imp3 .m-name { color: var(--amber); }
+.m-row.m-macro .m-actual { color: var(--text); font-weight: 600; }
+.m-row.m-macro.is-published .m-actual { color: var(--amber); }
+.m-row.m-macro .m-interp {
+  flex-basis: 100%;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
 
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }

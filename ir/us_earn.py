@@ -229,19 +229,139 @@ def analyze(data: dict) -> dict:
         price=_fmt(data.get("price_reaction"), "%"),
         pe=_fmt(data.get("pe")),
     )
-    client = genai.Client(api_key=config.GEMINI_API_KEY,
-                          http_options=types.HttpOptions(timeout=120_000))
-    resp = generate_with_retry(
-        client,
-        contents=[prompt],
-        config=types.GenerateContentConfig(
-            temperature=0.3,
-            system_instruction=_AN_SYSTEM,
-            response_mime_type="application/json",
-            response_schema=_USAnalysis,
-        ),
-    )
-    return resp.parsed.model_dump()
+    from ir.gemini_util import all_exhausted
+    if not all_exhausted():
+        try:
+            client = genai.Client(api_key=config.GEMINI_API_KEY,
+                                  http_options=types.HttpOptions(timeout=120_000))
+            resp = generate_with_retry(
+                client,
+                contents=[prompt],
+                config=types.GenerateContentConfig(
+                    temperature=0.3,
+                    system_instruction=_AN_SYSTEM,
+                    response_mime_type="application/json",
+                    response_schema=_USAnalysis,
+                ),
+            )
+            return resp.parsed.model_dump()
+        except Exception as e:  # noqa: BLE001
+            if not config.GROQ_API_KEY:
+                raise
+            log.warning("Gemini 分析失敗（%s），改用 Groq llama", str(e)[:80])
+    elif not config.GROQ_API_KEY:
+        raise RuntimeError("Gemini 額度耗盡且無 Groq 備援")
+    return _analyze_groq(prompt)
+
+
+def _analyze_groq(prompt: str) -> dict:
+    import json as _json
+
+    import requests
+
+    for attempt in range(4):
+        r = requests.post(
+            "https://api.groq.com/openai/v1/chat/completions",
+            headers={"Authorization": f"Bearer {config.GROQ_API_KEY}"},
+            json={"model": "llama-3.3-70b-versatile",
+                  "messages": [
+                      {"role": "system", "content": _AN_SYSTEM + " Output valid JSON only."},
+                      {"role": "user", "content": prompt}],
+                  "temperature": 0.3,
+                  "response_format": {"type": "json_object"}},
+            timeout=180,
+        )
+        if r.status_code == 429:
+            ra = float(r.headers.get("retry-after", 30))
+            if ra > 120:
+                raise RuntimeError(f"Groq 當日額度耗盡（retry-after {ra:.0f}s）")
+            time.sleep(min(ra, 90) + 1)
+            continue
+        r.raise_for_status()
+        result = _json.loads(r.json()["choices"][0]["message"]["content"])
+        parsed = _USAnalysis.model_validate(result)
+        log.info("US 分析完成（Groq llama 備援）")
+        return parsed.model_dump()
+    raise RuntimeError("Groq llama 連續限流")
+
+
+def fetch_earnings_history(symbol: str, since: str = "2026-01-01") -> list[dict]:
+    """抓 since 之後『每一季』已公布財報（回補歷史用），新到舊。
+
+    與 fetch_earnings 不同：不只取最近一季，且把營收對應到各季（依損益表
+    季底日期就近匹配），股價反應僅最近一季有意義故一律不帶。
+    """
+    import pandas as pd
+    import yfinance as yf
+    from datetime import date as _date
+
+    since_d = _date.fromisoformat(since)
+    t = yf.Ticker(_yahoo_symbol(symbol))
+    try:
+        ed = t.earnings_dates
+    except Exception as e:  # noqa: BLE001
+        log.warning("%s earnings_dates 失敗：%s", symbol, e)
+        return []
+    if ed is None or ed.empty:
+        return []
+    reported = ed.dropna(subset=["Reported EPS"]).sort_index()
+    if reported.empty:
+        return []
+    rows = reported[reported.index.map(lambda ts: ts.date() >= since_d
+                                       and ts.date() <= _date.today())]
+    if rows.empty:
+        return []
+
+    info = {}
+    try:
+        info = t.info
+    except Exception:  # noqa: BLE001
+        pass
+
+    # 季底日期 → 單季營收，供就近匹配與 YoY
+    rev_by_q: list[tuple] = []
+    try:
+        inc = t.quarterly_income_stmt
+        if inc is not None and "Total Revenue" in inc.index:
+            s = inc.loc["Total Revenue"].dropna()
+            rev_by_q = sorted(((c.date(), _f(v)) for c, v in s.items()),
+                              reverse=True)  # 新到舊
+    except Exception:  # noqa: BLE001
+        pass
+
+    def _revenue_for(report_d):
+        # 取季底日 <= 財報日、且差距最近（120 天內）的那一季
+        cands = [(qd, rv) for qd, rv in rev_by_q
+                 if qd <= report_d and (report_d - qd).days <= 120]
+        if not cands:
+            return None, None
+        qd, rv = max(cands, key=lambda x: x[0])
+        yoy = None
+        prior = [(d, v) for d, v in rev_by_q
+                 if 330 <= (qd - d).days <= 400]
+        if prior and prior[0][1]:
+            yoy = (rv / prior[0][1] - 1) * 100 if rv is not None else None
+        return rv, yoy
+
+    out = []
+    for idx, row in rows[::-1].iterrows():   # 新到舊
+        report_d = idx.date()
+        rev, rev_yoy = _revenue_for(report_d)
+        d = {
+            "symbol": symbol,
+            "name_en": info.get("longName") or info.get("shortName") or symbol,
+            "sector": info.get("sector", ""),
+            "report_date": report_d.isoformat(),
+            "eps_actual": _f(row.get("Reported EPS")),
+            "eps_estimate": _f(row.get("EPS Estimate")),
+            "surprise_pct": _f(row.get("Surprise(%)")),
+            "pe": _f(info.get("trailingPE")),
+            "market_cap": _f(info.get("marketCap")),
+            "revenue": rev,
+            "revenue_yoy": rev_yoy,
+        }
+        out.append(d)
+    return out
 
 
 def analyze_cached(data: dict) -> dict:

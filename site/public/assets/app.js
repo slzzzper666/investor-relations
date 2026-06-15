@@ -56,12 +56,14 @@
     us:    { list: "us_list.json",    upcoming: "us_upcoming.json",
              views: ["list", "calendar"], label: "美股" },
     macro: { future: "macro_future.json", calendar: "macro_upcoming.json",
+             history: "macro_history.json", monthly: "macro_monthly.json",
              views: ["future", "calendar"], label: "總經" }
   };
   var CAT_KEY = "ir-cat";
   var dataCache = {};   // cat -> { data, up }
   var macroData = null;    // 總經未來頁資料（macro_future.json）
-  var macroEvents = [];    // 總經行事曆事件（macro_upcoming.json）
+  var macroEvents = [];    // 總經行事曆事件（macro_upcoming.json ＋ macro_history.json）
+  var macroMonthly = [];   // 總經每月回顧（macro_monthly.json）
 
   var elCatTw = document.getElementById("cat-tw");
   var elCatUs = document.getElementById("cat-us");
@@ -188,6 +190,7 @@
         kind: "macro", date: e.date, time: e.time || "",
         country: e.country || "", name: e.name || "",
         previous: e.previous || "", forecast: e.forecast || "",
+        actual: e.actual || "", interpretation: e.interpretation || "",
         impact: e.impact || 0,
         company: (e.country ? e.country + " " : "") + (e.name || ""),
         code: "", id: "", mcap: 0
@@ -337,13 +340,18 @@
   function modalRowHtml(e) {
     if (e.kind === "macro") {
       var vals = [];
+      if (e.actual) vals.push('<b class="m-actual">實際 ' + esc(e.actual) + "</b>");
       if (e.forecast) vals.push("預期 " + esc(e.forecast));
       if (e.previous) vals.push("前值 " + esc(e.previous));
-      return '<div class="m-row m-macro imp' + (e.impact || 1) + '">' +
+      var interp = e.interpretation
+        ? '<span class="m-interp">' + esc(e.interpretation) + "</span>" : "";
+      return '<div class="m-row m-macro imp' + (e.impact || 1) +
+        (e.actual ? " is-published" : "") + '">' +
         '<span class="m-country">' + esc(e.country) + "</span>" +
         '<span class="m-name">' + esc(e.name) + "</span>" +
         '<span class="m-time mono">' + esc(e.time) + "</span>" +
         '<span class="m-fc mono">' + vals.join("　") + "</span>" +
+        interp +
       "</div>";
     }
     var cap = e.mcap > 0
@@ -478,6 +486,26 @@
           }).join("") +
         "</div>" +
       "</section>";
+    }
+
+    // 每月回顧（1~6 月，新到舊）
+    if (macroMonthly && macroMonthly.length) {
+      html += '<section class="mx-group mx-monthly">' +
+        '<h2 class="mx-group-title">每月回顧</h2>';
+      macroMonthly.slice().reverse().forEach(function (mo) {
+        var mlabel = mo.month ? mo.month.slice(0, 4) + " 年 " +
+          parseInt(mo.month.slice(5, 7), 10) + " 月" : "";
+        html += '<details class="mx-mo">' +
+          '<summary><span class="mx-mo-date mono">' + esc(mlabel) + "</span>" +
+            '<span class="mx-mo-sum">' + esc(mo.summary || "") + "</span></summary>" +
+          '<div class="mx-mo-body">' +
+            (mo.equity ? '<p><b>股市</b>　' + esc(mo.equity) + "</p>" : "") +
+            (mo.bond ? '<p><b>債市</b>　' + esc(mo.bond) + "</p>" : "") +
+            (mo.realestate ? '<p><b>房市</b>　' + esc(mo.realestate) + "</p>" : "") +
+          "</div>" +
+        "</details>";
+      });
+      html += "</section>";
     }
 
     html += '<p class="mx-note">資料來源：Yahoo Finance（市場數據）' +
@@ -632,10 +660,20 @@
     elTape.textContent = "總經 載入中";
     Promise.all([
       fetchJson(CATS.macro.future),
-      fetchJson(CATS.macro.calendar).catch(function () { return { items: [] }; })
+      fetchJson(CATS.macro.calendar).catch(function () { return { items: [] }; }),
+      fetchJson(CATS.macro.history).catch(function () { return { items: [] }; }),
+      fetchJson(CATS.macro.monthly).catch(function () { return { months: [] }; })
     ]).then(function (res) {
       macroData = res[0];
-      macroEvents = (res[1] && res[1].items) || [];
+      macroMonthly = (res[3] && res[3].months) || [];
+      var upc = (res[1] && res[1].items) || [];
+      var hist = (res[2] && res[2].items) || [];
+      // 歷史（已公布、含實際值）＋ 未來（待公布）合併；同日同名以未來版本為準
+      var seen = {};
+      upc.forEach(function (e) { seen[e.date + "|" + e.country + "|" + e.name] = true; });
+      macroEvents = upc.concat(hist.filter(function (e) {
+        return !seen[e.date + "|" + e.country + "|" + e.name];
+      }));
       showMacro();
     }).catch(function () { showCategoryPending("macro"); });
   }
