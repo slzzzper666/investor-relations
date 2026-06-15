@@ -55,11 +55,12 @@
              views: ["list", "calendar"], label: "台股" },
     us:    { list: "us_list.json",    upcoming: "us_upcoming.json",
              views: ["list", "calendar"], label: "美股" },
-    macro: { list: "macro_list.json", upcoming: "macro_upcoming.json",
-             views: ["list", "calendar", "future"], label: "總經" }
+    macro: { future: "macro_future.json",
+             views: ["future"], label: "總經" }
   };
   var CAT_KEY = "ir-cat";
   var dataCache = {};   // cat -> { data, up }
+  var macroData = null; // 總經未來頁資料（macro_future.json）
 
   var elCatTw = document.getElementById("cat-tw");
   var elCatUs = document.getElementById("cat-us");
@@ -340,12 +341,106 @@
 
   /* ---------- 檢視切換 ---------- */
 
-  function renderFuture() {
-    if (elFuture.getAttribute("data-built")) return;
-    elFuture.innerHTML =
-      '<div class="empty"><p>總經未來展望建置中</p>' +
-      '<p class="empty-hint">最新數據、歷史走勢，以及 AI 對股市／債市／房市的' +
-      '分析與預期即將上線。</p></div>';
+  /* 縮圖：一年走勢折線；上漲紅、下跌綠（沿用台股漲跌色） */
+  function sparkSvg(vals) {
+    if (!vals || vals.length < 2) return "";
+    var min = Math.min.apply(null, vals);
+    var max = Math.max.apply(null, vals);
+    var rng = (max - min) || 1;
+    var W = 100, H = 30, pad = 2.5;
+    var pts = vals.map(function (v, i) {
+      var x = (i / (vals.length - 1)) * W;
+      var y = pad + (1 - (v - min) / rng) * (H - 2 * pad);
+      return x.toFixed(1) + "," + y.toFixed(1);
+    }).join(" ");
+    var up = vals[vals.length - 1] >= vals[0];
+    return '<svg class="mx-spark ' + (up ? "up" : "down") +
+      '" viewBox="0 0 100 30" preserveAspectRatio="none" aria-hidden="true">' +
+      '<polyline points="' + pts + '"/></svg>';
+  }
+
+  function deltaChips(deltas) {
+    return (deltas || []).map(function (d) {
+      var cls = d.dir > 0 ? "up" : (d.dir < 0 ? "down" : "flat");
+      return '<span class="mx-chip ' + cls + '">' +
+        esc(d.label) + " " + esc(d.text) + "</span>";
+    }).join("");
+  }
+
+  function mxCard(it) {
+    return '<div class="mx-card">' +
+      '<div class="mx-card-top">' +
+        '<span class="mx-name">' + esc(it.name) + "</span>" +
+        '<span class="mx-sym mono">' + esc(it.symbol) + "</span>" +
+      "</div>" +
+      '<div class="mx-val">' + esc(it.value) +
+        (it.unit ? '<span class="mx-unit">' + esc(it.unit) + "</span>" : "") +
+      "</div>" +
+      sparkSvg(it.spark) +
+      '<div class="mx-deltas">' + deltaChips(it.deltas) + "</div>" +
+    "</div>";
+  }
+
+  function aiBlock(text) {
+    if (!text) return "";
+    return '<p class="mx-analysis">' + esc(text) + "</p>";
+  }
+
+  function renderFuture(d) {
+    d = d || macroData;
+    if (!d) return;
+    var ai = d.ai || {};
+
+    var html = '<div class="mx">';
+    html += '<p class="mx-meta mono">數據更新 ' + esc(d.generated_at || "—") +
+      "（台北）" + (d.ai_asof ? " · AI 觀察 " + esc(d.ai_asof) : "") + "</p>";
+
+    if (ai.overall) {
+      html += '<p class="mx-overall">' + esc(ai.overall) + "</p>";
+    }
+
+    // 股市預期（重點，醒目卡片置前）
+    var expect = ai.equity && ai.equity.expectation;
+    if (expect) {
+      html += '<div class="mx-expect">' +
+        '<div class="mx-expect-label">股市預期</div>' +
+        '<p>' + esc(expect) + "</p>" +
+      "</div>";
+    }
+
+    (d.groups || []).forEach(function (g) {
+      html += '<section class="mx-group">' +
+        '<h2 class="mx-group-title">' + esc(g.label) + "</h2>" +
+        '<div class="mx-cards">' +
+          (g.items || []).map(mxCard).join("") +
+        "</div>" +
+        aiBlock(ai[g.key] && ai[g.key].analysis) +
+      "</section>";
+    });
+
+    if (d.econ && d.econ.length) {
+      html += '<section class="mx-group">' +
+        '<h2 class="mx-group-title">經濟數據</h2>' +
+        '<div class="mx-econ">' +
+          d.econ.map(function (e) {
+            return '<div class="mx-econ-item">' +
+              '<div class="mx-econ-name">' + esc(e.name) + "</div>" +
+              '<div class="mx-econ-val">' + esc(String(e.value)) +
+                esc(e.unit || "") + "</div>" +
+              '<div class="mx-econ-asof mono">' + esc(e.asof || "") + "</div>" +
+            "</div>";
+          }).join("") +
+        "</div>" +
+      "</section>";
+    }
+
+    html += '<p class="mx-note">資料來源：Yahoo Finance（市場數據）' +
+      (d.econ && d.econ.length ? "、美國聯準會 FRED（經濟數據）" : "") +
+      "。市場數據每日自動更新，AI 觀察由 Claude 定期彙整。" +
+      "本頁內容僅供研究參考，不構成投資建議。</p>";
+    html += "</div>";
+
+    elFuture.innerHTML = html;
   }
 
   function applyView() {
@@ -459,7 +554,38 @@
       p[1].classList.toggle("is-active", on);
       p[1].setAttribute("aria-selected", String(on));
     });
-    elTabFuture.hidden = CATS[currentCat].views.indexOf("future") === -1;
+    var views = CATS[currentCat].views;
+    elTabList.hidden = views.indexOf("list") === -1;
+    elTabCalendar.hidden = views.indexOf("calendar") === -1;
+    elTabFuture.hidden = views.indexOf("future") === -1;
+    // 僅單一檢視（總經只有未來頁）時，整條檢視切換列隱藏
+    elViewTabs.hidden = views.length <= 1;
+  }
+
+  /* 總經未來頁：載入 macro_future.json 並渲染儀表板（不走列表／行事曆） */
+  function showMacro(d) {
+    dataReady = true;
+    elControls.hidden = true;
+    elLedger.hidden = true;
+    elCalendar.hidden = true;
+    elCatPending.hidden = true;
+    elError.hidden = true;
+    elEmpty.hidden = true;
+    elCount.textContent = "";
+    elFuture.hidden = false;
+    elTape.textContent = "總經 ・ 股市／債市／房市觀察 · 更新 " +
+      (d.generated_at || "");
+    elFooterMeta.textContent = "MACRO " + (d.generated_at || "");
+    renderFuture(d);
+  }
+
+  function loadMacro() {
+    if (macroData) { showMacro(macroData); return; }
+    elTape.textContent = "總經 載入中";
+    fetchJson(CATS.macro.future).then(function (d) {
+      macroData = d;
+      showMacro(d);
+    }).catch(function () { showCategoryPending("macro"); });
   }
 
   function loadCategory(cat) {
@@ -467,7 +593,12 @@
     currentCat = cat;
     try { localStorage.setItem(CAT_KEY, cat); } catch (e) { /* 無痕模式 */ }
     updateCatTabs();
-    if (CATS[cat].views.indexOf(currentView) === -1) currentView = "list";
+    // 總經固定走未來頁；台股／美股保留使用者的列表／行事曆選擇
+    if (cat !== "macro" && CATS[cat].views.indexOf(currentView) === -1) {
+      currentView = "list";
+    }
+
+    if (cat === "macro") { loadMacro(); return; }
 
     if (dataCache[cat]) { applyCategoryData(dataCache[cat]); return; }
 

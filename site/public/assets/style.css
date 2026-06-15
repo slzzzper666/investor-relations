@@ -1092,6 +1092,197 @@ a.m-row:hover {
   .m-time { display: none; }
 }
 
+/* ---------- 總經未來頁：股市／債市／房市儀表板 ---------- */
+
+.mx { padding-top: 4px; }
+
+.mx-meta {
+  font-size: 12.5px;
+  color: var(--faint);
+  letter-spacing: 0.02em;
+  margin-bottom: 18px;
+}
+
+.mx-overall {
+  font-size: 16px;
+  line-height: 1.95;
+  color: var(--text);
+  border-left: 3px solid var(--amber-dim);
+  padding-left: 16px;
+  margin-bottom: 22px;
+}
+
+.mx-expect {
+  background: linear-gradient(180deg, rgba(217,161,74,0.10), rgba(217,161,74,0.03));
+  border: 1px solid var(--amber-dim);
+  border-radius: 8px;
+  padding: 18px 22px 20px;
+  margin-bottom: 34px;
+}
+
+.mx-expect-label {
+  display: inline-block;
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--amber);
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+  padding-bottom: 4px;
+  border-bottom: 2px solid var(--amber-dim);
+}
+
+.mx-expect p {
+  font-size: 15px;
+  line-height: 1.95;
+  color: var(--text);
+}
+
+.mx-group { margin-bottom: 34px; }
+
+.mx-group-title {
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.mx-group-title::before {
+  content: "";
+  width: 4px;
+  height: 16px;
+  background: var(--amber);
+  border-radius: 2px;
+}
+
+.mx-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(184px, 1fr));
+  gap: 12px;
+}
+
+.mx-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 14px 14px 12px;
+}
+
+.mx-card-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.mx-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.4;
+}
+
+.mx-sym {
+  font-size: 11px;
+  color: var(--faint);
+  white-space: nowrap;
+}
+
+.mx-val {
+  font-family: var(--serif);
+  font-size: 23px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.2;
+}
+.mx-unit {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--muted);
+  margin-left: 3px;
+}
+
+.mx-spark {
+  display: block;
+  width: 100%;
+  height: 36px;
+  margin: 8px 0 10px;
+}
+.mx-spark polyline {
+  fill: none;
+  stroke-width: 1.6;
+  vector-effect: non-scaling-stroke;
+}
+.mx-spark.up polyline { stroke: var(--up); }
+.mx-spark.down polyline { stroke: var(--down); }
+
+.mx-deltas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.mx-chip {
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 1px 7px;
+  border-radius: 4px;
+  background: var(--panel-2);
+  border: 1px solid var(--line-soft);
+  white-space: nowrap;
+}
+.mx-chip.up { color: var(--up); }
+.mx-chip.down { color: var(--down); }
+.mx-chip.flat { color: var(--muted); }
+
+.mx-analysis {
+  margin-top: 16px;
+  font-size: 14.5px;
+  line-height: 1.95;
+  color: var(--muted);
+}
+
+.mx-econ {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+}
+.mx-econ-item {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 12px 14px;
+}
+.mx-econ-name { font-size: 12.5px; color: var(--muted); margin-bottom: 4px; }
+.mx-econ-val {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+}
+.mx-econ-asof { font-size: 11px; color: var(--faint); margin-top: 2px; }
+
+.mx-note {
+  margin-top: 26px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line-soft);
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--faint);
+}
+
+@media (max-width: 560px) {
+  .mx-cards { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+  .mx-val { font-size: 21px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
 }
