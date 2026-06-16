@@ -701,12 +701,13 @@ def main() -> None:
     caps = fetch_market_caps()
     pes = fetch_pe_ratios()
     fin_cache = _load_fin_cache()
-    # 探測 MOPS 財報端點（t163sb01）：雲端(GitHub Actions)會回 406，公告端點卻正常，
-    # 故不能用 upcoming 筆數判斷。直接用台積電試抓一次——不可用就整輪跳過逐檔連線，
-    # 改用已提交的 .fin_cache.json（沒有就留空），避免數百檔各重試 406 把 build 拖到 40+ 分。
-    mops_ok = fetch_tw_financials("2330", {}) is not None
-    if not mops_ok:
-        print("MOPS 財報端點不可用（雲端常見 406），財報改用既有快取、不逐檔連線")
+    # 財報逐檔抓 MOPS（t163sb01/t164sb05）。雲端(GitHub Actions)會被限流回 406；
+    # 單筆探測不可靠（第一筆常成功、之後才被限流），改用斷路器：連續 FIN_FAIL_LIMIT 檔
+    # 抓不到就判定 MOPS 擋住，其餘改用 .fin_cache.json、不再逐檔連線，避免數百檔各重試
+    # 406 把 build 拖到 40+ 分。本機 MOPS 可達時財報都抓得到、不會觸發斷路器。
+    mops_ok = True
+    consec_none = 0
+    FIN_FAIL_LIMIT = 20
 
     PUBLIC_DIR.mkdir(parents=True, exist_ok=True)
     DETAIL_DIR.mkdir(parents=True, exist_ok=True)
@@ -722,6 +723,14 @@ def main() -> None:
         detail = {"id": it_id, **it}
         if mops_ok:
             fin = fetch_tw_financials(it["code"], fin_cache)
+            if fin is None:
+                consec_none += 1
+                if consec_none >= FIN_FAIL_LIMIT:
+                    mops_ok = False
+                    print(f"連續 {FIN_FAIL_LIMIT} 檔財報無結果（疑似 MOPS 擋/限流），"
+                          f"其餘改用既有快取、不再逐檔連線")
+            else:
+                consec_none = 0
         else:
             cached = fin_cache.get(it["code"])
             fin = cached.get("data") if cached else None
