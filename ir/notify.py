@@ -17,13 +17,13 @@ _DC_HARD = 2000         # Discord content（非 embed）上限
 
 def _links_line(conf: Conference, video_url: str, notion_url: str,
                 fmt: str) -> str:
+    # 注意：notion_url 刻意不放進推播——Notion 資料庫僅供內部存取，
+    # 對外（TG/DC 訂閱者）公開連結有資安疑慮。只給 PDF 與影音供下載。
     items = []
     if conf.pdf_url:
         items.append(("📄 簡報 PDF", conf.pdf_url))
     if video_url:
         items.append(("🎥 影音", video_url))
-    if notion_url:
-        items.append(("📚 Notion 完整頁", notion_url))
     if fmt == "html":
         return "　".join(f'<a href="{u}">{t}</a>' for t, u in items)
     return "　".join(f"[{t}]({u})" for t, u in items)
