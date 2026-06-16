@@ -701,6 +701,13 @@ def main() -> None:
     caps = fetch_market_caps()
     pes = fetch_pe_ratios()
     fin_cache = _load_fin_cache()
+    # MOPS 正常會回上千筆未來場次；雲端(GitHub Actions)被擋時 upcoming 近乎 0。
+    # 被擋時不要逐檔打 MOPS 抓財報（會逐一逾時、整個 build 拖到一小時以上），
+    # 改用已提交的 .fin_cache.json，沒有就留空。MOPS 可達時（本機）照常抓並更新快取。
+    mops_ok = len(upcoming) > 200
+    if not mops_ok:
+        print(f"MOPS 疑似不可達（upcoming 僅 {len(upcoming)} 筆），"
+              f"財報改用既有快取、不逐檔連線")
 
     PUBLIC_DIR.mkdir(parents=True, exist_ok=True)
     DETAIL_DIR.mkdir(parents=True, exist_ok=True)
@@ -714,7 +721,11 @@ def main() -> None:
     for it in items:
         it_id = make_id(it, used_ids)
         detail = {"id": it_id, **it}
-        fin = fetch_tw_financials(it["code"], fin_cache)
+        if mops_ok:
+            fin = fetch_tw_financials(it["code"], fin_cache)
+        else:
+            cached = fin_cache.get(it["code"])
+            fin = cached.get("data") if cached else None
         if fin is not None:
             fin = {**fin,  # 股價型數據每日變動，組裝時注入
                    "market_cap": caps.get(it["code"]) or None,
