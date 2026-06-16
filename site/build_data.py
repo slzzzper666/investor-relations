@@ -701,13 +701,12 @@ def main() -> None:
     caps = fetch_market_caps()
     pes = fetch_pe_ratios()
     fin_cache = _load_fin_cache()
-    # MOPS 正常會回上千筆未來場次；雲端(GitHub Actions)被擋時 upcoming 近乎 0。
-    # 被擋時不要逐檔打 MOPS 抓財報（會逐一逾時、整個 build 拖到一小時以上），
-    # 改用已提交的 .fin_cache.json，沒有就留空。MOPS 可達時（本機）照常抓並更新快取。
-    mops_ok = len(upcoming) > 200
+    # 探測 MOPS 財報端點（t163sb01）：雲端(GitHub Actions)會回 406，公告端點卻正常，
+    # 故不能用 upcoming 筆數判斷。直接用台積電試抓一次——不可用就整輪跳過逐檔連線，
+    # 改用已提交的 .fin_cache.json（沒有就留空），避免數百檔各重試 406 把 build 拖到 40+ 分。
+    mops_ok = fetch_tw_financials("2330", {}) is not None
     if not mops_ok:
-        print(f"MOPS 疑似不可達（upcoming 僅 {len(upcoming)} 筆），"
-              f"財報改用既有快取、不逐檔連線")
+        print("MOPS 財報端點不可用（雲端常見 406），財報改用既有快取、不逐檔連線")
 
     PUBLIC_DIR.mkdir(parents=True, exist_ok=True)
     DETAIL_DIR.mkdir(parents=True, exist_ok=True)
