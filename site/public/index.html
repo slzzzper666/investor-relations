@@ -17,6 +17,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
+<meta name="theme-color" content="#0B0E13">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/icon-192.png">
+<link rel="icon" type="image/png" href="assets/icon-192.png">
 <script src="assets/analytics.js"></script>
 </head>
 <body>
@@ -77,12 +81,17 @@
   </div>
 
   <section id="calendar" class="calendar" hidden aria-label="法說會行事曆">
-    <div class="cal-nav">
-      <button type="button" class="cal-more" id="cal-prev">載入上個月</button>
+    <div class="cal-toolbar">
+      <button type="button" class="cal-today" id="cal-today">今天</button>
+      <span class="cal-cur mono" id="cal-cur" aria-live="polite"></span>
+      <label class="cal-filter" id="cal-filter">
+        <input type="checkbox" id="cal-only-done"> 只看已整理
+      </label>
     </div>
-    <div id="cal-months"></div>
-    <div class="cal-nav">
-      <button type="button" class="cal-more" id="cal-next">載入下個月</button>
+    <div class="cal-scroll" id="cal-scroll" tabindex="0" aria-label="行事曆，可上下捲動">
+      <div class="cal-sentinel" id="cal-top-sentinel" aria-hidden="true"></div>
+      <div id="cal-months"></div>
+      <div class="cal-sentinel" id="cal-bottom-sentinel" aria-hidden="true"></div>
     </div>
   </section>
 
@@ -113,5 +122,12 @@
 </footer>
 
 <script src="assets/app.js"></script>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("sw.js").catch(function () { /* 忽略 */ });
+  });
+}
+</script>
 </body>
 </html>

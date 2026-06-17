@@ -12,3 +12,6 @@ package.json
 package-lock.json
 .railway/
 .agents/
+_*.py
+# list.json 由 build_data.py（含 Actions）從 Notion 重建，不需版控這份 1.7MB 生成檔
+site/public/list.json

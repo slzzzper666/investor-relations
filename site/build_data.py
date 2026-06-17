@@ -745,6 +745,9 @@ def main() -> None:
         details.append(detail)
         (DETAIL_DIR / f"{it_id}.json").write_text(
             json.dumps(detail, ensure_ascii=False), encoding="utf-8")
+        # list.json 只供「列表/行事曆」用：僅留一句話總結，丟掉完整摘要與 ai_view
+        # （詳細頁另抓 detail/{id}.json 取完整內容）。可把首頁載入由數 MB 降到數百 KB。
+        one_liner = it["summary"].split("\n")[0].strip() if it["summary"] else ""
         list_items.append({
             "id": it_id,
             "company": it["company"],
@@ -753,8 +756,7 @@ def main() -> None:
             "market_cap": caps.get(it["code"], 0),
             "pdf_url": it["pdf_url"],
             "video_url": it["video_url"],
-            "summary": it["summary"],
-            "ai_view": it["ai_view"],
+            "summary": one_liner,
             "has_transcript": bool(it["transcript"]),
             "transcript_chars": len(it["transcript"]),
         })

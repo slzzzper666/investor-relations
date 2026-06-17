@@ -27,8 +27,13 @@
   var elTabCalendar = document.getElementById("tab-calendar");
   var elCalendar = document.getElementById("calendar");
   var elCalMonths = document.getElementById("cal-months");
-  var elCalPrev = document.getElementById("cal-prev");
-  var elCalNext = document.getElementById("cal-next");
+  var elCalScroll = document.getElementById("cal-scroll");
+  var elCalToday = document.getElementById("cal-today");
+  var elCalCur = document.getElementById("cal-cur");
+  var elCalOnlyDone = document.getElementById("cal-only-done");
+  var elCalFilter = document.getElementById("cal-filter");
+  var elCalTopSentinel = document.getElementById("cal-top-sentinel");
+  var elCalBottomSentinel = document.getElementById("cal-bottom-sentinel");
   var elModal = document.getElementById("day-modal");
   var elModalBackdrop = document.getElementById("modal-backdrop");
   var elModalTitle = document.getElementById("modal-title");
@@ -44,6 +49,11 @@
   var calBuilt = false;
   var calFirst = null;     // 已渲染的最早月份 {y, m}
   var calLast = null;      // 已渲染的最晚月份 {y, m}
+  var calObserver = null;  // 上下哨兵的 IntersectionObserver（無限延伸）
+  var calCurRaf = 0;       // 目前顯示月份標籤更新節流
+  var CAL_DONE_KEY = "ir-cal-only-done";
+  var calOnlyDone = false; // 只看已整理（行事曆隱藏未收錄的 pending 場次）
+  try { calOnlyDone = localStorage.getItem(CAL_DONE_KEY) === "1"; } catch (e) { /* 無痕 */ }
   var currentView = "list";
   var currentCat = "tw";
   var lastFocus = null;
@@ -174,7 +184,8 @@
       if (month && it.date.slice(0, 7) !== month) return false;
       if (!q) return true;
       return it.company.toLowerCase().indexOf(q) !== -1 ||
-             (it.code && it.code.indexOf(q) !== -1);
+             (it.code && it.code.indexOf(q) !== -1) ||
+             (it.summary && it.summary.toLowerCase().indexOf(q) !== -1);
     });
     render(items);
   }
@@ -246,11 +257,20 @@
   function calUnit() { return currentCat === "macro" ? "筆" : "場"; }
   function calNoun() { return currentCat === "macro" ? "數據" : "法說會"; }
 
+  // 某日要顯示的事件：開「只看已整理」時，台美股隱藏未收錄（無 id）的 pending 場次
+  function cellEvents(dateStr) {
+    var evts = eventsByDate[dateStr] || [];
+    if (calOnlyDone && currentCat !== "macro") {
+      evts = evts.filter(function (e) { return !!e.id; });
+    }
+    return evts;
+  }
+
   function monthEventCount(y, m) {
     var prefix = y + "-" + pad2(m);
     var n = 0;
     Object.keys(eventsByDate).forEach(function (d) {
-      if (d.slice(0, 7) === prefix) n += eventsByDate[d].length;
+      if (d.slice(0, 7) === prefix) n += cellEvents(d).length;
     });
     return n;
   }
@@ -266,7 +286,7 @@
     }
     for (d = 1; d <= days; d++) {
       var dateStr = y + "-" + pad2(m) + "-" + pad2(d);
-      var evts = eventsByDate[dateStr] || [];
+      var evts = cellEvents(dateStr);
       var cls = "cal-cell" + (dateStr === todayStr ? " is-today" : "");
       var inner = '<span class="cal-day-num">' + d + "</span>";
       evts.slice(0, MAX_PER_CELL).forEach(function (e) {
@@ -296,10 +316,12 @@
     }
 
     var n = monthEventCount(y, m);
+    var label = y + " 年 " + m + " 月";
     return (
-      '<section class="cal-month">' +
+      '<section class="cal-month" data-ym="' + y + "-" + pad2(m) +
+        '" data-label="' + label + '">' +
         '<header class="cal-month-head">' +
-          "<h2>" + y + " 年 " + m + " 月</h2>" +
+          "<h2>" + label + "</h2>" +
           '<span class="cal-month-meta mono">' +
             (n ? n + " " + calUnit() : "無" + calNoun()) + "</span>" +
         "</header>" +
@@ -314,17 +336,7 @@
   function prevOf(ym) { return ym.m === 1 ? { y: ym.y - 1, m: 12 } : { y: ym.y, m: ym.m - 1 }; }
   function nextOf(ym) { return ym.m === 12 ? { y: ym.y + 1, m: 1 } : { y: ym.y, m: ym.m + 1 }; }
 
-  function buildCalendar() {
-    // 初始範圍：本月起，到最後一個有場次的月份（至少含本月）
-    var now = new Date();
-    calFirst = { y: now.getFullYear(), m: now.getMonth() + 1 };
-    var maxYm = calFirst.y + "-" + pad2(calFirst.m);
-    Object.keys(eventsByDate).forEach(function (d) {
-      var ym = d.slice(0, 7);
-      if (ym > maxYm) maxYm = ym;
-    });
-    calLast = { y: parseInt(maxYm.slice(0, 4), 10), m: parseInt(maxYm.slice(5, 7), 10) };
-
+  function renderCalRange() {
     var html = "";
     var cur = { y: calFirst.y, m: calFirst.m };
     while (cur.y < calLast.y || (cur.y === calLast.y && cur.m <= calLast.m)) {
@@ -332,7 +344,105 @@
       cur = nextOf(cur);
     }
     elCalMonths.innerHTML = html;
+  }
+
+  function buildCalendar() {
+    // 初始範圍：涵蓋所有有場次的月份，且至少含本月；之後可在視窗內無限上下延伸
+    var now = new Date();
+    var thisM = { y: now.getFullYear(), m: now.getMonth() + 1 };
+    var minYm = thisM.y + "-" + pad2(thisM.m);
+    var maxYm = minYm;
+    Object.keys(eventsByDate).forEach(function (d) {
+      var ym = d.slice(0, 7);
+      if (ym < minYm) minYm = ym;
+      if (ym > maxYm) maxYm = ym;
+    });
+    calFirst = { y: parseInt(minYm.slice(0, 4), 10), m: parseInt(minYm.slice(5, 7), 10) };
+    calLast = { y: parseInt(maxYm.slice(0, 4), 10), m: parseInt(maxYm.slice(5, 7), 10) };
+    renderCalRange();
     calBuilt = true;
+    setupCalObserver();
+    if (elCalOnlyDone) elCalOnlyDone.checked = calOnlyDone;
+    // 開啟行事曆即定位到本月（等版面就緒後再捲動）
+    requestAnimationFrame(function () {
+      scrollToMonth(thisM.y, thisM.m, false);
+      updateCurLabel();
+    });
+  }
+
+  // 把行事曆視窗捲動到指定月份的開頭
+  function scrollToMonth(y, m, smooth) {
+    if (!elCalScroll) return;
+    var el = elCalMonths.querySelector('.cal-month[data-ym="' + y + "-" + pad2(m) + '"]');
+    if (!el) return;
+    var top = el.getBoundingClientRect().top -
+              elCalScroll.getBoundingClientRect().top + elCalScroll.scrollTop;
+    elCalScroll.scrollTo({ top: Math.max(0, top - 4), behavior: smooth ? "smooth" : "auto" });
+  }
+
+  // 視窗頂端目前對齊的月份（用於更新標籤、切換篩選後回到原位）
+  function currentTopMonth() {
+    var months = elCalMonths.querySelectorAll(".cal-month");
+    var top = elCalScroll.getBoundingClientRect().top;
+    for (var i = 0; i < months.length; i++) {
+      if (months[i].getBoundingClientRect().bottom > top + 10) {
+        return months[i].getAttribute("data-ym");
+      }
+    }
+    return null;
+  }
+
+  function updateCurLabel() {
+    if (!elCalCur || !elCalScroll) return;
+    var ym = currentTopMonth();
+    if (!ym) return;
+    var el = elCalMonths.querySelector('.cal-month[data-ym="' + ym + '"]');
+    if (el) elCalCur.textContent = el.getAttribute("data-label");
+  }
+
+  // 向上延伸一個月（保持視線位置不跳動）
+  function extendPrev() {
+    if (!calFirst) return;
+    var p = prevOf(calFirst);
+    if (p.y < 2024) return;                       // 合理下限，避免無止盡延伸
+    calFirst = p;
+    var h0 = elCalScroll.scrollHeight;
+    elCalMonths.insertAdjacentHTML("afterbegin", monthHtml(calFirst.y, calFirst.m));
+    elCalScroll.scrollTop += elCalScroll.scrollHeight - h0;
+  }
+
+  // 向下延伸一個月
+  function extendNext() {
+    if (!calLast) return;
+    var n = nextOf(calLast);
+    if (n.y > new Date().getFullYear() + 2) return;  // 合理上限
+    calLast = n;
+    elCalMonths.insertAdjacentHTML("beforeend", monthHtml(calLast.y, calLast.m));
+  }
+
+  // 上下哨兵進入視窗即自動延伸，達成「視窗內無限滑動、不用按鈕」
+  function setupCalObserver() {
+    if (calObserver || !("IntersectionObserver" in window) || !elCalScroll) return;
+    calObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        if (en.target === elCalTopSentinel) extendPrev();
+        else if (en.target === elCalBottomSentinel) extendNext();
+      });
+    }, { root: elCalScroll, rootMargin: "300px 0px" });
+    if (elCalTopSentinel) calObserver.observe(elCalTopSentinel);
+    if (elCalBottomSentinel) calObserver.observe(elCalBottomSentinel);
+  }
+
+  // 切換「只看已整理」：就地重繪目前範圍並回到原本看的月份
+  function applyOnlyDone() {
+    if (!calBuilt) return;
+    var keep = currentTopMonth();
+    renderCalRange();
+    if (keep) {
+      scrollToMonth(parseInt(keep.slice(0, 4), 10), parseInt(keep.slice(5, 7), 10), false);
+    }
+    updateCurLabel();
   }
 
   /* ---------- 當日場次視窗 ---------- */
@@ -542,6 +652,7 @@
     elTabFuture.classList.toggle("is-active", isFuture);
     elTabFuture.setAttribute("aria-selected", String(isFuture));
 
+    if (elCalFilter) elCalFilter.hidden = currentCat === "macro";
     if (isCal && !calBuilt) buildCalendar();
     if (isFuture) renderFuture();
   }
@@ -717,19 +828,31 @@
   elCatUs.addEventListener("click", function () { loadCategory("us"); });
   elCatMacro.addEventListener("click", function () { loadCategory("macro"); });
 
-  elCalPrev.addEventListener("click", function () {
-    if (!calBuilt) return;
-    calFirst = prevOf(calFirst);
-    var h0 = document.documentElement.scrollHeight;
-    elCalMonths.insertAdjacentHTML("afterbegin", monthHtml(calFirst.y, calFirst.m));
-    window.scrollBy(0, document.documentElement.scrollHeight - h0);
-  });
+  if (elCalToday) {
+    elCalToday.addEventListener("click", function () {
+      var now = new Date();
+      scrollToMonth(now.getFullYear(), now.getMonth() + 1, true);
+    });
+  }
 
-  elCalNext.addEventListener("click", function () {
-    if (!calBuilt) return;
-    calLast = nextOf(calLast);
-    elCalMonths.insertAdjacentHTML("beforeend", monthHtml(calLast.y, calLast.m));
-  });
+  if (elCalScroll) {
+    elCalScroll.addEventListener("scroll", function () {
+      if (calCurRaf) return;
+      calCurRaf = requestAnimationFrame(function () {
+        calCurRaf = 0;
+        updateCurLabel();
+      });
+    }, { passive: true });
+  }
+
+  if (elCalOnlyDone) {
+    elCalOnlyDone.addEventListener("change", function () {
+      calOnlyDone = elCalOnlyDone.checked;
+      try { localStorage.setItem(CAL_DONE_KEY, calOnlyDone ? "1" : "0"); }
+      catch (e) { /* 無痕 */ }
+      applyOnlyDone();
+    });
+  }
 
   elCalMonths.addEventListener("click", function (ev) {
     var btn = ev.target.closest ? ev.target.closest("button.cal-cell") : null;

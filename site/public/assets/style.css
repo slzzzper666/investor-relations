@@ -347,28 +347,65 @@ a { color: inherit; }
 
 /* ---------- 行事曆檢視 ---------- */
 
-.calendar { padding: 6px 0 56px; }
+.calendar { padding: 6px 0 24px; }
 
-.cal-nav { margin: 18px 0; }
+.cal-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 8px 0 12px;
+}
 
-.cal-more {
-  width: 100%;
+.cal-today {
   font-family: var(--mono);
   font-size: 12px;
-  letter-spacing: 0.1em;
-  color: var(--muted);
-  background: none;
-  border: 1px dashed var(--line);
+  letter-spacing: 0.12em;
+  color: var(--bg);
+  background: var(--amber);
+  border: none;
   border-radius: 3px;
-  padding: 9px 0;
+  padding: 7px 16px;
   cursor: pointer;
-  transition: color 0.15s, border-color 0.15s;
+  transition: opacity 0.15s;
 }
 
-.cal-more:hover {
-  color: var(--amber);
-  border-color: var(--amber-dim);
+.cal-today:hover { opacity: 0.85; }
+
+.cal-cur {
+  flex: 1;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: var(--muted);
 }
+
+.cal-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  color: var(--muted);
+  cursor: pointer;
+  user-select: none;
+}
+
+.cal-filter input { accent-color: var(--amber); cursor: pointer; }
+
+/* 行事曆獨立滾動視窗：上下滑動都在這個框內完成，整頁不跟著跑 */
+.cal-scroll {
+  position: relative;
+  max-height: calc(100vh - 250px);
+  min-height: 440px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border: 1px solid var(--line-soft);
+  border-radius: 4px;
+  padding: 0 14px 8px;
+  overscroll-behavior: contain;
+}
+
+.cal-sentinel { height: 1px; }
+
+.cal-scroll .cal-month:first-of-type { margin-top: 14px; }
 
 .cal-month { margin: 26px 0 8px; }
 
@@ -1071,6 +1108,11 @@ a.m-row:hover {
   .view-tab { padding: 9px 16px 8px; font-size: 12px; }
 
   .cal-month-head h2 { font-size: 17px; }
+
+  /* 手機：滾動視窗留更多可視高度，今天鈕與標籤可換行 */
+  .cal-scroll { max-height: calc(100dvh - 210px); min-height: 360px; padding: 0 8px 8px; }
+  .cal-toolbar { gap: 10px; flex-wrap: wrap; }
+  .cal-cur { order: 3; flex-basis: 100%; }
 
   .cal-cell {
     height: 92px;
