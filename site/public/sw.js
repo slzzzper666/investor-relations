@@ -1,7 +1,7 @@
 /* 法說會觀測站 Service Worker
    策略：網路優先（線上一律拿最新資料），離線時回退快取；導覽離線回退首頁。
    改版時更新 VERSION 即可清掉舊快取。 */
-var VERSION = "ir-v1-20260617";
+var VERSION = "ir-v2-20260617";
 var SHELL = [
   "./",
   "index.html",

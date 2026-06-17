@@ -16,6 +16,7 @@
 
   var elTape = document.getElementById("tape-meta");
   var elLedger = document.getElementById("ledger");
+  var elLedgerSentinel = document.getElementById("ledger-sentinel");
   var elEmpty = document.getElementById("empty");
   var elError = document.getElementById("load-error");
   var elCount = document.getElementById("count");
@@ -44,6 +45,10 @@
 
   var allItems = [];
   var upcomingItems = [];
+  var filteredItems = [];  // 目前篩選結果（完整），列表只漸進渲染其前段
+  var listLimit = 0;       // 目前已渲染到第幾筆
+  var LIST_PAGE = 120;     // 初始與每次延伸的筆數
+  var listObserver = null; // 清單底部哨兵的 IntersectionObserver
   var eventsByDate = {};   // "YYYY-MM-DD" -> [{code, company, mcap, id, time}]
   var dataReady = false;
   var calBuilt = false;
@@ -134,7 +139,29 @@
   }
 
   function render(items) {
-    if (!items.length) {
+    filteredItems = items;
+    listLimit = LIST_PAGE;   // 每次重新篩選都從頭、只先畫前段
+    paintList();
+  }
+
+  function extendList() {
+    if (currentView !== "list") return;
+    if (listLimit >= filteredItems.length) return;
+    listLimit += LIST_PAGE;
+    paintList();
+  }
+
+  // 清單底部哨兵接近視窗即自動延伸（漸進載入，避免一次塞上千筆 DOM）
+  function setupListObserver() {
+    if (listObserver || !elLedgerSentinel || !("IntersectionObserver" in window)) return;
+    listObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) extendList(); });
+    }, { root: null, rootMargin: "600px 0px" });
+    listObserver.observe(elLedgerSentinel);
+  }
+
+  function paintList() {
+    if (!filteredItems.length) {
       elLedger.innerHTML = "";
       elEmpty.hidden = false;
       elCount.textContent = "0 / " + allItems.length + " 場";
@@ -142,10 +169,20 @@
     }
     elEmpty.hidden = true;
 
+    // 只渲染前 listLimit 段；不切斷同一天（補進切點當天剩餘場次，日計數才正確）
+    var shown = filteredItems.slice(0, listLimit);
+    if (shown.length < filteredItems.length) {
+      var lastDate = shown[shown.length - 1].date;
+      var i = shown.length;
+      while (i < filteredItems.length && filteredItems[i].date === lastDate) {
+        shown.push(filteredItems[i]); i++;
+      }
+    }
+
     // 依日期分組（資料已新→舊排序）
     var groups = [];
     var byDate = {};
-    items.forEach(function (it) {
+    shown.forEach(function (it) {
       var key = it.date || "未標日期";
       if (!byDate[key]) {
         byDate[key] = [];
@@ -174,7 +211,8 @@
     }).join("");
 
     elLedger.innerHTML = html;
-    elCount.textContent = items.length + " / " + allItems.length + " 場";
+    elCount.textContent = filteredItems.length + " / " + allItems.length + " 場";
+    setupListObserver();
   }
 
   function applyFilters() {

@@ -404,8 +404,22 @@ a { color: inherit; }
 }
 
 .cal-sentinel { height: 1px; }
+#ledger-sentinel { height: 1px; }
 
 .cal-scroll .cal-month:first-of-type { margin-top: 14px; }
+
+/* 行事曆捲動條：細、圓角、融入暗底，hover/拖曳轉琥珀（取代醜的系統預設） */
+.cal-scroll { scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.cal-scroll::-webkit-scrollbar { width: 11px; }
+.cal-scroll::-webkit-scrollbar-track { background: transparent; }
+.cal-scroll::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: 999px;
+  border: 3px solid var(--bg);     /* 同底色內縮，看起來更細更精緻 */
+  min-height: 40px;
+}
+.cal-scroll::-webkit-scrollbar-thumb:hover,
+.cal-scroll::-webkit-scrollbar-thumb:active { background: var(--amber-dim); }
 
 .cal-month { margin: 26px 0 8px; }
 
