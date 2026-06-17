@@ -32,6 +32,7 @@ jobs:
         env:
           NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
           NOTION_PARENT_ID: ${{ secrets.NOTION_PARENT_ID }}
+          IR_SKIP_FINANCIALS: "1"   # 雲端 MOPS 財報又慢又被擋；財報改用已提交快取，部署由 ~46 分降到 ~5 分
         run: python site/build_data.py
       - name: 建置總經未來頁資料（yfinance 市場數據 + FRED 經濟數據 + Gemini AI 分析）
         env:
