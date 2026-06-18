@@ -35,6 +35,7 @@ jobs:
           IR_SKIP_FINANCIALS: "1"   # 雲端 MOPS 財報又慢又被擋；財報改用已提交快取，部署由 ~46 分降到 ~5 分
         run: python site/build_data.py
       - name: 建置美股財報資料（yfinance 財報 + Nasdaq 行事曆 + Gemini，分析走已提交快取不重燒額度）
+        continue-on-error: true   # 美股是外部網路相依的新步驟；失敗也不可拖垮台股/總經部署
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: python site/build_us.py
