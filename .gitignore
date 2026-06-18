@@ -1,7 +1,11 @@
 .env
 __pycache__/
 *.pyc
-data/
+data/*
+# 美股雲端自動化需要：白名單與 AI 分析快取要納入版控，Actions 才不會每天重燒 Gemini
+!data/us_whitelist.json
+!data/us_analysis/
+!data/us_analysis/**
 *.log
 .venv/
 venv/

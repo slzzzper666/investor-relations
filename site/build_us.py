@@ -141,6 +141,16 @@ def main():
             json.dumps(d, ensure_ascii=False), encoding="utf-8")
 
     upcoming = build_upcoming(whitelist)
+    up_path = PUBLIC_DIR / "us_upcoming.json"
+    # 防呆：Nasdaq 行事曆雲端可能被擋而抓到 0 → 別用空清單覆蓋既有版本
+    write_upcoming = True
+    if not upcoming and up_path.exists():
+        try:
+            if json.loads(up_path.read_text(encoding="utf-8")).get("count", 0) > 0:
+                log.warning("美股行事曆抓到 0 筆（疑似 Nasdaq 擋雲端），保留既有版本不覆蓋")
+                write_upcoming = False
+        except (ValueError, OSError):
+            pass
 
     # us_list.json 由「全部」us-* detail 檔重建（含歷史回補），日期新→舊
     all_items = []
@@ -159,9 +169,10 @@ def main():
     (PUBLIC_DIR / "us_list.json").write_text(
         json.dumps({"generated_at": generated_at, "count": len(all_items),
                     "items": all_items}, ensure_ascii=False), encoding="utf-8")
-    (PUBLIC_DIR / "us_upcoming.json").write_text(
-        json.dumps({"generated_at": generated_at, "count": len(upcoming),
-                    "items": upcoming}, ensure_ascii=False), encoding="utf-8")
+    if write_upcoming:
+        up_path.write_text(
+            json.dumps({"generated_at": generated_at, "count": len(upcoming),
+                        "items": upcoming}, ensure_ascii=False), encoding="utf-8")
 
     print(f"美股：分析 {len(list_items)} 檔、行事曆 {len(upcoming)} 筆")
     for li in list_items:

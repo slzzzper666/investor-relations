@@ -1,0 +1,557 @@
+{
+ "generated_at": "2026-06-14T04:18:20.091264",
+ "items": [
+  {
+   "symbol": "NVDA",
+   "name_zh": "輝達",
+   "sector": "半導體",
+   "theme": "AI/GPU 龍頭"
+  },
+  {
+   "symbol": "AAPL",
+   "name_zh": "蘋果",
+   "sector": "消費性電子",
+   "theme": "智慧裝置/服務龍頭"
+  },
+  {
+   "symbol": "MSFT",
+   "name_zh": "微軟",
+   "sector": "軟體/雲端",
+   "theme": "企業軟體/雲端運算龍頭"
+  },
+  {
+   "symbol": "AMZN",
+   "name_zh": "亞馬遜",
+   "sector": "網路平台/雲端",
+   "theme": "電商/雲端運算龍頭"
+  },
+  {
+   "symbol": "GOOGL",
+   "name_zh": "Alphabet",
+   "sector": "網路平台",
+   "theme": "搜尋/廣告/AI"
+  },
+  {
+   "symbol": "META",
+   "name_zh": "Meta",
+   "sector": "網路平台",
+   "theme": "社群媒體/元宇宙"
+  },
+  {
+   "symbol": "TSLA",
+   "name_zh": "特斯拉",
+   "sector": "電動車",
+   "theme": "電動車/能源儲存龍頭"
+  },
+  {
+   "symbol": "AMD",
+   "name_zh": "超微",
+   "sector": "半導體",
+   "theme": "CPU/GPU/AI晶片"
+  },
+  {
+   "symbol": "AVGO",
+   "name_zh": "博通",
+   "sector": "半導體",
+   "theme": "網路晶片/軟體"
+  },
+  {
+   "symbol": "ORCL",
+   "name_zh": "甲骨文",
+   "sector": "軟體/雲端",
+   "theme": "資料庫/企業軟體"
+  },
+  {
+   "symbol": "CRM",
+   "name_zh": "Salesforce",
+   "sector": "軟體/雲端",
+   "theme": "CRM軟體龍頭"
+  },
+  {
+   "symbol": "ADBE",
+   "name_zh": "Adobe",
+   "sector": "軟體/雲端",
+   "theme": "創意/數位行銷軟體"
+  },
+  {
+   "symbol": "NOW",
+   "name_zh": "ServiceNow",
+   "sector": "軟體/雲端",
+   "theme": "企業工作流程軟體"
+  },
+  {
+   "symbol": "NFLX",
+   "name_zh": "網飛",
+   "sector": "網路平台",
+   "theme": "串流媒體龍頭"
+  },
+  {
+   "symbol": "V",
+   "name_zh": "Visa",
+   "sector": "金融",
+   "theme": "支付處理龍頭"
+  },
+  {
+   "symbol": "MA",
+   "name_zh": "萬事達",
+   "sector": "金融",
+   "theme": "支付處理龍頭"
+  },
+  {
+   "symbol": "JPM",
+   "name_zh": "摩根大通",
+   "sector": "金融",
+   "theme": "大型銀行"
+  },
+  {
+   "symbol": "BRK.B",
+   "name_zh": "波克夏海瑟威",
+   "sector": "金融/多元",
+   "theme": "投資控股"
+  },
+  {
+   "symbol": "LLY",
+   "name_zh": "禮來",
+   "sector": "醫療生技",
+   "theme": "減重藥/糖尿病藥"
+  },
+  {
+   "symbol": "JNJ",
+   "name_zh": "嬌生",
+   "sector": "醫療生技",
+   "theme": "醫療保健/製藥"
+  },
+  {
+   "symbol": "INTC",
+   "name_zh": "英特爾",
+   "sector": "半導體",
+   "theme": "CPU/晶圓代工"
+  },
+  {
+   "symbol": "MU",
+   "name_zh": "美光",
+   "sector": "半導體",
+   "theme": "記憶體(HBM)"
+  },
+  {
+   "symbol": "ASML",
+   "name_zh": "艾司摩爾",
+   "sector": "半導體設備",
+   "theme": "EUV光刻機龍頭"
+  },
+  {
+   "symbol": "TSM",
+   "name_zh": "台積電ADR",
+   "sector": "半導體",
+   "theme": "晶圓代工龍頭"
+  },
+  {
+   "symbol": "LRCX",
+   "name_zh": "科林研發",
+   "sector": "半導體設備",
+   "theme": "晶圓製造設備"
+  },
+  {
+   "symbol": "KLAC",
+   "name_zh": "科磊",
+   "sector": "半導體設備",
+   "theme": "製程控制設備"
+  },
+  {
+   "symbol": "MRVL",
+   "name_zh": "美滿電子",
+   "sector": "半導體",
+   "theme": "網路/儲存/客製化晶片"
+  },
+  {
+   "symbol": "SMCI",
+   "name_zh": "美超微",
+   "sector": "AI硬體/伺服器",
+   "theme": "AI伺服器"
+  },
+  {
+   "symbol": "CDNS",
+   "name_zh": "益華電腦",
+   "sector": "半導體",
+   "theme": "EDA軟體"
+  },
+  {
+   "symbol": "SNPS",
+   "name_zh": "新思科技",
+   "sector": "半導體",
+   "theme": "EDA軟體"
+  },
+  {
+   "symbol": "CRWD",
+   "name_zh": "CrowdStrike",
+   "sector": "軟體/雲端",
+   "theme": "資安(端點防護)"
+  },
+  {
+   "symbol": "PANW",
+   "name_zh": "帕羅奧圖網路",
+   "sector": "軟體/雲端",
+   "theme": "資安(網路安全)"
+  },
+  {
+   "symbol": "DDOG",
+   "name_zh": "Datadog",
+   "sector": "軟體/雲端",
+   "theme": "雲端監控"
+  },
+  {
+   "symbol": "MDB",
+   "name_zh": "MongoDB",
+   "sector": "軟體/雲端",
+   "theme": "NoSQL資料庫"
+  },
+  {
+   "symbol": "SNOW",
+   "name_zh": "Snowflake",
+   "sector": "軟體/雲端",
+   "theme": "雲端資料倉儲"
+  },
+  {
+   "symbol": "ZS",
+   "name_zh": "Zscaler",
+   "sector": "軟體/雲端",
+   "theme": "雲端資安"
+  },
+  {
+   "symbol": "OKTA",
+   "name_zh": "Okta",
+   "sector": "軟體/雲端",
+   "theme": "身份管理"
+  },
+  {
+   "symbol": "FTNT",
+   "name_zh": "Fortinet",
+   "sector": "軟體/雲端",
+   "theme": "網路安全"
+  },
+  {
+   "symbol": "ADSK",
+   "name_zh": "歐特克",
+   "sector": "軟體",
+   "theme": "設計軟體"
+  },
+  {
+   "symbol": "WMT",
+   "name_zh": "沃爾瑪",
+   "sector": "消費",
+   "theme": "零售龍頭"
+  },
+  {
+   "symbol": "COST",
+   "name_zh": "好市多",
+   "sector": "消費",
+   "theme": "會員制倉儲零售"
+  },
+  {
+   "symbol": "PG",
+   "name_zh": "寶僑",
+   "sector": "消費",
+   "theme": "日用消費品龍頭"
+  },
+  {
+   "symbol": "KO",
+   "name_zh": "可口可樂",
+   "sector": "消費",
+   "theme": "飲料龍頭"
+  },
+  {
+   "symbol": "PEP",
+   "name_zh": "百事",
+   "sector": "消費",
+   "theme": "飲料/休閒食品"
+  },
+  {
+   "symbol": "NKE",
+   "name_zh": "Nike",
+   "sector": "消費",
+   "theme": "運動用品龍頭"
+  },
+  {
+   "symbol": "SBUX",
+   "name_zh": "星巴克",
+   "sector": "消費",
+   "theme": "咖啡連鎖"
+  },
+  {
+   "symbol": "HD",
+   "name_zh": "家得寶",
+   "sector": "消費",
+   "theme": "家居裝修零售"
+  },
+  {
+   "symbol": "MCD",
+   "name_zh": "麥當勞",
+   "sector": "消費",
+   "theme": "速食連鎖"
+  },
+  {
+   "symbol": "BKNG",
+   "name_zh": "Booking Holdings",
+   "sector": "網路平台",
+   "theme": "線上旅遊"
+  },
+  {
+   "symbol": "UBER",
+   "name_zh": "Uber",
+   "sector": "網路平台",
+   "theme": "叫車/外送"
+  },
+  {
+   "symbol": "PFE",
+   "name_zh": "輝瑞",
+   "sector": "醫療生技",
+   "theme": "製藥"
+  },
+  {
+   "symbol": "MRK",
+   "name_zh": "默沙東",
+   "sector": "醫療生技",
+   "theme": "製藥"
+  },
+  {
+   "symbol": "UNH",
+   "name_zh": "聯合健康",
+   "sector": "醫療生技",
+   "theme": "醫療保險"
+  },
+  {
+   "symbol": "ISRG",
+   "name_zh": "直覺外科",
+   "sector": "醫療生技",
+   "theme": "醫療機器人"
+  },
+  {
+   "symbol": "ABBV",
+   "name_zh": "艾伯維",
+   "sector": "醫療生技",
+   "theme": "生物製藥"
+  },
+  {
+   "symbol": "XOM",
+   "name_zh": "埃克森美孚",
+   "sector": "能源",
+   "theme": "石油天然氣龍頭"
+  },
+  {
+   "symbol": "CVX",
+   "name_zh": "雪佛龍",
+   "sector": "能源",
+   "theme": "石油天然氣"
+  },
+  {
+   "symbol": "NEE",
+   "name_zh": "新紀元能源",
+   "sector": "能源",
+   "theme": "再生能源電力"
+  },
+  {
+   "symbol": "CEG",
+   "name_zh": "Constellation Energy",
+   "sector": "能源",
+   "theme": "核能/SMR"
+  },
+  {
+   "symbol": "GE",
+   "name_zh": "通用電氣",
+   "sector": "工業",
+   "theme": "航空/電力"
+  },
+  {
+   "symbol": "CAT",
+   "name_zh": "開拓重工",
+   "sector": "工業",
+   "theme": "重型機械"
+  },
+  {
+   "symbol": "HON",
+   "name_zh": "漢威聯合",
+   "sector": "工業",
+   "theme": "工業科技"
+  },
+  {
+   "symbol": "RTX",
+   "name_zh": "雷神技術",
+   "sector": "工業",
+   "theme": "航太/國防"
+  },
+  {
+   "symbol": "WM",
+   "name_zh": "廢物管理",
+   "sector": "工業",
+   "theme": "環境服務"
+  },
+  {
+   "symbol": "ETN",
+   "name_zh": "伊頓",
+   "sector": "工業",
+   "theme": "電力管理/基建"
+  },
+  {
+   "symbol": "GNRC",
+   "name_zh": "Generac",
+   "sector": "工業",
+   "theme": "備用發電機/能源儲存"
+  },
+  {
+   "symbol": "F",
+   "name_zh": "福特汽車",
+   "sector": "電動車",
+   "theme": "傳統車廠轉型EV"
+  },
+  {
+   "symbol": "GM",
+   "name_zh": "通用汽車",
+   "sector": "電動車",
+   "theme": "傳統車廠轉型EV"
+  },
+  {
+   "symbol": "RIVN",
+   "name_zh": "Rivian",
+   "sector": "電動車",
+   "theme": "電動皮卡/SUV"
+  },
+  {
+   "symbol": "CHPT",
+   "name_zh": "ChargePoint",
+   "sector": "電動車",
+   "theme": "充電樁網路"
+  },
+  {
+   "symbol": "IONQ",
+   "name_zh": "IonQ",
+   "sector": "量子運算",
+   "theme": "量子電腦"
+  },
+  {
+   "symbol": "PLTR",
+   "name_zh": "Palantir",
+   "sector": "軟體/AI",
+   "theme": "大數據分析/AI"
+  },
+  {
+   "symbol": "ROK",
+   "name_zh": "羅克威爾自動化",
+   "sector": "工業",
+   "theme": "工業自動化/機器人"
+  },
+  {
+   "symbol": "LMT",
+   "name_zh": "洛克希德馬丁",
+   "sector": "工業",
+   "theme": "航太/國防/太空"
+  },
+  {
+   "symbol": "VRTX",
+   "name_zh": "沃泰克斯",
+   "sector": "醫療生技",
+   "theme": "囊狀纖維化藥物"
+  },
+  {
+   "symbol": "SRE",
+   "name_zh": "Sempra Energy",
+   "sector": "公用事業",
+   "theme": "天然氣/電力基建"
+  },
+  {
+   "symbol": "DHR",
+   "name_zh": "丹納赫",
+   "sector": "醫療生技",
+   "theme": "生命科學/診斷"
+  },
+  {
+   "symbol": "NOC",
+   "name_zh": "諾斯洛普格魯曼",
+   "sector": "工業",
+   "theme": "航太/國防"
+  },
+  {
+   "symbol": "BA",
+   "name_zh": "波音",
+   "sector": "工業",
+   "theme": "航太製造"
+  },
+  {
+   "symbol": "DE",
+   "name_zh": "迪爾",
+   "sector": "工業",
+   "theme": "農業/工程機械"
+  },
+  {
+   "symbol": "INTU",
+   "name_zh": "Intuit",
+   "sector": "軟體",
+   "theme": "財務軟體/AI"
+  },
+  {
+   "symbol": "SYK",
+   "name_zh": "史賽克",
+   "sector": "醫療生技",
+   "theme": "醫療設備/機器人"
+  },
+  {
+   "symbol": "DOW",
+   "name_zh": "陶氏化學",
+   "sector": "材料",
+   "theme": "化學品"
+  },
+  {
+   "symbol": "LIN",
+   "name_zh": "林德",
+   "sector": "材料",
+   "theme": "工業氣體"
+  },
+  {
+   "symbol": "ABNB",
+   "name_zh": "Airbnb",
+   "sector": "網路平台",
+   "theme": "短租平台"
+  },
+  {
+   "symbol": "SPOT",
+   "name_zh": "Spotify",
+   "sector": "網路平台",
+   "theme": "音樂串流"
+  },
+  {
+   "symbol": "ZM",
+   "name_zh": "Zoom Video",
+   "sector": "軟體/通訊",
+   "theme": "視訊會議"
+  },
+  {
+   "symbol": "TMO",
+   "name_zh": "賽默飛世爾",
+   "sector": "醫療生技",
+   "theme": "科學儀器/服務"
+  },
+  {
+   "symbol": "REGN",
+   "name_zh": "再生元製藥",
+   "sector": "醫療生技",
+   "theme": "生物製藥"
+  },
+  {
+   "symbol": "CPRI",
+   "name_zh": "Capri Holdings",
+   "sector": "消費",
+   "theme": "奢侈品"
+  },
+  {
+   "symbol": "SPGI",
+   "name_zh": "標普全球",
+   "sector": "金融",
+   "theme": "金融資訊/評級"
+  },
+  {
+   "symbol": "VZ",
+   "name_zh": "威瑞森",
+   "sector": "通訊",
+   "theme": "電信服務"
+  }
+ ]
+}
