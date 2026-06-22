@@ -12,6 +12,7 @@ AI 分析與「股市預期」由 Claude 另行撰寫於 data/macro_ai.json，�
   .venv\\Scripts\\python site\\build_macro.py
 """
 import json
+import re
 import sys
 import warnings
 from datetime import datetime, timedelta, timezone
@@ -207,6 +208,65 @@ def _months_ago(date_str: str, months: int) -> str:
     return f"{y:04d}-{m:02d}"
 
 
+FOMC_URL = "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
+_UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+       "(KHTML, like Gecko) Chrome/126.0 Safari/537.36")
+_MONTHS = {m: i for i, m in enumerate(
+    ["january", "february", "march", "april", "may", "june", "july",
+     "august", "september", "october", "november", "december"], 1)}
+
+
+def _et_to_taipei(d, hour_et: int):
+    """美東 hour_et 點 → 台北 datetime。粗估 DST：3/8~11/1 視 EDT(UTC-4)，否則 EST(UTC-5)。"""
+    edt = (3, 8) <= (d.month, d.day) < (11, 1)
+    return datetime(d.year, d.month, d.day, hour_et) + timedelta(hours=12 if edt else 13)
+
+
+def fetch_fomc_calendar() -> list[dict]:
+    """Fed 官網 FOMC 行事曆 → 未來利率決策日（每年 8 場，決策在第 2 天 14:00 ET）。
+
+    政府站雲端可達、年度排程提前公布，故能穩定排到年底（不靠會擋雲端的 Investing）。
+    """
+    from datetime import date as _date
+    try:
+        html = requests.get(FOMC_URL, headers={"User-Agent": _UA}, timeout=25).text
+    except requests.RequestException as e:  # noqa: BLE001
+        print(f"  FOMC 抓取失敗（{type(e).__name__}: {e}）")
+        return []
+    # 每場會議用「最近一個 YYYY FOMC Meetings 標題」歸年
+    heads = [(m.start(), int(m.group(1)))
+             for m in re.finditer(r"(\d{4})\s+FOMC Meetings", html)]
+    today = _date.today()
+    out = {}
+    for mt in re.finditer(
+            r'fomc-meeting__month[^>]*>(?:\s*<strong>)?\s*([A-Za-z]+).*?'
+            r'fomc-meeting__date[^>]*>\s*([0-9]+)\s*[-–]\s*([0-9]+)',
+            html, re.S):
+        year = next((y for p, y in reversed(heads) if p <= mt.start()), None)
+        mon = next((v for k, v in _MONTHS.items()
+                    if k.startswith(mt.group(1).lower())), None)
+        if not year or not mon:
+            continue
+        d1, d2 = int(mt.group(2)), int(mt.group(3))
+        dec_mon, dec_yr = mon, year
+        if d2 < d1:                       # 跨月（如 30-1）：決策日在下個月
+            dec_mon += 1
+            if dec_mon == 13:
+                dec_mon, dec_yr = 1, year + 1
+        try:
+            tp = _et_to_taipei(_date(dec_yr, dec_mon, d2), 14)
+        except ValueError:
+            continue
+        if tp.date() < today:
+            continue
+        out[tp.strftime("%Y-%m-%d")] = {
+            "date": tp.strftime("%Y-%m-%d"), "time": tp.strftime("%H:%M"),
+            "country": "\U0001F1FA\U0001F1F8", "name": "聯準會利率決策(FOMC)",
+            "previous": "", "forecast": "", "impact": 3,
+        }
+    return sorted(out.values(), key=lambda x: x["date"])
+
+
 def fetch_macro_calendar() -> list[dict]:
     """即將公布的總經數據（與 radar 推 TG/DC 同源：Investing.com）。
 
@@ -296,24 +356,34 @@ def main() -> None:
           f"{len(groups)} 類 {n_items} 指標、經濟數據 {len(econ)} 筆、"
           f"AI {'有' if ai.get('ai') else '無'}")
 
-    # 總經行事曆（即將公布的數據；Investing.com 擋雲端 → 抓到 0 就保留既有）
+    # 總經行事曆：合併「既有（保留近期排程）＋ 本次 Investing ＋ 官方 FOMC（排到年底）」
+    # Investing 擋雲端時靠 Fed 官方 FOMC 仍能排到年底；合併後若為空則不覆蓋既有。
     print("[總經行事曆]")
-    cal = fetch_macro_calendar()
     cal_path = PUBLIC_DIR / "macro_upcoming.json"
-    prev_count = 0
+    existing = []
     if cal_path.exists():
         try:
-            prev_count = json.loads(
-                cal_path.read_text(encoding="utf-8")).get("count", 0)
+            existing = json.loads(
+                cal_path.read_text(encoding="utf-8")).get("items", [])
         except (ValueError, OSError):
-            prev_count = 0
-    if not cal and prev_count > 0:
-        print(f"  抓到 0 筆（疑似 Investing 擋雲端 IP），保留既有 {prev_count} 筆")
+            existing = []
+    fresh = fetch_macro_calendar()          # Investing（雲端常被擋 → []）
+    fomc = fetch_fomc_calendar()            # Fed 官網 → 年底前的利率決策
+    print(f"  Investing {len(fresh)} 筆、FOMC {len(fomc)} 筆、既有 {len(existing)} 筆")
+    today = datetime.now(TAIPEI).strftime("%Y-%m-%d")
+    merged = {}
+    for ev in existing + fresh + fomc:      # 後者覆蓋前者（fresh/fomc 蓋掉既有同筆）
+        if not ev.get("date") or ev["date"] < today:
+            continue
+        merged[(ev["date"], ev.get("country", ""), ev["name"])] = ev
+    cal = sorted(merged.values(), key=lambda x: (x["date"], x.get("time", "")))
+    if not cal and existing:
+        print("  合併後 0 筆，保留既有不覆蓋")
     else:
         cal_path.write_text(
             json.dumps({"generated_at": generated_at, "count": len(cal),
                         "items": cal}, ensure_ascii=False), encoding="utf-8")
-        print(f"  總經行事曆：{len(cal)} 筆")
+        print(f"  總經行事曆：{len(cal)} 筆（最遠 {cal[-1]['date'] if cal else '-'}）")
 
 
 if __name__ == "__main__":
