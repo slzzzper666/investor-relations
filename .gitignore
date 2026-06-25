@@ -6,6 +6,9 @@ data/*
 !data/us_whitelist.json
 !data/us_analysis/
 !data/us_analysis/**
+# 逐字稿分段錨點（Claude/AI 產出），納入版控供 build_data 切段
+!data/segments/
+!data/segments/**
 *.log
 .venv/
 venv/

@@ -72,6 +72,30 @@
     return html;
   }
 
+  /* 結構化逐字稿：intro 段落 / topic 主題小標 / qa 問答（Q 為小標、A 為內文） */
+  function segmentsHtml(segs) {
+    var qaOpened = false;
+    return segs.map(function (s) {
+      var body = paragraphs(s.text).map(function (p) {
+        return "<p>" + esc(p) + "</p>";
+      }).join("");
+      if (s.type === "qa") {
+        var head = "";
+        if (!qaOpened) {
+          qaOpened = true;
+          head = '<h3 class="seg-qa-head">問答 Q&amp;A</h3>';
+        }
+        return head + '<div class="seg-qa">' +
+          (s.title ? '<p class="seg-q">' + esc(s.title) + "</p>" : "") +
+          '<div class="seg-a">' + body + "</div></div>";
+      }
+      if (s.type === "topic") {
+        return (s.title ? '<h3 class="seg-topic">' + esc(s.title) + "</h3>" : "") + body;
+      }
+      return body;   // intro
+    }).join("");
+  }
+
   /* 逐字稿：偵測「發言者：」前綴並標示 */
   function transcriptHtml(transcript) {
     var paras = paragraphs(transcript);
@@ -276,12 +300,19 @@
     var transcriptSection = "";
     if (!isUs) {
       if (d.transcript) {
+        var hasSegs = d.transcript_segments && d.transcript_segments.length;
+        var tHtml = hasSegs
+          ? segmentsHtml(d.transcript_segments)
+          : transcriptHtml(d.transcript);
+        var note = (hasSegs ? "已分段 · " : "") + "約 " +
+          d.transcript.length.toLocaleString("zh-Hant-TW") + " 字 · 語音辨識產生";
         transcriptSection =
           '<section class="doc-section">' +
             "<h2>完整逐字稿" +
-              '<span class="h2-note">約 ' + d.transcript.length.toLocaleString("zh-Hant-TW") + " 字 · 語音辨識產生</span>" +
+              '<span class="h2-note">' + note + "</span>" +
             "</h2>" +
-            '<div class="transcript" id="transcript">' + transcriptHtml(d.transcript) + "</div>" +
+            '<div class="transcript' + (hasSegs ? " is-segmented" : "") +
+              '" id="transcript">' + tHtml + "</div>" +
             '<button class="transcript-toggle" id="transcript-toggle" aria-expanded="false" aria-controls="transcript">展開完整逐字稿</button>' +
           "</section>";
       } else {

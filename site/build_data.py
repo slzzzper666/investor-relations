@@ -33,6 +33,7 @@ BASE_DIR = Path(__file__).resolve().parent          # site/
 ROOT_DIR = BASE_DIR.parent                          # 專案根目錄
 PUBLIC_DIR = BASE_DIR / "public"
 DETAIL_DIR = PUBLIC_DIR / "detail"
+SEGMENTS_DIR = ROOT_DIR / "data" / "segments"   # 逐字稿分段（錨點），由 Claude/AI 產出
 MCAP_CACHE = BASE_DIR / ".mcap_cache.json"
 FIN_CACHE = BASE_DIR / ".fin_cache.json"
 PE_CACHE = BASE_DIR / ".pe_cache.json"
@@ -683,6 +684,42 @@ def fetch_tw_financials(code: str, cache: dict) -> dict | None:
     return None
 
 
+def _load_segments(it_id: str, transcript: str):
+    """讀 data/segments/{id}.json 的「錨點」分段，依錨點切原始逐字稿成結構化段落。
+
+    錨點檔每段 {type: intro|topic|qa, title, start}；start 是逐字稿中該段開頭的
+    一小段原文，用來定位切點。回 [{type, title, text}] 或 None（無檔/對不上）。
+    """
+    if not transcript:
+        return None
+    seg_file = SEGMENTS_DIR / f"{it_id}.json"
+    if not seg_file.exists():
+        return None
+    try:
+        anchors = json.loads(seg_file.read_text(encoding="utf-8")).get("segments", [])
+    except (ValueError, OSError):
+        return None
+    found = []
+    for a in anchors:
+        start = a.get("start", "")
+        pos = transcript.find(start) if start else -1
+        if pos >= 0:
+            found.append((pos, a))
+    if not found:
+        return None
+    found.sort(key=lambda x: x[0])
+    out = []
+    intro = transcript[:found[0][0]].strip()
+    if intro:
+        out.append({"type": "intro", "title": "", "text": intro})
+    for i, (pos, a) in enumerate(found):
+        end = found[i + 1][0] if i + 1 < len(found) else len(transcript)
+        out.append({"type": a.get("type", "topic"),
+                    "title": a.get("title", ""),
+                    "text": transcript[pos:end].strip()})
+    return out
+
+
 def main() -> None:
     if not NOTION_API_KEY or not NOTION_PARENT_ID:
         raise SystemExit("缺少 NOTION_API_KEY / NOTION_PARENT_ID（.env）")
@@ -742,6 +779,9 @@ def main() -> None:
                    "market_cap": caps.get(it["code"]) or None,
                    "pe": pes.get(it["code"])}
         detail["financials"] = fin
+        segs = _load_segments(it_id, it.get("transcript", ""))
+        if segs:
+            detail["transcript_segments"] = segs
         details.append(detail)
         (DETAIL_DIR / f"{it_id}.json").write_text(
             json.dumps(detail, ensure_ascii=False), encoding="utf-8")
