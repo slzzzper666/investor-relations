@@ -12,6 +12,7 @@ AI 分析與「股市預期」由 Claude 另行撰寫於 data/macro_ai.json，�
   .venv\\Scripts\\python site\\build_macro.py
 """
 import json
+import os
 import re
 import sys
 import warnings
@@ -36,6 +37,13 @@ PUBLIC_DIR = BASE_DIR / "public"
 AI_FILE = BASE_DIR / "macro_ai.json"
 
 sys.path.insert(0, str(ROOT_DIR))   # 讓 build_macro 能 import ir.*
+
+try:                                  # 本機從 .env 讀 FRED 金鑰；CI 由 env(secret) 提供
+    from dotenv import load_dotenv
+    load_dotenv(ROOT_DIR / ".env")
+except ImportError:
+    pass
+FRED_API_KEY = os.getenv("FRED_API_KEY", "")
 
 TAIPEI = timezone(timedelta(hours=8))
 
@@ -267,6 +275,58 @@ def fetch_fomc_calendar() -> list[dict]:
     return sorted(out.values(), key=lambda x: x["date"])
 
 
+US_FLAG = "\U0001F1FA\U0001F1F8"
+FRED_RELEASES = [           # (release_id, 顯示名稱, 重要度)
+    (50, "美國非農就業/失業率", 3),
+    (10, "美國 CPI（消費者物價）", 3),
+    (46, "美國 PPI（生產者物價）", 2),
+    (53, "美國 GDP", 2),
+]
+
+
+def fetch_fred_calendar() -> list[dict]:
+    """FRED release/dates → 美國重要數據（CPI/就業/PPI/GDP）未來公布日（8:30 ET）。
+
+    需 FRED_API_KEY（免費）；無金鑰則略過。BLS 擋爬蟲，改用 FRED 官方 API、雲端可達。
+    """
+    if not FRED_API_KEY:
+        print("  （無 FRED_API_KEY，略過 CPI/就業等官方排程）")
+        return []
+    from datetime import date as _date
+    today = _date.today()
+    end = _date(today.year + 1, 12, 31).isoformat()
+    out = []
+    for rid, name, impact in FRED_RELEASES:
+        try:
+            r = requests.get(
+                "https://api.stlouisfed.org/fred/release/dates",
+                params={"release_id": rid, "api_key": FRED_API_KEY,
+                        "file_type": "json", "sort_order": "asc",
+                        "include_release_dates_with_no_data": "true",
+                        "realtime_start": today.isoformat(), "realtime_end": end},
+                timeout=20)
+            r.raise_for_status()
+            rows = r.json().get("release_dates", [])
+        except (requests.RequestException, ValueError) as e:  # noqa: BLE001
+            print(f"  FRED {name} 失敗：{e}")
+            continue
+        n = 0
+        for d in rows:
+            ds = d.get("date", "")
+            if ds < today.isoformat():
+                continue
+            mo, dd = int(ds[5:7]), int(ds[8:10])
+            edt = (3, 8) <= (mo, dd) < (11, 1)     # 8:30 ET → 台北同日 20:30/21:30
+            out.append({
+                "date": ds, "time": "20:30" if edt else "21:30",
+                "country": US_FLAG, "name": name,
+                "previous": "", "forecast": "", "impact": impact,
+            })
+            n += 1
+        print(f"  FRED {name}：{n} 筆")
+    return out
+
+
 def fetch_macro_calendar() -> list[dict]:
     """即將公布的總經數據（與 radar 推 TG/DC 同源：Investing.com）。
 
@@ -369,10 +429,16 @@ def main() -> None:
             existing = []
     fresh = fetch_macro_calendar()          # Investing（雲端常被擋 → []）
     fomc = fetch_fomc_calendar()            # Fed 官網 → 年底前的利率決策
-    print(f"  Investing {len(fresh)} 筆、FOMC {len(fomc)} 筆、既有 {len(existing)} 筆")
+    fred = fetch_fred_calendar()            # FRED → CPI/就業/PPI/GDP 排到年底
+    print(f"  Investing {len(fresh)}、FOMC {len(fomc)}、FRED {len(fred)}、既有 {len(existing)} 筆")
     today = datetime.now(TAIPEI).strftime("%Y-%m-%d")
     merged = {}
-    for ev in existing + fresh + fomc:      # 後者覆蓋前者（fresh/fomc 蓋掉既有同筆）
+    # 美國事件改由 FOMC/FRED 權威來源提供；既有/Investing 的美國筆丟掉避免重複
+    for ev in existing + fresh:
+        if ev.get("country") == US_FLAG or not ev.get("date") or ev["date"] < today:
+            continue
+        merged[(ev["date"], ev.get("country", ""), ev["name"])] = ev
+    for ev in fomc + fred:
         if not ev.get("date") or ev["date"] < today:
             continue
         merged[(ev["date"], ev.get("country", ""), ev["name"])] = ev

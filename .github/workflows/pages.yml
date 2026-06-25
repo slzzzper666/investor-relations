@@ -42,6 +42,7 @@ jobs:
       - name: 建置總經未來頁資料（yfinance 市場數據 + FRED 經濟數據 + Gemini AI 分析）
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
         run: python site/build_macro.py
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
