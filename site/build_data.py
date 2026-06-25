@@ -699,10 +699,12 @@ def _load_segments(it_id: str, transcript: str):
         anchors = json.loads(seg_file.read_text(encoding="utf-8")).get("segments", [])
     except (ValueError, OSError):
         return None
+    # 台/臺 變體統一後比對（替換長度不變，位置不偏移 → 仍可用原文切片）
+    ntrans = transcript.replace("臺", "台")
     found = []
     for a in anchors:
         start = a.get("start", "")
-        pos = transcript.find(start) if start else -1
+        pos = ntrans.find(start.replace("臺", "台")) if start else -1
         if pos >= 0:
             found.append((pos, a))
     if not found:
