@@ -1,0 +1,24 @@
+{
+  "id": "2330_2026-05-29",
+  "v": 1,
+  "by": "claude",
+  "segments": [
+    {"type": "topic", "title": "第一季財務摘要與第二季財測", "start": "My presentation will start with financial highlights"},
+    {"type": "topic", "title": "毛利率與下半年獲利展望", "start": "about our first quarter 2026 and second quarter 2026 profitability"},
+    {"type": "topic", "title": "中東情勢下的供應鏈與能源", "start": "TSMC operates a well-established enterprise risk management system"},
+    {"type": "topic", "title": "2026 資本支出計畫", "start": "let me talk about our 2026 capital budget"},
+    {"type": "topic", "title": "近期需求展望（AI 需求強勁）", "start": "let me start with our near-term demand outlook"},
+    {"type": "topic", "title": "N2 產能擴充", "start": "let me talk about our M2 capacity expansion"},
+    {"type": "topic", "title": "N3 全球產能擴充", "start": "we are now executing a global capacity plan"},
+    {"type": "topic", "title": "成熟製程策略", "start": "let me talk about our mature node strategies"},
+    {"type": "topic", "title": "A14 技術進展", "start": "let me talk about our A14 status"},
+    {"type": "qa", "title": "美銀：3nm 毛利與 CAPEX 上修", "start": "Hasley from Bank of America"},
+    {"type": "qa", "title": "摩根大通：供給吃緊與競爭", "start": "Goku Haringhalan"},
+    {"type": "qa", "title": "摩根士丹利：先進封裝與長期 CAPEX", "start": "Charlie Chan from Morgan Stanley"},
+    {"type": "qa", "title": "瑞銀：資本密集度與 2026 展望", "start": "Next one we have from UBOS"},
+    {"type": "qa", "title": "Jim：長期利潤結構與亞利桑那廠", "start": "Jim Fontanelli"},
+    {"type": "qa", "title": "高盛：獲利基準與 AI 加速器", "start": "Bruce Liu from Goldman Sachs"},
+    {"type": "qa", "title": "花旗：先進封裝與大尺寸晶片", "start": "Laura Chen from Citi"},
+    {"type": "qa", "title": "Needham：AI 營收定義與 CPU", "start": "Chow Shu from NeedM"}
+  ]
+}
