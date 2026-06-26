@@ -34,6 +34,19 @@ ROOT_DIR = BASE_DIR.parent                          # 專案根目錄
 PUBLIC_DIR = BASE_DIR / "public"
 DETAIL_DIR = PUBLIC_DIR / "detail"
 SEGMENTS_DIR = ROOT_DIR / "data" / "segments"   # 逐字稿分段（錨點），由 Claude/AI 產出
+EXCLUDED_FILE = ROOT_DIR / "data" / "excluded_ids.txt"  # 壞源（假法說會）排除清單
+
+
+def _load_excluded() -> set:
+    """讀排除清單（每行一個 {code}_{date}，# 開頭為註解）。"""
+    if not EXCLUDED_FILE.exists():
+        return set()
+    out = set()
+    for ln in EXCLUDED_FILE.read_text(encoding="utf-8").splitlines():
+        ln = ln.strip()
+        if ln and not ln.startswith("#"):
+            out.add(ln)
+    return out
 MCAP_CACHE = BASE_DIR / ".mcap_cache.json"
 FIN_CACHE = BASE_DIR / ".fin_cache.json"
 PE_CACHE = BASE_DIR / ".pe_cache.json"
@@ -760,8 +773,15 @@ def main() -> None:
     used_ids: set[str] = set()
     list_items: list[dict] = []
     details: list[dict] = []
+    excluded = _load_excluded()
+    if excluded:
+        print(f"排除清單：{len(excluded)} 場（壞源假法說會）不納入網站")
+    n_excluded = 0
     for it in items:
         it_id = make_id(it, used_ids)
+        if it_id in excluded:          # 第三方影片冒充法說會 → 整筆不上站
+            n_excluded += 1
+            continue
         detail = {"id": it_id, **it}
         if mops_ok:
             fin = fetch_tw_financials(it["code"], fin_cache)

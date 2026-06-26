@@ -9,6 +9,7 @@ data/*
 # 逐字稿分段錨點（Claude/AI 產出），納入版控供 build_data 切段
 !data/segments/
 !data/segments/**
+!data/excluded_ids.txt
 *.log
 .venv/
 venv/
