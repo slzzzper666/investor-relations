@@ -4,7 +4,7 @@ on:
   push:
     branches: [master]
   schedule:
-    - cron: "0 20 * * *"   # UTC 20:00 = 台北 04:00，等 Railway pipeline（台北 01:00）跑完後重建資料
+    - cron: "0 23 * * *"   # UTC 23:00 = 台北 07:00，等美股收盤後重建（美股收盤約台北 04:00/05:00），起床即見最新美股數據；仍在 Railway pipeline（台北 01:00）之後
   workflow_dispatch:
 
 permissions:
