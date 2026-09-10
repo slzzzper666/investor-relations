@@ -1,0 +1,17 @@
+{
+ "code": "3666",
+ "name": "光耀",
+ "conf_date": "2026-06-24",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:15",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "面板零組件",
+  "筆電/PC",
+  "手機",
+  "車用電子"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

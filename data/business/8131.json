@@ -1,0 +1,16 @@
+{
+ "code": "8131",
+ "name": "福懋科",
+ "conf_date": "2026-06-11",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:03",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "記憶體",
+  "封裝測試",
+  "先進封裝/CoWoS"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.1-flash-lite"
+}

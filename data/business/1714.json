@@ -1,0 +1,31 @@
+{
+ "code": "1714",
+ "name": "和桐",
+ "conf_date": "2026-03-25",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:13",
+ "segments": [
+  {
+   "name": "化學品",
+   "pct": 94.2,
+   "note": ""
+  },
+  {
+   "name": "水泥",
+   "pct": 5.1,
+   "note": ""
+  },
+  {
+   "name": "倉儲",
+   "pct": 0.1,
+   "note": ""
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "化工",
+  "水泥"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.6-flash"
+}

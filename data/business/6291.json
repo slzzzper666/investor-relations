@@ -1,0 +1,27 @@
+{
+ "code": "6291",
+ "name": "沛亨",
+ "conf_date": "2026-05-26",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:26",
+ "segments": [
+  {
+   "name": "電腦周邊",
+   "pct": 70.0,
+   "note": "包含電聲元件、光纖產品"
+  },
+  {
+   "name": "網通產品",
+   "pct": 30.0,
+   "note": "包含電源管理IC、POS/廣告機"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "網通設備",
+  "光通訊",
+  "電源供應器"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

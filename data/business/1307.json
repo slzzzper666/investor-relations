@@ -1,0 +1,37 @@
+{
+ "code": "1307",
+ "name": "三芳",
+ "conf_date": "2026-03-30",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:26",
+ "segments": [
+  {
+   "name": "人工皮革",
+   "pct": 60.0,
+   "note": "主要產品分佈佔比"
+  },
+  {
+   "name": "NO SEW SKIN",
+   "pct": 28.0,
+   "note": "主要產品分佈佔比"
+  },
+  {
+   "name": "其他",
+   "pct": 7.0,
+   "note": "主要產品分佈佔比"
+  },
+  {
+   "name": "熱熔膠",
+   "pct": 5.0,
+   "note": "主要產品分佈佔比"
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "化工",
+  "紡織",
+  "車用電子"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

@@ -1,0 +1,15 @@
+{
+ "code": "8039",
+ "name": "台虹",
+ "conf_date": "2026-05-29",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:44",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "PCB",
+  "半導體材料"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.1-flash-lite"
+}

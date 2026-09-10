@@ -1,0 +1,27 @@
+{
+ "code": "2362",
+ "name": "藍天",
+ "conf_date": "2026-06-17",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:01",
+ "segments": [
+  {
+   "name": "筆電銷貨收入",
+   "pct": 85.0,
+   "note": "2026年第一季營收結構"
+  },
+  {
+   "name": "百腦匯收入",
+   "pct": 15.0,
+   "note": "2026年第一季營收結構"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "筆電/PC",
+  "百貨",
+  "資產開發"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.1-flash-lite"
+}

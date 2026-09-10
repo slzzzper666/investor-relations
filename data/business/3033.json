@@ -1,0 +1,43 @@
+{
+ "code": "3033",
+ "name": "威健",
+ "conf_date": "2026-05-28",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:10",
+ "segments": [
+  {
+   "name": "電腦/資料中心",
+   "pct": 46.0,
+   "note": ""
+  },
+  {
+   "name": "工業用",
+   "pct": 26.0,
+   "note": ""
+  },
+  {
+   "name": "消費性",
+   "pct": 12.0,
+   "note": ""
+  },
+  {
+   "name": "車用",
+   "pct": 9.0,
+   "note": ""
+  },
+  {
+   "name": "網通",
+   "pct": 7.0,
+   "note": ""
+  }
+ ],
+ "as_of": "2026",
+ "tags": [
+  "伺服器",
+  "AI伺服器",
+  "筆電/PC",
+  "車用電子"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.1-flash-lite"
+}

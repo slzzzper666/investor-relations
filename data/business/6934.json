@@ -1,0 +1,15 @@
+{
+ "code": "6934",
+ "name": "心誠鎂",
+ "conf_date": "2026-04-14",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:56",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "新藥研發",
+  "醫療器材"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

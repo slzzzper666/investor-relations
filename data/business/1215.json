@@ -1,0 +1,15 @@
+{
+ "code": "1215",
+ "name": "卜蜂",
+ "conf_date": "2026-06-15",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:59",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "食品",
+  "農業科技"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.1-flash-lite"
+}

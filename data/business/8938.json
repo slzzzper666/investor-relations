@@ -1,0 +1,26 @@
+{
+ "code": "8938",
+ "name": "明安",
+ "conf_date": "2026-05-27",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:24",
+ "segments": [
+  {
+   "name": "高爾夫產品",
+   "pct": 87.5,
+   "note": "營收占比85~90%"
+  },
+  {
+   "name": "複合材料產品",
+   "pct": 12.5,
+   "note": "營收占比10~15%"
+  }
+ ],
+ "as_of": "2026",
+ "tags": [
+  "汽車零組件",
+  "其他"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

@@ -1,0 +1,16 @@
+{
+ "code": "5312",
+ "name": "寶島科",
+ "conf_date": "2026-06-11",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:18",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "零售通路",
+  "百貨",
+  "醫療通路"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

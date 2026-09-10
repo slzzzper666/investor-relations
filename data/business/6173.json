@@ -1,0 +1,43 @@
+{
+ "code": "6173",
+ "name": "信昌電",
+ "conf_date": "2026-05-21",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:28",
+ "segments": [
+  {
+   "name": "MLCC",
+   "pct": 64.0,
+   "note": "2026 Q1產品營收比重"
+  },
+  {
+   "name": "Resistor",
+   "pct": 17.0,
+   "note": "2026 Q1產品營收比重"
+  },
+  {
+   "name": "Powder",
+   "pct": 15.0,
+   "note": "2026 Q1產品營收比重"
+  },
+  {
+   "name": "Inductor",
+   "pct": 2.0,
+   "note": "2026 Q1產品營收比重"
+  },
+  {
+   "name": "Others",
+   "pct": 2.0,
+   "note": "2026 Q1產品營收比重"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "被動元件",
+  "半導體材料",
+  "車用電子",
+  "AI伺服器"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

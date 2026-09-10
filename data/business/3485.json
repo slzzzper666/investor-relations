@@ -1,0 +1,27 @@
+{
+ "code": "3485",
+ "name": "敘豐",
+ "conf_date": "2026-04-10",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:41",
+ "segments": [
+  {
+   "name": "高階 FCBGA 設備",
+   "pct": 91.77,
+   "note": "114年度銷售占比"
+  },
+  {
+   "name": "其他",
+   "pct": 8.23,
+   "note": "114年度銷售占比"
+  }
+ ],
+ "as_of": "2025 全年",
+ "tags": [
+  "IC基板",
+  "半導體設備",
+  "PCB"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

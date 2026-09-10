@@ -1,0 +1,36 @@
+{
+ "code": "6176",
+ "name": "瑞儀",
+ "conf_date": "2026-07-30",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:00",
+ "segments": [
+  {
+   "name": "IT",
+   "pct": 89.0,
+   "note": "包含筆電與顯示器相關應用"
+  },
+  {
+   "name": "Auto",
+   "pct": 8.8,
+   "note": "車用電子相關"
+  },
+  {
+   "name": "FLG",
+   "pct": 0.8,
+   "note": "導光板相關"
+  },
+  {
+   "name": "Metalens",
+   "pct": 0.2,
+   "note": "超透鏡相關"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "面板零組件",
+  "車用電子"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.1-flash-lite"
+}

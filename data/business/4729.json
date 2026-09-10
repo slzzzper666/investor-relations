@@ -1,0 +1,16 @@
+{
+ "code": "4729",
+ "name": "熒茂",
+ "conf_date": "2026-07-23",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:08",
+ "segments": [],
+ "as_of": "2026 Q1",
+ "tags": [
+  "面板零組件",
+  "車用電子",
+  "醫療器材"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

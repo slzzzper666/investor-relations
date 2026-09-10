@@ -1,0 +1,16 @@
+{
+ "code": "5519",
+ "name": "隆大",
+ "conf_date": "2026-06-24",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:43",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "營建",
+  "資產開發",
+  "觀光旅館"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

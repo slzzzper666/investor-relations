@@ -1,0 +1,16 @@
+{
+ "code": "3652",
+ "name": "精聯",
+ "conf_date": "2026-05-25",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:58",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "工業電腦",
+  "自動化/機器人",
+  "零售通路"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

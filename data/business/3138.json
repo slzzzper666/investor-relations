@@ -1,0 +1,17 @@
+{
+ "code": "3138",
+ "name": "耀登",
+ "conf_date": "2026-03-19",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:47",
+ "segments": [],
+ "as_of": "2025",
+ "tags": [
+  "網通設備",
+  "衛星通訊",
+  "無人機",
+  "資安"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

@@ -1,0 +1,16 @@
+{
+ "code": "4175",
+ "name": "杏一",
+ "conf_date": "2026-04-30",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:35",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "醫療通路",
+  "零售通路",
+  "醫療器材"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

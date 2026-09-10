@@ -1,0 +1,38 @@
+{
+ "code": "3515",
+ "name": "華擎",
+ "conf_date": "2026-06-18",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:04",
+ "segments": [
+  {
+   "name": "主機板",
+   "pct": null,
+   "note": "依據產品別銷售分析圖表"
+  },
+  {
+   "name": "工業電腦",
+   "pct": null,
+   "note": "依據產品別銷售分析圖表"
+  },
+  {
+   "name": "伺服器",
+   "pct": null,
+   "note": "依據產品別銷售分析圖表"
+  },
+  {
+   "name": "其他",
+   "pct": null,
+   "note": "依據產品別銷售分析圖表"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "筆電/PC",
+  "伺服器",
+  "工業電腦",
+  "電源供應器"
+ ],
+ "confidence": "medium",
+ "model": "gemini-3.1-flash-lite"
+}

@@ -1,0 +1,16 @@
+{
+ "code": "4760",
+ "name": "勤凱科技",
+ "conf_date": "2026-05-28",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:23",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "半導體材料",
+  "被動元件",
+  "先進封裝/CoWoS"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

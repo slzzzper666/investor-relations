@@ -1,0 +1,17 @@
+{
+ "code": "2501",
+ "name": "國建",
+ "conf_date": "2026-04-20",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:04",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "營建",
+  "資產開發",
+  "觀光旅館",
+  "餐飲"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.1-flash-lite"
+}

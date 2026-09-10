@@ -1,0 +1,31 @@
+{
+ "code": "6997",
+ "name": "博弘",
+ "conf_date": "2026-04-16",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:39",
+ "segments": [
+  {
+   "name": "Cloud",
+   "pct": 93.0,
+   "note": "2025全年雲端代理相關營收佔比"
+  },
+  {
+   "name": "Professional Service",
+   "pct": 4.0,
+   "note": "2025全年專業服務營收佔比"
+  },
+  {
+   "name": "Others",
+   "pct": 3.0,
+   "note": "2025全年其他業務營收佔比"
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "資訊服務",
+  "雲端服務"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

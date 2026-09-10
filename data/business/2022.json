@@ -1,0 +1,16 @@
+{
+ "code": "2022",
+ "name": "聚亨",
+ "conf_date": "2026-06-23",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:58",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "鋼鐵",
+  "建材",
+  "營建"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

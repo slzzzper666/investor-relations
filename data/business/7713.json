@@ -1,0 +1,17 @@
+{
+ "code": "7713",
+ "name": "威力德生醫",
+ "conf_date": "2026-03-16",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:48",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "醫療器材",
+  "醫療通路",
+  "健康檢測",
+  "資訊服務"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

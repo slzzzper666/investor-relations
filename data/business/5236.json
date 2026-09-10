@@ -1,0 +1,27 @@
+{
+ "code": "5236",
+ "name": "凌陽創新",
+ "conf_date": "2026-07-09",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:36",
+ "segments": [
+  {
+   "name": "PC/NB 核心業務",
+   "pct": 80.0,
+   "note": "5M/AI機種出貨增加"
+  },
+  {
+   "name": "多應用領域",
+   "pct": 20.0,
+   "note": "涵蓋網路攝影機、工業、醫療等"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "IC設計",
+  "筆電/PC",
+  "感測元件"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

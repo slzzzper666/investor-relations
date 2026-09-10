@@ -1,0 +1,16 @@
+{
+ "code": "3206",
+ "name": "志豐",
+ "conf_date": "2026-04-23",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:37",
+ "segments": [],
+ "as_of": "2025",
+ "tags": [
+  "連接器",
+  "車用電子",
+  "醫療器材"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

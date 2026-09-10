@@ -1,0 +1,23 @@
+{
+ "code": "4707",
+ "name": "磐亞",
+ "conf_date": "2026-06-11",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:18",
+ "segments": [
+  {
+   "name": "化學工業部-EOD廠",
+   "pct": 86.0,
+   "note": "2025年營收比重"
+  },
+  {
+   "name": "化學工業部-酯化廠",
+   "pct": 14.0,
+   "note": "2025年營收比重"
+  }
+ ],
+ "as_of": "2025",
+ "tags": [],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

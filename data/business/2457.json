@@ -1,0 +1,31 @@
+{
+ "code": "2457",
+ "name": "飛宏",
+ "conf_date": "2026-06-09",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:31",
+ "segments": [
+  {
+   "name": "Power Supply",
+   "pct": 66.2,
+   "note": "115年第一季銷售占比"
+  },
+  {
+   "name": "EV",
+   "pct": 33.8,
+   "note": "115年第一季銷售占比"
+  },
+  {
+   "name": "Others",
+   "pct": 0.0,
+   "note": "115年第一季銷售占比"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "電源供應器",
+  "電動車"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

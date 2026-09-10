@@ -1,0 +1,17 @@
+{
+ "code": "2506",
+ "name": "太設",
+ "conf_date": "2026-06-26",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:52",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "營建",
+  "資產開發",
+  "百貨",
+  "觀光旅館"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

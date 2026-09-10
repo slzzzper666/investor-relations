@@ -1,0 +1,38 @@
+{
+ "code": "6679",
+ "name": "鈺太",
+ "conf_date": "2026-06-12",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:17",
+ "segments": [
+  {
+   "name": "D-MIC",
+   "pct": 74.0,
+   "note": "1Q26產品別營收比重"
+  },
+  {
+   "name": "Other",
+   "pct": 16.0,
+   "note": "1Q26產品別營收比重"
+  },
+  {
+   "name": "A-MIC",
+   "pct": 9.0,
+   "note": "1Q26產品別營收比重"
+  },
+  {
+   "name": "Power",
+   "pct": 1.0,
+   "note": "1Q26產品別營收比重"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "IC設計",
+  "筆電/PC",
+  "車用電子",
+  "感測元件"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

@@ -1,0 +1,17 @@
+{
+ "code": "1503",
+ "name": "士電",
+ "conf_date": "2026-09-10",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:40",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "電力設備",
+  "汽車零組件",
+  "車用電子",
+  "自動化/機器人"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.6-flash"
+}

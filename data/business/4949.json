@@ -1,0 +1,17 @@
+{
+ "code": "4949",
+ "name": "有成精密",
+ "conf_date": "2026-05-21",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:45",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "半導體設備",
+  "半導體材料",
+  "太陽能",
+  "儲能"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

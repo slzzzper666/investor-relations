@@ -1,0 +1,35 @@
+{
+ "code": "3062",
+ "name": "建漢",
+ "conf_date": "2026-06-18",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:40",
+ "segments": [
+  {
+   "name": "消費",
+   "pct": 33.0,
+   "note": "Router, WiFi, IP CAM"
+  },
+  {
+   "name": "電信",
+   "pct": 32.0,
+   "note": "STB, PON"
+  },
+  {
+   "name": "企業",
+   "pct": 30.0,
+   "note": "Switch, AP"
+  },
+  {
+   "name": "其他",
+   "pct": 5.0,
+   "note": ""
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "網通設備"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

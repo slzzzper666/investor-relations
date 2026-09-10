@@ -1,0 +1,42 @@
+{
+ "code": "3552",
+ "name": "同致",
+ "conf_date": "2026-04-27",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:36",
+ "segments": [
+  {
+   "name": "Autonomous Parking Sensing",
+   "pct": 67.86,
+   "note": "2025Q4營業額"
+  },
+  {
+   "name": "Autonomous Parking Controls",
+   "pct": 20.67,
+   "note": "2025Q4營業額"
+  },
+  {
+   "name": "Intelligent Cabin Control",
+   "pct": 6.13,
+   "note": "2025Q4營業額"
+  },
+  {
+   "name": "Others",
+   "pct": 4.52,
+   "note": "2025Q4營業額"
+  },
+  {
+   "name": "Intelligent Cabin Sensing",
+   "pct": 0.82,
+   "note": "2025Q4營業額"
+  }
+ ],
+ "as_of": "2025 Q4",
+ "tags": [
+  "車用電子",
+  "汽車零組件",
+  "電動車"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

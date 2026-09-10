@@ -1,0 +1,16 @@
+{
+ "code": "4536",
+ "name": "拓凱",
+ "conf_date": "2026-03-25",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:18",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "醫療器材",
+  "航空",
+  "其他"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.6-flash"
+}

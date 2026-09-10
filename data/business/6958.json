@@ -1,0 +1,30 @@
+{
+ "code": "6958",
+ "name": "日盛台駿",
+ "conf_date": "2026-05-27",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:39",
+ "segments": [
+  {
+   "name": "台灣",
+   "pct": 72.0,
+   "note": "2026Q1應收帳款淨額地區占比"
+  },
+  {
+   "name": "大陸",
+   "pct": 26.0,
+   "note": "2026Q1應收帳款淨額地區占比"
+  },
+  {
+   "name": "泰國",
+   "pct": 2.0,
+   "note": "2026Q1應收帳款淨額地區占比"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "租賃"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

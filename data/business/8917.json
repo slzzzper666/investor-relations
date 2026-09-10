@@ -1,0 +1,36 @@
+{
+ "code": "8917",
+ "name": "欣泰",
+ "conf_date": "2026-03-19",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:48",
+ "segments": [
+  {
+   "name": "售氣收入",
+   "pct": null,
+   "note": "114年個體營收金額2,543,183仟元"
+  },
+  {
+   "name": "裝置收入",
+   "pct": null,
+   "note": "114年個體營收金額342,784仟元"
+  },
+  {
+   "name": "其他收入",
+   "pct": null,
+   "note": "114年個體營收金額206,789仟元"
+  },
+  {
+   "name": "租金收入",
+   "pct": null,
+   "note": "114年個體營收金額4,843仟元"
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "電力設備",
+  "環保工程"
+ ],
+ "confidence": "medium",
+ "model": "gemini-3.5-flash-lite"
+}

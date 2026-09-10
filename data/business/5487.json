@@ -1,0 +1,31 @@
+{
+ "code": "5487",
+ "name": "通泰",
+ "conf_date": "2026-04-22",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:37",
+ "segments": [
+  {
+   "name": "觸控控制",
+   "pct": 55.0,
+   "note": "2025年營收佔比"
+  },
+  {
+   "name": "健康醫療",
+   "pct": 26.0,
+   "note": "2025年營收佔比"
+  },
+  {
+   "name": "其它",
+   "pct": 19.0,
+   "note": "2025年營收佔比"
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "IC設計",
+  "感測元件"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

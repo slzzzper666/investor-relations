@@ -1,0 +1,17 @@
+{
+ "code": "6761",
+ "name": "穩得",
+ "conf_date": "2026-04-30",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:34",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "被動元件",
+  "伺服器",
+  "AI伺服器",
+  "網通設備"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

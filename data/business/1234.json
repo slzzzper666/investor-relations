@@ -1,0 +1,14 @@
+{
+ "code": "1234",
+ "name": "黑松",
+ "conf_date": "2026-06-11",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:23",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "食品"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash"
+}

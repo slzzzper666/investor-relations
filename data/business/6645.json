@@ -1,0 +1,17 @@
+{
+ "code": "6645",
+ "name": "金萬林-創",
+ "conf_date": "2026-07-08",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:06",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "健康檢測",
+  "醫療器材",
+  "新藥研發",
+  "軟體/SaaS"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

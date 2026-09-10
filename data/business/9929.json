@@ -1,0 +1,17 @@
+{
+ "code": "9929",
+ "name": "秋雨",
+ "conf_date": "2026-06-26",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:05",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "LED",
+  "環保工程",
+  "太陽能",
+  "資訊服務"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

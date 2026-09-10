@@ -1,0 +1,48 @@
+{
+ "code": "6573",
+ "name": "虹揚-KY",
+ "conf_date": "2026-05-28",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:04",
+ "segments": [
+  {
+   "name": "Bridge Rectifiers",
+   "pct": 58.0,
+   "note": "產品別銷售比重"
+  },
+  {
+   "name": "Solar Diodes",
+   "pct": 16.0,
+   "note": "產品別銷售比重"
+  },
+  {
+   "name": "Rectifiers Diodes",
+   "pct": 15.0,
+   "note": "產品別銷售比重"
+  },
+  {
+   "name": "Others",
+   "pct": 5.0,
+   "note": "產品別銷售比重"
+  },
+  {
+   "name": "Protection",
+   "pct": 4.0,
+   "note": "產品別銷售比重"
+  },
+  {
+   "name": "Small Signal",
+   "pct": 2.0,
+   "note": "產品別銷售比重"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "功率半導體",
+  "車用電子",
+  "AI伺服器",
+  "太陽能"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

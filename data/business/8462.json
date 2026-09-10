@@ -1,0 +1,35 @@
+{
+ "code": "8462",
+ "name": "柏文",
+ "conf_date": "2026-03-20",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:23",
+ "segments": [
+  {
+   "name": "健身及娛樂服務",
+   "pct": 61.0,
+   "note": "會籍使用費"
+  },
+  {
+   "name": "運動保健服務",
+   "pct": 35.0,
+   "note": "私人教練課程"
+  },
+  {
+   "name": "入會費",
+   "pct": 3.0,
+   "note": "含手續費"
+  },
+  {
+   "name": "其他",
+   "pct": 1.0,
+   "note": "芳療課程、商品銷售"
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "其他"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash"
+}

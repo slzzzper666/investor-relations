@@ -1,0 +1,41 @@
+{
+ "code": "8261",
+ "name": "富鼎",
+ "conf_date": "2026-07-29",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:11",
+ "segments": [
+  {
+   "name": "SPS",
+   "pct": 45.0,
+   "note": "2026年第二季營收佔比"
+  },
+  {
+   "name": "DC Fan",
+   "pct": 29.0,
+   "note": "2026年第二季營收佔比"
+  },
+  {
+   "name": "Computing",
+   "pct": 14.0,
+   "note": "2026年第二季營收佔比"
+  },
+  {
+   "name": "Others",
+   "pct": 9.0,
+   "note": "2026年第二季營收佔比"
+  },
+  {
+   "name": "Display",
+   "pct": 3.0,
+   "note": "2026年第二季營收佔比"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "IC設計",
+  "功率半導體"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.1-flash-lite"
+}

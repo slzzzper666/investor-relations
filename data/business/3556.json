@@ -1,0 +1,25 @@
+{
+ "code": "3556",
+ "name": "禾瑞亞",
+ "conf_date": "2026-05-14",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:32",
+ "segments": [
+  {
+   "name": "觸控",
+   "pct": 94.0,
+   "note": "觸控面板控制器與控制晶片"
+  },
+  {
+   "name": "影音",
+   "pct": 6.0,
+   "note": "USB影音控制晶片與模組"
+  }
+ ],
+ "as_of": "",
+ "tags": [
+  "IC設計"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

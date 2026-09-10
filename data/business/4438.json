@@ -1,0 +1,40 @@
+{
+ "code": "4438",
+ "name": "廣越",
+ "conf_date": "2026-05-12",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:41",
+ "segments": [
+  {
+   "name": "其他",
+   "pct": 30.0,
+   "note": "長、短褲等"
+  },
+  {
+   "name": "樹脂棉夾克",
+   "pct": 21.0,
+   "note": "1Q26 產品別"
+  },
+  {
+   "name": "薄外套、大衣",
+   "pct": 21.0,
+   "note": "1Q26 產品別"
+  },
+  {
+   "name": "針織品項",
+   "pct": 18.0,
+   "note": "1Q26 產品別"
+  },
+  {
+   "name": "羽絨夾克",
+   "pct": 10.0,
+   "note": "1Q26 產品別"
+  }
+ ],
+ "as_of": "",
+ "tags": [
+  "紡織"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

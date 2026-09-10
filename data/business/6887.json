@@ -1,0 +1,16 @@
+{
+ "code": "6887",
+ "name": "寶綠特-KY",
+ "conf_date": "2026-03-09",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:57",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "環保工程",
+  "紡織",
+  "化工"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

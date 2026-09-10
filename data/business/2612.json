@@ -1,0 +1,31 @@
+{
+ "code": "2612",
+ "name": "中航",
+ "conf_date": "2026-06-26",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:24",
+ "segments": [
+  {
+   "name": "海運業務",
+   "pct": 70.0,
+   "note": ""
+  },
+  {
+   "name": "內陸貨櫃運輸及物流業務",
+   "pct": 28.0,
+   "note": ""
+  },
+  {
+   "name": "代理空運及其他業務",
+   "pct": 2.0,
+   "note": ""
+  }
+ ],
+ "as_of": "2026",
+ "tags": [
+  "航運",
+  "貨運物流"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash"
+}

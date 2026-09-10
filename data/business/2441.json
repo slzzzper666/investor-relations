@@ -1,0 +1,30 @@
+{
+ "code": "2441",
+ "name": "超豐",
+ "conf_date": "2026-07-28",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:46",
+ "segments": [
+  {
+   "name": "Packaging",
+   "pct": 76.9,
+   "note": "封裝業務"
+  },
+  {
+   "name": "Testing",
+   "pct": 16.4,
+   "note": "測試業務"
+  },
+  {
+   "name": "Bumping & DPS",
+   "pct": 6.7,
+   "note": "凸塊與晶圓級封裝"
+  }
+ ],
+ "as_of": "2026 H1",
+ "tags": [
+  "封裝測試"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.1-flash-lite"
+}

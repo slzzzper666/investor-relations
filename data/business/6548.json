@@ -1,0 +1,42 @@
+{
+ "code": "6548",
+ "name": "長科*",
+ "conf_date": "2026-07-29",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:07",
+ "segments": [
+  {
+   "name": "IC",
+   "pct": 32.0,
+   "note": "2026 2Q單季"
+  },
+  {
+   "name": "QFN",
+   "pct": 32.0,
+   "note": "2026 2Q單季"
+  },
+  {
+   "name": "Discrete",
+   "pct": 15.0,
+   "note": "2026 2Q單季"
+  },
+  {
+   "name": "QFP",
+   "pct": 13.0,
+   "note": "2026 2Q單季"
+  },
+  {
+   "name": "EMC LED",
+   "pct": 8.0,
+   "note": "2026 2Q單季"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "半導體材料",
+  "車用電子",
+  "電動車"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

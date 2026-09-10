@@ -1,0 +1,31 @@
+{
+ "code": "2459",
+ "name": "敦吉",
+ "conf_date": "2026-05-21",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:39",
+ "segments": [
+  {
+   "name": "音圈馬達",
+   "pct": 30.53,
+   "note": "前三大產品線營收占比"
+  },
+  {
+   "name": "連接器",
+   "pct": 7.45,
+   "note": "前三大產品線營收占比"
+  },
+  {
+   "name": "變壓器",
+   "pct": 6.13,
+   "note": "前三大產品線營收占比"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "連接器",
+  "零售通路"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

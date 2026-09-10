@@ -1,0 +1,25 @@
+{
+ "code": "2420",
+ "name": "新巨",
+ "conf_date": "2026-05-08",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:36",
+ "segments": [
+  {
+   "name": "微動開關",
+   "pct": 53.98,
+   "note": "2026年第一季營收比重"
+  },
+  {
+   "name": "電源供應器",
+   "pct": 46.02,
+   "note": "2026年第一季營收比重"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "電源供應器"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

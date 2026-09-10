@@ -1,0 +1,58 @@
+{
+ "code": "3537",
+ "name": "堡達",
+ "conf_date": "2026-06-05",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:20",
+ "segments": [
+  {
+   "name": "Note PC",
+   "pct": 27.0,
+   "note": "客戶群產業佔比"
+  },
+  {
+   "name": "NETCOM",
+   "pct": 26.0,
+   "note": "客戶群產業佔比"
+  },
+  {
+   "name": "PC,iPC",
+   "pct": 15.0,
+   "note": "客戶群產業佔比"
+  },
+  {
+   "name": "AI Server/Server",
+   "pct": 14.0,
+   "note": "客戶群產業佔比"
+  },
+  {
+   "name": "Graphic Card",
+   "pct": 13.0,
+   "note": "客戶群產業佔比"
+  },
+  {
+   "name": "Others",
+   "pct": 3.0,
+   "note": "客戶群產業佔比"
+  },
+  {
+   "name": "TV,Monitor",
+   "pct": 1.0,
+   "note": "客戶群產業佔比"
+  },
+  {
+   "name": "FA parts",
+   "pct": 1.0,
+   "note": "客戶群產業佔比"
+  }
+ ],
+ "as_of": "",
+ "tags": [
+  "被動元件",
+  "伺服器",
+  "AI伺服器",
+  "筆電/PC"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

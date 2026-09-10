@@ -1,0 +1,31 @@
+{
+ "code": "4138",
+ "name": "曜亞",
+ "conf_date": "2026-03-26",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:45",
+ "segments": [
+  {
+   "name": "產品銷貨收入",
+   "pct": 71.0,
+   "note": "2025年營收比重"
+  },
+  {
+   "name": "勞務收入",
+   "pct": 28.0,
+   "note": "2025年營收比重"
+  },
+  {
+   "name": "其他收入",
+   "pct": 1.0,
+   "note": "2025年營收比重"
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "醫療器材",
+  "美妝保健"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

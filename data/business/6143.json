@@ -1,0 +1,14 @@
+{
+ "code": "6143",
+ "name": "振曜",
+ "conf_date": "2026-05-29",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:22",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "網通設備"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

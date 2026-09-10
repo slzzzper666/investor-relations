@@ -1,0 +1,17 @@
+{
+ "code": "3059",
+ "name": "華晶科",
+ "conf_date": "2026-05-28",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:26",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "光學鏡頭",
+  "自動化/機器人",
+  "無人機",
+  "醫療器材"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

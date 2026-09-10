@@ -1,0 +1,14 @@
+{
+ "code": "6015",
+ "name": "宏遠證",
+ "conf_date": "2026-06-24",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:15",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "證券"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

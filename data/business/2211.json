@@ -1,0 +1,27 @@
+{
+ "code": "2211",
+ "name": "長榮鋼",
+ "conf_date": "2026-05-21",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:59",
+ "segments": [
+  {
+   "name": "長榮鋼鐵",
+   "pct": null,
+   "note": "鋼結構製造及吊裝業務"
+  },
+  {
+   "name": "轉投資事業",
+   "pct": null,
+   "note": "包含環保工程及廢棄物處理"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "鋼鐵",
+  "環保工程",
+  "儲能"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.1-flash-lite"
+}

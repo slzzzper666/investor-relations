@@ -1,0 +1,26 @@
+{
+ "code": "2329",
+ "name": "華泰",
+ "conf_date": "2026-05-15",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:03",
+ "segments": [
+  {
+   "name": "IC封測業務",
+   "pct": 56.0,
+   "note": "營收2,724,769仟元"
+  },
+  {
+   "name": "EMS業務",
+   "pct": 44.0,
+   "note": "營收2,135,707仟元"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "封裝測試",
+  "記憶體"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.7-flash"
+}

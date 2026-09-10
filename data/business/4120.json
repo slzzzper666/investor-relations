@@ -1,0 +1,15 @@
+{
+ "code": "4120",
+ "name": "友華",
+ "conf_date": "2026-06-25",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:14",
+ "segments": [],
+ "as_of": "2026 Q1",
+ "tags": [
+  "新藥研發",
+  "美妝保健"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

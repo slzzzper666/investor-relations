@@ -1,0 +1,26 @@
+{
+ "code": "7760",
+ "name": "享溫馨",
+ "conf_date": "2026-03-26",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:01",
+ "segments": [
+  {
+   "name": "享溫馨",
+   "pct": 74.65,
+   "note": "114年度會計師查核數"
+  },
+  {
+   "name": "打享野鍋",
+   "pct": 25.35,
+   "note": "114年度會計師查核數"
+  }
+ ],
+ "as_of": "2025 全年",
+ "tags": [
+  "觀光旅館",
+  "餐飲"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

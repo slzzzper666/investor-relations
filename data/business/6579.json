@@ -1,0 +1,43 @@
+{
+ "code": "6579",
+ "name": "研揚",
+ "conf_date": "2026-05-13",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:05",
+ "segments": [
+  {
+   "name": "Smart Platform",
+   "pct": 31.0,
+   "note": "2026年第一季產品組合"
+  },
+  {
+   "name": "Embedded Computing",
+   "pct": 27.0,
+   "note": "2026年第一季產品組合"
+  },
+  {
+   "name": "Applied Computing",
+   "pct": 18.0,
+   "note": "2026年第一季產品組合"
+  },
+  {
+   "name": "UP (Developer Board)",
+   "pct": 12.0,
+   "note": "2026年第一季產品組合"
+  },
+  {
+   "name": "Others",
+   "pct": 12.0,
+   "note": "2026年第一季產品組合"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "工業電腦",
+  "自動化/機器人",
+  "AI伺服器",
+  "網通設備"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.1-flash-lite"
+}

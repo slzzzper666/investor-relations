@@ -1,0 +1,17 @@
+{
+ "code": "8431",
+ "name": "匯鑽科",
+ "conf_date": "2026-07-21",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:09",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "散熱",
+  "網通設備",
+  "光通訊",
+  "機械設備"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

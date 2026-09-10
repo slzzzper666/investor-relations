@@ -1,0 +1,50 @@
+{
+ "code": "2606",
+ "name": "裕民",
+ "conf_date": "2026-05-22",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:46",
+ "segments": [
+  {
+   "name": "Panamax",
+   "pct": 34.0,
+   "note": "依據船隊艘數配置"
+  },
+  {
+   "name": "Capesize",
+   "pct": 32.0,
+   "note": "依據船隊艘數配置"
+  },
+  {
+   "name": "Ultramax",
+   "pct": 11.0,
+   "note": "依據船隊艘數配置"
+  },
+  {
+   "name": "CTV",
+   "pct": 8.0,
+   "note": "依據船隊艘數配置"
+  },
+  {
+   "name": "Cement Carrier",
+   "pct": 6.0,
+   "note": "依據船隊艘數配置"
+  },
+  {
+   "name": "Oil Tanker",
+   "pct": 6.0,
+   "note": "依據船隊艘數配置"
+  },
+  {
+   "name": "VLOC",
+   "pct": 3.0,
+   "note": "依據船隊艘數配置"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "航運"
+ ],
+ "confidence": "medium",
+ "model": "gemini-3.1-flash-lite"
+}

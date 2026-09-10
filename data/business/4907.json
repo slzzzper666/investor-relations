@@ -1,0 +1,14 @@
+{
+ "code": "4907",
+ "name": "富宇",
+ "conf_date": "2026-07-03",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:11",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "營建"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

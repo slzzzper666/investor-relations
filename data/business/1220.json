@@ -1,0 +1,35 @@
+{
+ "code": "1220",
+ "name": "台榮",
+ "conf_date": "2026-05-28",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:01",
+ "segments": [
+  {
+   "name": "飼料產品",
+   "pct": 32.0,
+   "note": "畜產及水產飼料"
+  },
+  {
+   "name": "糖類產品",
+   "pct": 30.0,
+   "note": "果糖、麥芽糖等"
+  },
+  {
+   "name": "其他",
+   "pct": 23.0,
+   "note": "其他業務"
+  },
+  {
+   "name": "玉米澱粉產品",
+   "pct": 15.0,
+   "note": "玉米澱粉"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "食品"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

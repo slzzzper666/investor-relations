@@ -1,0 +1,27 @@
+{
+ "code": "6732",
+ "name": "昇佳電子",
+ "conf_date": "2026-06-25",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:13",
+ "segments": [
+  {
+   "name": "光學感測",
+   "pct": 88.0,
+   "note": "1Q26產品類別營收占比"
+  },
+  {
+   "name": "微機電 MEMS",
+   "pct": 12.0,
+   "note": "1Q26產品類別營收占比"
+  }
+ ],
+ "as_of": "",
+ "tags": [
+  "IC設計",
+  "感測元件",
+  "手機"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

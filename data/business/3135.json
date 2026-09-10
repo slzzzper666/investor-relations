@@ -1,0 +1,30 @@
+{
+ "code": "3135",
+ "name": "凌航",
+ "conf_date": "2026-06-11",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:14",
+ "segments": [
+  {
+   "name": "FLASH",
+   "pct": 80.9,
+   "note": ""
+  },
+  {
+   "name": "DRAM",
+   "pct": 19.0,
+   "note": ""
+  },
+  {
+   "name": "Others",
+   "pct": 0.1,
+   "note": ""
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "記憶體"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash"
+}

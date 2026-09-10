@@ -1,0 +1,16 @@
+{
+ "code": "6955",
+ "name": "邦睿生技-創",
+ "conf_date": "2026-06-25",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:59",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "醫療器材",
+  "健康檢測",
+  "新藥研發"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

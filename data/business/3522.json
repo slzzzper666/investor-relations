@@ -1,0 +1,15 @@
+{
+ "code": "3522",
+ "name": "御嵿",
+ "conf_date": "2026-02-05",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:51",
+ "segments": [],
+ "as_of": "2025",
+ "tags": [
+  "餐飲",
+  "觀光旅館"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

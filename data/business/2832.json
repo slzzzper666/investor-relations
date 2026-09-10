@@ -1,0 +1,45 @@
+{
+ "code": "2832",
+ "name": "台產",
+ "conf_date": "2026-03-13",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:19",
+ "segments": [
+  {
+   "name": "車險",
+   "pct": 43.8,
+   "note": ""
+  },
+  {
+   "name": "責任險",
+   "pct": 18.5,
+   "note": ""
+  },
+  {
+   "name": "商火險",
+   "pct": 14.5,
+   "note": ""
+  },
+  {
+   "name": "住火險",
+   "pct": 11.1,
+   "note": ""
+  },
+  {
+   "name": "傷健險",
+   "pct": 9.0,
+   "note": ""
+  },
+  {
+   "name": "海空險",
+   "pct": 3.2,
+   "note": ""
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "保險"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash"
+}

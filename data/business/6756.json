@@ -1,0 +1,15 @@
+{
+ "code": "6756",
+ "name": "威鋒電子",
+ "conf_date": "2026-05-06",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:39",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "IC設計",
+  "筆電/PC"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

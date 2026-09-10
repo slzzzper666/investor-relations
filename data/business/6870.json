@@ -1,0 +1,16 @@
+{
+ "code": "6870",
+ "name": "騰雲",
+ "conf_date": "2026-06-30",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:11",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "軟體/SaaS",
+  "資訊服務",
+  "雲端服務"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

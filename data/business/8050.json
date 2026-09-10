@@ -1,0 +1,47 @@
+{
+ "code": "8050",
+ "name": "廣積",
+ "conf_date": "2026-07-28",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:07",
+ "segments": [
+  {
+   "name": "Network Appliance",
+   "pct": 51.62,
+   "note": "高階網通與資安設備"
+  },
+  {
+   "name": "Industrial Automation",
+   "pct": 28.11,
+   "note": "工業自動化"
+  },
+  {
+   "name": "Smart Retail",
+   "pct": 15.78,
+   "note": "智慧零售與數位看板"
+  },
+  {
+   "name": "Intellegent Transportation",
+   "pct": 3.05,
+   "note": "智慧交通與車載電腦"
+  },
+  {
+   "name": "Medical",
+   "pct": 1.42,
+   "note": "智慧醫療與健康照護"
+  },
+  {
+   "name": "AIOT",
+   "pct": 0.02,
+   "note": "邊緣AI與嵌入式運算"
+  }
+ ],
+ "as_of": "2026 H1",
+ "tags": [
+  "工業電腦",
+  "網通設備",
+  "自動化/機器人"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

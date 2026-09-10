@@ -1,0 +1,26 @@
+{
+ "code": "1731",
+ "name": "美吾華",
+ "conf_date": "2026-05-26",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:56",
+ "segments": [
+  {
+   "name": "洗護產品",
+   "pct": 59.0,
+   "note": "髮膚清潔與保養"
+  },
+  {
+   "name": "染髮產品",
+   "pct": 41.0,
+   "note": "染髮劑系列"
+  }
+ ],
+ "as_of": "",
+ "tags": [
+  "美妝保健",
+  "化工"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

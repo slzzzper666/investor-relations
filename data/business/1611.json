@@ -1,0 +1,32 @@
+{
+ "code": "1611",
+ "name": "中電",
+ "conf_date": "2026-04-28",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:50",
+ "segments": [
+  {
+   "name": "照明本業",
+   "pct": 86.7,
+   "note": "114年度營業比重"
+  },
+  {
+   "name": "租金收入",
+   "pct": 12.8,
+   "note": "114年度營業比重"
+  },
+  {
+   "name": "其他收入",
+   "pct": 0.5,
+   "note": "114年度營業比重"
+  }
+ ],
+ "as_of": "2025 全年",
+ "tags": [
+  "LED",
+  "電力設備",
+  "租賃"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

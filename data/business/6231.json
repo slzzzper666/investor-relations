@@ -1,0 +1,16 @@
+{
+ "code": "6231",
+ "name": "系微",
+ "conf_date": "2026-02-05",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:50",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "軟體/SaaS",
+  "筆電/PC",
+  "伺服器"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

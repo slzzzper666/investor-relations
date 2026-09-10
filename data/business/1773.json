@@ -1,0 +1,37 @@
+{
+ "code": "1773",
+ "name": "勝一",
+ "conf_date": "2026-05-26",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:54",
+ "segments": [
+  {
+   "name": "電子級溶劑",
+   "pct": 75.8,
+   "note": "公司最重要的營收來源"
+  },
+  {
+   "name": "工業級溶劑",
+   "pct": 11.5,
+   "note": ""
+  },
+  {
+   "name": "原料",
+   "pct": 10.9,
+   "note": ""
+  },
+  {
+   "name": "其他",
+   "pct": 1.8,
+   "note": ""
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "半導體材料",
+  "化工",
+  "面板"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.1-flash-lite"
+}

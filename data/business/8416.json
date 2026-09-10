@@ -1,0 +1,17 @@
+{
+ "code": "8416",
+ "name": "實威",
+ "conf_date": "2026-06-03",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:20",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "軟體/SaaS",
+  "自動化/機器人",
+  "資訊服務",
+  "機械設備"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

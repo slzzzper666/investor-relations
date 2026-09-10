@@ -1,0 +1,17 @@
+{
+ "code": "2889",
+ "name": "國票金",
+ "conf_date": "2026-03-31",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:49",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "金控",
+  "證券",
+  "銀行",
+  "租賃"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.7-flash"
+}

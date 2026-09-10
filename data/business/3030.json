@@ -1,0 +1,57 @@
+{
+ "code": "3030",
+ "name": "德律",
+ "conf_date": "2026-06-26",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:47",
+ "segments": [
+  {
+   "name": "Server",
+   "pct": 49.0,
+   "note": "產業別營收比例"
+  },
+  {
+   "name": "Automobile",
+   "pct": 12.0,
+   "note": "產業別營收比例"
+  },
+  {
+   "name": "Semiconductor",
+   "pct": 9.0,
+   "note": "產業別營收比例"
+  },
+  {
+   "name": "Network",
+   "pct": 9.0,
+   "note": "產業別營收比例"
+  },
+  {
+   "name": "Phone",
+   "pct": 8.0,
+   "note": "產業別營收比例"
+  },
+  {
+   "name": "PC / NB / Tablet",
+   "pct": 8.0,
+   "note": "產業別營收比例"
+  },
+  {
+   "name": "Household / Game",
+   "pct": 4.0,
+   "note": "產業別營收比例"
+  },
+  {
+   "name": "Industrial / Defense",
+   "pct": 1.0,
+   "note": "產業別營收比例"
+  }
+ ],
+ "as_of": "2026",
+ "tags": [
+  "半導體設備",
+  "自動化/機器人",
+  "先進封裝/CoWoS"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.7-flash"
+}

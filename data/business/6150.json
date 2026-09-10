@@ -1,0 +1,38 @@
+{
+ "code": "6150",
+ "name": "撼訊",
+ "conf_date": "2026-05-13",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:32",
+ "segments": [
+  {
+   "name": "Intel ARC/ARC Pro顯示卡",
+   "pct": 44.17,
+   "note": "115年第一季各產品線營收分布"
+  },
+  {
+   "name": "IPC顯示卡",
+   "pct": 33.21,
+   "note": "115年第一季各產品線營收分布"
+  },
+  {
+   "name": "ODM專案",
+   "pct": 21.49,
+   "note": "115年第一季各產品線營收分布"
+  },
+  {
+   "name": "Thunderbolt擴充埠/外接盒產品",
+   "pct": 1.13,
+   "note": "115年第一季各產品線營收分布"
+  }
+ ],
+ "as_of": "",
+ "tags": [
+  "筆電/PC",
+  "工業電腦",
+  "AI伺服器",
+  "伺服器"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

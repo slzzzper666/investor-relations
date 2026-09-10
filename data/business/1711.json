@@ -1,0 +1,41 @@
+{
+ "code": "1711",
+ "name": "永光",
+ "conf_date": "2026-04-28",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:10",
+ "segments": [
+  {
+   "name": "色料事業",
+   "pct": 36.0,
+   "note": ""
+  },
+  {
+   "name": "特化事業",
+   "pct": 24.0,
+   "note": ""
+  },
+  {
+   "name": "電化事業",
+   "pct": 24.0,
+   "note": ""
+  },
+  {
+   "name": "碳粉事業",
+   "pct": 13.0,
+   "note": ""
+  },
+  {
+   "name": "醫藥事業",
+   "pct": 3.0,
+   "note": ""
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "化工",
+  "半導體材料"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.1-flash-lite"
+}

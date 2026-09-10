@@ -1,0 +1,31 @@
+{
+ "code": "2364",
+ "name": "倫飛",
+ "conf_date": "2026-04-17",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:52",
+ "segments": [
+  {
+   "name": "Laptop & Tablet",
+   "pct": 88.0,
+   "note": "筆電及平板電腦"
+  },
+  {
+   "name": "Docking & MB",
+   "pct": 6.0,
+   "note": "擴充基座與主機板"
+  },
+  {
+   "name": "Other",
+   "pct": 6.0,
+   "note": "其他"
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "筆電/PC",
+  "工業電腦"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

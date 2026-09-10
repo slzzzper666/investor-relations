@@ -1,0 +1,35 @@
+{
+ "code": "9925",
+ "name": "新保",
+ "conf_date": "2026-04-24",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:17",
+ "segments": [
+  {
+   "name": "電子服務業務",
+   "pct": null,
+   "note": "2025年營收3,212,875仟元"
+  },
+  {
+   "name": "現送業務",
+   "pct": null,
+   "note": "2025年營收1,194,508仟元"
+  },
+  {
+   "name": "常駐業務",
+   "pct": null,
+   "note": "2025年營收1,661,174仟元"
+  },
+  {
+   "name": "其他",
+   "pct": null,
+   "note": "2025年營收2,065,229仟元"
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "其他"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.6-flash"
+}

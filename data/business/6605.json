@@ -1,0 +1,16 @@
+{
+ "code": "6605",
+ "name": "帝寶",
+ "conf_date": "2026-06-24",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:09",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "汽車零組件",
+  "車用電子",
+  "LED"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.1-flash-lite"
+}

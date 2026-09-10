@@ -1,0 +1,28 @@
+{
+ "code": "8932",
+ "name": "智通*",
+ "conf_date": "2026-03-31",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:43",
+ "segments": [
+  {
+   "name": "軟體事業群",
+   "pct": 74.0,
+   "note": "4Q25軟體事業群營收占比"
+  },
+  {
+   "name": "其他",
+   "pct": 26.0,
+   "note": "4Q25其他事業營收占比"
+  }
+ ],
+ "as_of": "",
+ "tags": [
+  "資訊服務",
+  "軟體/SaaS",
+  "數位金融",
+  "資安"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

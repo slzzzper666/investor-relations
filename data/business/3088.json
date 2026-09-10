@@ -1,0 +1,37 @@
+{
+ "code": "3088",
+ "name": "艾訊",
+ "conf_date": "2026-05-20",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:29",
+ "segments": [
+  {
+   "name": "AUTOMATION",
+   "pct": 42.0,
+   "note": "2026年第一季"
+  },
+  {
+   "name": "COMMERCIAL",
+   "pct": 32.0,
+   "note": "2026年第一季"
+  },
+  {
+   "name": "INFRASTRUCTURE",
+   "pct": 14.0,
+   "note": "2026年第一季"
+  },
+  {
+   "name": "OTHERS",
+   "pct": 12.0,
+   "note": "2026年第一季"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "工業電腦",
+  "自動化/機器人",
+  "網通設備"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

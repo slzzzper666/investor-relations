@@ -1,0 +1,32 @@
+{
+ "code": "1432",
+ "name": "大魯閣",
+ "conf_date": "2026-07-02",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:03",
+ "segments": [
+  {
+   "name": "運動休閒",
+   "pct": 100.0,
+   "note": "115年Q1營收佔比"
+  },
+  {
+   "name": "商場經營",
+   "pct": 0.0,
+   "note": "115年Q1營收佔比"
+  },
+  {
+   "name": "建設開發",
+   "pct": 0.0,
+   "note": "115年Q1營收佔比"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "觀光旅館",
+  "餐飲",
+  "百貨"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

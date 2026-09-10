@@ -1,0 +1,31 @@
+{
+ "code": "8047",
+ "name": "星雲",
+ "conf_date": "2026-04-15",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:39",
+ "segments": [
+  {
+   "name": "Laser",
+   "pct": 52.0,
+   "note": "114年度產品別營收占比"
+  },
+  {
+   "name": "Cutter",
+   "pct": 29.0,
+   "note": "114年度產品別營收占比"
+  },
+  {
+   "name": "Other",
+   "pct": 19.0,
+   "note": "114年度產品別營收占比"
+  }
+ ],
+ "as_of": "2025 全年",
+ "tags": [
+  "自動化/機器人",
+  "機械設備"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

@@ -1,0 +1,28 @@
+{
+ "code": "6614",
+ "name": "資拓宏宇",
+ "conf_date": "2026-03-19",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:56",
+ "segments": [
+  {
+   "name": "系統整合開發",
+   "pct": 79.8,
+   "note": "2025年全年營收佔比"
+  },
+  {
+   "name": "軟硬體銷售",
+   "pct": 20.2,
+   "note": "2025年全年營收佔比"
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "資訊服務",
+  "軟體/SaaS",
+  "資安",
+  "雲端服務"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

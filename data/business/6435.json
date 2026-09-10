@@ -1,0 +1,43 @@
+{
+ "code": "6435",
+ "name": "大中",
+ "conf_date": "2026-04-27",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:36",
+ "segments": [
+  {
+   "name": "PC",
+   "pct": 41.28,
+   "note": "Q1 2026 營收比重"
+  },
+  {
+   "name": "Server Motor/Fan.",
+   "pct": 36.37,
+   "note": "Q1 2026 營收比重"
+  },
+  {
+   "name": "BMS",
+   "pct": 5.74,
+   "note": "Q1 2026 營收比重"
+  },
+  {
+   "name": "SMPS",
+   "pct": 3.58,
+   "note": "Q1 2026 營收比重"
+  },
+  {
+   "name": "Networking. Datacom.Telecom",
+   "pct": 2.45,
+   "note": "Q1 2026 營收比重"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "IC設計",
+  "功率半導體",
+  "筆電/PC",
+  "伺服器"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

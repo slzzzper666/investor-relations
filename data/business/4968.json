@@ -1,0 +1,27 @@
+{
+ "code": "4968",
+ "name": "立積",
+ "conf_date": "2026-07-31",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:35",
+ "segments": [
+  {
+   "name": "Wi-Fi",
+   "pct": 85.67,
+   "note": "2026 Q2營收佔比"
+  },
+  {
+   "name": "Others",
+   "pct": 14.33,
+   "note": "2026 Q2營收佔比"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "IC設計",
+  "網通設備",
+  "手機"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

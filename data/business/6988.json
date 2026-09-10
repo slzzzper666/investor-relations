@@ -1,0 +1,27 @@
+{
+ "code": "6988",
+ "name": "威力暘-創",
+ "conf_date": "2026-06-17",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:06",
+ "segments": [
+  {
+   "name": "台灣",
+   "pct": 60.0,
+   "note": "市場地域分佈"
+  },
+  {
+   "name": "中國",
+   "pct": 40.0,
+   "note": "市場地域分佈"
+  }
+ ],
+ "as_of": "",
+ "tags": [
+  "車用電子",
+  "電動車",
+  "汽車零組件"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

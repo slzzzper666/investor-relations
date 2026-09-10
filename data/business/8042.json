@@ -1,0 +1,25 @@
+{
+ "code": "8042",
+ "name": "金山電",
+ "conf_date": "2026-05-12",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:33",
+ "segments": [
+  {
+   "name": "液態電容",
+   "pct": 80.04,
+   "note": "2026Q1按產品別區分"
+  },
+  {
+   "name": "固態加固液態電容",
+   "pct": 19.96,
+   "note": "2026Q1按產品別區分"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "被動元件"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

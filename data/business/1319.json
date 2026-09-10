@@ -1,0 +1,27 @@
+{
+ "code": "1319",
+ "name": "東陽",
+ "conf_date": "2026-03-10",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:55",
+ "segments": [
+  {
+   "name": "AM產品",
+   "pct": 75.0,
+   "note": "售後維修市場"
+  },
+  {
+   "name": "OEM產品",
+   "pct": 25.0,
+   "note": "原廠委託製造"
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "汽車零組件",
+  "車用電子",
+  "電動車"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.1-flash-lite"
+}

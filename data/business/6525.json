@@ -1,0 +1,42 @@
+{
+ "code": "6525",
+ "name": "捷敏-KY",
+ "conf_date": "2026-03-10",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:13",
+ "segments": [
+  {
+   "name": "Consumer",
+   "pct": 40.0,
+   "note": "消費性電子"
+  },
+  {
+   "name": "PC",
+   "pct": 19.0,
+   "note": ""
+  },
+  {
+   "name": "Industry",
+   "pct": 18.0,
+   "note": "工業"
+  },
+  {
+   "name": "Hybrid/electric vehicle",
+   "pct": 13.0,
+   "note": "車用"
+  },
+  {
+   "name": "Communication",
+   "pct": 10.0,
+   "note": "通訊"
+  }
+ ],
+ "as_of": "2025 全年",
+ "tags": [
+  "封裝測試",
+  "功率半導體",
+  "車用電子"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.6-flash"
+}

@@ -1,0 +1,31 @@
+{
+ "code": "3229",
+ "name": "晟鈦",
+ "conf_date": "2026-06-10",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:50",
+ "segments": [
+  {
+   "name": "P-copper",
+   "pct": 60.0,
+   "note": "磷銅球製造銷售"
+  },
+  {
+   "name": "PCB",
+   "pct": 31.0,
+   "note": "PCB全製程"
+  },
+  {
+   "name": "Drilling",
+   "pct": 9.0,
+   "note": "PCB鑽孔"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "PCB",
+  "半導體材料"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

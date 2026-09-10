@@ -1,0 +1,40 @@
+{
+ "code": "1623",
+ "name": "大東電",
+ "conf_date": "2026-05-27",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:21",
+ "segments": [
+  {
+   "name": "特高壓",
+   "pct": 54.92,
+   "note": ""
+  },
+  {
+   "name": "其他",
+   "pct": 16.63,
+   "note": ""
+  },
+  {
+   "name": "中高壓",
+   "pct": 12.87,
+   "note": ""
+  },
+  {
+   "name": "低壓",
+   "pct": 8.97,
+   "note": ""
+  },
+  {
+   "name": "橡膠",
+   "pct": 6.61,
+   "note": ""
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "電力設備"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash"
+}

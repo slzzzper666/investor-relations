@@ -1,0 +1,42 @@
+{
+ "code": "6188",
+ "name": "廣明",
+ "conf_date": "2026-04-30",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:34",
+ "segments": [
+  {
+   "name": "SSD",
+   "pct": 32.0,
+   "note": "2026/Q1 營收比重"
+  },
+  {
+   "name": "ROBOT",
+   "pct": 22.0,
+   "note": "2026/Q1 營收比重"
+  },
+  {
+   "name": "Dock",
+   "pct": 21.0,
+   "note": "2026/Q1 營收比重"
+  },
+  {
+   "name": "HDD",
+   "pct": 20.0,
+   "note": "2026/Q1 營收比重"
+  },
+  {
+   "name": "Others",
+   "pct": 5.0,
+   "note": "2026/Q1 營收比重"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "自動化/機器人",
+  "連接器",
+  "機械設備"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

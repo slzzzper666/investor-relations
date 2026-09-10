@@ -1,0 +1,37 @@
+{
+ "code": "6861",
+ "name": "睿生光電",
+ "conf_date": "2026-03-12",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:37",
+ "segments": [
+  {
+   "name": "FPD Module(ODM)",
+   "pct": 35.0,
+   "note": "2026(F)預估佔比"
+  },
+  {
+   "name": "Open Cell",
+   "pct": 32.0,
+   "note": "2026(F)預估佔比"
+  },
+  {
+   "name": "TFT-PD Cell",
+   "pct": 24.0,
+   "note": "2026(F)預估佔比"
+  },
+  {
+   "name": "FPD Module(OEM)",
+   "pct": 9.0,
+   "note": "2026(F)預估佔比"
+  }
+ ],
+ "as_of": "2026",
+ "tags": [
+  "面板零組件",
+  "感測元件",
+  "醫療器材"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

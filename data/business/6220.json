@@ -1,0 +1,33 @@
+{
+ "code": "6220",
+ "name": "岳豐",
+ "conf_date": "2026-06-26",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:13",
+ "segments": [
+  {
+   "name": "POWER CORD 電源線",
+   "pct": 49.0,
+   "note": "2026年Q1產品類別營收佔比"
+  },
+  {
+   "name": "CABLE 網路線",
+   "pct": 28.0,
+   "note": "2026年Q1產品類別營收佔比"
+  },
+  {
+   "name": "其他",
+   "pct": 23.0,
+   "note": "2026年Q1產品類別營收佔比"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "連接器",
+  "網通設備",
+  "電商",
+  "零售通路"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

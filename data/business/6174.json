@@ -1,0 +1,48 @@
+{
+ "code": "6174",
+ "name": "安碁",
+ "conf_date": "2026-06-09",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:19",
+ "segments": [
+  {
+   "name": "車用",
+   "pct": 54.44,
+   "note": "車用營收佔比"
+  },
+  {
+   "name": "工業控制",
+   "pct": 13.03,
+   "note": "IPC營收佔比"
+  },
+  {
+   "name": "電腦/消費性產品",
+   "pct": 10.7,
+   "note": "PC/CONSUMERS營收佔比"
+  },
+  {
+   "name": "其他",
+   "pct": 9.9,
+   "note": "OTHERS營收佔比"
+  },
+  {
+   "name": "Private-Label",
+   "pct": 7.63,
+   "note": "銷售佔比"
+  },
+  {
+   "name": "網路通訊",
+   "pct": 4.3,
+   "note": "COMMUNICATION NETWORKING營收佔比"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "石英元件",
+  "車用電子",
+  "網通設備",
+  "工業電腦"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

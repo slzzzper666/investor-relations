@@ -1,0 +1,31 @@
+{
+ "code": "1710",
+ "name": "東聯",
+ "conf_date": "2026-06-23",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:22",
+ "segments": [
+  {
+   "name": "乙二醇事業",
+   "pct": 61.0,
+   "note": ""
+  },
+  {
+   "name": "特化事業",
+   "pct": 31.0,
+   "note": ""
+  },
+  {
+   "name": "氣體事業",
+   "pct": 8.0,
+   "note": ""
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "化工",
+  "塑化"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash"
+}

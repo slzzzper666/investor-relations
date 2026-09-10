@@ -1,0 +1,16 @@
+{
+ "code": "7631",
+ "name": "聚賢研發-創",
+ "conf_date": "2026-06-30",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:55",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "半導體設備",
+  "機械設備",
+  "環保工程"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

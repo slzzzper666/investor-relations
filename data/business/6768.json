@@ -1,0 +1,26 @@
+{
+ "code": "6768",
+ "name": "志強-KY",
+ "conf_date": "2026-03-19",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:25",
+ "segments": [
+  {
+   "name": "運動鞋",
+   "pct": 80.0,
+   "note": "主力產品"
+  },
+  {
+   "name": "休閒鞋",
+   "pct": 20.0,
+   "note": "主力產品"
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "紡織",
+  "其他"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

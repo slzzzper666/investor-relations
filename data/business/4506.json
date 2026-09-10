@@ -1,0 +1,26 @@
+{
+ "code": "4506",
+ "name": "崇友",
+ "conf_date": "2026-05-29",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:23",
+ "segments": [
+  {
+   "name": "電梯收入",
+   "pct": 57.53,
+   "note": "1Q26電梯收入1,017,393千元"
+  },
+  {
+   "name": "勞務收入",
+   "pct": 42.47,
+   "note": "1Q26勞務收入750,889千元"
+  }
+ ],
+ "as_of": "",
+ "tags": [
+  "機械設備",
+  "營建"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

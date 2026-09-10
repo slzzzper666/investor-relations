@@ -1,0 +1,30 @@
+{
+ "code": "2546",
+ "name": "根基",
+ "conf_date": "2026-06-29",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:17",
+ "segments": [
+  {
+   "name": "其他工程",
+   "pct": 60.1,
+   "note": ""
+  },
+  {
+   "name": "建設工程",
+   "pct": 20.2,
+   "note": ""
+  },
+  {
+   "name": "土建工程",
+   "pct": 19.7,
+   "note": ""
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "營建"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.6-flash"
+}

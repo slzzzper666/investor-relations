@@ -1,0 +1,35 @@
+{
+ "code": "6274",
+ "name": "台燿",
+ "conf_date": "2026-07-31",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:07",
+ "segments": [
+  {
+   "name": "ELL & SLL",
+   "pct": 39.0,
+   "note": "2026年第二季"
+  },
+  {
+   "name": "VLL & LL",
+   "pct": 31.0,
+   "note": "2026年第二季"
+  },
+  {
+   "name": "HDI & N-LL",
+   "pct": 16.0,
+   "note": "2026年第二季"
+  },
+  {
+   "name": "Others",
+   "pct": 14.0,
+   "note": "2026年第二季"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "銅箔基板"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

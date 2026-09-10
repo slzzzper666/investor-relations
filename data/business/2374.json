@@ -1,0 +1,38 @@
+{
+ "code": "2374",
+ "name": "佳能",
+ "conf_date": "2026-05-12",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:06",
+ "segments": [
+  {
+   "name": "Hybrid Camera/Instant Printing",
+   "pct": 80.0,
+   "note": "拍後即印相機與AI影像強化"
+  },
+  {
+   "name": "Sport/Action Cam",
+   "pct": 10.0,
+   "note": "模組化架構與高速分離式設計"
+  },
+  {
+   "name": "AI Hybrid System",
+   "pct": 10.0,
+   "note": "高精度影像模組與犯罪預防應用"
+  },
+  {
+   "name": "Machine Vision Module",
+   "pct": 10.0,
+   "note": "包含多種影像協同模組"
+  }
+ ],
+ "as_of": "2026",
+ "tags": [
+  "光學鏡頭",
+  "自動化/機器人",
+  "無人機",
+  "醫療器材"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.1-flash-lite"
+}

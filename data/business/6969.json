@@ -1,0 +1,16 @@
+{
+ "code": "6969",
+ "name": "成信實業*-創",
+ "conf_date": "2026-06-11",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:03",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "環保工程",
+  "半導體材料",
+  "太陽能"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

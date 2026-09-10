@@ -1,0 +1,14 @@
+{
+ "code": "6986",
+ "name": "和迅",
+ "conf_date": "2026-07-16",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:09",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "新藥研發"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

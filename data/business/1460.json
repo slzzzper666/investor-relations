@@ -1,0 +1,14 @@
+{
+ "code": "1460",
+ "name": "宏遠",
+ "conf_date": "2026-06-23",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:47",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "紡織"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

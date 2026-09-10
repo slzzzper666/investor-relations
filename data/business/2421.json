@@ -1,0 +1,48 @@
+{
+ "code": "2421",
+ "name": "建準",
+ "conf_date": "2026-06-02",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:54",
+ "segments": [
+  {
+   "name": "Telecom & Server",
+   "pct": 60.6,
+   "note": "包含伺服器與網通相關業務"
+  },
+  {
+   "name": "IT & OE",
+   "pct": 15.6,
+   "note": "資訊與辦公設備"
+  },
+  {
+   "name": "Industrial Medical E.",
+   "pct": 8.8,
+   "note": "工業與醫療電子"
+  },
+  {
+   "name": "Automobile",
+   "pct": 8.2,
+   "note": "汽車相關散熱"
+  },
+  {
+   "name": "Distribution",
+   "pct": 4.0,
+   "note": "通路銷售"
+  },
+  {
+   "name": "Home Appliances",
+   "pct": 2.3,
+   "note": "家電相關"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "散熱",
+  "伺服器",
+  "AI伺服器",
+  "車用電子"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.1-flash-lite"
+}

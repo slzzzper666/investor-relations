@@ -1,0 +1,31 @@
+{
+ "code": "7711",
+ "name": "永擎",
+ "conf_date": "2026-05-29",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:56",
+ "segments": [
+  {
+   "name": "AI",
+   "pct": null,
+   "note": "佔比約75-80%"
+  },
+  {
+   "name": "GP System",
+   "pct": null,
+   "note": "佔比約15%"
+  },
+  {
+   "name": "GP MB",
+   "pct": null,
+   "note": "佔比約10%"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "伺服器",
+  "AI伺服器"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.1-flash-lite"
+}

@@ -1,0 +1,36 @@
+{
+ "code": "6138",
+ "name": "茂達",
+ "conf_date": "2026-05-05",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:33",
+ "segments": [
+  {
+   "name": "MOTOR",
+   "pct": 45.1,
+   "note": "2026 Q1 產品別營收比重"
+  },
+  {
+   "name": "PWM",
+   "pct": 26.64,
+   "note": "2026 Q1 產品別營收比重"
+  },
+  {
+   "name": "LDO",
+   "pct": 25.43,
+   "note": "2026 Q1 產品別營收比重"
+  },
+  {
+   "name": "AUDIO",
+   "pct": 2.83,
+   "note": "2026 Q1 產品別營收比重"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "IC設計",
+  "電源供應器"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

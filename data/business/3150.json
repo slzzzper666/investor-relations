@@ -1,0 +1,26 @@
+{
+ "code": "3150",
+ "name": "鈺寶-創",
+ "conf_date": "2026-06-22",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:06",
+ "segments": [
+  {
+   "name": "客製化無線模組",
+   "pct": 66.0,
+   "note": "模組化產品出貨比重提升"
+  },
+  {
+   "name": "無線音訊晶片",
+   "pct": 34.0,
+   "note": "IC產品"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "IC設計",
+  "網通設備"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

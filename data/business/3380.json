@@ -1,0 +1,35 @@
+{
+ "code": "3380",
+ "name": "明泰",
+ "conf_date": "2026-02-26",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:15",
+ "segments": [
+  {
+   "name": "無線寬頻網路",
+   "pct": 43.0,
+   "note": ""
+  },
+  {
+   "name": "區域都會網路",
+   "pct": 36.0,
+   "note": ""
+  },
+  {
+   "name": "其他",
+   "pct": 13.0,
+   "note": ""
+  },
+  {
+   "name": "數位多媒體暨行動方案",
+   "pct": 8.0,
+   "note": ""
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "網通設備"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.6-flash"
+}

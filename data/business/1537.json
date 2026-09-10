@@ -1,0 +1,42 @@
+{
+ "code": "1537",
+ "name": "廣隆",
+ "conf_date": "2026-07-24",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:32",
+ "segments": [
+  {
+   "name": "UPS 及通用型電池",
+   "pct": 61.0,
+   "note": "2026年第二季產品銷售別"
+  },
+  {
+   "name": "Electric Vehicle 電動代步車用電池",
+   "pct": 19.0,
+   "note": "2026年第二季產品銷售別"
+  },
+  {
+   "name": "Motorcycle 機車啟動用電池",
+   "pct": 12.0,
+   "note": "2026年第二季產品銷售別"
+  },
+  {
+   "name": "Automotive 汽車啟動用電池",
+   "pct": 5.0,
+   "note": "2026年第二季產品銷售別"
+  },
+  {
+   "name": "Other 其他",
+   "pct": 3.0,
+   "note": "2026年第二季產品銷售別"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "電池模組",
+  "儲能",
+  "車用電子"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

@@ -1,0 +1,30 @@
+{
+ "code": "6281",
+ "name": "全國電",
+ "conf_date": "2026-07-08",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:45",
+ "segments": [
+  {
+   "name": "家電類商品",
+   "pct": 88.21,
+   "note": "2026 Q1 YTD"
+  },
+  {
+   "name": "資通訊類及其他商品",
+   "pct": 10.96,
+   "note": "2026 Q1 YTD"
+  },
+  {
+   "name": "其他",
+   "pct": 0.83,
+   "note": "2026 Q1 YTD"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "零售通路"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

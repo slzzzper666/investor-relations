@@ -1,0 +1,17 @@
+{
+ "code": "6272",
+ "name": "驊陞",
+ "conf_date": "2026-06-15",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:59",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "連接器",
+  "車用電子",
+  "散熱",
+  "工業電腦"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

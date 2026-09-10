@@ -1,0 +1,40 @@
+{
+ "code": "1474",
+ "name": "弘裕",
+ "conf_date": "2026-07-28",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:04",
+ "segments": [
+  {
+   "name": "工業",
+   "pct": 61.0,
+   "note": "工業袋材面料"
+  },
+  {
+   "name": "成衣",
+   "pct": 17.0,
+   "note": "成衣面料"
+  },
+  {
+   "name": "傢飾",
+   "pct": 12.0,
+   "note": "傢飾面料"
+  },
+  {
+   "name": "代工&其他",
+   "pct": 8.0,
+   "note": "其他業務"
+  },
+  {
+   "name": "醫療",
+   "pct": 3.0,
+   "note": "醫療紡織品"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "紡織"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

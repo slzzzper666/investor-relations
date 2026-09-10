@@ -1,0 +1,14 @@
+{
+ "code": "6020",
+ "name": "大展證",
+ "conf_date": "2026-07-24",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:08",
+ "segments": [],
+ "as_of": "2026 Q2",
+ "tags": [
+  "證券"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

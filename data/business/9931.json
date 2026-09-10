@@ -1,0 +1,30 @@
+{
+ "code": "9931",
+ "name": "欣高",
+ "conf_date": "2026-06-08",
+ "source": "transcript",
+ "built_at": "2026-09-11 02:50",
+ "segments": [
+  {
+   "name": "氣體收入",
+   "pct": null,
+   "note": "114年營收佔比主要來源"
+  },
+  {
+   "name": "裝置收入",
+   "pct": null,
+   "note": "114年營收項目之一"
+  },
+  {
+   "name": "其他營業收入",
+   "pct": null,
+   "note": "114年營收項目之一"
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "其他"
+ ],
+ "confidence": "low",
+ "model": "gemini-3.5-flash-lite"
+}

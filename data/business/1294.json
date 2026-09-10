@@ -1,0 +1,26 @@
+{
+ "code": "1294",
+ "name": "漢田生技",
+ "conf_date": "2026-04-14",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:41",
+ "segments": [
+  {
+   "name": "保健飲品",
+   "pct": 96.0,
+   "note": "2025年產品比重"
+  },
+  {
+   "name": "其他",
+   "pct": 4.0,
+   "note": "包含粉包、膠囊、原料等"
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "美妝保健",
+  "食品"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

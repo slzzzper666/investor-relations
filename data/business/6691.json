@@ -1,0 +1,51 @@
+{
+ "code": "6691",
+ "name": "洋基工程",
+ "conf_date": "2026-06-10",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:45",
+ "segments": [
+  {
+   "name": "Semiconductor",
+   "pct": 54.12,
+   "note": "半導體"
+  },
+  {
+   "name": "PCB",
+   "pct": 14.93,
+   "note": ""
+  },
+  {
+   "name": "Others (Note)",
+   "pct": 12.1,
+   "note": "其他"
+  },
+  {
+   "name": "Office Building",
+   "pct": 8.18,
+   "note": "商辦大樓"
+  },
+  {
+   "name": "Optoelectronics",
+   "pct": 7.34,
+   "note": "光電"
+  },
+  {
+   "name": "Electronic components",
+   "pct": 3.06,
+   "note": "電子零組件"
+  },
+  {
+   "name": "Data Centra",
+   "pct": 0.27,
+   "note": "資料中心"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "營建",
+  "其他"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.6-flash"
+}

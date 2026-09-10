@@ -1,0 +1,26 @@
+{
+ "code": "4554",
+ "name": "橙的",
+ "conf_date": "2026-04-14",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:41",
+ "segments": [
+  {
+   "name": "AM市場",
+   "pct": 83.4,
+   "note": "2025年預估營收比重"
+  },
+  {
+   "name": "OEM市場",
+   "pct": 16.6,
+   "note": "2025年預估營收比重"
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "汽車零組件",
+  "車用電子"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

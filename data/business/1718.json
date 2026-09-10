@@ -1,0 +1,32 @@
+{
+ "code": "1718",
+ "name": "中纖",
+ "conf_date": "2026-06-11",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:11",
+ "segments": [
+  {
+   "name": "化纖",
+   "pct": 48.0,
+   "note": "2025年個體營收比重"
+  },
+  {
+   "name": "化工",
+   "pct": 46.0,
+   "note": "2025年個體營收比重"
+  },
+  {
+   "name": "其他",
+   "pct": 6.0,
+   "note": "2025年個體營收比重"
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "塑化",
+  "化工",
+  "紡織"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.1-flash-lite"
+}

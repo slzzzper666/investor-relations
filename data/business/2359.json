@@ -1,0 +1,43 @@
+{
+ "code": "2359",
+ "name": "所羅門",
+ "conf_date": "2026-04-08",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:06",
+ "segments": [
+  {
+   "name": "機電事業群",
+   "pct": 40.0,
+   "note": ""
+  },
+  {
+   "name": "智動化事業群",
+   "pct": 29.0,
+   "note": ""
+  },
+  {
+   "name": "光電製造業",
+   "pct": 21.0,
+   "note": ""
+  },
+  {
+   "name": "電子通路業",
+   "pct": 8.0,
+   "note": ""
+  },
+  {
+   "name": "其他",
+   "pct": 2.0,
+   "note": ""
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "自動化/機器人",
+  "電力設備",
+  "軟體/SaaS",
+  "機械設備"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.1-flash-lite"
+}

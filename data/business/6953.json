@@ -1,0 +1,31 @@
+{
+ "code": "6953",
+ "name": "家碩",
+ "conf_date": "2026-06-09",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:18",
+ "segments": [
+  {
+   "name": "EUV",
+   "pct": 66.0,
+   "note": "115年Q1產品別營收"
+  },
+  {
+   "name": "高階",
+   "pct": 25.0,
+   "note": "115年Q1產品別營收"
+  },
+  {
+   "name": "其他",
+   "pct": 9.0,
+   "note": "115年Q1產品別營收"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "半導體設備",
+  "自動化/機器人"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

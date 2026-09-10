@@ -1,0 +1,15 @@
+{
+ "code": "6615",
+ "name": "慧智",
+ "conf_date": "2026-06-17",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:16",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "健康檢測",
+  "新藥研發"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

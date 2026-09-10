@@ -1,0 +1,65 @@
+{
+ "code": "6202",
+ "name": "盛群",
+ "conf_date": "2026-07-30",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:24",
+ "segments": [
+  {
+   "name": "Safety",
+   "pct": 18.0,
+   "note": "安全防護"
+  },
+  {
+   "name": "Home Appliance",
+   "pct": 16.0,
+   "note": "家電"
+  },
+  {
+   "name": "Others",
+   "pct": 14.0,
+   "note": "其他"
+  },
+  {
+   "name": "Health Care",
+   "pct": 13.0,
+   "note": "健康保健"
+  },
+  {
+   "name": "Industrial Control",
+   "pct": 12.0,
+   "note": "工業控制"
+  },
+  {
+   "name": "Display Driver",
+   "pct": 8.0,
+   "note": "顯示驅動"
+  },
+  {
+   "name": "PC Peripheral",
+   "pct": 8.0,
+   "note": "電腦周邊"
+  },
+  {
+   "name": "Power management",
+   "pct": 8.0,
+   "note": "電源管理"
+  },
+  {
+   "name": "BLDC",
+   "pct": 2.0,
+   "note": "直流無刷馬達"
+  },
+  {
+   "name": "RF",
+   "pct": 1.0,
+   "note": "射頻"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "IC設計"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash"
+}

@@ -1,0 +1,14 @@
+{
+ "code": "2025",
+ "name": "千興",
+ "conf_date": "2026-07-22",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:00",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "鋼鐵"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

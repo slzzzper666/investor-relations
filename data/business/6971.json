@@ -1,0 +1,15 @@
+{
+ "code": "6971",
+ "name": "惠民實業",
+ "conf_date": "2026-03-10",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:49",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "環保工程",
+  "水處理"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

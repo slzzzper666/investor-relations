@@ -1,0 +1,14 @@
+{
+ "code": "6715",
+ "name": "嘉基",
+ "conf_date": "2026-06-09",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:05",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "連接器"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.1-flash-lite"
+}

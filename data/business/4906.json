@@ -1,0 +1,41 @@
+{
+ "code": "4906",
+ "name": "正文",
+ "conf_date": "2026-05-29",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:14",
+ "segments": [
+  {
+   "name": "家庭聯網",
+   "pct": 46.0,
+   "note": ""
+  },
+  {
+   "name": "整合型產品",
+   "pct": 22.0,
+   "note": ""
+  },
+  {
+   "name": "其他",
+   "pct": 17.0,
+   "note": ""
+  },
+  {
+   "name": "Wi-Fi 模組",
+   "pct": 11.0,
+   "note": ""
+  },
+  {
+   "name": "電信基礎建設",
+   "pct": 4.0,
+   "note": ""
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "網通設備",
+  "光通訊"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.6-flash"
+}

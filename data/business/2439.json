@@ -1,0 +1,33 @@
+{
+ "code": "2439",
+ "name": "美律",
+ "conf_date": "2026-07-31",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:11",
+ "segments": [
+  {
+   "name": "Headset",
+   "pct": 69.0,
+   "note": "包含耳罩式、電競及真無線耳機"
+  },
+  {
+   "name": "Speaker",
+   "pct": 23.0,
+   "note": "包含高傳真音響、動圈式揚聲器及車用揚聲器"
+  },
+  {
+   "name": "Other",
+   "pct": 8.0,
+   "note": "包含麥克風、電池及醫療產品"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "手機",
+  "車用電子",
+  "電池模組",
+  "醫療器材"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.1-flash-lite"
+}

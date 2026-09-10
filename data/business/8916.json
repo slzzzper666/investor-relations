@@ -1,0 +1,23 @@
+{
+ "code": "8916",
+ "name": "光隆",
+ "conf_date": "2026-05-14",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:31",
+ "segments": [
+  {
+   "name": "成衣",
+   "pct": 60.0,
+   "note": "合併營收佔比"
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "紡織",
+  "建材",
+  "資產開發",
+  "觀光旅館"
+ ],
+ "confidence": "medium",
+ "model": "gemini-3.5-flash-lite"
+}

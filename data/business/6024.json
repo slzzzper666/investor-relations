@@ -1,0 +1,30 @@
+{
+ "code": "6024",
+ "name": "群益期",
+ "conf_date": "2026-06-17",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:16",
+ "segments": [
+  {
+   "name": "經紀業務",
+   "pct": 71.15,
+   "note": ""
+  },
+  {
+   "name": "自營業務",
+   "pct": 26.44,
+   "note": "含自營營業外相關收入"
+  },
+  {
+   "name": "槓桿交易商",
+   "pct": 2.41,
+   "note": ""
+  }
+ ],
+ "as_of": "2026",
+ "tags": [
+  "證券"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.6-flash"
+}

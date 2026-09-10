@@ -1,0 +1,30 @@
+{
+ "code": "6965",
+ "name": "中傑-KY",
+ "conf_date": "2026-05-27",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:27",
+ "segments": [
+  {
+   "name": "運動鞋",
+   "pct": 74.7,
+   "note": "1Q26營收結構-依產品別"
+  },
+  {
+   "name": "休閒鞋",
+   "pct": 25.2,
+   "note": "1Q26營收結構-依產品別"
+  },
+  {
+   "name": "其他",
+   "pct": 0.1,
+   "note": "1Q26營收結構-依產品別"
+  }
+ ],
+ "as_of": "",
+ "tags": [
+  "紡織"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

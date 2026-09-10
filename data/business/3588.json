@@ -1,0 +1,38 @@
+{
+ "code": "3588",
+ "name": "通嘉",
+ "conf_date": "2026-06-23",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:52",
+ "segments": [
+  {
+   "name": "Computer",
+   "pct": 39.0,
+   "note": "NB含Tablet等"
+  },
+  {
+   "name": "Consumer",
+   "pct": 33.0,
+   "note": "TV/Lighting等"
+  },
+  {
+   "name": "Communication",
+   "pct": 23.0,
+   "note": "NWK/Mobile等"
+  },
+  {
+   "name": "Others",
+   "pct": 5.0,
+   "note": "Medical/Power Tool等"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "IC設計",
+  "功率半導體",
+  "筆電/PC",
+  "手機"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

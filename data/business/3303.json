@@ -1,0 +1,26 @@
+{
+ "code": "3303",
+ "name": "岱稜",
+ "conf_date": "2026-05-04",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:34",
+ "segments": [
+  {
+   "name": "燙金箔",
+   "pct": 95.0,
+   "note": "包含冷燙箔與熱燙箔和其他"
+  },
+  {
+   "name": "光電材料",
+   "pct": 5.0,
+   "note": "包含醫療膠帶、塗佈代工等"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "化工",
+  "美妝保健"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

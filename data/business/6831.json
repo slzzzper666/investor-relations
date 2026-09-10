@@ -1,0 +1,17 @@
+{
+ "code": "6831",
+ "name": "邁科",
+ "conf_date": "2026-06-01",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:57",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "散熱",
+  "伺服器",
+  "AI伺服器",
+  "網通設備"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.1-flash-lite"
+}

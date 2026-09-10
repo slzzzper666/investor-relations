@@ -1,0 +1,41 @@
+{
+ "code": "2312",
+ "name": "金寶",
+ "conf_date": "2026-06-30",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:54",
+ "segments": [
+  {
+   "name": "消費性電子產品",
+   "pct": 37.65,
+   "note": ""
+  },
+  {
+   "name": "影像產品",
+   "pct": 26.35,
+   "note": ""
+  },
+  {
+   "name": "儲存裝置產品",
+   "pct": 23.09,
+   "note": ""
+  },
+  {
+   "name": "網路通訊產品",
+   "pct": 12.02,
+   "note": ""
+  },
+  {
+   "name": "其他",
+   "pct": 0.9,
+   "note": ""
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "網通設備",
+  "其他"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.1-flash-lite"
+}

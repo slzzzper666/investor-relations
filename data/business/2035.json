@@ -1,0 +1,14 @@
+{
+ "code": "2035",
+ "name": "唐榮公司",
+ "conf_date": "2026-05-12",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:33",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "鋼鐵"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

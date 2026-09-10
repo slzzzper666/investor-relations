@@ -1,0 +1,14 @@
+{
+ "code": "5438",
+ "name": "東友",
+ "conf_date": "2026-06-30",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:12",
+ "segments": [],
+ "as_of": "2026 Q1",
+ "tags": [
+  "其他"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

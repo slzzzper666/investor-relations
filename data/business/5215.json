@@ -1,0 +1,62 @@
+{
+ "code": "5215",
+ "name": "科嘉-KY",
+ "conf_date": "2026-06-01",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:58",
+ "segments": [
+  {
+   "name": "L",
+   "pct": 29.0,
+   "note": ""
+  },
+  {
+   "name": "D",
+   "pct": 18.0,
+   "note": ""
+  },
+  {
+   "name": "S",
+   "pct": 16.0,
+   "note": ""
+  },
+  {
+   "name": "W",
+   "pct": 12.0,
+   "note": ""
+  },
+  {
+   "name": "材料",
+   "pct": 11.0,
+   "note": ""
+  },
+  {
+   "name": "其他",
+   "pct": 7.0,
+   "note": ""
+  },
+  {
+   "name": "P",
+   "pct": 4.0,
+   "note": ""
+  },
+  {
+   "name": "C",
+   "pct": 3.0,
+   "note": ""
+  },
+  {
+   "name": "lighting",
+   "pct": 0.0,
+   "note": ""
+  }
+ ],
+ "as_of": "",
+ "tags": [
+  "筆電/PC",
+  "PCB",
+  "化工"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

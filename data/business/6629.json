@@ -1,0 +1,30 @@
+{
+ "code": "6629",
+ "name": "泰金-KY",
+ "conf_date": "2026-05-27",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:25",
+ "segments": [
+  {
+   "name": "衛浴五金",
+   "pct": 74.0,
+   "note": "2026Q1 產品類別"
+  },
+  {
+   "name": "櫥櫃及掛件",
+   "pct": 15.0,
+   "note": "2026Q1 產品類別"
+  },
+  {
+   "name": "窗簾五金",
+   "pct": 10.0,
+   "note": "2026Q1 產品類別"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "手工具"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

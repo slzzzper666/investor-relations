@@ -1,0 +1,22 @@
+{
+ "code": "4137",
+ "name": "麗豐-KY",
+ "conf_date": "2026-07-01",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:41",
+ "segments": [
+  {
+   "name": "美容連鎖事業體",
+   "pct": 93.0,
+   "note": "營收占比約為93%"
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "美妝保健",
+  "電商",
+  "零售通路"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

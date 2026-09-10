@@ -1,0 +1,25 @@
+{
+ "code": "2029",
+ "name": "盛餘",
+ "conf_date": "2026-03-25",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:40",
+ "segments": [
+  {
+   "name": "內銷",
+   "pct": 75.0,
+   "note": "鍍製產品內銷比例"
+  },
+  {
+   "name": "外銷",
+   "pct": 25.0,
+   "note": "鍍製產品外銷比例"
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "鋼鐵"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

@@ -1,0 +1,16 @@
+{
+ "code": "2103",
+ "name": "台橡",
+ "conf_date": "2026-05-20",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:10",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "塑化",
+  "化工",
+  "橡膠輪胎"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.1-flash-lite"
+}

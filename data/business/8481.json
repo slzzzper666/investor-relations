@@ -1,0 +1,28 @@
+{
+ "code": "8481",
+ "name": "政伸",
+ "conf_date": "2026-05-13",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:57",
+ "segments": [
+  {
+   "name": "自行車產業",
+   "pct": 66.0,
+   "note": "2026年第一季營業比重"
+  },
+  {
+   "name": "運動器材產業",
+   "pct": 31.0,
+   "note": "2026年第一季營業比重"
+  },
+  {
+   "name": "其他產業",
+   "pct": 3.0,
+   "note": "2026年第一季營業比重"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

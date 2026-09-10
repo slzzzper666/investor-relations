@@ -1,0 +1,22 @@
+{
+ "code": "5340",
+ "name": "建榮",
+ "conf_date": "2026-05-15",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:30",
+ "segments": [
+  {
+   "name": "特殊玻纖產品",
+   "pct": 30.0,
+   "note": "產能已達30%以上"
+  }
+ ],
+ "as_of": "2026",
+ "tags": [
+  "PCB",
+  "玻璃陶瓷",
+  "半導體材料"
+ ],
+ "confidence": "medium",
+ "model": "gemini-3.5-flash-lite"
+}

@@ -1,0 +1,38 @@
+{
+ "code": "5457",
+ "name": "宣德",
+ "conf_date": "2026-06-03",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:21",
+ "segments": [
+  {
+   "name": "機構件",
+   "pct": 37.0,
+   "note": ""
+  },
+  {
+   "name": "連接器",
+   "pct": 30.0,
+   "note": ""
+  },
+  {
+   "name": "組裝/SMT",
+   "pct": 22.0,
+   "note": ""
+  },
+  {
+   "name": "其他",
+   "pct": 12.0,
+   "note": ""
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "機殼結構件",
+  "連接器",
+  "車用電子",
+  "衛星通訊"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

@@ -1,0 +1,26 @@
+{
+ "code": "4960",
+ "name": "誠美材",
+ "conf_date": "2026-03-03",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:26",
+ "segments": [
+  {
+   "name": "傳統偏光板業務",
+   "pct": 60.0,
+   "note": "優化後偏光板業務占比"
+  },
+  {
+   "name": "高值化業務",
+   "pct": 40.0,
+   "note": "調整後高值化營收占比目標"
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "面板零組件",
+  "半導體材料"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

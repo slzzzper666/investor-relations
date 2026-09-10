@@ -1,0 +1,31 @@
+{
+ "code": "1597",
+ "name": "直得",
+ "conf_date": "2026-03-05",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:22",
+ "segments": [
+  {
+   "name": "微型",
+   "pct": null,
+   "note": "2025年度營收6.77億元"
+  },
+  {
+   "name": "大型",
+   "pct": null,
+   "note": "2025年度營收3.78億元"
+  },
+  {
+   "name": "線馬",
+   "pct": null,
+   "note": "2025年度營收0.84億元"
+  }
+ ],
+ "as_of": "2025 全年",
+ "tags": [
+  "自動化/機器人",
+  "機械設備"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash"
+}

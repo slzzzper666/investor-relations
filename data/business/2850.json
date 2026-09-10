@@ -1,0 +1,45 @@
+{
+ "code": "2850",
+ "name": "新產",
+ "conf_date": "2026-06-01",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:53",
+ "segments": [
+  {
+   "name": "車險",
+   "pct": 46.0,
+   "note": ""
+  },
+  {
+   "name": "火險",
+   "pct": 19.0,
+   "note": ""
+  },
+  {
+   "name": "工程險",
+   "pct": 16.0,
+   "note": ""
+  },
+  {
+   "name": "責任險",
+   "pct": 9.0,
+   "note": ""
+  },
+  {
+   "name": "傷健險",
+   "pct": 6.0,
+   "note": ""
+  },
+  {
+   "name": "水險",
+   "pct": 5.0,
+   "note": ""
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "保險"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.6-flash"
+}

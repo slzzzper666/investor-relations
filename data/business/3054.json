@@ -1,0 +1,27 @@
+{
+ "code": "3054",
+ "name": "立萬利",
+ "conf_date": "2026-06-29",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:47",
+ "segments": [
+  {
+   "name": "儲存裝置",
+   "pct": 93.39,
+   "note": "包括DRAM等相關記憶體產品"
+  },
+  {
+   "name": "其他",
+   "pct": 6.61,
+   "note": "保健食品及其他產品"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "記憶體",
+  "食品",
+  "美妝保健"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

@@ -1,0 +1,14 @@
+{
+ "code": "6026",
+ "name": "福邦證",
+ "conf_date": "2026-07-21",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:09",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "證券"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

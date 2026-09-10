@@ -1,0 +1,15 @@
+{
+ "code": "6485",
+ "name": "點序",
+ "conf_date": "2026-05-13",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:32",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "IC設計",
+  "記憶體"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

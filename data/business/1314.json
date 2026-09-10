@@ -1,0 +1,48 @@
+{
+ "code": "1314",
+ "name": "中石化",
+ "conf_date": "2026-04-17",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:00",
+ "segments": [
+  {
+   "name": "AN",
+   "pct": 40.0,
+   "note": ""
+  },
+  {
+   "name": "威名",
+   "pct": 27.0,
+   "note": ""
+  },
+  {
+   "name": "CPL",
+   "pct": 19.0,
+   "note": ""
+  },
+  {
+   "name": "PA6",
+   "pct": 10.0,
+   "note": ""
+  },
+  {
+   "name": "子公司及其他(不含威名)",
+   "pct": 3.0,
+   "note": ""
+  },
+  {
+   "name": "OPP",
+   "pct": 1.0,
+   "note": ""
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "塑化",
+  "化工",
+  "營建",
+  "資產開發"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.1-flash-lite"
+}

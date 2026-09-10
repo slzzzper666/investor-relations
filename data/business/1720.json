@@ -1,0 +1,17 @@
+{
+ "code": "1720",
+ "name": "生達",
+ "conf_date": "2026-03-12",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:27",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "學名藥",
+  "原料藥",
+  "美妝保健",
+  "醫療通路"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

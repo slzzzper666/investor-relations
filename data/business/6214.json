@@ -1,0 +1,33 @@
+{
+ "code": "6214",
+ "name": "精誠",
+ "conf_date": "2026-05-13",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:51",
+ "segments": [
+  {
+   "name": "VAD",
+   "pct": 64.0,
+   "note": "生態夥伴加值"
+  },
+  {
+   "name": "SI",
+   "pct": 20.0,
+   "note": "數位生態整合"
+  },
+  {
+   "name": "Industry",
+   "pct": 16.0,
+   "note": "產業應用"
+  }
+ ],
+ "as_of": "",
+ "tags": [
+  "資訊服務",
+  "軟體/SaaS",
+  "雲端服務",
+  "資安"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.1-flash-lite"
+}

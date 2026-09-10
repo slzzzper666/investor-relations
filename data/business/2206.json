@@ -1,0 +1,32 @@
+{
+ "code": "2206",
+ "name": "三陽工業",
+ "conf_date": "2026-04-29",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:53",
+ "segments": [
+  {
+   "name": "機車",
+   "pct": 61.76,
+   "note": ""
+  },
+  {
+   "name": "汽車",
+   "pct": 35.02,
+   "note": ""
+  },
+  {
+   "name": "零組件及其他",
+   "pct": 3.22,
+   "note": ""
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "電動車",
+  "儲能",
+  "其他"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash"
+}

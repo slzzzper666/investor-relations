@@ -1,0 +1,32 @@
+{
+ "code": "3022",
+ "name": "威強電",
+ "conf_date": "2026-06-25",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:18",
+ "segments": [
+  {
+   "name": "產業電腦產品",
+   "pct": 71.0,
+   "note": ""
+  },
+  {
+   "name": "產業電腦週邊產品及組件",
+   "pct": 25.0,
+   "note": ""
+  },
+  {
+   "name": "其他",
+   "pct": 4.0,
+   "note": ""
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "工業電腦",
+  "網通設備",
+  "醫療器材"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.6-flash"
+}

@@ -1,0 +1,17 @@
+{
+ "code": "7547",
+ "name": "碩網",
+ "conf_date": "2026-06-26",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:13",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "資訊服務",
+  "軟體/SaaS",
+  "資安",
+  "AI伺服器"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

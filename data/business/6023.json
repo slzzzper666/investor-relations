@@ -1,0 +1,15 @@
+{
+ "code": "6023",
+ "name": "元大期貨",
+ "conf_date": "2026-03-23",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:47",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "證券",
+  "數位金融"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

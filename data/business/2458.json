@@ -1,0 +1,33 @@
+{
+ "code": "2458",
+ "name": "義隆",
+ "conf_date": "2026-06-08",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:57",
+ "segments": [
+  {
+   "name": "觸控產品",
+   "pct": 77.0,
+   "note": "觸控板、觸控螢幕晶片、生物辨識晶片"
+  },
+  {
+   "name": "非觸控產品",
+   "pct": 16.0,
+   "note": "指向裝置、微控制器&其他"
+  },
+  {
+   "name": "人工智慧產品",
+   "pct": 7.0,
+   "note": "車用ADAS、智慧交通AICCTV、AI影像辨識演算法"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "IC設計",
+  "筆電/PC",
+  "車用電子",
+  "無人機"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.1-flash-lite"
+}

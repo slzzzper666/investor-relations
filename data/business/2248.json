@@ -1,0 +1,33 @@
+{
+ "code": "2248",
+ "name": "華勝-KY",
+ "conf_date": "2026-04-22",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:56",
+ "segments": [
+  {
+   "name": "汽車LED氛圍燈",
+   "pct": 83.73,
+   "note": "主要產品及比重"
+  },
+  {
+   "name": "汽車內外飾件",
+   "pct": 15.77,
+   "note": "主要產品及比重"
+  },
+  {
+   "name": "其他",
+   "pct": 0.5,
+   "note": "主要產品及比重"
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "車用電子",
+  "電動車",
+  "汽車零組件",
+  "LED"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

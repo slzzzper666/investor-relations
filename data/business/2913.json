@@ -1,0 +1,38 @@
+{
+ "code": "2913",
+ "name": "農林",
+ "conf_date": "2026-05-06",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:34",
+ "segments": [
+  {
+   "name": "茶樹種植、茶葉及茶相關產品之生產與銷售",
+   "pct": null,
+   "note": "主要經營四項業務之一"
+  },
+  {
+   "name": "觀光休閒",
+   "pct": null,
+   "note": "主要經營四項業務之一"
+  },
+  {
+   "name": "土地資產",
+   "pct": null,
+   "note": "主要經營四項業務之一"
+  },
+  {
+   "name": "土地開發",
+   "pct": null,
+   "note": "主要經營四項業務之一"
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "農業科技",
+  "觀光旅館",
+  "資產開發",
+  "建材"
+ ],
+ "confidence": "low",
+ "model": "gemini-3.5-flash-lite"
+}

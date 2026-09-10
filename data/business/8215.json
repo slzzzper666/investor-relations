@@ -1,0 +1,15 @@
+{
+ "code": "8215",
+ "name": "明基材",
+ "conf_date": "2026-07-31",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:36",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "面板零組件",
+  "化工"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

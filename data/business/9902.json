@@ -1,0 +1,16 @@
+{
+ "code": "9902",
+ "name": "台火",
+ "conf_date": "2026-05-14",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:05",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "營建",
+  "資產開發",
+  "租賃"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

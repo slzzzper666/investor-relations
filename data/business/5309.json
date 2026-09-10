@@ -1,0 +1,33 @@
+{
+ "code": "5309",
+ "name": "系統電",
+ "conf_date": "2026-03-10",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:49",
+ "segments": [
+  {
+   "name": "TPMS",
+   "pct": 57.0,
+   "note": "胎壓偵測系統"
+  },
+  {
+   "name": "工業電腦",
+   "pct": 23.0,
+   "note": "含無人機"
+  },
+  {
+   "name": "能源系統及其他",
+   "pct": 20.0,
+   "note": "能源系統及其他"
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "工業電腦",
+  "車用電子",
+  "儲能",
+  "無人機"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

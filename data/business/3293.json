@@ -1,0 +1,31 @@
+{
+ "code": "3293",
+ "name": "鈊象",
+ "conf_date": "2026-03-25",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:46",
+ "segments": [
+  {
+   "name": "網路遊戲授權",
+   "pct": 68.0,
+   "note": "2025年度營收比重"
+  },
+  {
+   "name": "網路遊戲APP",
+   "pct": 29.0,
+   "note": "2025年度營收比重"
+  },
+  {
+   "name": "商用遊戲機",
+   "pct": 3.0,
+   "note": "2025年度營收比重"
+  }
+ ],
+ "as_of": "2025 全年",
+ "tags": [
+  "遊戲",
+  "軟體/SaaS"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

@@ -1,0 +1,15 @@
+{
+ "code": "4726",
+ "name": "永昕",
+ "conf_date": "2026-06-09",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:19",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "新藥研發",
+  "原料藥"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

@@ -1,0 +1,46 @@
+{
+ "code": "6821",
+ "name": "聯寶",
+ "conf_date": "2026-03-24",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:46",
+ "segments": [
+  {
+   "name": "PoE",
+   "pct": 43.0,
+   "note": "114年度產品營收佔比"
+  },
+  {
+   "name": "LAN",
+   "pct": 26.0,
+   "note": "114年度產品營收佔比"
+  },
+  {
+   "name": "DSL",
+   "pct": 10.0,
+   "note": "114年度產品營收佔比"
+  },
+  {
+   "name": "WPC",
+   "pct": 10.0,
+   "note": "114年度產品營收佔比"
+  },
+  {
+   "name": "CMC",
+   "pct": 7.0,
+   "note": "114年度產品營收佔比"
+  },
+  {
+   "name": "Other",
+   "pct": 4.0,
+   "note": "114年度產品營收佔比"
+  }
+ ],
+ "as_of": "2025 全年",
+ "tags": [
+  "網通設備",
+  "電源供應器"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

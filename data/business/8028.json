@@ -1,0 +1,42 @@
+{
+ "code": "8028",
+ "name": "昇陽半導體",
+ "conf_date": "2026-06-04",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:56",
+ "segments": [
+  {
+   "name": "AI Server/PC",
+   "pct": null,
+   "note": "薄化高價值營收占比"
+  },
+  {
+   "name": "ATV",
+   "pct": null,
+   "note": "車用營收占比"
+  },
+  {
+   "name": "Consumer",
+   "pct": null,
+   "note": ""
+  },
+  {
+   "name": "Mobility",
+   "pct": null,
+   "note": ""
+  },
+  {
+   "name": "others",
+   "pct": null,
+   "note": ""
+  }
+ ],
+ "as_of": "2028",
+ "tags": [
+  "半導體材料",
+  "先進封裝/CoWoS",
+  "車用電子"
+ ],
+ "confidence": "medium",
+ "model": "gemini-3.1-flash-lite"
+}

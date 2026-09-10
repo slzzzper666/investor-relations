@@ -1,0 +1,45 @@
+{
+ "code": "6907",
+ "name": "雅特力-KY",
+ "conf_date": "2026-04-23",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:37",
+ "segments": [
+  {
+   "name": "Smart Home",
+   "pct": 24.0,
+   "note": "1Q26 應用佔比"
+  },
+  {
+   "name": "AIoT",
+   "pct": 19.0,
+   "note": "1Q26 應用佔比"
+  },
+  {
+   "name": "Smart Industrial",
+   "pct": 19.0,
+   "note": "1Q26 應用佔比"
+  },
+  {
+   "name": "Smart Mobility",
+   "pct": 17.0,
+   "note": "1Q26 應用佔比"
+  },
+  {
+   "name": "Smart Business",
+   "pct": 15.0,
+   "note": "1Q26 應用佔比"
+  },
+  {
+   "name": "Others",
+   "pct": 6.0,
+   "note": "1Q26 應用佔比"
+  }
+ ],
+ "as_of": "",
+ "tags": [
+  "IC設計"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

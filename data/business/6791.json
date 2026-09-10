@@ -1,0 +1,16 @@
+{
+ "code": "6791",
+ "name": "虎門科技",
+ "conf_date": "2026-06-29",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:12",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "資訊服務",
+  "軟體/SaaS",
+  "機械設備"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

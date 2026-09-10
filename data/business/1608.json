@@ -1,0 +1,41 @@
+{
+ "code": "1608",
+ "name": "華榮",
+ "conf_date": "2026-05-21",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:05",
+ "segments": [
+  {
+   "name": "銅商品",
+   "pct": 32.0,
+   "note": ""
+  },
+  {
+   "name": "電力中高壓",
+   "pct": 32.0,
+   "note": ""
+  },
+  {
+   "name": "電力小電",
+   "pct": 31.0,
+   "note": ""
+  },
+  {
+   "name": "工程及其他",
+   "pct": 4.0,
+   "note": ""
+  },
+  {
+   "name": "通信光纖",
+   "pct": 1.0,
+   "note": ""
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "電力設備",
+  "光通訊"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.1-flash-lite"
+}

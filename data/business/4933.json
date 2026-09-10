@@ -1,0 +1,51 @@
+{
+ "code": "4933",
+ "name": "友輝",
+ "conf_date": "2026-06-12",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:17",
+ "segments": [
+  {
+   "name": "NB",
+   "pct": 51.0,
+   "note": "2026Q1銷售產品應用"
+  },
+  {
+   "name": "Precision coating",
+   "pct": 25.0,
+   "note": "2026Q1銷售產品應用"
+  },
+  {
+   "name": "AUTO",
+   "pct": 18.0,
+   "note": "2026Q1銷售產品應用"
+  },
+  {
+   "name": "Others",
+   "pct": 6.0,
+   "note": "2026Q1銷售產品應用"
+  },
+  {
+   "name": "MNT",
+   "pct": null,
+   "note": "2026Q1銷售產品應用"
+  },
+  {
+   "name": "Mobile / Tablet",
+   "pct": null,
+   "note": "2026Q1銷售產品應用"
+  },
+  {
+   "name": "TV",
+   "pct": null,
+   "note": "2026Q1銷售產品應用"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "面板零組件",
+  "車用電子"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

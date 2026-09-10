@@ -1,0 +1,38 @@
+{
+ "code": "3663",
+ "name": "鑫科",
+ "conf_date": "2026-07-03",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:11",
+ "segments": [
+  {
+   "name": "貴金屬",
+   "pct": 76.0,
+   "note": "Precious metals"
+  },
+  {
+   "name": "鈦金屬與鎳",
+   "pct": 11.0,
+   "note": "Titanium/Nickel"
+  },
+  {
+   "name": "靶材與其他",
+   "pct": 7.0,
+   "note": "Targets & others"
+  },
+  {
+   "name": "金紅石",
+   "pct": 6.0,
+   "note": "Rutile"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "半導體材料",
+  "面板零組件",
+  "鋼鐵",
+  "先進封裝/CoWoS"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

@@ -1,0 +1,37 @@
+{
+ "code": "5287",
+ "name": "數字",
+ "conf_date": "2026-06-25",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:14",
+ "segments": [
+  {
+   "name": "591",
+   "pct": 65.0,
+   "note": "房屋交易"
+  },
+  {
+   "name": "8591",
+   "pct": 20.0,
+   "note": "寶物交易"
+  },
+  {
+   "name": "8891",
+   "pct": 9.0,
+   "note": "汽車交易"
+  },
+  {
+   "name": "518",
+   "pct": 6.0,
+   "note": "熊班人力"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "資訊服務",
+  "軟體/SaaS",
+  "電商"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

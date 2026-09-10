@@ -1,0 +1,16 @@
+{
+ "code": "6598",
+ "name": "ABC-KY",
+ "conf_date": "2026-05-14",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:55",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "醫療器材",
+  "健康檢測",
+  "新藥研發"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

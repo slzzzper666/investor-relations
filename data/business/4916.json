@@ -1,0 +1,33 @@
+{
+ "code": "4916",
+ "name": "事欣科",
+ "conf_date": "2026-04-15",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:26",
+ "segments": [
+  {
+   "name": "Aerospace& Defense",
+   "pct": 40.0,
+   "note": "Backlog as of March"
+  },
+  {
+   "name": "Gaming",
+   "pct": 37.0,
+   "note": "Backlog as of March"
+  },
+  {
+   "name": "Communication",
+   "pct": 18.0,
+   "note": "Backlog as of March"
+  }
+ ],
+ "as_of": "2026",
+ "tags": [
+  "工業電腦",
+  "衛星通訊",
+  "車用電子",
+  "自動化/機器人"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

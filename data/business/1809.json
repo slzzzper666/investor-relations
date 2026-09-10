@@ -1,0 +1,17 @@
+{
+ "code": "1809",
+ "name": "中釉",
+ "conf_date": "2026-06-23",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:41",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "玻璃陶瓷",
+  "化工",
+  "建材",
+  "半導體材料"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

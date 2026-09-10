@@ -1,0 +1,28 @@
+{
+ "code": "3518",
+ "name": "柏騰",
+ "conf_date": "2026-07-08",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:54",
+ "segments": [
+  {
+   "name": "真空鍍膜(PVD)",
+   "pct": 99.0,
+   "note": "主要產品及其應用"
+  },
+  {
+   "name": "碳化矽(SiC)",
+   "pct": 1.0,
+   "note": "主要產品及其應用"
+  }
+ ],
+ "as_of": "2026",
+ "tags": [
+  "化合物半導體",
+  "半導體材料",
+  "筆電/PC",
+  "散熱"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

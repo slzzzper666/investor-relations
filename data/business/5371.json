@@ -1,0 +1,36 @@
+{
+ "code": "5371",
+ "name": "中光電",
+ "conf_date": "2026-07-28",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:08",
+ "segments": [
+  {
+   "name": "Display Business",
+   "pct": 52.0,
+   "note": "2Q26營收占比"
+  },
+  {
+   "name": "Others",
+   "pct": 20.0,
+   "note": "2Q26營收占比"
+  },
+  {
+   "name": "Optoma",
+   "pct": 15.0,
+   "note": "2Q26營收占比"
+  },
+  {
+   "name": "Young Optics",
+   "pct": 13.0,
+   "note": "2Q26營收占比"
+  }
+ ],
+ "as_of": "",
+ "tags": [
+  "面板零組件",
+  "光學鏡頭"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

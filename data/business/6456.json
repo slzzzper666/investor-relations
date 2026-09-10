@@ -1,0 +1,37 @@
+{
+ "code": "6456",
+ "name": "GIS-KY",
+ "conf_date": "2026-06-29",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:07",
+ "segments": [
+  {
+   "name": "平板電腦觸控顯示模組",
+   "pct": 45.0,
+   "note": ""
+  },
+  {
+   "name": "筆電觸控顯示模組",
+   "pct": 32.0,
+   "note": ""
+  },
+  {
+   "name": "指紋辨識模組",
+   "pct": 16.0,
+   "note": ""
+  },
+  {
+   "name": "其他",
+   "pct": 7.0,
+   "note": ""
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "面板零組件",
+  "筆電/PC",
+  "手機"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.1-flash-lite"
+}

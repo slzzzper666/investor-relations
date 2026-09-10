@@ -1,0 +1,16 @@
+{
+ "code": "2645",
+ "name": "長榮航太",
+ "conf_date": "2026-05-20",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:46",
+ "segments": [],
+ "as_of": "2026 Q1",
+ "tags": [
+  "航空",
+  "機械設備",
+  "無人機"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.1-flash-lite"
+}

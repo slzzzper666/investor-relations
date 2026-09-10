@@ -1,0 +1,66 @@
+{
+ "code": "2707",
+ "name": "晶華",
+ "conf_date": "2026-05-27",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:09",
+ "segments": [
+  {
+   "name": "晶華酒店本館",
+   "pct": 59.0,
+   "note": ""
+  },
+  {
+   "name": "台南晶英",
+   "pct": 12.0,
+   "note": ""
+  },
+  {
+   "name": "麗晶精品",
+   "pct": 9.0,
+   "note": ""
+  },
+  {
+   "name": "晶泉丰旅",
+   "pct": 7.0,
+   "note": ""
+  },
+  {
+   "name": "捷絲旅",
+   "pct": 6.0,
+   "note": ""
+  },
+  {
+   "name": "天祥晶華",
+   "pct": 3.0,
+   "note": ""
+  },
+  {
+   "name": "故宮晶華",
+   "pct": 2.0,
+   "note": ""
+  },
+  {
+   "name": "晶華管顧",
+   "pct": 1.0,
+   "note": ""
+  },
+  {
+   "name": "晶華公寓",
+   "pct": 1.0,
+   "note": ""
+  },
+  {
+   "name": "SILKS GLOBAL",
+   "pct": 0.0,
+   "note": ""
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "觀光旅館",
+  "餐飲"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.6-flash"
+}

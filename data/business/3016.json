@@ -1,0 +1,28 @@
+{
+ "code": "3016",
+ "name": "嘉晶",
+ "conf_date": "2026-04-29",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:02",
+ "segments": [
+  {
+   "name": "矽磊晶",
+   "pct": null,
+   "note": "依據2026 Q1營收結構圖判讀"
+  },
+  {
+   "name": "化合物磊晶",
+   "pct": null,
+   "note": "依據2026 Q1營收結構圖判讀"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "半導體材料",
+  "化合物半導體",
+  "功率半導體",
+  "光通訊"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.1-flash-lite"
+}

@@ -1,0 +1,42 @@
+{
+ "code": "6908",
+ "name": "宏碁遊戲-創",
+ "conf_date": "2026-03-04",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:05",
+ "segments": [
+  {
+   "name": "TW",
+   "pct": 50.0,
+   "note": "台灣子公司營收比例"
+  },
+  {
+   "name": "WINKING",
+   "pct": 27.0,
+   "note": "唯晶科技子公司營收比例"
+  },
+  {
+   "name": "PH",
+   "pct": 10.0,
+   "note": "菲律賓子公司營收比例"
+  },
+  {
+   "name": "HK",
+   "pct": 8.0,
+   "note": "香港子公司營收比例"
+  },
+  {
+   "name": "SG",
+   "pct": 5.0,
+   "note": "新加坡子公司營收比例"
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "遊戲",
+  "電商",
+  "軟體/SaaS"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

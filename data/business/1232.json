@@ -1,0 +1,14 @@
+{
+ "code": "1232",
+ "name": "大統益",
+ "conf_date": "2026-03-20",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:05",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "食品"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.1-flash-lite"
+}

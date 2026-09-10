@@ -1,0 +1,32 @@
+{
+ "code": "2236",
+ "name": "百達-KY",
+ "conf_date": "2026-09-10",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:37",
+ "segments": [
+  {
+   "name": "Components Manufacturing",
+   "pct": 85.0,
+   "note": "核心業務佔比"
+  },
+  {
+   "name": "Press Machine Manufacturing",
+   "pct": 10.0,
+   "note": "核心業務佔比"
+  },
+  {
+   "name": "Autonomous Robotics",
+   "pct": 5.0,
+   "note": "核心業務佔比"
+  }
+ ],
+ "as_of": "",
+ "tags": [
+  "汽車零組件",
+  "自動化/機器人",
+  "機械設備"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

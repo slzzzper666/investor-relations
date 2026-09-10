@@ -1,0 +1,17 @@
+{
+ "code": "5314",
+ "name": "世紀*",
+ "conf_date": "2026-04-15",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:40",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "IC設計",
+  "無人機",
+  "電商",
+  "保險"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

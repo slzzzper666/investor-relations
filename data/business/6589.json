@@ -1,0 +1,30 @@
+{
+ "code": "6589",
+ "name": "台康生技",
+ "conf_date": "2026-04-29",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:19",
+ "segments": [
+  {
+   "name": "CDMO相關收入",
+   "pct": null,
+   "note": ""
+  },
+  {
+   "name": "藥品銷售收入",
+   "pct": null,
+   "note": ""
+  },
+  {
+   "name": "授權金收入",
+   "pct": null,
+   "note": ""
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "新藥研發"
+ ],
+ "confidence": "medium",
+ "model": "gemini-3.6-flash"
+}

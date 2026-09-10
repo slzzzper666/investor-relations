@@ -1,0 +1,26 @@
+{
+ "code": "1324",
+ "name": "地球",
+ "conf_date": "2026-03-27",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:06",
+ "segments": [
+  {
+   "name": "內銷",
+   "pct": 58.0,
+   "note": "2025年度內銷營收比重"
+  },
+  {
+   "name": "外銷",
+   "pct": 42.0,
+   "note": "2025年度外銷營收比重"
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "化工",
+  "橡膠輪胎"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

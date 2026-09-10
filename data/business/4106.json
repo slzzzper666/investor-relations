@@ -1,0 +1,40 @@
+{
+ "code": "4106",
+ "name": "雃博",
+ "conf_date": "2026-04-08",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:58",
+ "segments": [
+  {
+   "name": "PAC 壓瘡照護",
+   "pct": 45.0,
+   "note": "2025年營收比重"
+  },
+  {
+   "name": "RT 呼吸治療",
+   "pct": 19.0,
+   "note": "2025年營收比重"
+  },
+  {
+   "name": "Mobility 行動輔具",
+   "pct": 17.0,
+   "note": "2025年營收比重"
+  },
+  {
+   "name": "IPC 間歇性氣體加壓循環器",
+   "pct": 10.0,
+   "note": "2025年營收比重"
+  },
+  {
+   "name": "ME 滅菌鍋",
+   "pct": 6.0,
+   "note": "2025年營收比重"
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "醫療器材"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

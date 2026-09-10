@@ -1,0 +1,31 @@
+{
+ "code": "1256",
+ "name": "鮮活果汁-KY",
+ "conf_date": "2026-05-26",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:43",
+ "segments": [
+  {
+   "name": "果汁",
+   "pct": 71.9,
+   "note": "2026年第一季產品別占比"
+  },
+  {
+   "name": "果粒",
+   "pct": 26.6,
+   "note": "2026年第一季產品別占比"
+  },
+  {
+   "name": "其他",
+   "pct": 1.5,
+   "note": "2026年第一季產品別占比"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "食品",
+  "餐飲"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

@@ -1,0 +1,26 @@
+{
+ "code": "6996",
+ "name": "力領科技",
+ "conf_date": "2026-05-21",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:27",
+ "segments": [
+  {
+   "name": "車用",
+   "pct": 88.96,
+   "note": "車用顯示器驅動晶片"
+  },
+  {
+   "name": "工控",
+   "pct": 11.04,
+   "note": "工控顯示器驅動IC"
+  }
+ ],
+ "as_of": "2026",
+ "tags": [
+  "IC設計",
+  "車用電子"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

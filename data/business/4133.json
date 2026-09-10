@@ -1,0 +1,31 @@
+{
+ "code": "4133",
+ "name": "亞諾法",
+ "conf_date": "2026-06-11",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:05",
+ "segments": [
+  {
+   "name": "抗體試劑",
+   "pct": 63.0,
+   "note": "2026 Jan~May 營收比重"
+  },
+  {
+   "name": "其他",
+   "pct": 22.0,
+   "note": "2026 Jan~May 營收比重"
+  },
+  {
+   "name": "蛋白質",
+   "pct": 15.0,
+   "note": "2026 Jan~May 營收比重"
+  }
+ ],
+ "as_of": "2026",
+ "tags": [
+  "健康檢測",
+  "新藥研發"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

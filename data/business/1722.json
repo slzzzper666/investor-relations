@@ -1,0 +1,17 @@
+{
+ "code": "1722",
+ "name": "台肥",
+ "conf_date": "2026-06-17",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:56",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "化工",
+  "農業科技",
+  "資產開發",
+  "觀光旅館"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.1-flash-lite"
+}

@@ -1,0 +1,36 @@
+{
+ "code": "2332",
+ "name": "友訊",
+ "conf_date": "2026-06-16",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:27",
+ "segments": [
+  {
+   "name": "Others",
+   "pct": 41.0,
+   "note": "1Q26營收產品別"
+  },
+  {
+   "name": "Switch & Security",
+   "pct": 38.0,
+   "note": "1Q26營收產品別"
+  },
+  {
+   "name": "Mobile & Broadband",
+   "pct": 12.0,
+   "note": "1Q26營收產品別"
+  },
+  {
+   "name": "Wireless & IoT",
+   "pct": 9.0,
+   "note": "1Q26營收產品別"
+  }
+ ],
+ "as_of": "",
+ "tags": [
+  "網通設備",
+  "自動化/機器人"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

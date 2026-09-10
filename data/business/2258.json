@@ -1,0 +1,15 @@
+{
+ "code": "2258",
+ "name": "鴻華先進-創",
+ "conf_date": "2026-06-23",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:50",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "電動車",
+  "車用電子"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.1-flash-lite"
+}

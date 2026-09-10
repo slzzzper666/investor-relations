@@ -1,0 +1,32 @@
+{
+ "code": "8227",
+ "name": "巨有科技",
+ "conf_date": "2026-05-27",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:24",
+ "segments": [
+  {
+   "name": "量產收入",
+   "pct": 67.0,
+   "note": "2026/Q1 量產收入佔比"
+  },
+  {
+   "name": "工程收入",
+   "pct": 33.0,
+   "note": "2026/Q1 工程收入佔比"
+  },
+  {
+   "name": "其他收入",
+   "pct": 0.0,
+   "note": "2026/Q1 其他收入佔比"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "IC設計",
+  "矽智財IP",
+  "先進封裝/CoWoS"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

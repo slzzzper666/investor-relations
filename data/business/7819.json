@@ -1,0 +1,17 @@
+{
+ "code": "7819",
+ "name": "精誠金融",
+ "conf_date": "2026-04-28",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:36",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "資訊服務",
+  "軟體/SaaS",
+  "數位金融",
+  "資安"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

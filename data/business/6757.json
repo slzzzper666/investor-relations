@@ -1,0 +1,25 @@
+{
+ "code": "6757",
+ "name": "台灣虎航",
+ "conf_date": "2026-06-16",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:04",
+ "segments": [
+  {
+   "name": "票收",
+   "pct": 78.7,
+   "note": "2026年1-3月客運收入組成"
+  },
+  {
+   "name": "附帶收入",
+   "pct": 21.3,
+   "note": "含超重行李、訂位手續費等"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "航空"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.1-flash-lite"
+}

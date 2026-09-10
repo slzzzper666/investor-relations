@@ -1,0 +1,38 @@
+{
+ "code": "4919",
+ "name": "新唐",
+ "conf_date": "2026-05-05",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:51",
+ "segments": [
+  {
+   "name": "Automotive & Industrial",
+   "pct": 39.0,
+   "note": ""
+  },
+  {
+   "name": "AI & Computing",
+   "pct": 35.0,
+   "note": ""
+  },
+  {
+   "name": "Consumer",
+   "pct": 15.0,
+   "note": ""
+  },
+  {
+   "name": "Communication & Others",
+   "pct": 11.0,
+   "note": ""
+  }
+ ],
+ "as_of": "",
+ "tags": [
+  "IC設計",
+  "車用電子",
+  "AI伺服器",
+  "感測元件"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.1-flash-lite"
+}

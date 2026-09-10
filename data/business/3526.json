@@ -1,0 +1,17 @@
+{
+ "code": "3526",
+ "name": "凡甲",
+ "conf_date": "2026-07-01",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:11",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "連接器",
+  "車用電子",
+  "電動車",
+  "伺服器"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

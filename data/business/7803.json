@@ -1,0 +1,42 @@
+{
+ "code": "7803",
+ "name": "雲象科技-創",
+ "conf_date": "2026-06-30",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:02",
+ "segments": [
+  {
+   "name": "aetherSlide",
+   "pct": 93.0,
+   "note": "2025年產品營收佔比"
+  },
+  {
+   "name": "AI Service",
+   "pct": 4.0,
+   "note": "2025年產品營收佔比"
+  },
+  {
+   "name": "aetherAI Endo",
+   "pct": 1.0,
+   "note": "2025年產品營收佔比"
+  },
+  {
+   "name": "aetherWeb",
+   "pct": 1.0,
+   "note": "2025年產品營收佔比"
+  },
+  {
+   "name": "aetherAI Hema",
+   "pct": 1.0,
+   "note": "2025年產品營收佔比"
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "軟體/SaaS",
+  "醫療器材",
+  "健康檢測"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

@@ -1,0 +1,43 @@
+{
+ "code": "1785",
+ "name": "光洋科",
+ "conf_date": "2026-06-01",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:22",
+ "segments": [
+  {
+   "name": "儲存媒體",
+   "pct": 49.0,
+   "note": "2026年Q1 VAS收入產業別佔比"
+  },
+  {
+   "name": "電子半導體",
+   "pct": 31.0,
+   "note": "2026年Q1 VAS收入產業別佔比"
+  },
+  {
+   "name": "其他",
+   "pct": 9.0,
+   "note": "2026年Q1 VAS收入產業別佔比"
+  },
+  {
+   "name": "顯示",
+   "pct": 8.0,
+   "note": "2026年Q1 VAS收入產業別佔比"
+  },
+  {
+   "name": "特化",
+   "pct": 3.0,
+   "note": "2026年Q1 VAS收入產業別佔比"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "半導體材料",
+  "面板",
+  "LED",
+  "儲能"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

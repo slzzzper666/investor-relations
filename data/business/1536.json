@@ -1,0 +1,31 @@
+{
+ "code": "1536",
+ "name": "和大",
+ "conf_date": "2026-07-22",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:23",
+ "segments": [
+  {
+   "name": "汽車",
+   "pct": 85.0,
+   "note": "Auto"
+  },
+  {
+   "name": "其他",
+   "pct": 11.0,
+   "note": "Others"
+  },
+  {
+   "name": "機車",
+   "pct": 4.0,
+   "note": "Motorbike"
+  }
+ ],
+ "as_of": "",
+ "tags": [
+  "汽車零組件",
+  "電動車"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash"
+}

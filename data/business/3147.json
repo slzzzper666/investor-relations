@@ -1,0 +1,43 @@
+{
+ "code": "3147",
+ "name": "大綜",
+ "conf_date": "2026-04-22",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:37",
+ "segments": [
+  {
+   "name": "主機 Server",
+   "pct": 63.0,
+   "note": "FY26 1Q 產品結構"
+  },
+  {
+   "name": "基礎建設軟硬體",
+   "pct": 15.0,
+   "note": "FY26 1Q 產品結構"
+  },
+  {
+   "name": "軟硬體解決方案",
+   "pct": 10.0,
+   "note": "FY26 1Q 產品結構"
+  },
+  {
+   "name": "諮詢顧問,應用軟體,合約服務",
+   "pct": 9.0,
+   "note": "FY26 1Q 產品結構"
+  },
+  {
+   "name": "資安,軟體,雲端",
+   "pct": 3.0,
+   "note": "FY26 1Q 產品結構"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "資訊服務",
+  "雲端服務",
+  "資安",
+  "AI伺服器"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

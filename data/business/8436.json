@@ -1,0 +1,45 @@
+{
+ "code": "8436",
+ "name": "大江",
+ "conf_date": "2026-06-29",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:12",
+ "segments": [
+  {
+   "name": "CN",
+   "pct": 24.0,
+   "note": "2026年1-5月區域營收-By出貨地"
+  },
+  {
+   "name": "US",
+   "pct": 21.0,
+   "note": "2026年1-5月區域營收-By出貨地"
+  },
+  {
+   "name": "EU",
+   "pct": 17.0,
+   "note": "2026年1-5月區域營收-By出貨地"
+  },
+  {
+   "name": "AS",
+   "pct": 16.0,
+   "note": "2026年1-5月區域營收-By出貨地"
+  },
+  {
+   "name": "TW",
+   "pct": 16.0,
+   "note": "2026年1-5月區域營收-By出貨地"
+  },
+  {
+   "name": "Others",
+   "pct": 6.0,
+   "note": "2026年1-5月區域營收-By出貨地"
+  }
+ ],
+ "as_of": "2026",
+ "tags": [
+  "美妝保健"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

@@ -1,0 +1,16 @@
+{
+ "code": "8410",
+ "name": "森田",
+ "conf_date": "2026-03-31",
+ "source": "pdf",
+ "built_at": "2026-09-11 03:43",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "筆電/PC",
+  "面板零組件",
+  "化工"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

@@ -1,0 +1,15 @@
+{
+ "code": "6951",
+ "name": "青新-創",
+ "conf_date": "2026-06-04",
+ "source": "pdf",
+ "built_at": "2026-09-11 02:51",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "環保工程",
+  "化工"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}
