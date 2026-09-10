@@ -16,6 +16,24 @@ for d in (DATA_DIR, AUDIO_DIR, TRANSCRIPT_DIR):
 load_dotenv(BASE_DIR / ".env")
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
+
+
+def _gemini_keys() -> list[str]:
+    """所有可用的 Gemini 金鑰（GEMINI_API_KEY、GEMINI_API_KEY_2、_3…）。
+
+    免費額度是「每金鑰每模型每日」分開計，多掛幾組不同 Google 帳號的金鑰，
+    可用量就等倍數放大。順序即優先序，去重避免重複計算額度。
+    """
+    keys, seen = [], set()
+    for name in ["GEMINI_API_KEY"] + [f"GEMINI_API_KEY_{i}" for i in range(2, 10)]:
+        k = os.getenv(name, "").strip()
+        if k and k not in seen:
+            seen.add(k)
+            keys.append(k)
+    return keys
+
+
+GEMINI_API_KEYS = _gemini_keys()
 GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "")
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "")

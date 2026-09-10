@@ -5,7 +5,6 @@
 """
 from datetime import date
 
-from google import genai
 from google.genai import types
 from pydantic import BaseModel
 
@@ -66,17 +65,15 @@ def _render_blocks(groups: list[dict], econ: list[dict]) -> str:
 def generate_macro_ai(groups: list[dict], econ: list[dict]) -> dict:
     """回傳 {asof, ai:{overall, equity:{analysis,expectation}, bond:{analysis},
     realestate:{analysis}}}；無金鑰或全模型失敗時拋出例外，由呼叫端退回基準版。"""
-    if not config.GEMINI_API_KEY:
+    if not config.GEMINI_API_KEYS:
         raise RuntimeError("未設定 GEMINI_API_KEY")
 
     prompt = _PROMPT.format(today=date.today().isoformat(),
                             blocks=_render_blocks(groups, econ))
-    client = genai.Client(api_key=config.GEMINI_API_KEY,
-                          http_options=types.HttpOptions(timeout=120_000))
     resp = generate_with_retry(
-        client,
-        contents=[prompt],
-        config=types.GenerateContentConfig(
+        [prompt],
+        timeout_ms=120_000,
+        config_=types.GenerateContentConfig(
             temperature=0.3,
             system_instruction=_SYSTEM,
             response_mime_type="application/json",

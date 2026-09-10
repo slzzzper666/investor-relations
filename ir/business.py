@@ -14,11 +14,9 @@ import json
 import re
 from pathlib import Path
 
-from google import genai
 from google.genai import types
 from pydantic import BaseModel, Field
 
-import config
 from ir.gemini_util import all_exhausted, generate_with_retry
 from ir.logger import get_logger
 
@@ -101,9 +99,7 @@ class BusinessProfile(BaseModel):
     confidence: str = "none"
 
 
-def _client() -> genai.Client:
-    return genai.Client(api_key=config.GEMINI_API_KEY,
-                        http_options=types.HttpOptions(timeout=600_000))
+MAX_INLINE_PDF = 18 * 1024 * 1024   # 單次請求上限約 20MB，留安全邊際
 
 
 _SEASON_WORDS = {"一": 1, "二": 2, "三": 3, "四": 4,
@@ -193,39 +189,36 @@ def extract(company: str, code: str, pdf_path: Path | None = None,
     if all_exhausted():
         raise RuntimeError("Gemini 今日額度已耗盡")
 
-    client = _client()
     taxonomy = "、".join(TAXONOMY)
     if pdf_path is not None:
+        # PDF 直接 inline：不走 Files API，就沒有「上傳的檔案綁定該金鑰」的問題，
+        # 多金鑰輪替時不必為了換金鑰重新上傳，也省一趟往返。
+        data = pdf_path.read_bytes()
+        if len(data) > MAX_INLINE_PDF:
+            raise ValueError(f"簡報過大（{len(data) / 1e6:.1f}MB），超出單次請求上限")
         prompt = _PROMPT.format(company=company, code=code, taxonomy=taxonomy,
-                                content="資料見附件簡報 PDF。")
-        f = client.files.upload(file=str(pdf_path))
-        contents: list = [f, prompt]
+                                content="資料見所附簡報 PDF。")
+        contents: list = [
+            types.Part.from_bytes(data=data, mime_type="application/pdf"),
+            prompt,
+        ]
     else:
         prompt = _PROMPT.format(company=company, code=code, taxonomy=taxonomy,
                                 content="法說會逐字稿如下：\n" + transcript[:30000])
         contents = [prompt]
-        f = None
 
-    try:
-        resp = generate_with_retry(
-            client,
-            contents=contents,
-            config=types.GenerateContentConfig(
-                temperature=0.1,
-                system_instruction=_SYSTEM,
-                response_mime_type="application/json",
-                response_schema=BusinessProfile,
-            ),
-        )
-        parsed = resp.parsed
-        if not isinstance(parsed, BusinessProfile):
-            parsed = BusinessProfile.model_validate(json.loads(resp.text))
-    finally:
-        if f is not None:
-            try:
-                client.files.delete(name=f.name)
-            except Exception:  # noqa: BLE001
-                pass
+    resp = generate_with_retry(
+        contents,
+        config_=types.GenerateContentConfig(
+            temperature=0.1,
+            system_instruction=_SYSTEM,
+            response_mime_type="application/json",
+            response_schema=BusinessProfile,
+        ),
+    )
+    parsed = resp.parsed
+    if not isinstance(parsed, BusinessProfile):
+        parsed = BusinessProfile.model_validate(json.loads(resp.text))
 
     out = _clean(parsed)
     # 記下實際產出的模型：降級鏈會依額度自動換模型，出問題時要查得到是誰做的

@@ -38,10 +38,12 @@ jobs:
         continue-on-error: true   # 美股是外部網路相依的新步驟；失敗也不可拖垮台股/總經部署
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_API_KEY_2: ${{ secrets.GEMINI_API_KEY_2 }}
         run: python site/build_us.py
       - name: 建置總經未來頁資料（yfinance 市場數據 + FRED 經濟數據 + Gemini AI 分析）
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_API_KEY_2: ${{ secrets.GEMINI_API_KEY_2 }}
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
         run: python site/build_macro.py
       - uses: actions/configure-pages@v5

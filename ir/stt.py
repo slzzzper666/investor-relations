@@ -9,7 +9,6 @@ import tempfile
 import time
 from pathlib import Path
 
-from google import genai
 from google.genai import types
 
 import config
@@ -28,13 +27,7 @@ _PROMPT = (
 )
 
 
-def _client() -> genai.Client:
-    # 大音檔的轉錄要等很久，拉長 HTTP 逾時到 15 分鐘
-    return genai.Client(api_key=config.GEMINI_API_KEY,
-                        http_options=types.HttpOptions(timeout=900_000))
-
-
-def _upload_and_wait(client: genai.Client, path: Path):
+def _upload_and_wait(client, path: Path):
     f = client.files.upload(file=str(path))
     while f.state and f.state.name == "PROCESSING":
         time.sleep(5)
@@ -118,25 +111,36 @@ def transcribe(audio_path: Path) -> str:
         except Exception as e:
             log.warning("Groq 轉錄失敗，改用 Gemini：%s", e)
 
-    client = _client()
     log.info("上傳音檔到 Gemini：%s（%.1f MB）", audio_path.name,
              audio_path.stat().st_size / 1e6)
-    f = _upload_and_wait(client, audio_path)
 
-    resp = generate_with_retry(
-        client,
-        model="gemini-2.5-flash",
-        contents=[f, _PROMPT],
-        config=types.GenerateContentConfig(temperature=0.1),
-    )
-    text = (resp.text or "").strip()
+    # 音檔動輒數十 MB，超過單次請求上限、只能走 Files API，而上傳的檔案綁定
+    # 該金鑰。所以這裡把「上傳」包成 callable：輪替到哪組金鑰就用哪組上傳，
+    # gemini_util 每組金鑰只會呼叫一次。
+    uploaded: list[tuple] = []
+
+    def _build(client):
+        f = _upload_and_wait(client, audio_path)
+        uploaded.append((client, f))
+        return [f, _PROMPT]
+
+    try:
+        resp = generate_with_retry(
+            _build,
+            config_=types.GenerateContentConfig(temperature=0.1),
+            timeout_ms=900_000,      # 長音檔轉錄很慢，拉長 HTTP 逾時
+        )
+        text = (resp.text or "").strip()
+    finally:
+        for client, f in uploaded:
+            try:
+                client.files.delete(name=f.name)
+            except Exception:
+                pass
+
     if len(text) < 100:
         raise RuntimeError(f"逐字稿過短（{len(text)} 字），疑似轉錄失敗")
     log.info("逐字稿完成：%s（%d 字）", audio_path.name, len(text))
-    try:
-        client.files.delete(name=f.name)
-    except Exception:
-        pass
     return _collapse_loops(text)
 
 

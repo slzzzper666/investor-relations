@@ -3,10 +3,8 @@
 輸入逐字稿（有影音）或簡報 PDF（無影音時的降級來源），
 輸出結構化的重點摘要 + AI 觀點與未來方向分析。
 """
-import time
 from pathlib import Path
 
-from google import genai
 from google.genai import types
 from pydantic import BaseModel
 
@@ -48,11 +46,6 @@ class AnalysisQuotaExhausted(Exception):
 
 class _GroqRateLimited(Exception):
     pass
-
-
-def _client() -> genai.Client:
-    return genai.Client(api_key=config.GEMINI_API_KEY,
-                        http_options=types.HttpOptions(timeout=600_000))
 
 
 def _pdf_text(pdf_path: Path) -> str:
@@ -105,24 +98,24 @@ def analyze(company: str, code: str, conf_date: str,
 
 def _analyze_gemini(company: str, code: str, conf_date: str, source_desc: str,
                     transcript: str, pdf_path: Path | None) -> dict:
-    client = _client()
     if transcript:
         prompt = _PROMPT.format(company=company, code=code, date=conf_date,
                                 source_desc=source_desc, content=transcript)
         contents: list = [prompt]
     else:
+        # PDF 直接 inline，不走 Files API：上傳的檔案綁定該金鑰，
+        # 多金鑰輪替時會卡住，inline 沒這問題也省一趟往返。
         prompt = _PROMPT.format(company=company, code=code, date=conf_date,
-                                source_desc=source_desc, content="（見附件 PDF）")
-        f = client.files.upload(file=str(pdf_path))
-        while f.state and f.state.name == "PROCESSING":
-            time.sleep(3)
-            f = client.files.get(name=f.name)
-        contents = [f, prompt]
+                                source_desc=source_desc, content="（見所附 PDF）")
+        contents = [
+            types.Part.from_bytes(data=pdf_path.read_bytes(),
+                                  mime_type="application/pdf"),
+            prompt,
+        ]
 
     resp = generate_with_retry(
-        client,
-        contents=contents,
-        config=types.GenerateContentConfig(
+        contents,
+        config_=types.GenerateContentConfig(
             temperature=0.3,
             system_instruction=_SYSTEM,
             response_mime_type="application/json",
