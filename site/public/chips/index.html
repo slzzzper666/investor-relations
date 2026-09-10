@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0A0A0B">
+<title>三籌資本</title>
+<link rel="icon" type="image/svg+xml" href="logo.svg">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="三籌資本">
+<meta property="og:title" content="三籌資本 ｜ 每日籌碼戰報 2026/09/10（四）">
+<meta property="og:description" content="台股三大法人 × 期貨籌碼 × 主力分點 每日彙整">
+<meta property="og:image" content="icon-512.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0A0A0B; --bg2:#101013; --bg3:#16161A; --line:rgba(255,255,255,.08);
+  --line2:rgba(255,255,255,.13);
+  --txt:#F5F5F6; --txt2:#A1A1AA; --txt3:#71717A;
+  --buy:#FF6B6B; --sell:#34D399; --accent:#8B8CF8;
+  --disp:"Space Grotesk",sans-serif; --sans:"Noto Sans TC","Space Grotesk",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--txt);font-family:var(--sans);line-height:1.65;
+  -webkit-font-smoothing:antialiased;font-feature-settings:"tnum";position:relative;
+  overflow-x:hidden}
+/* 唯一裝飾：頂部柔和漸層光暈 */
+body::before{content:"";position:fixed;top:-30vh;left:50%;transform:translateX(-50%);
+  width:130vw;height:80vh;z-index:0;pointer-events:none;filter:blur(80px);opacity:.5;
+  background:
+    radial-gradient(38% 60% at 32% 50%, rgba(139,140,248,.22), transparent 70%),
+    radial-gradient(34% 56% at 62% 38%, rgba(52,211,153,.12), transparent 70%),
+    radial-gradient(40% 60% at 78% 60%, rgba(255,107,107,.12), transparent 70%)}
+.wrap{max-width:780px;margin:0 auto;padding:64px 22px 96px;position:relative;z-index:1}
+
+/* 抬頭 */
+.masthead{margin-bottom:64px}
+.logobar{display:flex;align-items:center;gap:13px;margin-bottom:30px}
+.logo{width:38px;height:38px;border-radius:11px;flex:none}
+.logobar .wm{font-family:var(--sans);font-weight:700;font-size:19px;letter-spacing:.5px;color:var(--txt)}
+.kicker{font-family:var(--disp);font-weight:500;font-size:12px;letter-spacing:3.5px;
+  text-transform:uppercase;color:var(--txt3);margin-bottom:18px}
+h1.head{font-family:var(--sans);font-weight:900;letter-spacing:-.5px;
+  font-size:clamp(40px,8.5vw,68px);line-height:1.04;color:var(--txt)}
+.head .sub{display:block;font-size:clamp(18px,3vw,24px);font-weight:500;color:var(--txt2);
+  margin-top:14px;letter-spacing:0}
+.lede{margin-top:24px;font-size:15px;color:var(--txt2);max-width:48ch;line-height:1.75}
+.lede b{color:var(--txt);font-weight:600}
+
+/* 市場概況 */
+.market{background:var(--bg2);border:1px solid var(--line);border-radius:18px;
+  padding:22px 24px;margin-bottom:10px}
+.mq-row{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.mq-il{font-family:var(--disp);font-size:11px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--txt3);margin-bottom:6px}
+.mq-iv{font-family:var(--disp);font-size:40px;font-weight:600;letter-spacing:-1px;color:var(--txt);
+  line-height:1;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.mq-chg{font-size:16px;font-weight:600}
+.mq-side{text-align:right}
+.mq-sl{font-size:12px;color:var(--txt3);margin-bottom:5px}
+.mq-sv{font-family:var(--disp);font-size:22px;font-weight:600;color:var(--txt)}
+.mq-sv span{font-size:12px;color:var(--txt3);margin-left:4px;font-weight:400}
+.mq-amts{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:18px}
+@media(max-width:600px){.mq-amts{grid-template-columns:repeat(2,1fr)}}
+.mq-amt{background:var(--bg2);padding:12px 14px;text-align:center}
+.mq-al{display:block;font-size:12px;color:var(--txt2);margin-bottom:4px}
+.mq-av{font-family:var(--disp);font-size:18px;font-weight:600}
+
+/* 區段 */
+section{margin-top:58px}
+.sec-h{display:flex;align-items:baseline;justify-content:space-between;gap:14px;
+  padding-bottom:16px;margin-bottom:24px;border-bottom:1px solid var(--line)}
+.sec-h h2{font-family:var(--sans);font-weight:700;font-size:23px;letter-spacing:.3px;color:var(--txt)}
+.sec-h .en{font-family:var(--disp);font-size:11px;letter-spacing:2.5px;text-transform:uppercase;
+  color:var(--txt3);white-space:nowrap}
+
+/* 卡片通用 */
+.card{background:var(--bg2);border:1px solid var(--line);border-radius:18px;padding:22px 24px}
+
+/* 法人 */
+.invblock{background:var(--bg2);border:1px solid var(--line);border-radius:18px;
+  padding:20px 22px;margin-bottom:14px}
+.invhead{display:flex;align-items:baseline;gap:11px;margin-bottom:14px}
+.invhead .zh{font-weight:700;font-size:16px;color:var(--txt)}
+.invhead .en{font-family:var(--disp);font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:var(--txt3)}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:14px 30px}
+@media(max-width:600px){.cols{grid-template-columns:1fr;gap:18px}}
+.ch{font-size:12px;font-weight:600;color:var(--txt3);letter-spacing:1px;margin-bottom:10px;
+  display:flex;justify-content:space-between;align-items:baseline}
+.ch .u{font-size:10.5px;color:var(--txt3);font-weight:400}
+ul.rank{list-style:none}
+ul.rank li{display:flex;align-items:center;gap:11px;padding:7px 0;font-size:14.5px}
+ul.rank li+li{border-top:1px solid var(--line)}
+.rk{font-family:var(--disp);font-weight:500;width:16px;text-align:center;flex:none;color:var(--txt3);font-size:13px}
+.code{font-family:var(--disp);color:var(--txt2);flex:none;width:46px;font-size:13.5px;font-weight:500}
+.nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--txt)}
+.amt{font-family:var(--disp);font-weight:600;flex:none;font-size:14.5px}
+.amt.buy,.buy{color:var(--buy)}.amt.sell,.sell{color:var(--sell)}
+.tag{font-size:11px;color:var(--accent);margin-left:8px;font-weight:500;
+  background:rgba(139,140,248,.12);border-radius:5px;padding:1px 7px}
+.empty{color:var(--txt3)}
+
+/* 量表 */
+.meters{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:14px}
+@media(max-width:600px){.meters{grid-template-columns:1fr}}
+.meter{background:var(--bg2);border:1px solid var(--line);border-radius:18px;padding:22px 22px 20px}
+.m-read{font-family:var(--disp);font-weight:600;font-size:34px;letter-spacing:-.5px;color:var(--txt)}
+.m-read.hi{color:var(--txt)}
+.m-bar{position:relative;height:5px;border-radius:3px;background:var(--bg3);margin:18px 0 14px}
+.m-fill{position:absolute;top:0;height:5px;border-radius:3px;background:var(--accent);opacity:.85}
+.m-neutral{position:absolute;top:-3px;width:2px;height:11px;border-radius:1px;
+  background:var(--txt3);transform:translateX(-1px)}
+.m-dot{position:absolute;top:50%;width:11px;height:11px;border-radius:50%;background:var(--txt);
+  transform:translate(-50%,-50%);box-shadow:0 0 0 3px var(--bg2)}
+.m-label{font-size:14px;color:var(--txt);font-weight:500}
+.m-sub{font-size:12px;color:var(--txt3);margin-top:3px}
+
+/* 期貨 stat */
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:18px;overflow:hidden;margin-bottom:16px}
+@media(max-width:600px){.stats{grid-template-columns:1fr}}
+.stat{background:var(--bg2);padding:16px 20px}
+.stats .stat:last-child:nth-child(odd){grid-column:1 / -1}
+.sl{font-size:12.5px;color:var(--txt2);margin-bottom:5px}
+.sv{font-family:var(--disp);font-size:21px;font-weight:600;color:var(--txt);letter-spacing:-.3px}
+.sv .su{font-size:12px;color:var(--txt3);margin-left:4px;font-weight:400}
+.sv .d{font-size:13px;margin-left:9px;font-weight:500}
+.d.up{color:var(--buy)}.d.down{color:var(--sell)}
+
+/* 圖表 */
+.charts{display:grid;gap:14px;margin-top:4px}
+.charts figure{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--bg2)}
+.charts img{width:100%;display:block}
+
+/* 分點 */
+.alert{margin-bottom:14px}
+.ahead{display:flex;align-items:baseline;gap:11px;margin-bottom:12px}
+.ahead .zh{font-weight:700;font-size:16px;color:var(--txt)}
+.ahead .en{font-family:var(--disp);font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:var(--txt3)}
+ul.evt{list-style:none;display:grid;gap:10px}
+ul.evt li{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:13px 17px;font-size:14px}
+.ev-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.ev-h b{color:var(--txt);font-weight:600}
+.ev-k{font-family:var(--disp);font-size:12.5px;color:var(--txt2);font-weight:500;flex:none}
+ul.evt .sub{color:var(--txt2);font-size:13px;margin-top:5px}
+
+footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);
+  color:var(--txt3);font-size:12.5px;line-height:1.9}
+footer b{color:var(--txt2);font-weight:600}
+
+/* 入場淡入 */
+@media(prefers-reduced-motion:no-preference){
+  .masthead,section{animation:rise .7s cubic-bezier(.22,.61,.36,1) both}
+  section:nth-of-type(2){animation-delay:.06s}
+  section:nth-of-type(3){animation-delay:.12s}
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="masthead">
+  <div class="logobar">
+    <svg class="logo" viewBox="0 0 100 100" aria-hidden="true">
+    <defs><linearGradient id="lg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#202026"/><stop offset="1" stop-color="#0d0d10"/>
+    </linearGradient></defs>
+    <rect x="5" y="5" width="90" height="90" rx="26" fill="url(#lg)"
+      stroke="rgba(255,255,255,.14)" stroke-width="1.5"/>
+    <rect x="27" y="32" width="46" height="8" rx="4" fill="#F4F4F5"/>
+    <rect x="27" y="46" width="36" height="8" rx="4" fill="#F4F4F5"/>
+    <rect x="27" y="60" width="28" height="8" rx="4" fill="#8B8CF8"/></svg>
+    <span class="wm">三籌資本</span>
+  </div>
+  <div class="kicker">每日籌碼戰報 · 2026/09/10（四）</div>
+  <h1 class="head">三大法人籌碼<span class="sub">外資 · 投信 · 自營商 · 期貨 · 主力分點</span></h1>
+  <p class="lede">外資台指期淨未平倉 <b>-83,918</b> 口，P/C 未平倉比 <b>0.83</b>，散戶小台多空比 <b>+5.7%</b>。</p>
+</header>
+
+
+    <div class="market">
+      <div class="mq-row">
+        <div class="mq-idx">
+          <div class="mq-il">加權指數 · TAIEX</div>
+          <div class="mq-iv">46,940.49 <span class="mq-chg sell">▼ -243 · -0.51%</span></div>
+        </div>
+        <div class="mq-side"><div class="mq-sl">成交金額</div><div class="mq-sv">0.75<span>兆元</span></div></div>
+      </div>
+      <div class="mq-amts"><div class="mq-amt"><span class="mq-al">外資</span><span class="mq-av sell">-383</span></div><div class="mq-amt"><span class="mq-al">投信</span><span class="mq-av buy">+18</span></div><div class="mq-amt"><span class="mq-al">自營商</span><span class="mq-av sell">-138</span></div><div class="mq-amt"><span class="mq-al">三大法人合計</span><span class="mq-av sell">-503</span></div></div>
+    </div>
+
+<section>
+  <div class="sec-h"><h2>三大法人買賣超</h2><span class="en">Institutional</span></div>
+  
+    <div class="invblock">
+      <div class="invhead"><span class="zh">外資</span><span class="en">Foreign</span></div>
+      <div class="cols">
+        <div class="col">
+          <div class="ch">買超<span class="u">億元</span></div>
+          <ul class="rank"><li><span class="rk">1</span><span class="code">2454</span><span class="nm">聯發科</span><span class="amt buy">+81.04</span></li>
+<li><span class="rk">2</span><span class="code">3711</span><span class="nm">日月光投控<span class="tag">連4日</span></span><span class="amt buy">+31.01</span></li>
+<li><span class="rk">3</span><span class="code">6770</span><span class="nm">力積電</span><span class="amt buy">+20.58</span></li>
+<li><span class="rk">4</span><span class="code">1303</span><span class="nm">南亞</span><span class="amt buy">+17.95</span></li>
+<li><span class="rk">5</span><span class="code">3189</span><span class="nm">景碩</span><span class="amt buy">+15.30</span></li></ul>
+        </div>
+        <div class="col">
+          <div class="ch">賣超<span class="u">億元</span></div>
+          <ul class="rank"><li><span class="rk">1</span><span class="code">2308</span><span class="nm">台達電</span><span class="amt sell">-145.86</span></li>
+<li><span class="rk">2</span><span class="code">3231</span><span class="nm">緯創</span><span class="amt sell">-62.45</span></li>
+<li><span class="rk">3</span><span class="code">2330</span><span class="nm">台積電</span><span class="amt sell">-47.63</span></li>
+<li><span class="rk">4</span><span class="code">6147</span><span class="nm">頎邦</span><span class="amt sell">-27.34</span></li>
+<li><span class="rk">5</span><span class="code">3406</span><span class="nm">玉晶光</span><span class="amt sell">-20.93</span></li></ul>
+        </div>
+      </div>
+    </div>
+  
+    <div class="invblock">
+      <div class="invhead"><span class="zh">投信</span><span class="en">Inv. Trust</span></div>
+      <div class="cols">
+        <div class="col">
+          <div class="ch">買超<span class="u">億元</span></div>
+          <ul class="rank"><li><span class="rk">1</span><span class="code">2303</span><span class="nm">聯電<span class="tag">連5日</span></span><span class="amt buy">+17.84</span></li>
+<li><span class="rk">2</span><span class="code">1815</span><span class="nm">富喬<span class="tag">連8日</span></span><span class="amt buy">+14.40</span></li>
+<li><span class="rk">3</span><span class="code">6531</span><span class="nm">愛普*</span><span class="amt buy">+8.76</span></li>
+<li><span class="rk">4</span><span class="code">3105</span><span class="nm">穩懋<span class="tag">連4日</span></span><span class="amt buy">+8.52</span></li>
+<li><span class="rk">5</span><span class="code">3008</span><span class="nm">大立光</span><span class="amt buy">+8.47</span></li></ul>
+        </div>
+        <div class="col">
+          <div class="ch">賣超<span class="u">億元</span></div>
+          <ul class="rank"><li><span class="rk">1</span><span class="code">2308</span><span class="nm">台達電</span><span class="amt sell">-22.16</span></li>
+<li><span class="rk">2</span><span class="code">6488</span><span class="nm">環球晶</span><span class="amt sell">-15.76</span></li>
+<li><span class="rk">3</span><span class="code">2330</span><span class="nm">台積電</span><span class="amt sell">-12.07</span></li>
+<li><span class="rk">4</span><span class="code">4979</span><span class="nm">華星光</span><span class="amt sell">-7.87</span></li>
+<li><span class="rk">5</span><span class="code">2345</span><span class="nm">智邦</span><span class="amt sell">-7.72</span></li></ul>
+        </div>
+      </div>
+    </div>
+  
+    <div class="invblock">
+      <div class="invhead"><span class="zh">自營商</span><span class="en">Dealer</span></div>
+      <div class="cols">
+        <div class="col">
+          <div class="ch">買超<span class="u">億元</span></div>
+          <ul class="rank"><li><span class="rk">1</span><span class="code">00403A</span><span class="nm">主動統一升級50<span class="tag">連5日</span></span><span class="amt buy">+4.40</span></li>
+<li><span class="rk">2</span><span class="code">00632R</span><span class="nm">元大台灣50反1</span><span class="amt buy">+3.83</span></li>
+<li><span class="rk">3</span><span class="code">3661</span><span class="nm">世芯-KY</span><span class="amt buy">+3.08</span></li>
+<li><span class="rk">4</span><span class="code">2327</span><span class="nm">國巨*</span><span class="amt buy">+2.95</span></li>
+<li><span class="rk">5</span><span class="code">3008</span><span class="nm">大立光<span class="tag">連3日</span></span><span class="amt buy">+2.01</span></li></ul>
+        </div>
+        <div class="col">
+          <div class="ch">賣超<span class="u">億元</span></div>
+          <ul class="rank"><li><span class="rk">1</span><span class="code">00918</span><span class="nm">大華優利高填息30</span><span class="amt sell">-21.98</span></li>
+<li><span class="rk">2</span><span class="code">00919</span><span class="nm">群益台灣精選高息</span><span class="amt sell">-20.19</span></li>
+<li><span class="rk">3</span><span class="code">2308</span><span class="nm">台達電</span><span class="amt sell">-15.63</span></li>
+<li><span class="rk">4</span><span class="code">0050</span><span class="nm">元大台灣50</span><span class="amt sell">-13.07</span></li>
+<li><span class="rk">5</span><span class="code">00631L</span><span class="nm">元大台灣50正2</span><span class="amt sell">-11.56</span></li></ul>
+        </div>
+      </div>
+    </div>
+  <div class="invblock">
+    <div class="invhead"><span class="zh">三大法人合計 淨買超 TOP5</span><span class="en">Net Total</span></div>
+    <ul class="rank"><li><span class="rk">1</span><span class="code">2454</span><span class="nm">聯發科</span><span class="amt buy">+84.07</span></li>
+<li><span class="rk">2</span><span class="code">3711</span><span class="nm">日月光投控</span><span class="amt buy">+28.20</span></li>
+<li><span class="rk">3</span><span class="code">1303</span><span class="nm">南亞</span><span class="amt buy">+22.57</span></li>
+<li><span class="rk">4</span><span class="code">6770</span><span class="nm">力積電</span><span class="amt buy">+22.18</span></li>
+<li><span class="rk">5</span><span class="code">3189</span><span class="nm">景碩</span><span class="amt buy">+18.22</span></li></ul>
+  </div>
+</section>
+
+<section>
+  <div class="sec-h"><h2>期貨籌碼</h2><span class="en">Futures &amp; Options</span></div>
+  <div class="meters">
+    <div class="meter">
+      <div class="m-top"><span class="m-read lo">0.83</span></div>
+      <div class="m-bar">
+        <span class="m-fill" style="left:19.4%;width:7.9%"></span>
+        <span class="m-neutral" style="left:27.3%"></span>
+        <span class="m-dot" style="left:19.4%"></span>
+      </div>
+      <div class="m-label">P/C 未平倉比</div>
+      <div class="m-sub">1.00 為多空均衡</div>
+    </div>
+    <div class="meter">
+      <div class="m-top"><span class="m-read hi">+5.7%</span></div>
+      <div class="m-bar">
+        <span class="m-fill" style="left:50.0%;width:4.8%"></span>
+        <span class="m-neutral" style="left:50.0%"></span>
+        <span class="m-dot" style="left:54.8%"></span>
+      </div>
+      <div class="m-label">散戶小台多空比</div>
+      <div class="m-sub">正值偏多 · 負值偏空</div>
+    </div>
+    <div class="meter">
+      <div class="m-top"><span class="m-read hi">+35.7%</span></div>
+      <div class="m-bar">
+        <span class="m-fill" style="left:50.0%;width:29.7%"></span>
+        <span class="m-neutral" style="left:50.0%"></span>
+        <span class="m-dot" style="left:79.7%"></span>
+      </div>
+      <div class="m-label">散戶微台多空比</div>
+      <div class="m-sub">正值偏多 · 負值偏空</div>
+    </div></div><div class="stats"><div class="stat"><div class="sl">外資台指期 淨未平倉</div><div class="sv">-83,918<span class="su">口</span><span class="d down">-2,852</span></div></div><div class="stat"><div class="sl">外資買權 CALL 淨OI</div><div class="sv">-1,959<span class="su">口</span><span class="d up">+245</span></div></div><div class="stat"><div class="sl">外資賣權 PUT 淨OI</div><div class="sv">+1,696<span class="su">口</span><span class="d up">+1,031</span></div></div><div class="stat"><div class="sl">散戶小台 淨未平倉</div><div class="sv">+2,078<span class="su">口</span><span class="d up">+535</span></div></div><div class="stat"><div class="sl">散戶微台 淨未平倉</div><div class="sv">+34,792<span class="su">口</span><span class="d up">+22,390</span></div></div></div><div class="charts"><figure><img src="foreign_futures.png" alt="期貨籌碼走勢圖" loading="lazy"></figure><figure><img src="retail_futures.png" alt="期貨籌碼走勢圖" loading="lazy"></figure></div>
+</section>
+
+<section>
+  <div class="sec-h"><h2>主力分點異動</h2><span class="en">Broker · 2026/09/10（四）</span></div>
+  <div class="alert"><div class="ahead"><span class="zh">連續買超警報</span><span class="en">CONSECUTIVE</span></div><ul class="evt"><li><div class="ev-h"><b>2834 臺企銀</b><span class="ev-k">連 11 日</span></div><div class="sub">摩根大通・累積 40,720 張　均成本 17.28　<span class="buy">現價 17.90・獲利 +3.6%</span></div></li>
+<li><div class="ev-h"><b>2886 兆豐金</b><span class="ev-k">連 10 日</span></div><div class="sub">台灣摩根士丹利・累積 50,531 張　均成本 49.17　<span class="buy">現價 49.90・獲利 +1.5%</span></div></li>
+<li><div class="ev-h"><b>2889 國票金</b><span class="ev-k">連 9 日</span></div><div class="sub">台灣摩根士丹利・累積 29,831 張　均成本 16.34　<span class="buy">現價 16.55・獲利 +1.3%</span></div></li>
+<li><div class="ev-h"><b>2890 永豐金</b><span class="ev-k">連 9 日</span></div><div class="sub">美商高盛・累積 25,137 張　均成本 42.16　<span class="buy">現價 42.90・獲利 +1.8%</span></div></li>
+<li><div class="ev-h"><b>5347 世界</b><span class="ev-k">連 9 日</span></div><div class="sub">摩根大通・累積 12,436 張　均成本 151.41　<span class="buy">現價 161.50・獲利 +6.7%</span></div></li>
+<li><div class="ev-h"><b>2409 友達</b><span class="ev-k">連 9 日</span></div><div class="sub">花旗環球・累積 10,638 張　均成本 28.75　<span class="buy">現價 31.20・獲利 +8.5%</span></div></li></ul></div><div class="alert"><div class="ahead"><span class="zh">新進大戶</span><span class="en">NEW ENTRY</span></div><ul class="evt"><li><div class="ev-h"><b>6770 力積電</b><span class="ev-k">10,000 張</span></div><div class="sub">大和國泰 今日新進・佔成交 6.9%</div></li>
+<li><div class="ev-h"><b>2892 第一金</b><span class="ev-k">5,609 張</span></div><div class="sub">新光 今日新進・佔成交 19.3%</div></li>
+<li><div class="ev-h"><b>6770 力積電</b><span class="ev-k">3,884 張</span></div><div class="sub">凱基-站前 今日新進・佔成交 2.7%</div></li>
+<li><div class="ev-h"><b>6505 台塑化</b><span class="ev-k">2,584 張</span></div><div class="sub">統一 今日新進・佔成交 6.0%</div></li>
+<li><div class="ev-h"><b>5347 世界</b><span class="ev-k">2,083 張</span></div><div class="sub">大和國泰 今日新進・佔成交 10.0%</div></li>
+<li><div class="ev-h"><b>2409 友達</b><span class="ev-k">2,032 張</span></div><div class="sub">宏遠證券 今日新進・佔成交 0.4%</div></li></ul></div><div class="alert"><div class="ahead"><span class="zh">大量買超・佔成交 &gt;10%</span><span class="en">HEAVY VOLUME</span></div><ul class="evt"><li><div class="ev-h"><b>2102 泰豐</b><span class="ev-k">57.7%</span></div><div class="sub">摩根大通・買超 +311 張</div></li>
+<li><div class="ev-h"><b>2884 玉山金</b><span class="ev-k">28.6%</span></div><div class="sub">美林・買超 +16,290 張</div></li>
+<li><div class="ev-h"><b>5876 上海商銀</b><span class="ev-k">26.5%</span></div><div class="sub">台灣摩根士丹利・買超 +1,879 張</div></li>
+<li><div class="ev-h"><b>1815 富喬</b><span class="ev-k">25.8%</span></div><div class="sub">國泰證券・買超 +11,314 張</div></li>
+<li><div class="ev-h"><b>1402 遠東新</b><span class="ev-k">25.7%</span></div><div class="sub">台灣摩根士丹利・買超 +1,768 張</div></li>
+<li><div class="ev-h"><b>2029 盛餘</b><span class="ev-k">25.6%</span></div><div class="sub">花旗環球・買超 +107 張</div></li></ul></div>
+</section>
+
+<footer>
+  <b>三籌資本</b> · 每交易日 18:00 自動更新 · 資料來源 TWSE / TPEX / TAIFEX<br>
+  本頁僅供參考，不構成投資建議 · 產製時間 2026/09/10 10:25
+</footer>
+
+</div>
+<script>
+if ("serviceWorker" in navigator) {
+  addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
+}
+</script>
+</body>
+</html>
