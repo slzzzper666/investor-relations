@@ -1,0 +1,43 @@
+{
+ "code": "2492",
+ "name": "華新科",
+ "conf_date": "2026-05-27",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:15",
+ "segments": [
+  {
+   "name": "MLCC",
+   "pct": 46.4,
+   "note": ""
+  },
+  {
+   "name": "Resistor",
+   "pct": 22.2,
+   "note": ""
+  },
+  {
+   "name": "RF",
+   "pct": 14.2,
+   "note": ""
+  },
+  {
+   "name": "Inductor & Others",
+   "pct": 13.3,
+   "note": ""
+  },
+  {
+   "name": "Disc Capacitor",
+   "pct": 4.0,
+   "note": ""
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "被動元件",
+  "車用電子",
+  "電動車",
+  "AI伺服器"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.1-flash-lite"
+}

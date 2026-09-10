@@ -1,0 +1,37 @@
+{
+ "code": "1216",
+ "name": "統一",
+ "conf_date": "2026-06-05",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:06",
+ "segments": [
+  {
+   "name": "便利商店+流通",
+   "pct": 57.0,
+   "note": ""
+  },
+  {
+   "name": "食品+食糧",
+   "pct": 30.0,
+   "note": ""
+  },
+  {
+   "name": "其他",
+   "pct": 10.0,
+   "note": ""
+  },
+  {
+   "name": "包裝容器",
+   "pct": 3.0,
+   "note": ""
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "食品",
+  "零售通路",
+  "貨運物流"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.1-flash-lite"
+}

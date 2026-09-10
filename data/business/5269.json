@@ -1,0 +1,31 @@
+{
+ "code": "5269",
+ "name": "祥碩",
+ "conf_date": "2026-05-12",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:19",
+ "segments": [
+  {
+   "name": "Host",
+   "pct": 77.0,
+   "note": "高速介面控制晶片"
+  },
+  {
+   "name": "Auto & Surveillance",
+   "pct": 17.0,
+   "note": "車用監控產品"
+  },
+  {
+   "name": "Device",
+   "pct": 6.0,
+   "note": "裝置端高速介面控制晶片"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "IC設計",
+  "車用電子"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.1-flash-lite"
+}

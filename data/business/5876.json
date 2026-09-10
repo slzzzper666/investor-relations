@@ -1,0 +1,26 @@
+{
+ "code": "5876",
+ "name": "上海商銀",
+ "conf_date": "2026-05-18",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:11",
+ "segments": [
+  {
+   "name": "企業金融",
+   "pct": 59.0,
+   "note": "放款業務別"
+  },
+  {
+   "name": "消費金融",
+   "pct": 41.0,
+   "note": "放款業務別"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "銀行",
+  "數位金融"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.1-flash-lite"
+}

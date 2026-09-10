@@ -1,0 +1,58 @@
+{
+ "code": "6770",
+ "name": "力積電",
+ "conf_date": "2026-07-14",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:07",
+ "segments": [
+  {
+   "name": "DRAM",
+   "pct": 46.0,
+   "note": "包含Specialty"
+  },
+  {
+   "name": "PMIC",
+   "pct": 15.0,
+   "note": ""
+  },
+  {
+   "name": "Discrete",
+   "pct": 12.0,
+   "note": ""
+  },
+  {
+   "name": "HV",
+   "pct": 7.0,
+   "note": ""
+  },
+  {
+   "name": "Flash",
+   "pct": 6.0,
+   "note": ""
+  },
+  {
+   "name": "3D AI Foundry",
+   "pct": 5.4,
+   "note": "Interposer/IPD/WoW等"
+  },
+  {
+   "name": "CIS",
+   "pct": 4.0,
+   "note": ""
+  },
+  {
+   "name": "IMC",
+   "pct": 3.0,
+   "note": ""
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "晶圓代工",
+  "記憶體",
+  "功率半導體",
+  "先進封裝/CoWoS"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.1-flash-lite"
+}

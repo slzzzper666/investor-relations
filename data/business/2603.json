@@ -1,0 +1,30 @@
+{
+ "code": "2603",
+ "name": "長榮",
+ "conf_date": "2026-04-24",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:05",
+ "segments": [
+  {
+   "name": "貨運收入",
+   "pct": 93.39,
+   "note": ""
+  },
+  {
+   "name": "其他",
+   "pct": 5.4,
+   "note": ""
+  },
+  {
+   "name": "船艙租收入",
+   "pct": 1.21,
+   "note": ""
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "航運"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.1-flash-lite"
+}

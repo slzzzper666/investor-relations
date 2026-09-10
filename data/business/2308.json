@@ -1,0 +1,38 @@
+{
+ "code": "2308",
+ "name": "台達電",
+ "conf_date": "2026-07-30",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:02",
+ "segments": [
+  {
+   "name": "電源及零組件",
+   "pct": 53.0,
+   "note": "Power Electronics"
+  },
+  {
+   "name": "基礎設施",
+   "pct": 34.0,
+   "note": "Infrastructure"
+  },
+  {
+   "name": "自動化",
+   "pct": 8.0,
+   "note": "Automation"
+  },
+  {
+   "name": "交通",
+   "pct": 5.0,
+   "note": "Mobility"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "電源供應器",
+  "散熱",
+  "自動化/機器人",
+  "電動車"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.7-flash"
+}

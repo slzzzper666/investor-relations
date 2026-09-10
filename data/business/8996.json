@@ -1,0 +1,16 @@
+{
+ "code": "8996",
+ "name": "高力",
+ "conf_date": "2026-06-01",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:17",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "散熱",
+  "儲能",
+  "電力設備"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.1-flash-lite"
+}

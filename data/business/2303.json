@@ -1,0 +1,35 @@
+{
+ "code": "2303",
+ "name": "聯電",
+ "conf_date": "2026-07-29",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:03",
+ "segments": [
+  {
+   "name": "通訊",
+   "pct": 39.0,
+   "note": "2Q26產品應用別比重"
+  },
+  {
+   "name": "消費性",
+   "pct": 32.0,
+   "note": "2Q26產品應用別比重"
+  },
+  {
+   "name": "其他",
+   "pct": 16.0,
+   "note": "2Q26產品應用別比重"
+  },
+  {
+   "name": "電腦",
+   "pct": 13.0,
+   "note": "2Q26產品應用別比重"
+  }
+ ],
+ "as_of": "",
+ "tags": [
+  "晶圓代工"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

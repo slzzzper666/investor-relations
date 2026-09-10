@@ -1,0 +1,42 @@
+{
+ "code": "2395",
+ "name": "研華",
+ "conf_date": "2026-05-29",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:05",
+ "segments": [
+  {
+   "name": "智能系統事業群",
+   "pct": 36.0,
+   "note": "iSystems"
+  },
+  {
+   "name": "嵌入式事業群",
+   "pct": 35.0,
+   "note": "Embedded"
+  },
+  {
+   "name": "Advantech Service+/Others",
+   "pct": 16.0,
+   "note": "AS+"
+  },
+  {
+   "name": "物聯網自動化事業群",
+   "pct": 7.0,
+   "note": "iAutomation"
+  },
+  {
+   "name": "智能服務事業群",
+   "pct": 6.0,
+   "note": "iService"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "工業電腦",
+  "自動化/機器人",
+  "醫療器材"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.1-flash-lite"
+}

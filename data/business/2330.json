@@ -1,0 +1,46 @@
+{
+ "code": "2330",
+ "name": "台積電",
+ "conf_date": "2026-07-16",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:02",
+ "segments": [
+  {
+   "name": "高效能運算",
+   "pct": 66.0,
+   "note": ""
+  },
+  {
+   "name": "智慧型手機",
+   "pct": 22.0,
+   "note": ""
+  },
+  {
+   "name": "物聯網",
+   "pct": 5.0,
+   "note": ""
+  },
+  {
+   "name": "車用電子",
+   "pct": 4.0,
+   "note": ""
+  },
+  {
+   "name": "其他",
+   "pct": 2.0,
+   "note": ""
+  },
+  {
+   "name": "消費性電子",
+   "pct": 1.0,
+   "note": ""
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "晶圓代工",
+  "先進封裝/CoWoS"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash"
+}

@@ -1,0 +1,38 @@
+{
+ "code": "2360",
+ "name": "致茂",
+ "conf_date": "2026-07-30",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:03",
+ "segments": [
+  {
+   "name": "量測及自動化檢測設備",
+   "pct": 56.0,
+   "note": "2026年第2季母公司營收佔比"
+  },
+  {
+   "name": "半導體 / Photonics 測試解決方案",
+   "pct": 39.0,
+   "note": "2026年第2季母公司營收佔比"
+  },
+  {
+   "name": "其它",
+   "pct": 4.0,
+   "note": "2026年第2季母公司營收佔比"
+  },
+  {
+   "name": "Turnkey Solutions",
+   "pct": 1.0,
+   "note": "2026年第2季母公司營收佔比"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "半導體設備",
+  "AI伺服器",
+  "自動化/機器人",
+  "儲能"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

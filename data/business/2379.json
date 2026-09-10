@@ -1,0 +1,16 @@
+{
+ "code": "2379",
+ "name": "瑞昱",
+ "conf_date": "2026-07-30",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:06",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "IC設計",
+  "網通設備",
+  "筆電/PC"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.1-flash-lite"
+}

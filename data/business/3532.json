@@ -1,0 +1,14 @@
+{
+ "code": "3532",
+ "name": "台勝科",
+ "conf_date": "2026-05-28",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:15",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "半導體材料"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.1-flash-lite"
+}

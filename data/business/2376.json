@@ -1,0 +1,17 @@
+{
+ "code": "2376",
+ "name": "技嘉",
+ "conf_date": "2026-05-15",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:11",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "伺服器",
+  "AI伺服器",
+  "筆電/PC",
+  "散熱"
+ ],
+ "confidence": "none",
+ "model": "gemini-2.5-flash"
+}

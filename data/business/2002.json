@@ -1,0 +1,27 @@
+{
+ "code": "2002",
+ "name": "中鋼",
+ "conf_date": "2026-06-24",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:09",
+ "segments": [
+  {
+   "name": "鋼鐵部門",
+   "pct": 73.51,
+   "note": ""
+  },
+  {
+   "name": "非鋼鐵部門",
+   "pct": 26.49,
+   "note": ""
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "鋼鐵",
+  "太陽能",
+  "風電"
+ ],
+ "confidence": "high",
+ "model": "gemini-2.5-flash"
+}

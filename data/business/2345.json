@@ -1,0 +1,16 @@
+{
+ "code": "2345",
+ "name": "智邦",
+ "conf_date": "2026-05-28",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:03",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "網通設備",
+  "雲端服務",
+  "伺服器"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

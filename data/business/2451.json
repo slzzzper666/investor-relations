@@ -1,0 +1,26 @@
+{
+ "code": "2451",
+ "name": "創見",
+ "conf_date": "2026-04-08",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:17",
+ "segments": [
+  {
+   "name": "工控產品",
+   "pct": 62.8,
+   "note": "2025年銷售佔比"
+  },
+  {
+   "name": "消費型產品",
+   "pct": 37.2,
+   "note": "2025年銷售佔比"
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "記憶體",
+  "工業電腦"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.1-flash-lite"
+}

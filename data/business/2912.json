@@ -1,0 +1,37 @@
+{
+ "code": "2912",
+ "name": "統一超",
+ "conf_date": "2026-06-04",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:13",
+ "segments": [
+  {
+   "name": "7-ELEVEN Taiwan",
+   "pct": 61.0,
+   "note": ""
+  },
+  {
+   "name": "Retail",
+   "pct": 30.0,
+   "note": "菲律賓7-11,康是美,宅急便,博客來,統一精工"
+  },
+  {
+   "name": "Logistics",
+   "pct": 8.0,
+   "note": "捷盟行銷,統昶行銷,大智通文化行銷"
+  },
+  {
+   "name": "Others",
+   "pct": 1.0,
+   "note": "中國事業群,餐飲事業群,支援事業群"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "零售通路",
+  "餐飲",
+  "電商"
+ ],
+ "confidence": "high",
+ "model": "gemini-2.5-flash-lite"
+}

@@ -1,0 +1,17 @@
+{
+ "code": "6239",
+ "name": "力成",
+ "conf_date": "2026-07-28",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:13",
+ "segments": [],
+ "as_of": "2026 Q2",
+ "tags": [
+  "封裝測試",
+  "先進封裝/CoWoS",
+  "記憶體",
+  "車用電子"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.1-flash-lite"
+}

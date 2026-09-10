@@ -1,0 +1,36 @@
+{
+ "code": "3008",
+ "name": "大立光",
+ "conf_date": "2026-07-09",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:04",
+ "segments": [
+  {
+   "name": "8MP",
+   "pct": null,
+   "note": "出貨量比重0-10%"
+  },
+  {
+   "name": "10MP",
+   "pct": null,
+   "note": "出貨量比重50-60%"
+  },
+  {
+   "name": "20MP+",
+   "pct": null,
+   "note": "出貨量比重10-20%"
+  },
+  {
+   "name": "Others",
+   "pct": null,
+   "note": "出貨量比重20-30%"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "光學鏡頭",
+  "手機"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

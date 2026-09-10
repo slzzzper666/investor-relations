@@ -1,0 +1,17 @@
+{
+ "code": "9945",
+ "name": "潤泰新",
+ "conf_date": "2026-07-02",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:25",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "營建",
+  "資產開發",
+  "保險",
+  "環保工程"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.1-flash-lite"
+}

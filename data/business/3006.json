@@ -1,0 +1,16 @@
+{
+ "code": "3006",
+ "name": "晶豪科",
+ "conf_date": "2026-03-10",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:20",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "IC設計",
+  "記憶體",
+  "感測元件"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.1-flash-lite"
+}

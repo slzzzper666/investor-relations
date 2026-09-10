@@ -1,0 +1,33 @@
+{
+ "code": "2454",
+ "name": "聯發科",
+ "conf_date": "2026-07-31",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:02",
+ "segments": [
+  {
+   "name": "Smart Edge Platforms",
+   "pct": 53.0,
+   "note": "連網晶片、運算晶片、電視及客製化晶片"
+  },
+  {
+   "name": "Mobile Phone",
+   "pct": 41.0,
+   "note": "5G/4G/3G智慧型手機及功能型手機"
+  },
+  {
+   "name": "Power IC",
+   "pct": 6.0,
+   "note": "電源管理晶片"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "IC設計",
+  "手機",
+  "網通設備",
+  "車用電子"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.6-flash"
+}

@@ -1,0 +1,38 @@
+{
+ "code": "2354",
+ "name": "鴻準",
+ "conf_date": "2026-06-30",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:22",
+ "segments": [
+  {
+   "name": "遊戲機",
+   "pct": 78.0,
+   "note": ""
+  },
+  {
+   "name": "散熱模組",
+   "pct": 14.0,
+   "note": ""
+  },
+  {
+   "name": "機殼",
+   "pct": 6.0,
+   "note": ""
+  },
+  {
+   "name": "其他",
+   "pct": 2.0,
+   "note": ""
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "遊戲",
+  "散熱",
+  "機殼結構件",
+  "自動化/機器人"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.1-flash-lite"
+}

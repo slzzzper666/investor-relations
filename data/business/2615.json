@@ -1,0 +1,35 @@
+{
+ "code": "2615",
+ "name": "萬海",
+ "conf_date": "2026-03-26",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:08",
+ "segments": [
+  {
+   "name": "亞洲區間航線",
+   "pct": 37.0,
+   "note": ""
+  },
+  {
+   "name": "中東/印度航線",
+   "pct": 27.0,
+   "note": ""
+  },
+  {
+   "name": "美國航線",
+   "pct": 23.0,
+   "note": ""
+  },
+  {
+   "name": "南美洲航線",
+   "pct": 13.0,
+   "note": ""
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "航運"
+ ],
+ "confidence": "high",
+ "model": "gemini-2.5-flash"
+}

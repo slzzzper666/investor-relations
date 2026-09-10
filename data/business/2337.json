@@ -1,0 +1,37 @@
+{
+ "code": "2337",
+ "name": "旺宏",
+ "conf_date": "2026-07-28",
+ "source": "pdf",
+ "built_at": "2026-09-11 01:10",
+ "segments": [
+  {
+   "name": "NOR Flash",
+   "pct": 48.0,
+   "note": "2Q26母公司銷售額佔比"
+  },
+  {
+   "name": "NAND Flash",
+   "pct": 43.0,
+   "note": "2Q26母公司銷售額佔比"
+  },
+  {
+   "name": "ROM",
+   "pct": 6.0,
+   "note": "2Q26母公司銷售額佔比"
+  },
+  {
+   "name": "晶圓代工 (FBG)",
+   "pct": 3.0,
+   "note": "2Q26母公司銷售額佔比"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "記憶體",
+  "晶圓代工",
+  "車用電子"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.1-flash-lite"
+}
