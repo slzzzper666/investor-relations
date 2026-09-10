@@ -1,0 +1,49 @@
+{
+ "code": "6670",
+ "name": "復盛應用",
+ "conf_date": "2026-08-26",
+ "source": "pdf",
+ "built_at": "2026-09-10 21:57",
+ "segments": [
+  {
+   "name": "Golf Club Heads",
+   "pct": 59.0,
+   "note": "高爾夫球桿頭"
+  },
+  {
+   "name": "Graphite Shaft & Packaged Sets",
+   "pct": 13.0,
+   "note": "碳纖維桿身及套桿"
+  },
+  {
+   "name": "Club Head Accessories",
+   "pct": 8.0,
+   "note": "球桿頭配件"
+  },
+  {
+   "name": "Skates & Boots & Protective Gears",
+   "pct": 8.0,
+   "note": "冰鞋與防護裝備"
+  },
+  {
+   "name": "Aerospace & Automotive Parts",
+   "pct": 6.0,
+   "note": "航太與汽車零件"
+  },
+  {
+   "name": "Others",
+   "pct": 6.0,
+   "note": "其他"
+  },
+  {
+   "name": "Baseball & Softball bats",
+   "pct": 0.0,
+   "note": "棒壘球棒"
+  }
+ ],
+ "as_of": "2026 H1",
+ "tags": [
+  "其他"
+ ],
+ "confidence": "high"
+}

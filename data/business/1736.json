@@ -1,0 +1,31 @@
+{
+ "code": "1736",
+ "name": "喬山",
+ "conf_date": "2026-08-14",
+ "source": "pdf",
+ "built_at": "2026-09-10 21:58",
+ "segments": [
+  {
+   "name": "Commercial",
+   "pct": 71.0,
+   "note": "商用健身器材"
+  },
+  {
+   "name": "Home",
+   "pct": 22.0,
+   "note": "家用健身器材"
+  },
+  {
+   "name": "Fuji",
+   "pct": 7.0,
+   "note": "按摩椅"
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "醫療器材",
+  "零售通路",
+  "其他"
+ ],
+ "confidence": "high"
+}

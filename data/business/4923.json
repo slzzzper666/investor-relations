@@ -1,0 +1,35 @@
+{
+ "code": "4923",
+ "name": "力士",
+ "conf_date": "2026-08-10",
+ "source": "pdf",
+ "built_at": "2026-09-11 00:51",
+ "segments": [
+  {
+   "name": "Mosfet",
+   "pct": 91.54,
+   "note": "2026H1產品銷售佔比"
+  },
+  {
+   "name": "ESD",
+   "pct": 5.26,
+   "note": "2026H1產品銷售佔比"
+  },
+  {
+   "name": "Diode",
+   "pct": 2.09,
+   "note": "2026H1產品銷售佔比"
+  },
+  {
+   "name": "Transistor",
+   "pct": 1.11,
+   "note": "2026H1產品銷售佔比"
+  }
+ ],
+ "as_of": "2026 H1",
+ "tags": [
+  "IC設計",
+  "功率半導體"
+ ],
+ "confidence": "high"
+}

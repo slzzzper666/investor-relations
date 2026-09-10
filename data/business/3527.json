@@ -1,0 +1,26 @@
+{
+ "code": "3527",
+ "name": "聚積",
+ "conf_date": "2026-08-27",
+ "source": "pdf",
+ "built_at": "2026-09-11 00:12",
+ "segments": [
+  {
+   "name": "LED驅動與Micro LED",
+   "pct": null,
+   "note": "核心競爭力與成長引擎"
+  },
+  {
+   "name": "車用電子",
+   "pct": null,
+   "note": "技術延伸布局車用產品"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "IC設計",
+  "LED",
+  "車用電子"
+ ],
+ "confidence": "low"
+}

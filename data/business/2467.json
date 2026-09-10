@@ -1,0 +1,42 @@
+{
+ "code": "2467",
+ "name": "志聖",
+ "conf_date": "2026-08-12",
+ "source": "pdf",
+ "built_at": "2026-09-10 21:42",
+ "segments": [
+  {
+   "name": "SEMI先進封裝",
+   "pct": 46.0,
+   "note": "2026 H1實績"
+  },
+  {
+   "name": "先進PCB",
+   "pct": 24.0,
+   "note": "2026 H1實績"
+  },
+  {
+   "name": "PCB",
+   "pct": 22.0,
+   "note": "2026 H1實績"
+  },
+  {
+   "name": "FPD",
+   "pct": 5.0,
+   "note": "2026 H1實績"
+  },
+  {
+   "name": "Other Electronics",
+   "pct": 3.0,
+   "note": "2026 H1實績"
+  }
+ ],
+ "as_of": "2026 H1",
+ "tags": [
+  "先進封裝/CoWoS",
+  "IC基板",
+  "半導體設備",
+  "PCB"
+ ],
+ "confidence": "high"
+}

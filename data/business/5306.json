@@ -1,0 +1,40 @@
+{
+ "code": "5306",
+ "name": "桂盟",
+ "conf_date": "2026-08-18",
+ "source": "pdf",
+ "built_at": "2026-09-10 22:44",
+ "segments": [
+  {
+   "name": "Bike Component",
+   "pct": 74.9,
+   "note": "自行車零件"
+  },
+  {
+   "name": "ATS",
+   "pct": 11.7,
+   "note": "汽車正時系統"
+  },
+  {
+   "name": "GDO",
+   "pct": 7.4,
+   "note": "車庫門開門機系統"
+  },
+  {
+   "name": "Motorcycle",
+   "pct": 4.2,
+   "note": "機車鏈條及鏈輪"
+  },
+  {
+   "name": "Others",
+   "pct": 1.8,
+   "note": "其他業務"
+  }
+ ],
+ "as_of": "",
+ "tags": [
+  "汽車零組件",
+  "機械設備"
+ ],
+ "confidence": "high"
+}

@@ -1,0 +1,26 @@
+{
+ "code": "3576",
+ "name": "聯合再生",
+ "conf_date": "2026-08-28",
+ "source": "pdf",
+ "built_at": "2026-09-10 22:13",
+ "segments": [
+  {
+   "name": "太陽能",
+   "pct": 67.0,
+   "note": "Jan-Jun 2026 營收產品別"
+  },
+  {
+   "name": "其他",
+   "pct": 33.0,
+   "note": "Jan-Jun 2026 營收產品別"
+  }
+ ],
+ "as_of": "2026 H1",
+ "tags": [
+  "太陽能",
+  "儲能",
+  "電池模組"
+ ],
+ "confidence": "high"
+}

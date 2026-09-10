@@ -1,0 +1,34 @@
+{
+ "code": "1735",
+ "name": "日勝化",
+ "conf_date": "2026-09-01",
+ "source": "pdf",
+ "built_at": "2026-09-10 23:39",
+ "segments": [
+  {
+   "name": "PU",
+   "pct": 63.6,
+   "note": "聚氨酯樹脂"
+  },
+  {
+   "name": "UV",
+   "pct": 24.1,
+   "note": "光固化產品"
+  },
+  {
+   "name": "CLA",
+   "pct": 12.0,
+   "note": "架橋劑、硬化劑"
+  },
+  {
+   "name": "添加劑",
+   "pct": 0.3,
+   "note": "化學品貿易、塗料添加劑"
+  }
+ ],
+ "as_of": "2026 H1",
+ "tags": [
+  "化工"
+ ],
+ "confidence": "high"
+}

@@ -1,0 +1,30 @@
+{
+ "code": "6223",
+ "name": "旺矽",
+ "conf_date": "2026-09-01",
+ "source": "pdf",
+ "built_at": "2026-09-10 23:53",
+ "segments": [
+  {
+   "name": "Probe Card",
+   "pct": 74.7,
+   "note": "探針卡"
+  },
+  {
+   "name": "Equipment",
+   "pct": 23.3,
+   "note": "設備"
+  },
+  {
+   "name": "Other",
+   "pct": 2.0,
+   "note": "其他"
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "封裝測試",
+  "半導體設備"
+ ],
+ "confidence": "high"
+}

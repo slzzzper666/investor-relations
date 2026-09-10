@@ -1,0 +1,40 @@
+{
+ "code": "6532",
+ "name": "瑞耘",
+ "conf_date": "2026-08-31",
+ "source": "pdf",
+ "built_at": "2026-09-10 23:56",
+ "segments": [
+  {
+   "name": "CMP Ring",
+   "pct": 41.0,
+   "note": "化學機械平坦化保持環"
+  },
+  {
+   "name": "Chamber Liner/Adaptor",
+   "pct": 30.0,
+   "note": "腔體內襯/轉接器"
+  },
+  {
+   "name": "Others",
+   "pct": 14.0,
+   "note": "其它配件"
+  },
+  {
+   "name": "Chamber Ring",
+   "pct": 13.0,
+   "note": "腔體環"
+  },
+  {
+   "name": "Shower Head",
+   "pct": 2.0,
+   "note": "氣體分配盤/勻氣盤"
+  }
+ ],
+ "as_of": "2026 H1",
+ "tags": [
+  "半導體設備",
+  "半導體材料"
+ ],
+ "confidence": "high"
+}

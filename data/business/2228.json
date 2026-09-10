@@ -1,0 +1,25 @@
+{
+ "code": "2228",
+ "name": "劍麟",
+ "conf_date": "2026-08-19",
+ "source": "pdf",
+ "built_at": "2026-09-10 23:01",
+ "segments": [
+  {
+   "name": "Auto Parts Group",
+   "pct": 84.23,
+   "note": "汽車事業群"
+  },
+  {
+   "name": "Display & Houseware Group",
+   "pct": 15.77,
+   "note": "展家事業群"
+  }
+ ],
+ "as_of": "2026 H1",
+ "tags": [
+  "汽車零組件",
+  "車用電子"
+ ],
+ "confidence": "high"
+}

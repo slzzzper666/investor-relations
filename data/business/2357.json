@@ -1,0 +1,32 @@
+{
+ "code": "2357",
+ "name": "華碩",
+ "conf_date": "2026-08-12",
+ "source": "pdf",
+ "built_at": "2026-09-10 21:22",
+ "segments": [
+  {
+   "name": "System",
+   "pct": 45.0,
+   "note": "Business Group"
+  },
+  {
+   "name": "IS",
+   "pct": 36.0,
+   "note": "Business Group"
+  },
+  {
+   "name": "Open Platform",
+   "pct": 19.0,
+   "note": "Business Group"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "筆電/PC",
+  "伺服器",
+  "AI伺服器",
+  "雲端服務"
+ ],
+ "confidence": "high"
+}

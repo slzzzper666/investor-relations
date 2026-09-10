@@ -1,0 +1,29 @@
+{
+ "code": "5388",
+ "name": "中磊",
+ "conf_date": "2026-08-11",
+ "source": "pdf",
+ "built_at": "2026-09-10 22:21",
+ "segments": [
+  {
+   "name": "Broadband CPE",
+   "pct": 60.0,
+   "note": "2026 H1 營收產品別比重"
+  },
+  {
+   "name": "Infrastructure & IoT",
+   "pct": 21.0,
+   "note": "2026 H1 營收產品別比重"
+  },
+  {
+   "name": "Enterprise",
+   "pct": 19.0,
+   "note": "2026 H1 營收產品別比重"
+  }
+ ],
+ "as_of": "2026 H1",
+ "tags": [
+  "網通設備"
+ ],
+ "confidence": "high"
+}

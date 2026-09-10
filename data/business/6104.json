@@ -1,0 +1,40 @@
+{
+ "code": "6104",
+ "name": "創惟",
+ "conf_date": "2026-08-21",
+ "source": "pdf",
+ "built_at": "2026-09-11 00:23",
+ "segments": [
+  {
+   "name": "Type C Application with USB Hub and PD",
+   "pct": 43.6,
+   "note": "2026年上半年營收占比"
+  },
+  {
+   "name": "Normal USB Hub Application",
+   "pct": 30.2,
+   "note": "2026年上半年營收占比"
+  },
+  {
+   "name": "Storage",
+   "pct": 16.7,
+   "note": "2026年上半年營收占比"
+  },
+  {
+   "name": "Analog",
+   "pct": 6.2,
+   "note": "2026年上半年營收占比"
+  },
+  {
+   "name": "Others",
+   "pct": 3.3,
+   "note": "2026年上半年營收占比"
+  }
+ ],
+ "as_of": "2026 H1",
+ "tags": [
+  "IC設計",
+  "筆電/PC"
+ ],
+ "confidence": "high"
+}

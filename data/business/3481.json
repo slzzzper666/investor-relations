@@ -1,0 +1,31 @@
+{
+ "code": "3481",
+ "name": "群創",
+ "conf_date": "2026-08-18",
+ "source": "pdf",
+ "built_at": "2026-09-10 21:28",
+ "segments": [
+  {
+   "name": "消費性顯示器",
+   "pct": 45.0,
+   "note": "TV, IT, Tablet, MP"
+  },
+  {
+   "name": "非顯示器領域群",
+   "pct": 42.0,
+   "note": "X-ray, automotive, FOPLP"
+  },
+  {
+   "name": "商用顯示器",
+   "pct": 13.0,
+   "note": "commercial products"
+  }
+ ],
+ "as_of": "",
+ "tags": [
+  "面板",
+  "車用電子",
+  "先進封裝/CoWoS"
+ ],
+ "confidence": "high"
+}

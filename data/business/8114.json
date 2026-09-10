@@ -1,0 +1,46 @@
+{
+ "code": "8114",
+ "name": "振樺電",
+ "conf_date": "2026-09-02",
+ "source": "pdf",
+ "built_at": "2026-09-10 22:40",
+ "segments": [
+  {
+   "name": "Edge AI & DMS",
+   "pct": 60.0,
+   "note": "Embedded Foundry"
+  },
+  {
+   "name": "Retail & Hospitality",
+   "pct": 18.0,
+   "note": "O2O Solutions"
+  },
+  {
+   "name": "Digital Healthcare",
+   "pct": 10.0,
+   "note": "O2O Solutions"
+  },
+  {
+   "name": "SDN Cloud & Infrastructure",
+   "pct": 6.0,
+   "note": "Embedded Foundry"
+  },
+  {
+   "name": "Fintech & Logistics",
+   "pct": 4.0,
+   "note": "O2O Solutions"
+  },
+  {
+   "name": "Smart City & Entertainment",
+   "pct": 2.0,
+   "note": "O2O Solutions"
+  }
+ ],
+ "as_of": "",
+ "tags": [
+  "工業電腦",
+  "伺服器",
+  "零售通路"
+ ],
+ "confidence": "high"
+}

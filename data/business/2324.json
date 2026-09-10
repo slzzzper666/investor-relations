@@ -1,0 +1,27 @@
+{
+ "code": "2324",
+ "name": "仁寶",
+ "conf_date": "2026-08-13",
+ "source": "pdf",
+ "built_at": "2026-09-10 21:35",
+ "segments": [
+  {
+   "name": "NB PC",
+   "pct": 66.0,
+   "note": "2Q26營收占比"
+  },
+  {
+   "name": "Non-PC",
+   "pct": 34.0,
+   "note": "2Q26營收占比"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "筆電/PC",
+  "伺服器",
+  "AI伺服器",
+  "車用電子"
+ ],
+ "confidence": "high"
+}

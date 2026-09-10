@@ -1,0 +1,45 @@
+{
+ "code": "2105",
+ "name": "正新",
+ "conf_date": "2026-08-25",
+ "source": "pdf",
+ "built_at": "2026-09-10 21:42",
+ "segments": [
+  {
+   "name": "PCR",
+   "pct": 34.4,
+   "note": "輻射層汽車外胎"
+  },
+  {
+   "name": "MC",
+   "pct": 22.5,
+   "note": "機車外胎"
+  },
+  {
+   "name": "TBR",
+   "pct": 14.4,
+   "note": "輻射層卡車外胎"
+  },
+  {
+   "name": "BC",
+   "pct": 13.9,
+   "note": "自行車外胎"
+  },
+  {
+   "name": "OTHER",
+   "pct": 9.9,
+   "note": "其他"
+  },
+  {
+   "name": "TUBE",
+   "pct": 4.8,
+   "note": "內胎"
+  }
+ ],
+ "as_of": "2026 H1",
+ "tags": [
+  "橡膠輪胎",
+  "汽車零組件"
+ ],
+ "confidence": "high"
+}

@@ -1,0 +1,36 @@
+{
+ "code": "6416",
+ "name": "瑞祺電通",
+ "conf_date": "2026-08-18",
+ "source": "pdf",
+ "built_at": "2026-09-10 22:56",
+ "segments": [
+  {
+   "name": "網路安全",
+   "pct": 66.0,
+   "note": "包含資訊安全IT與營運安全OT"
+  },
+  {
+   "name": "軟體定義廣域網",
+   "pct": 20.0,
+   "note": "SD-WAN + SASE + ADC"
+  },
+  {
+   "name": "整合式通訊系統",
+   "pct": 8.0,
+   "note": "UCS"
+  },
+  {
+   "name": "其他",
+   "pct": 6.0,
+   "note": "服務與其他業務"
+  }
+ ],
+ "as_of": "2026 H1",
+ "tags": [
+  "網通設備",
+  "工業電腦",
+  "資安"
+ ],
+ "confidence": "high"
+}

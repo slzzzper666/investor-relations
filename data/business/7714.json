@@ -1,0 +1,46 @@
+{
+ "code": "7714",
+ "name": "創泓科技",
+ "conf_date": "2026-09-02",
+ "source": "pdf",
+ "built_at": "2026-09-10 23:45",
+ "segments": [
+  {
+   "name": "Arista",
+   "pct": 26.2,
+   "note": "115H1 營收品牌組成"
+  },
+  {
+   "name": "CheckPoint",
+   "pct": 25.6,
+   "note": "115H1 營收品牌組成"
+  },
+  {
+   "name": "F5",
+   "pct": 15.3,
+   "note": "115H1 營收品牌組成"
+  },
+  {
+   "name": "Tenable",
+   "pct": 13.2,
+   "note": "115H1 營收品牌組成"
+  },
+  {
+   "name": "其他",
+   "pct": 12.2,
+   "note": "AI無人載具相關"
+  },
+  {
+   "name": "Trellix",
+   "pct": 7.5,
+   "note": "115H1 營收品牌組成"
+  }
+ ],
+ "as_of": "",
+ "tags": [
+  "資訊服務",
+  "資安",
+  "無人機"
+ ],
+ "confidence": "high"
+}

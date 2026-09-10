@@ -1,0 +1,35 @@
+{
+ "code": "5289",
+ "name": "宜鼎",
+ "conf_date": "2026-08-27",
+ "source": "pdf",
+ "built_at": "2026-09-11 00:09",
+ "segments": [
+  {
+   "name": "DRAM",
+   "pct": 61.0,
+   "note": "2026Q2 產品營收佔比"
+  },
+  {
+   "name": "FLASH",
+   "pct": 34.0,
+   "note": "2026Q2 產品營收佔比"
+  },
+  {
+   "name": "AI Solutions",
+   "pct": 4.0,
+   "note": "2026Q2 產品營收佔比"
+  },
+  {
+   "name": "Others",
+   "pct": 1.0,
+   "note": "2026Q2 產品營收佔比"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "記憶體",
+  "工業電腦"
+ ],
+ "confidence": "high"
+}

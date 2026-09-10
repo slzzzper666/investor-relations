@@ -1,0 +1,47 @@
+{
+ "code": "6230",
+ "name": "尼得科超眾",
+ "conf_date": "2026-08-28",
+ "source": "pdf",
+ "built_at": "2026-09-10 22:49",
+ "segments": [
+  {
+   "name": "Server",
+   "pct": 33.0,
+   "note": "2026Q2 營收占比"
+  },
+  {
+   "name": "NB",
+   "pct": 28.0,
+   "note": "2026Q2 營收占比"
+  },
+  {
+   "name": "Network",
+   "pct": 21.0,
+   "note": "2026Q2 營收占比"
+  },
+  {
+   "name": "DT",
+   "pct": 11.0,
+   "note": "2026Q2 營收占比"
+  },
+  {
+   "name": "Others",
+   "pct": 7.0,
+   "note": "2026Q2 營收占比"
+  },
+  {
+   "name": "Game Console",
+   "pct": null,
+   "note": "2026Q2 營收占比"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "散熱",
+  "伺服器",
+  "AI伺服器",
+  "筆電/PC"
+ ],
+ "confidence": "high"
+}

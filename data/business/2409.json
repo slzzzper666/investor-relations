@@ -1,0 +1,37 @@
+{
+ "code": "2409",
+ "name": "友達",
+ "conf_date": "2026-08-17",
+ "source": "pdf",
+ "built_at": "2026-09-10 21:33",
+ "segments": [
+  {
+   "name": "Display",
+   "pct": 48.0,
+   "note": "顯示技術"
+  },
+  {
+   "name": "Mobility Solutions",
+   "pct": 29.0,
+   "note": "智慧移動"
+  },
+  {
+   "name": "Vertical Solutions",
+   "pct": 19.0,
+   "note": "垂直場域"
+  },
+  {
+   "name": "Others",
+   "pct": 4.0,
+   "note": "其他"
+  }
+ ],
+ "as_of": "",
+ "tags": [
+  "面板",
+  "面板零組件",
+  "車用電子",
+  "LED"
+ ],
+ "confidence": "high"
+}

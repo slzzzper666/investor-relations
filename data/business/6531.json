@@ -1,0 +1,32 @@
+{
+ "code": "6531",
+ "name": "愛普*",
+ "conf_date": "2026-08-06",
+ "source": "pdf",
+ "built_at": "2026-09-10 21:36",
+ "segments": [
+  {
+   "name": "IoTRAM",
+   "pct": 70.0,
+   "note": "2026Q2營收約1,688百萬元"
+  },
+  {
+   "name": "S-SiCap",
+   "pct": 26.0,
+   "note": "2026Q2營收約638百萬元"
+  },
+  {
+   "name": "VHM",
+   "pct": 2.0,
+   "note": "2026Q2營收約37百萬元"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "IC設計",
+  "記憶體",
+  "先進封裝/CoWoS",
+  "被動元件"
+ ],
+ "confidence": "high"
+}

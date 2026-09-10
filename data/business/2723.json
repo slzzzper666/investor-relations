@@ -1,0 +1,29 @@
+{
+ "code": "2723",
+ "name": "美食-KY",
+ "conf_date": "2026-08-28",
+ "source": "pdf",
+ "built_at": "2026-09-10 22:37",
+ "segments": [
+  {
+   "name": "US & other",
+   "pct": 56.0,
+   "note": "美國及其他地區營收佔比"
+  },
+  {
+   "name": "China",
+   "pct": 24.0,
+   "note": "大陸地區營收佔比"
+  },
+  {
+   "name": "Taiwan",
+   "pct": 20.0,
+   "note": "台灣地區營收佔比"
+  }
+ ],
+ "as_of": "",
+ "tags": [
+  "餐飲"
+ ],
+ "confidence": "high"
+}

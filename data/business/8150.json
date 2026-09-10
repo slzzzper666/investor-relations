@@ -1,0 +1,41 @@
+{
+ "code": "8150",
+ "name": "南茂",
+ "conf_date": "2026-08-11",
+ "source": "pdf",
+ "built_at": "2026-09-10 21:45",
+ "segments": [
+  {
+   "name": "Flash",
+   "pct": 29.5,
+   "note": "產品別營收比重"
+  },
+  {
+   "name": "DRAM/SRAM",
+   "pct": 21.5,
+   "note": "產品別營收比重"
+  },
+  {
+   "name": "Gold bump",
+   "pct": 21.1,
+   "note": "產品別營收比重"
+  },
+  {
+   "name": "DDIC (COG+COF)",
+   "pct": 18.1,
+   "note": "產品別營收比重"
+  },
+  {
+   "name": "Mixed-signal",
+   "pct": 9.8,
+   "note": "產品別營收比重"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "封裝測試",
+  "面板零組件",
+  "記憶體"
+ ],
+ "confidence": "high"
+}

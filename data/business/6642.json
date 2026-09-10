@@ -1,0 +1,42 @@
+{
+ "code": "6642",
+ "name": "富致",
+ "conf_date": "2026-08-11",
+ "source": "pdf",
+ "built_at": "2026-09-11 00:49",
+ "segments": [
+  {
+   "name": "AI/Data Center/Server",
+   "pct": 32.0,
+   "note": "2026 H1 產品應用比重"
+  },
+  {
+   "name": "EV/Autonomous",
+   "pct": 32.0,
+   "note": "2026 H1 產品應用比重"
+  },
+  {
+   "name": "Automation/Robot",
+   "pct": 31.0,
+   "note": "2026 H1 產品應用比重"
+  },
+  {
+   "name": "Energy Conversion & Storage",
+   "pct": 4.0,
+   "note": "2026 H1 產品應用比重"
+  },
+  {
+   "name": "Others",
+   "pct": 1.0,
+   "note": "2026 H1 產品應用比重"
+  }
+ ],
+ "as_of": "2026 H1",
+ "tags": [
+  "被動元件",
+  "車用電子",
+  "電動車",
+  "自動化/機器人"
+ ],
+ "confidence": "high"
+}

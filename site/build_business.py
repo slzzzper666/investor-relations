@@ -88,6 +88,8 @@ def main() -> None:
     ap.add_argument("--days", type=int, default=7, help="回溯天數（預設 7）")
     ap.add_argument("--limit", type=int, default=0, help="這次最多處理幾家")
     ap.add_argument("--force", action="store_true", help="已建檔的也重做")
+    ap.add_argument("--retry-empty", action="store_true",
+                    help="只重做「查過但沒抓到營收結構」的公司（換更強的模型時用）")
     args = ap.parse_args()
 
     BUSINESS_DIR.mkdir(parents=True, exist_ok=True)
@@ -99,8 +101,18 @@ def main() -> None:
         code, name, date = it["code"], it["company"], it["date"]
         out_file = BUSINESS_DIR / f"{code}.json"
         if out_file.exists() and not args.force:
-            skipped += 1
-            continue
+            # --retry-empty：只回頭補「查過但沒抓到營收結構」的，其餘照樣跳過。
+            # 較弱的模型會漏讀圖表，額度充裕時可用強模型再掃一次這批。
+            if not args.retry_empty:
+                skipped += 1
+                continue
+            try:
+                prev = json.loads(out_file.read_text(encoding="utf-8"))
+            except ValueError:
+                prev = {}
+            if prev.get("segments"):
+                skipped += 1
+                continue
         if args.limit and done >= args.limit:
             log.info("已達本次上限 %d 家，其餘留待下一輪", args.limit)
             break

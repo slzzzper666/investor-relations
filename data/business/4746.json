@@ -1,0 +1,61 @@
+{
+ "code": "4746",
+ "name": "台耀",
+ "conf_date": "2026-08-14",
+ "source": "pdf",
+ "built_at": "2026-09-10 23:07",
+ "segments": [
+  {
+   "name": "膽固醇磷酸鹽結合劑",
+   "pct": 34.0,
+   "note": "2026 up to July"
+  },
+  {
+   "name": "維他命D衍生物",
+   "pct": 20.0,
+   "note": "2026 up to July"
+  },
+  {
+   "name": "委託研發代工生產",
+   "pct": 13.0,
+   "note": "2026 up to July"
+  },
+  {
+   "name": "類固醇",
+   "pct": 9.0,
+   "note": "2026 up to July"
+  },
+  {
+   "name": "呼吸系統用藥",
+   "pct": 6.0,
+   "note": "2026 up to July"
+  },
+  {
+   "name": "消炎止痛劑",
+   "pct": 6.0,
+   "note": "2026 up to July"
+  },
+  {
+   "name": "其他",
+   "pct": 6.0,
+   "note": "2026 up to July"
+  },
+  {
+   "name": "抗癌活性成份",
+   "pct": 4.0,
+   "note": "2026 up to July"
+  },
+  {
+   "name": "免疫調節劑",
+   "pct": 2.0,
+   "note": "2026 up to July"
+  }
+ ],
+ "as_of": "2026",
+ "tags": [
+  "原料藥",
+  "學名藥",
+  "新藥研發"
+ ],
+ "confidence": "high"
+}

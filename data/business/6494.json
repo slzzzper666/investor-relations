@@ -1,0 +1,29 @@
+{
+ "code": "6494",
+ "name": "九齊",
+ "conf_date": "2026-08-12",
+ "source": "pdf",
+ "built_at": "2026-09-11 00:45",
+ "segments": [
+  {
+   "name": "MCU",
+   "pct": 68.0,
+   "note": "微控制器產品佔比"
+  },
+  {
+   "name": "語音",
+   "pct": 31.0,
+   "note": "語音IC產品佔比"
+  },
+  {
+   "name": "其它",
+   "pct": 1.0,
+   "note": "其他產品佔比"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "IC設計"
+ ],
+ "confidence": "high"
+}

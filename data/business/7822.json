@@ -1,0 +1,29 @@
+{
+ "code": "7822",
+ "name": "倍利科",
+ "conf_date": "2026-08-19",
+ "source": "pdf",
+ "built_at": "2026-09-10 21:54",
+ "segments": [
+  {
+   "name": "Foundry",
+   "pct": 67.78,
+   "note": "客戶族群對營收占比"
+  },
+  {
+   "name": "OSAT",
+   "pct": 31.67,
+   "note": "客戶族群對營收占比"
+  },
+  {
+   "name": "Others",
+   "pct": 0.55,
+   "note": "客戶族群對營收占比"
+  }
+ ],
+ "as_of": "2026 H1",
+ "tags": [
+  "半導體設備"
+ ],
+ "confidence": "high"
+}

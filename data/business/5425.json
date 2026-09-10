@@ -1,0 +1,37 @@
+{
+ "code": "5425",
+ "name": "台半",
+ "conf_date": "2026-08-21",
+ "source": "pdf",
+ "built_at": "2026-09-11 00:24",
+ "segments": [
+  {
+   "name": "Automotive",
+   "pct": 59.0,
+   "note": "車用電子"
+  },
+  {
+   "name": "3Cs",
+   "pct": 23.0,
+   "note": "3C電子"
+  },
+  {
+   "name": "Industrial",
+   "pct": 16.0,
+   "note": "工業用"
+  },
+  {
+   "name": "Others",
+   "pct": 2.0,
+   "note": "其他"
+  }
+ ],
+ "as_of": "2026",
+ "tags": [
+  "化合物半導體",
+  "功率半導體",
+  "車用電子",
+  "電動車"
+ ],
+ "confidence": "high"
+}

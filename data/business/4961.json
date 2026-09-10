@@ -1,0 +1,37 @@
+{
+ "code": "4961",
+ "name": "天鈺",
+ "conf_date": "2026-08-07",
+ "source": "pdf",
+ "built_at": "2026-09-10 22:22",
+ "segments": [
+  {
+   "name": "Mobile IC",
+   "pct": 38.64,
+   "note": ""
+  },
+  {
+   "name": "其他相關半導體",
+   "pct": 26.81,
+   "note": "包含TCON/EPD/ESL/AI Chip"
+  },
+  {
+   "name": "顯示器驅動IC",
+   "pct": 24.52,
+   "note": "包含大尺寸及中尺寸"
+  },
+  {
+   "name": "電源管理IC",
+   "pct": 10.02,
+   "note": ""
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "IC設計",
+  "面板",
+  "面板零組件",
+  "手機"
+ ],
+ "confidence": "high"
+}

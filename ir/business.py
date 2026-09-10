@@ -159,6 +159,22 @@ def _clean(profile: BusinessProfile) -> dict:
         if pct is not None and not (0 <= pct <= 100):
             pct = None
         segs.append({"name": name, "pct": pct, "note": s.note.strip()})
+
+    # 合理性檢查：營收結構是一組互斥項目，合計不可能超過 100%（容忍四捨五入）。
+    # 實測有的簡報只畫「各產品線成長率」沒畫佔比，模型會誤把成長率當佔比抓下來
+    # （症狀＝項目名重複、合計遠超過 100%）。寧可整組丟掉只留族群標籤，
+    # 也不要把錯的數字放上站——讀者無從分辨對錯。
+    # 只管上限不管下限：簡報常只列主要幾項，合計偏低是合法的。
+    if segs:
+        names = [s["name"] for s in segs]
+        total = sum(s["pct"] for s in segs if s["pct"] is not None)
+        dup = len(names) != len(set(names))
+        if dup or total > 115:
+            log.warning("業務項目合理性檢查未過（%d 項、合計 %.0f%%、名稱重複 %s），"
+                        "捨棄比重只保留族群", len(segs), total, dup)
+            segs = []
+            profile.confidence = "none"
+
     # 有佔比的排前面（大→小），沒佔比的維持原順序墊後
     segs.sort(key=lambda x: (x["pct"] is None, -(x["pct"] or 0)))
     return {
@@ -212,6 +228,9 @@ def extract(company: str, code: str, pdf_path: Path | None = None,
                 pass
 
     out = _clean(parsed)
-    log.info("業務項目 %s %s：%d 項、標籤 %s（%s）", code, company,
-             len(out["segments"]), "/".join(out["tags"]) or "無", out["confidence"])
+    # 記下實際產出的模型：降級鏈會依額度自動換模型，出問題時要查得到是誰做的
+    out["model"] = getattr(resp, "model_version", "") or ""
+    log.info("業務項目 %s %s：%d 項、標籤 %s（%s｜%s）", code, company,
+             len(out["segments"]), "/".join(out["tags"]) or "無",
+             out["confidence"], out["model"] or "未知模型")
     return out

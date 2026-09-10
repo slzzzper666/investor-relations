@@ -1,0 +1,37 @@
+{
+ "code": "2347",
+ "name": "聯強",
+ "conf_date": "2026-08-10",
+ "source": "pdf",
+ "built_at": "2026-09-10 21:37",
+ "segments": [
+  {
+   "name": "Semiconductor",
+   "pct": 43.0,
+   "note": "Y26Q2 產品別營收占比"
+  },
+  {
+   "name": "Enterprise Solution",
+   "pct": 37.0,
+   "note": "Y26Q2 產品別營收占比"
+  },
+  {
+   "name": "Device & Consumer",
+   "pct": 17.0,
+   "note": "Y26Q2 產品別營收占比"
+  },
+  {
+   "name": "Mobile Device",
+   "pct": 3.0,
+   "note": "Y26Q2 產品別營收占比"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "資訊服務",
+  "雲端服務",
+  "伺服器",
+  "筆電/PC"
+ ],
+ "confidence": "high"
+}

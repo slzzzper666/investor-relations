@@ -1,0 +1,31 @@
+{
+ "code": "6412",
+ "name": "群電",
+ "conf_date": "2026-08-04",
+ "source": "pdf",
+ "built_at": "2026-09-10 22:08",
+ "segments": [
+  {
+   "name": "Cloud and Smart Solutions",
+   "pct": 55.0,
+   "note": "2Q26營收佔比55%"
+  },
+  {
+   "name": "PC",
+   "pct": 36.0,
+   "note": "2Q26營收佔比36%"
+  },
+  {
+   "name": "Consumer Electronics",
+   "pct": 9.0,
+   "note": "2Q26營收佔比9%"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "電源供應器",
+  "筆電/PC",
+  "雲端服務"
+ ],
+ "confidence": "high"
+}

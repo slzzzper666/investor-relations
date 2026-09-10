@@ -1,0 +1,24 @@
+{
+ "code": "6918",
+ "name": "愛派司",
+ "conf_date": "2026-08-25",
+ "source": "pdf",
+ "built_at": "2026-09-10 23:34",
+ "segments": [
+  {
+   "name": "自製產品",
+   "pct": 71.0,
+   "note": "115年度H1"
+  },
+  {
+   "name": "代理品項",
+   "pct": 29.0,
+   "note": "115年度H1"
+  }
+ ],
+ "as_of": "2026 H1",
+ "tags": [
+  "醫療器材"
+ ],
+ "confidence": "high"
+}

@@ -1,0 +1,42 @@
+{
+ "code": "4551",
+ "name": "智伸科",
+ "conf_date": "2026-08-12",
+ "source": "pdf",
+ "built_at": "2026-09-10 22:27",
+ "segments": [
+  {
+   "name": "Automotive",
+   "pct": 54.0,
+   "note": "主要事業部門營收佔比"
+  },
+  {
+   "name": "Electronics",
+   "pct": 15.0,
+   "note": "AI/HDD"
+  },
+  {
+   "name": "Semiconductor & AI Server & Others",
+   "pct": 14.0,
+   "note": "主要事業部門營收佔比"
+  },
+  {
+   "name": "Medical",
+   "pct": 9.0,
+   "note": "主要事業部門營收佔比"
+  },
+  {
+   "name": "Sports",
+   "pct": 8.0,
+   "note": "主要事業部門營收佔比"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "汽車零組件",
+  "車用電子",
+  "電動車",
+  "醫療器材"
+ ],
+ "confidence": "high"
+}

@@ -1,0 +1,27 @@
+{
+ "code": "6874",
+ "name": "倍力",
+ "conf_date": "2026-08-12",
+ "source": "pdf",
+ "built_at": "2026-09-11 00:43",
+ "segments": [
+  {
+   "name": "代理產品",
+   "pct": 90.0,
+   "note": "Oracle、SAP、IBM等代理與整合服務"
+  },
+  {
+   "name": "自有產品與服務",
+   "pct": 10.0,
+   "note": "GCRS、碳管家等軟體產品與服務"
+  }
+ ],
+ "as_of": "2026 H1",
+ "tags": [
+  "資訊服務",
+  "軟體/SaaS",
+  "資安",
+  "雲端服務"
+ ],
+ "confidence": "high"
+}

@@ -1,0 +1,14 @@
+{
+ "code": "8110",
+ "name": "華東",
+ "conf_date": "2026-08-21",
+ "source": "pdf",
+ "built_at": "2026-09-10 22:20",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "記憶體",
+  "封裝測試"
+ ],
+ "confidence": "none"
+}

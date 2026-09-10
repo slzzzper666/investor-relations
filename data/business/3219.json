@@ -1,0 +1,31 @@
+{
+ "code": "3219",
+ "name": "倚強科",
+ "conf_date": "2026-08-27",
+ "source": "pdf",
+ "built_at": "2026-09-11 00:13",
+ "segments": [
+  {
+   "name": "Consumer Electronics",
+   "pct": 74.0,
+   "note": "含手機、手錶、耳機、平板、筆電與AR眼鏡"
+  },
+  {
+   "name": "AI Server",
+   "pct": 21.0,
+   "note": "AI伺服器相關產品"
+  },
+  {
+   "name": "Other",
+   "pct": 5.0,
+   "note": "車用與5G等其他應用"
+  }
+ ],
+ "as_of": "2026 H1",
+ "tags": [
+  "AI伺服器",
+  "半導體設備",
+  "網通設備"
+ ],
+ "confidence": "high"
+}

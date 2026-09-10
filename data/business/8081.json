@@ -1,0 +1,45 @@
+{
+ "code": "8081",
+ "name": "致新",
+ "conf_date": "2026-08-07",
+ "source": "pdf",
+ "built_at": "2026-09-10 22:22",
+ "segments": [
+  {
+   "name": "Panel",
+   "pct": 33.0,
+   "note": "115年第二季產品應用比重"
+  },
+  {
+   "name": "Computing",
+   "pct": 30.0,
+   "note": "115年第二季產品應用比重"
+  },
+  {
+   "name": "Others",
+   "pct": 15.0,
+   "note": "115年第二季產品應用比重"
+  },
+  {
+   "name": "TV",
+   "pct": 12.0,
+   "note": "115年第二季產品應用比重"
+  },
+  {
+   "name": "Motor",
+   "pct": 7.0,
+   "note": "115年第二季產品應用比重"
+  },
+  {
+   "name": "Distributor",
+   "pct": 3.0,
+   "note": "115年第二季產品應用比重"
+  }
+ ],
+ "as_of": "",
+ "tags": [
+  "IC設計",
+  "面板零組件"
+ ],
+ "confidence": "high"
+}

@@ -1,0 +1,19 @@
+{
+ "code": "2408",
+ "name": "南亞科",
+ "conf_date": "2026-08-20",
+ "source": "pdf",
+ "built_at": "2026-09-10 21:18",
+ "segments": [
+  {
+   "name": "應用於AI基礎設施及伺服器",
+   "pct": null,
+   "note": "營收占比超過20%"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "記憶體"
+ ],
+ "confidence": "low"
+}

@@ -1,0 +1,40 @@
+{
+ "code": "6719",
+ "name": "力智",
+ "conf_date": "2026-08-07",
+ "source": "pdf",
+ "built_at": "2026-09-10 22:27",
+ "segments": [
+  {
+   "name": "Computing",
+   "pct": 54.0,
+   "note": "2026 Q2 營收佔比"
+  },
+  {
+   "name": "BMS",
+   "pct": 19.0,
+   "note": "2026 Q2 營收佔比"
+  },
+  {
+   "name": "Communication",
+   "pct": 18.0,
+   "note": "2026 Q2 營收佔比"
+  },
+  {
+   "name": "Industrial",
+   "pct": 7.0,
+   "note": "2026 Q2 營收佔比"
+  },
+  {
+   "name": "Consumer",
+   "pct": 2.0,
+   "note": "2026 Q2 營收佔比"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "IC設計",
+  "功率半導體"
+ ],
+ "confidence": "high"
+}

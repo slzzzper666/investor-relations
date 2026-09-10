@@ -1,0 +1,47 @@
+{
+ "code": "6224",
+ "name": "聚鼎",
+ "conf_date": "2026-08-25",
+ "source": "pdf",
+ "built_at": "2026-09-10 22:57",
+ "segments": [
+  {
+   "name": "Automotive/Energy/Industry/Robot/Lighting",
+   "pct": 39.0,
+   "note": ""
+  },
+  {
+   "name": "Battery/Handheld devices",
+   "pct": 20.0,
+   "note": ""
+  },
+  {
+   "name": "3C/Consumer/Other",
+   "pct": 20.0,
+   "note": ""
+  },
+  {
+   "name": "Semiconductor",
+   "pct": 10.0,
+   "note": "YoY +101%"
+  },
+  {
+   "name": "AI Server,HPC,Storage,Networking",
+   "pct": 5.0,
+   "note": "YoY +41%"
+  },
+  {
+   "name": "Aerospace",
+   "pct": 5.0,
+   "note": "YoY +37%"
+  }
+ ],
+ "as_of": "2026 H1",
+ "tags": [
+  "被動元件",
+  "PCB",
+  "散熱",
+  "車用電子"
+ ],
+ "confidence": "high"
+}

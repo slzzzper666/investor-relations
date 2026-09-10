@@ -1,0 +1,30 @@
+{
+ "code": "6789",
+ "name": "采鈺",
+ "conf_date": "2026-08-06",
+ "source": "pdf",
+ "built_at": "2026-09-10 21:37",
+ "segments": [
+  {
+   "name": "影像感測器",
+   "pct": 75.0,
+   "note": "CIS"
+  },
+  {
+   "name": "微型光學元件",
+   "pct": 24.0,
+   "note": "MOE"
+  },
+  {
+   "name": "其他",
+   "pct": 1.0,
+   "note": "光罩及NRE測試服務"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "封裝測試",
+  "感測元件"
+ ],
+ "confidence": "high"
+}

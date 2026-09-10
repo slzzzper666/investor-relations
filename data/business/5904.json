@@ -1,0 +1,70 @@
+{
+ "code": "5904",
+ "name": "寶雅*",
+ "conf_date": "2026-08-25",
+ "source": "pdf",
+ "built_at": "2026-09-11 00:20",
+ "segments": [
+  {
+   "name": "Cosmetics",
+   "pct": 19.0,
+   "note": "1H26 Sales mix"
+  },
+  {
+   "name": "Skin Care",
+   "pct": 15.0,
+   "note": "1H26 Sales mix"
+  },
+  {
+   "name": "Household",
+   "pct": 15.0,
+   "note": "1H26 Sales mix"
+  },
+  {
+   "name": "Bath",
+   "pct": 13.0,
+   "note": "1H26 Sales mix"
+  },
+  {
+   "name": "Beauty",
+   "pct": 10.0,
+   "note": "1H26 Sales mix"
+  },
+  {
+   "name": "Textile",
+   "pct": 9.0,
+   "note": "1H26 Sales mix"
+  },
+  {
+   "name": "Food",
+   "pct": 6.0,
+   "note": "1H26 Sales mix"
+  },
+  {
+   "name": "Hardware",
+   "pct": 4.0,
+   "note": "1H26 Sales mix"
+  },
+  {
+   "name": "Others",
+   "pct": 4.0,
+   "note": "1H26 Sales mix"
+  },
+  {
+   "name": "Accessories",
+   "pct": 3.0,
+   "note": "1H26 Sales mix"
+  },
+  {
+   "name": "Groceries",
+   "pct": 2.0,
+   "note": "1H26 Sales mix"
+  }
+ ],
+ "as_of": "2026 H1",
+ "tags": [
+  "零售通路",
+  "美妝保健"
+ ],
+ "confidence": "high"
+}

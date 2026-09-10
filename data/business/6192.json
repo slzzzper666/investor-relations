@@ -1,0 +1,26 @@
+{
+ "code": "6192",
+ "name": "巨路",
+ "conf_date": "2026-08-28",
+ "source": "pdf",
+ "built_at": "2026-09-10 22:46",
+ "segments": [
+  {
+   "name": "Process control",
+   "pct": 85.8,
+   "note": "程控事業"
+  },
+  {
+   "name": "Elec/Telecomm",
+   "pct": 14.2,
+   "note": "電子與電信"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "自動化/機器人",
+  "電力設備",
+  "半導體設備"
+ ],
+ "confidence": "high"
+}

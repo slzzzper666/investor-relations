@@ -1,0 +1,46 @@
+{
+ "code": "3217",
+ "name": "優群",
+ "conf_date": "2026-08-12",
+ "source": "pdf",
+ "built_at": "2026-09-11 00:48",
+ "segments": [
+  {
+   "name": "SO-DIMM",
+   "pct": 28.0,
+   "note": "2026 Q2 銷值佔比"
+  },
+  {
+   "name": "M.2",
+   "pct": 26.0,
+   "note": "2026 Q2 銷值佔比"
+  },
+  {
+   "name": "USB TYPE-C",
+   "pct": 13.0,
+   "note": "2026 Q2 銷值佔比"
+  },
+  {
+   "name": "Metal Bar",
+   "pct": 12.0,
+   "note": "2026 Q2 銷值佔比"
+  },
+  {
+   "name": "Long DIMM",
+   "pct": 10.0,
+   "note": "2026 Q2 銷值佔比"
+  },
+  {
+   "name": "Others",
+   "pct": 10.0,
+   "note": "2026 Q2 銷值佔比"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "連接器",
+  "筆電/PC",
+  "伺服器"
+ ],
+ "confidence": "high"
+}

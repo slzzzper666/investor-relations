@@ -1,0 +1,31 @@
+{
+ "code": "3450",
+ "name": "聯鈞",
+ "conf_date": "2026-08-18",
+ "source": "pdf",
+ "built_at": "2026-09-10 21:44",
+ "segments": [
+  {
+   "name": "Power Semi.",
+   "pct": 50.4,
+   "note": "July 2026 revenue by application"
+  },
+  {
+   "name": "AI Optics",
+   "pct": 45.5,
+   "note": "July 2026 revenue by application"
+  },
+  {
+   "name": "Commodity Optics",
+   "pct": 4.1,
+   "note": "July 2026 revenue by application"
+  }
+ ],
+ "as_of": "2026",
+ "tags": [
+  "光通訊",
+  "化合物半導體",
+  "功率半導體"
+ ],
+ "confidence": "high"
+}

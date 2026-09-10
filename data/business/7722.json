@@ -1,0 +1,31 @@
+{
+ "code": "7722",
+ "name": "LINEPAY",
+ "conf_date": "2026-08-18",
+ "source": "pdf",
+ "built_at": "2026-09-10 22:26",
+ "segments": [
+  {
+   "name": "手續費收入事業",
+   "pct": 84.0,
+   "note": "YoY 18%"
+  },
+  {
+   "name": "金融推廣合作事業",
+   "pct": 14.0,
+   "note": "YoY 14%"
+  },
+  {
+   "name": "系統管理服務事業及其他",
+   "pct": 2.0,
+   "note": "YoY -31%"
+  }
+ ],
+ "as_of": "2026",
+ "tags": [
+  "數位金融",
+  "軟體/SaaS",
+  "資訊服務"
+ ],
+ "confidence": "high"
+}

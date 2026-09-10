@@ -1,0 +1,40 @@
+{
+ "code": "7769",
+ "name": "鴻勁",
+ "conf_date": "2026-08-25",
+ "source": "pdf",
+ "built_at": "2026-09-10 21:19",
+ "segments": [
+  {
+   "name": "AI / HPC / ASIC",
+   "pct": 77.0,
+   "note": "2026 H1 訂單應用別分布"
+  },
+  {
+   "name": "Automotive",
+   "pct": 9.0,
+   "note": "2026 H1 訂單應用別分布"
+  },
+  {
+   "name": "Mobile AP Communication",
+   "pct": 8.0,
+   "note": "2026 H1 訂單應用別分布"
+  },
+  {
+   "name": "3C Consumer",
+   "pct": 5.0,
+   "note": "2026 H1 訂單應用別分布"
+  },
+  {
+   "name": "Memory MEMS",
+   "pct": 1.0,
+   "note": "2026 H1 訂單應用別分布"
+  }
+ ],
+ "as_of": "2026 H1",
+ "tags": [
+  "半導體設備",
+  "自動化/機器人"
+ ],
+ "confidence": "high"
+}

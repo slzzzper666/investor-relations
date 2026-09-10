@@ -1,0 +1,37 @@
+{
+ "code": "2368",
+ "name": "金像電",
+ "conf_date": "2026-08-28",
+ "source": "pdf",
+ "built_at": "2026-09-10 21:26",
+ "segments": [
+  {
+   "name": "Server",
+   "pct": 78.0,
+   "note": "伺服器"
+  },
+  {
+   "name": "Networking",
+   "pct": 15.0,
+   "note": "網通"
+  },
+  {
+   "name": "NB",
+   "pct": 5.0,
+   "note": "筆記型電腦"
+  },
+  {
+   "name": "Others",
+   "pct": 2.0,
+   "note": "其他"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "PCB",
+  "伺服器",
+  "AI伺服器",
+  "網通設備"
+ ],
+ "confidence": "high"
+}

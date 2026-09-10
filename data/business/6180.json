@@ -1,0 +1,31 @@
+{
+ "code": "6180",
+ "name": "橘子",
+ "conf_date": "2026-08-07",
+ "source": "pdf",
+ "built_at": "2026-09-11 00:53",
+ "segments": [
+  {
+   "name": "遊戲",
+   "pct": 59.0,
+   "note": "佔集團營收59%"
+  },
+  {
+   "name": "商務",
+   "pct": null,
+   "note": "企業雲端與資安等需求"
+  },
+  {
+   "name": "其他",
+   "pct": null,
+   "note": "其他事業營收年增24%"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "遊戲",
+  "軟體/SaaS",
+  "雲端服務"
+ ],
+ "confidence": "high"
+}

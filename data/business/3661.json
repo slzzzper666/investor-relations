@@ -1,0 +1,36 @@
+{
+ "code": "3661",
+ "name": "世芯-KY",
+ "conf_date": "2026-08-14",
+ "source": "pdf",
+ "built_at": "2026-09-10 21:30",
+ "segments": [
+  {
+   "name": "HPC",
+   "pct": 50.0,
+   "note": "2Q26營收應用分布"
+  },
+  {
+   "name": "Networking",
+   "pct": 32.0,
+   "note": "2Q26營收應用分布"
+  },
+  {
+   "name": "Consumer",
+   "pct": 16.0,
+   "note": "2Q26營收應用分布"
+  },
+  {
+   "name": "Niche",
+   "pct": 1.0,
+   "note": "2Q26營收應用分布"
+  }
+ ],
+ "as_of": "",
+ "tags": [
+  "IC設計",
+  "矽智財IP",
+  "AI伺服器"
+ ],
+ "confidence": "high"
+}

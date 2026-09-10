@@ -1,0 +1,35 @@
+{
+ "code": "6620",
+ "name": "漢達",
+ "conf_date": "2026-08-07",
+ "source": "pdf",
+ "built_at": "2026-09-11 00:52",
+ "segments": [
+  {
+   "name": "Dexlansoprazole",
+   "pct": 45.0,
+   "note": "2026H1營收佔比"
+  },
+  {
+   "name": "TASCENSO",
+   "pct": 40.0,
+   "note": "2026H1營收佔比"
+  },
+  {
+   "name": "Phyrago",
+   "pct": 10.0,
+   "note": "2026H1營收佔比"
+  },
+  {
+   "name": "Others",
+   "pct": 5.0,
+   "note": "2026H1營收佔比"
+  }
+ ],
+ "as_of": "2026 H1",
+ "tags": [
+  "新藥研發",
+  "學名藥"
+ ],
+ "confidence": "high"
+}
