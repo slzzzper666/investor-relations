@@ -1664,3 +1664,57 @@ a.m-row:hover {
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
 }
+
+
+/* ---------- 姊妹頁入口：盤後籌碼快照（三籌資本，同站 /chips/） ---------- */
+.sister-link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+  padding: 11px 18px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(217, 161, 74, 0.05);
+  text-decoration: none;
+  color: var(--text);
+  transition: border-color .18s ease, background .18s ease, transform .18s ease;
+}
+
+.sister-link:hover,
+.sister-link:focus-visible {
+  border-color: var(--amber-dim);
+  background: rgba(217, 161, 74, 0.1);
+  transform: translateY(-1px);
+}
+
+.sister-kicker {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+
+.sister-title {
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.sister-title::after {
+  content: " 92";
+  color: var(--amber);
+}
+
+.sister-desc {
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+@media (max-width: 560px) {
+  .sister-link { gap: 8px; padding: 10px 15px; }
+  .sister-desc { font-size: 11.5px; }
+}
