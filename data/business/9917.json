@@ -1,0 +1,45 @@
+{
+ "code": "9917",
+ "name": "中保科",
+ "conf_date": "2026-09-08",
+ "source": "pdf",
+ "built_at": "2026-09-10 20:26",
+ "segments": [
+  {
+   "name": "中保無限+",
+   "pct": null,
+   "note": "系統保全"
+  },
+  {
+   "name": "國興",
+   "pct": null,
+   "note": "駐衛保全"
+  },
+  {
+   "name": "國樓",
+   "pct": null,
+   "note": "停車場、駐衛保全、物業管理"
+  },
+  {
+   "name": "國雲",
+   "pct": null,
+   "note": "物業管理"
+  },
+  {
+   "name": "立保",
+   "pct": null,
+   "note": "金流保全整合"
+  },
+  {
+   "name": "立偉",
+   "pct": null,
+   "note": "健康照護"
+  }
+ ],
+ "as_of": "2026 H1",
+ "tags": [
+  "資安",
+  "其他"
+ ],
+ "confidence": "high"
+}

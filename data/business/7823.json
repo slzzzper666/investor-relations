@@ -1,0 +1,25 @@
+{
+ "code": "7823",
+ "name": "奧義賽博-KY創",
+ "conf_date": "2026-09-03",
+ "source": "pdf",
+ "built_at": "2026-09-10 20:35",
+ "segments": [
+  {
+   "name": "經常性收入",
+   "pct": 84.5,
+   "note": "1H26 佔比"
+  },
+  {
+   "name": "專案服務收入",
+   "pct": 15.5,
+   "note": "由經常性收入佔比推估"
+  }
+ ],
+ "as_of": "",
+ "tags": [
+  "資安",
+  "軟體/SaaS"
+ ],
+ "confidence": "high"
+}

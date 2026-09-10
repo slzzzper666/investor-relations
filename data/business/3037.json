@@ -1,0 +1,45 @@
+{
+ "code": "3037",
+ "name": "欣興",
+ "conf_date": "2026-09-08",
+ "source": "pdf",
+ "built_at": "2026-09-10 20:03",
+ "segments": [
+  {
+   "name": "ABF",
+   "pct": 52.0,
+   "note": "2Q26"
+  },
+  {
+   "name": "HDI",
+   "pct": 27.0,
+   "note": "2Q26"
+  },
+  {
+   "name": "BT",
+   "pct": 9.0,
+   "note": "2Q26"
+  },
+  {
+   "name": "PCB",
+   "pct": 9.0,
+   "note": "2Q26"
+  },
+  {
+   "name": "FPC",
+   "pct": 2.0,
+   "note": "2Q26"
+  },
+  {
+   "name": "Other",
+   "pct": 1.0,
+   "note": "2Q26"
+  }
+ ],
+ "as_of": "",
+ "tags": [
+  "ABF載板",
+  "PCB"
+ ],
+ "confidence": "high"
+}

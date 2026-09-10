@@ -1,0 +1,37 @@
+{
+ "code": "4966",
+ "name": "譜瑞-KY",
+ "conf_date": "2026-09-09",
+ "source": "pdf",
+ "built_at": "2026-09-10 20:38",
+ "segments": [
+  {
+   "name": "High-Speed I/F",
+   "pct": 49.5,
+   "note": "47%~52%"
+  },
+  {
+   "name": "DP",
+   "pct": 31.5,
+   "note": "29%~34%"
+  },
+  {
+   "name": "Touch",
+   "pct": 10.5,
+   "note": "8%~13%"
+  },
+  {
+   "name": "Source Driver",
+   "pct": 9.5,
+   "note": "7%~12%"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "IC設計",
+  "筆電/PC",
+  "車用電子",
+  "面板零組件"
+ ],
+ "confidence": "high"
+}

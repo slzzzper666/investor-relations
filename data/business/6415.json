@@ -1,0 +1,41 @@
+{
+ "code": "6415",
+ "name": "矽力*-KY",
+ "conf_date": "2026-09-04",
+ "source": "pdf",
+ "built_at": "2026-09-10 20:19",
+ "segments": [
+  {
+   "name": "Consumer",
+   "pct": 36.0,
+   "note": "消費性電子應用"
+  },
+  {
+   "name": "Industrial",
+   "pct": 35.0,
+   "note": "工業應用"
+  },
+  {
+   "name": "Automotive",
+   "pct": 14.0,
+   "note": "車用"
+  },
+  {
+   "name": "Computer",
+   "pct": 9.0,
+   "note": "電腦應用"
+  },
+  {
+   "name": "Communication",
+   "pct": 6.0,
+   "note": "通訊應用"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "IC設計",
+  "功率半導體",
+  "車用電子"
+ ],
+ "confidence": "high"
+}

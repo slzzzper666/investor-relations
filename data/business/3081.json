@@ -1,0 +1,25 @@
+{
+ "code": "3081",
+ "name": "聯亞",
+ "conf_date": "2026-09-03",
+ "source": "pdf",
+ "built_at": "2026-09-10 20:06",
+ "segments": [
+  {
+   "name": "LD Epiwafer",
+   "pct": null,
+   "note": ""
+  },
+  {
+   "name": "PD Epiwafer",
+   "pct": null,
+   "note": ""
+  }
+ ],
+ "as_of": "",
+ "tags": [
+  "化合物半導體",
+  "光通訊"
+ ],
+ "confidence": "low"
+}

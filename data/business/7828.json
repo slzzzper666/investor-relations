@@ -1,0 +1,30 @@
+{
+ "code": "7828",
+ "name": "創新服務",
+ "conf_date": "2026-09-04",
+ "source": "pdf",
+ "built_at": "2026-09-10 20:05",
+ "segments": [
+  {
+   "name": "半導體設備",
+   "pct": null,
+   "note": "包含探針卡相關自動化設備"
+  },
+  {
+   "name": "半導體材料",
+   "pct": null,
+   "note": "包含探針卡材料包銷售"
+  },
+  {
+   "name": "先進封裝",
+   "pct": null,
+   "note": "包含銅柱巨量轉移技術玻璃核心基板應用"
+  }
+ ],
+ "as_of": "2026",
+ "tags": [
+  "半導體設備",
+  "IC基板"
+ ],
+ "confidence": "medium"
+}

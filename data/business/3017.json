@@ -1,0 +1,37 @@
+{
+ "code": "3017",
+ "name": "奇鋐",
+ "conf_date": "2026-09-03",
+ "source": "pdf",
+ "built_at": "2026-09-10 20:04",
+ "segments": [
+  {
+   "name": "散熱產品Thermal",
+   "pct": 62.98,
+   "note": ""
+  },
+  {
+   "name": "機箱產品Chassis",
+   "pct": 20.44,
+   "note": ""
+  },
+  {
+   "name": "系統及周邊產品",
+   "pct": 8.51,
+   "note": ""
+  },
+  {
+   "name": "富世達(轉軸)",
+   "pct": 8.07,
+   "note": ""
+  }
+ ],
+ "as_of": "",
+ "tags": [
+  "散熱",
+  "機殼結構件",
+  "伺服器",
+  "AI伺服器"
+ ],
+ "confidence": "high"
+}

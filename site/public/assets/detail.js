@@ -160,12 +160,113 @@
     "</div>";
   }
 
-  function finMini(label, value) {
+  function finMini(label, value, sub) {
     if (value == null || value === "") return "";
     return '<div class="fin-mini-item">' +
       '<div class="fin-mini-label">' + esc(label) + "</div>" +
       '<div class="fin-mini-value">' + value + "</div>" +
+      (sub ? '<div class="fin-mini-sub">' + sub + "</div>" : "") +
     "</div>";
+  }
+
+  /* 本益比對同業中位數的折溢價：判斷貴或便宜的關鍵，單看絕對值沒有意義 */
+  function peerPeSub(fin) {
+    var peer = fin.industry_pe;
+    if (!peer || !peer.median) return "";
+    var txt = esc(fin.industry || "同業") + "中位 " + finNum(peer.median, 1);
+    if (fin.pe == null) return '<span class="fin-peer">' + txt + "</span>";
+    var ratio = fin.pe / peer.median;
+    var cls = ratio >= 1 ? "up" : "down";   // 高於同業＝紅、低於同業＝綠（同年增率語意）
+    // 微利股的本益比會飆到幾百倍，換算成「溢價 9852%」既難讀也沒意義，
+    // 差距超過一倍就改用倍數表示。
+    var label = (ratio >= 2 || ratio <= 0.5)
+      ? finNum(ratio, 1) + "× 同業"
+      : (ratio >= 1 ? "溢價 " : "折價 ") +
+        finNum(Math.abs(ratio - 1) * 100, 0) + "%";
+    return '<span class="fin-peer">' + txt + "</span>" +
+      '<span class="fin-delta ' + cls + '">' + label + "</span>";
+  }
+
+  /* 近 N 季趨勢表：欄＝季別（舊→新，趨勢由左往右讀），列＝指標。
+     每格帶一條與同列最大值等比的底條，數字之外還能一眼看出高低。 */
+  function quartersHtml(quarters) {
+    if (!quarters || !quarters.length) return "";
+    var qs = quarters.slice().reverse();   // 傳入是新→舊
+    var rows = [
+      { key: "revenue", label: "營收", unit: "億", digits: 1 },
+      { key: "revenue_yoy", label: "營收 YoY", unit: "%", digits: 1, signed: true },
+      { key: "eps", label: "EPS", unit: "元", digits: 2 },
+      { key: "gross_margin", label: "毛利率", unit: "%", digits: 1 },
+      { key: "capex", label: "資本支出", unit: "億", digits: 1 }
+    ];
+
+    var head = '<tr><th scope="col">季別</th>' + qs.map(function (q, i) {
+      var cls = i === qs.length - 1 ? ' class="is-latest"' : "";
+      return "<th scope=\"col\"" + cls + ">" + esc(q.period).replace(" ", "<br>") + "</th>";
+    }).join("") + "</tr>";
+
+    var body = rows.map(function (r) {
+      var vals = qs.map(function (q) { return q[r.key]; });
+      var present = vals.filter(function (v) { return v != null; });
+      if (!present.length) return "";       // 整列都沒資料（如金控無毛利率）就不顯示
+      var max = Math.max.apply(null, present.map(Math.abs));
+      // 大數字（台積電營收上萬億）在窄欄位放不下小數，依量級決定精度
+      var digits = r.digits;
+      if (r.key === "revenue" || r.key === "capex") digits = max >= 1000 ? 0 : 1;
+      var tds = qs.map(function (q, i) {
+        var v = q[r.key];
+        var latest = i === qs.length - 1 ? " is-latest" : "";
+        if (v == null) return '<td class="is-na' + latest + '">—</td>';
+        var pctW = max > 0 ? Math.round(Math.abs(v) / max * 100) : 0;
+        var neg = v < 0 ? " is-neg" : "";
+        var txt = (r.signed && v > 0 ? "+" : "") + finNum(v, digits);
+        return '<td class="' + (latest ? "is-latest" : "") + neg + '">' +
+          '<span class="q-bar" style="width:' + pctW + '%"></span>' +
+          '<span class="q-val">' + txt + "</span></td>";
+      }).join("");
+      return '<tr><th scope="row">' + esc(r.label) +
+        '<span class="q-unit">' + esc(r.unit) + "</span></th>" + tds + "</tr>";
+    }).join("");
+
+    if (!body) return "";
+    return '<div class="fin-trend">' +
+      '<div class="fin-trend-head">近 ' + qs.length + ' 季趨勢</div>' +
+      '<div class="fin-table-wrap"><table class="fin-table">' +
+        "<thead>" + head + "</thead><tbody>" + body + "</tbody></table></div>" +
+    "</div>";
+  }
+
+  /* 業務項目：公司自己的營收結構 + 可點的族群標籤 */
+  function businessHtml(biz) {
+    if (!biz || (!biz.segments || !biz.segments.length)) return "";
+    // 比重條用絕對佔比（55% 就填 55% 寬），不做相對最大項的等比放大——
+    // 這是營收結構，條的長度本身就該等於佔比。
+    var items = biz.segments.map(function (s) {
+      var pct = s.pct != null ? finNum(s.pct, 1) + "%" : "";
+      var w = s.pct != null ? Math.max(0, Math.min(100, s.pct)) : 0;
+      return '<li class="biz-item">' +
+        '<span class="biz-bar" style="width:' + w + '%"></span>' +
+        '<span class="biz-name">' + esc(s.name) +
+          (s.note ? '<span class="biz-note">' + esc(s.note) + "</span>" : "") +
+        "</span>" +
+        '<span class="biz-pct mono">' + pct + "</span>" +
+      "</li>";
+    }).join("");
+
+    var tags = (biz.tags || []).map(function (t) {
+      return '<a class="biz-tag" href="index.html?tag=' +
+        encodeURIComponent(t) + '">' + esc(t) + "</a>";
+    }).join("");
+
+    return '<aside class="biz-panel">' +
+      '<div class="fin-head"><span class="fin-title">業務項目</span>' +
+        (biz.as_of ? '<span class="fin-period mono">' + esc(biz.as_of) + "</span>" : "") +
+      "</div>" +
+      '<ul class="biz-list">' + items + "</ul>" +
+      (tags ? '<div class="biz-tags"><span class="biz-tags-label">族群</span>' +
+        tags + "</div>" : "") +
+      '<p class="fin-note">營收結構由 AI 讀取法說會簡報整理 · 點族群看同類公司</p>' +
+    "</aside>";
   }
 
   /* 美元金額 → [數字, 單位]（兆／億美元） */
@@ -221,9 +322,11 @@
 
   function financialsHtml(fin) {
     if (fin && fin.market === "us") return usFinancialsHtml(fin);
+    var quarters = (fin && fin.quarters) || [];
+    var latest = quarters[0] || {};
     var head = '<div class="fin-head"><span class="fin-title">財報數據</span>' +
-      (fin && fin.period
-        ? '<span class="fin-period mono">' + esc(fin.period) + "</span>" : "") +
+      (latest.period
+        ? '<span class="fin-period mono">' + esc(latest.period) + "</span>" : "") +
       "</div>";
 
     if (!fin) {
@@ -234,34 +337,37 @@
 
     var cards = "";
     if (fin.market_cap != null) {
-      cards += finCard(FIN_ICONS.cap, "市值", finNum(fin.market_cap, 0), "億", "");
+      cards += finCard(FIN_ICONS.cap, "市值", finNum(fin.market_cap, 0), "億",
+        fin.industry ? '<span class="fin-peer">' + esc(fin.industry) + "</span>" : "");
     }
-    if (fin.revenue != null) {
-      cards += finCard(FIN_ICONS.rev, "單季營收", finNum(fin.revenue, 2), "億",
-        finDelta("年", fin.revenue_yoy) + finDelta("季", fin.revenue_qoq));
+    if (latest.revenue != null) {
+      cards += finCard(FIN_ICONS.rev, "單季營收", finNum(latest.revenue, 2), "億",
+        finDelta("年", latest.revenue_yoy) + finDelta("季", latest.revenue_qoq));
     }
-    if (fin.eps != null) {
-      cards += finCard(FIN_ICONS.eps, "單季 EPS", finNum(fin.eps, 2), "元",
-        finDelta("年", fin.eps_yoy));
+    if (latest.eps != null) {
+      cards += finCard(FIN_ICONS.eps, "單季 EPS", finNum(latest.eps, 2), "元",
+        finDelta("年", latest.eps_yoy));
     }
 
     var mini =
-      finMini("毛利率", fin.gross_margin != null
-        ? finNum(fin.gross_margin, 1) + "%" : null) +
+      finMini("毛利率", latest.gross_margin != null
+        ? finNum(latest.gross_margin, 1) + "%" : null) +
       finMini("本益比", fin.pe != null
-        ? finNum(fin.pe, 1) + "倍" : null) +
-      finMini("資本支出", fin.capex != null
-        ? finNum(fin.capex, 1) + "億" : null);
+        ? finNum(fin.pe, 1) + "倍" : null, peerPeSub(fin)) +
+      finMini("資本支出", latest.capex != null
+        ? finNum(latest.capex, 1) + "億" : null);
     var miniBlock = mini ? '<div class="fin-mini">' + mini + "</div>" : "";
+    var trend = quartersHtml(quarters);
 
-    if (!cards && !miniBlock) {
+    if (!cards && !miniBlock && !trend) {
       return '<aside class="fin-panel">' + head +
         '<p class="fin-empty">本檔暫無最新一季財報數據。</p></aside>';
     }
 
     return '<aside class="fin-panel">' + head +
-      '<div class="fin-cards">' + cards + "</div>" + miniBlock +
-      '<p class="fin-note">單季數據（累計相減）· 來源：公開資訊觀測站</p>' +
+      (cards ? '<div class="fin-cards">' + cards + "</div>" : "") + miniBlock +
+      trend +
+      '<p class="fin-note">單季數據 · 來源：公開財報（FinMind）／本益比與市值：TWSE、TPEx</p>' +
     "</aside>";
   }
 
@@ -341,7 +447,9 @@
           "</section>" +
           transcriptSection +
         "</article>" +
-        financialsHtml(d.financials) +
+        '<div class="doc-side">' +
+          businessHtml(d.business) + financialsHtml(d.financials) +
+        "</div>" +
       "</div>" +
       '<nav class="doc-foot-nav"><a href="index.html">' + L.back + "</a></nav>";
 

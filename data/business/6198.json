@@ -1,0 +1,30 @@
+{
+ "code": "6198",
+ "name": "瑞築",
+ "conf_date": "2026-09-04",
+ "source": "pdf",
+ "built_at": "2026-09-10 20:05",
+ "segments": [
+  {
+   "name": "土地開發",
+   "pct": null,
+   "note": ""
+  },
+  {
+   "name": "建築規劃",
+   "pct": null,
+   "note": ""
+  },
+  {
+   "name": "專業營造",
+   "pct": null,
+   "note": ""
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "營建",
+  "資產開發"
+ ],
+ "confidence": "low"
+}

@@ -1,0 +1,35 @@
+{
+ "code": "6147",
+ "name": "頎邦",
+ "conf_date": "2026-09-09",
+ "source": "pdf",
+ "built_at": "2026-09-10 20:38",
+ "segments": [
+  {
+   "name": "DDI",
+   "pct": null,
+   "note": "顯示驅動IC"
+  },
+  {
+   "name": "RFFE",
+   "pct": null,
+   "note": "射頻前端"
+  },
+  {
+   "name": "RFID",
+   "pct": null,
+   "note": "射頻識別"
+  },
+  {
+   "name": "Others",
+   "pct": null,
+   "note": "其他"
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "封裝測試",
+  "面板零組件"
+ ],
+ "confidence": "medium"
+}

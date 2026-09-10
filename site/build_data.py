@@ -17,7 +17,6 @@ import os
 import re
 import shutil
 import sys
-import time
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -34,6 +33,7 @@ ROOT_DIR = BASE_DIR.parent                          # 專案根目錄
 PUBLIC_DIR = BASE_DIR / "public"
 DETAIL_DIR = PUBLIC_DIR / "detail"
 SEGMENTS_DIR = ROOT_DIR / "data" / "segments"   # 逐字稿分段（錨點），由 Claude/AI 產出
+BUSINESS_DIR = ROOT_DIR / "data" / "business"   # 業務項目（AI 讀簡報產出，見 build_business.py）
 EXCLUDED_FILE = ROOT_DIR / "data" / "excluded_ids.txt"  # 壞源（假法說會）排除清單
 
 
@@ -48,14 +48,17 @@ def _load_excluded() -> set:
             out.add(ln)
     return out
 MCAP_CACHE = BASE_DIR / ".mcap_cache.json"
-FIN_CACHE = BASE_DIR / ".fin_cache.json"
+FIN_CACHE = BASE_DIR / ".fin6q_cache.json"
 PE_CACHE = BASE_DIR / ".pe_cache.json"
 
 # 重用 ir 套件（MOPS 端點常數、ROC 日期解析、含 Proxy 偵測的 Session）
 sys.path.insert(0, str(ROOT_DIR))
+from ir.fin6q import QUARTERS, RateLimited   # noqa: E402
+from ir.fin6q import fetch as fetch_quarters  # noqa: E402
+from ir.industry import (fetch_industry_map, industry_name,  # noqa: E402
+                         peer_pe_stats)
 from ir.mops import AJAX_URL, _parse_date  # noqa: E402
 from ir.net import get_session             # noqa: E402
-from ir.radar.tw import _ccsi, _pct_change, _single_quarter  # noqa: E402
 
 TAIPEI = timezone(timedelta(hours=8))
 
@@ -258,41 +261,75 @@ def _transcript_html(transcript: str) -> str:
     return "".join(f"<p>{_esc(p)}</p>" for p in paras)
 
 
-def _pct_str(v) -> str:
-    """年增/季增百分比 → '（年增 +12.3%）'樣式用的帶號字串；無值回空。"""
-    if v is None:
-        return ""
-    return f"{'+' if v >= 0 else ''}{v:.1f}%"
+def _cell(v, fmt: str = "{:,.2f}") -> str:
+    return "—" if v is None else fmt.format(v)
 
 
 def _fin_static_html(fin: dict | None) -> str:
-    """純靜態頁的財報數據區塊（文字版，供 SEO 收錄）。"""
+    """純靜態頁的財報數據區塊（近 N 季表格 + 估值，供 SEO 收錄）。"""
     if not fin:
         return ""
-    rows = []
+    qs = fin.get("quarters") or []
+    head = []
     if fin.get("market_cap"):
-        rows.append(f"<li>市值：約 {fin['market_cap']:,} 億元</li>")
-    if fin.get("revenue") is not None:
-        sub = [s for s in (
-            f"年增 {_pct_str(fin.get('revenue_yoy'))}" if fin.get("revenue_yoy") is not None else "",
-            f"季增 {_pct_str(fin.get('revenue_qoq'))}" if fin.get("revenue_qoq") is not None else "",
-        ) if s]
-        tail = f"（{' ／ '.join(sub)}）" if sub else ""
-        rows.append(f"<li>單季營收：{fin['revenue']:,.2f} 億元{tail}</li>")
-    if fin.get("eps") is not None:
-        tail = (f"（年增 {_pct_str(fin.get('eps_yoy'))}）"
-                if fin.get("eps_yoy") is not None else "")
-        rows.append(f"<li>單季 EPS：{fin['eps']:.2f} 元{tail}</li>")
-    if fin.get("gross_margin") is not None:
-        rows.append(f"<li>毛利率：{fin['gross_margin']:.1f}%</li>")
+        head.append(f"<li>市值：約 {fin['market_cap']:,} 億元</li>")
+    if fin.get("industry"):
+        head.append(f"<li>產業：{_esc(fin['industry'])}</li>")
     if fin.get("pe") is not None:
-        rows.append(f"<li>本益比：{fin['pe']:.1f} 倍</li>")
-    if fin.get("capex") is not None:
-        rows.append(f"<li>單季資本支出：{fin['capex']:,.2f} 億元</li>")
-    if not rows:
+        peer = fin.get("industry_pe") or {}
+        tail = ""
+        if peer.get("median"):
+            # 與 detail.js 的 peerPeSub 同一套規則：差距逾一倍改用倍數，
+            # 免得微利股出現「溢價 9852%」這種沒有意義的數字
+            ratio = fin["pe"] / peer["median"]
+            gap = (f"{ratio:.1f} 倍於同業" if ratio >= 2 or ratio <= 0.5
+                   else f"{'溢價' if ratio >= 1 else '折價'} "
+                        f"{abs(ratio - 1) * 100:.0f}%")
+            tail = (f"（{_esc(fin.get('industry', '同業'))}中位數 "
+                    f"{peer['median']:.1f} 倍、樣本 {peer['n']} 檔，本檔{gap}）")
+        head.append(f"<li>本益比：{fin['pe']:.1f} 倍{tail}</li>")
+
+    table = ""
+    if qs:
+        ths = "".join(f"<th>{_esc(q['period'])}</th>" for q in qs)
+
+        def row(label: str, key: str, fmt: str = "{:,.2f}") -> str:
+            tds = "".join(f"<td>{_cell(q.get(key), fmt)}</td>" for q in qs)
+            return f"<tr><th scope='row'>{label}</th>{tds}</tr>"
+
+        table = (
+            f"<table><caption>近 {len(qs)} 季單季財務數據</caption>"
+            f"<thead><tr><th scope='row'>項目</th>{ths}</tr></thead><tbody>"
+            + row("營收（億元）", "revenue")
+            + row("營收年增率（%）", "revenue_yoy", "{:+.1f}")
+            + row("EPS（元）", "eps")
+            + row("EPS 年增率（%）", "eps_yoy", "{:+.1f}")
+            + row("毛利率（%）", "gross_margin", "{:.1f}")
+            + row("資本支出（億元）", "capex")
+            + "</tbody></table>")
+
+    if not head and not table:
         return ""
-    return (f"<h2>最新財報數據（{_esc(fin.get('period', ''))}）</h2>"
-            f"<ul>{''.join(rows)}</ul>")
+    ul = f"<ul>{''.join(head)}</ul>" if head else ""
+    return f"<h2>財務數據</h2>{ul}{table}"
+
+
+def _business_static_html(biz: dict | None) -> str:
+    """純靜態頁的業務項目區塊。"""
+    if not biz or not biz.get("segments"):
+        return ""
+    lis = []
+    for s in biz["segments"]:
+        pct = f"：{s['pct']:.1f}%" if s.get("pct") is not None else ""
+        note = f"（{_esc(s['note'])}）" if s.get("note") else ""
+        lis.append(f"<li>{_esc(s['name'])}{pct}{note}</li>")
+    tags = ""
+    if biz.get("tags"):
+        tags = ("<p>族群："
+                + "、".join(_esc(t) for t in biz["tags"]) + "</p>")
+    as_of = f"（{_esc(biz['as_of'])}）" if biz.get("as_of") else ""
+    return (f"<h2>業務項目與營收比重{as_of}</h2>"
+            f"<ul>{''.join(lis)}</ul>{tags}")
 
 
 def render_static_page(d: dict) -> str:
@@ -383,6 +420,7 @@ def render_static_page(d: dict) -> str:
 <p class="meta">{d['date']}</p>
 <h2>重點摘要</h2>
 {_summary_html(d['summary'])}
+{_business_static_html(d.get('business'))}
 {_fin_static_html(d.get('financials'))}
 {ai_block}
 <p class="links">{'　'.join(links)}</p>
@@ -560,141 +598,57 @@ def _load_fin_cache() -> dict:
     return {}
 
 
-def _target_quarter(today) -> tuple[int, int]:
-    """依台股法定財報截止日，推算目前最可能已公布的最新一季 (ROC 年, 季)。"""
-    roc = today.year - 1911
-    md = (today.month, today.day)
+def _latest_period(today) -> str:
+    """依台股法定財報截止日，推算目前最可能已公布的最新一季，如 '2026 Q2'。
+
+    只用來當快取鍵：同一季內不重抓，跨季才更新。
+    """
+    y, md = today.year, (today.month, today.day)
     if md >= (11, 14):
-        return roc, 3
+        return f"{y} Q3"
     if md >= (8, 14):
-        return roc, 2
+        return f"{y} Q2"
     if md >= (5, 15):
-        return roc, 1
+        return f"{y} Q1"
     if md >= (3, 31):
-        return roc - 1, 4
-    return roc - 1, 3
+        return f"{y - 1} Q4"
+    return f"{y - 1} Q3"
 
 
-def _parse_capex_num(s: str) -> float | None:
-    """'-11,091,192' 或 '(11,091,192)' → float（仟元，含正負號）。"""
-    t = str(s).strip().replace(",", "")
-    if not t or t in ("-", "--"):
-        return None
-    neg = t.startswith("(") and t.endswith(")")
-    t = t.strip("()")
-    try:
-        v = float(t)
-    except ValueError:
-        return None
-    return -v if neg else v
+def fetch_tw_financials(code: str, cache: dict) -> list[dict] | None:
+    """單檔台股近 N 季財報序列（新→舊），來源 FinMind（見 ir/fin6q.py）。
 
-
-CAPEX_URL = "https://mopsov.twse.com.tw/mops/web/ajax_t164sb05"
-
-
-def _capex_cumulative(code: str, roc_year: int, season: int) -> float | None:
-    """舊版 MOPS 現金流量表 → 累計『取得不動產、廠房及設備』（仟元，含號）。"""
-    try:
-        r = get_session().post(CAPEX_URL, data={
-            "encodeURIComponent": "1", "step": "1", "firstin": "1", "off": "1",
-            "queryName": "co_id", "inpuType": "co_id", "TYPEK": "all",
-            "isnew": "false", "co_id": code, "year": str(roc_year),
-            "season": f"{season:02d}",
-        }, timeout=30)
-        r.raise_for_status()
-    except requests.RequestException:
-        return None
-    finally:
-        time.sleep(1)
-    soup = BeautifulSoup(r.text, "lxml")
-    for tr in soup.find_all("tr"):
-        cells = [td.get_text(strip=True) for td in tr.find_all("td")]
-        if not cells:
-            continue
-        label = cells[0]
-        if "不動產" in label and "設備" in label and (
-                "取得" in label or "購置" in label):
-            for c in cells[1:]:
-                v = _parse_capex_num(c)
-                if v is not None:
-                    return v
-    return None
-
-
-def fetch_tw_financials(code: str, cache: dict) -> dict | None:
-    """單檔台股最新一季財報快照（季靜態：營收/EPS/毛利率/CapEx + YoY、QoQ）。
-
-    取材自 MOPS t163sb01（損益表）與舊版 t164sb05（現金流量表）；
-    皆採累計相減算單季。依目標季快取於 .fin_cache.json，同季不重打。
+    依「目前最新已公布季」快取於 .fin6q_cache.json，同季不重抓。
     市值、本益比為股價型（每日變動），不在此處，於組裝階段注入。
-    回 None＝非四碼代號或該季資料尚未公布。
     """
     if not re.fullmatch(r"\d{4}", code or ""):
         return None
 
-    today = datetime.now(TAIPEI).date()
-    ty, ts = _target_quarter(today)
+    period_key = _latest_period(datetime.now(TAIPEI).date())
     cached = cache.get(code)
-    if cached and cached.get("v") == 2 and cached.get("period_key") == [ty, ts]:
-        return cached.get("data")
+    if cached and cached.get("v") == 4 and cached.get("period_key") == period_key:
+        return cached.get("quarters")
 
-    # 候選：目標季 → 再退一季（部分公司公布較晚）
-    older = (ty, ts - 1) if ts > 1 else (ty - 1, 4)
-    for y, s in (ty, ts), older:
-        try:
-            cur = _ccsi(code, y, s)
-            if not cur:
-                continue
-            rev, eps = _single_quarter(code, y, s)
-            rev_ly, eps_ly = _single_quarter(code, y - 1, s)
-            rev_pq = (_single_quarter(code, y - 1, 4)
-                      if s == 1 else _single_quarter(code, y, s - 1))[0]
-        except Exception as exc:  # noqa: BLE001
-            print(f"財報 {code} {y}Q{s} 抓取失敗：{exc}")
-            continue
-        if eps is None and rev is None:
-            continue
+    quarters = fetch_quarters(code)          # RateLimited 由呼叫端處理
+    cache[code] = {"v": 4, "period_key": period_key, "quarters": quarters}
+    return quarters
 
-        # 毛利率（單季）：單季毛利 / 單季營收。金控/證券無營業毛利 → None
-        gross_margin = None
-        g_cur = cur.get("gross")
-        if g_cur is not None and rev not in (None, 0):
-            g_single = (g_cur if s == 1
-                        else (g_cur - _ccsi(code, y, s - 1).get("gross", 0)
-                              if _ccsi(code, y, s - 1).get("gross") is not None
-                              else None))
-            if g_single is not None:
-                gross_margin = round(g_single / rev * 100, 1)
 
-        # CapEx（單季，億元，取絕對值＝當季資本支出規模）
-        capex = None
-        try:
-            c_cur = _capex_cumulative(code, y, s)
-            if c_cur is not None:
-                if s == 1:
-                    c_single = c_cur
-                else:
-                    c_prev = _capex_cumulative(code, y, s - 1)
-                    c_single = c_cur - c_prev if c_prev is not None else None
-                if c_single is not None:
-                    capex = round(abs(c_single) / 1e5, 2)  # 仟元→億元
-        except Exception as exc:  # noqa: BLE001
-            print(f"CapEx {code} {y}Q{s} 抓取失敗：{exc}")
-
-        data = {
-            "period": f"{y + 1911} Q{s}",
-            "eps": eps,
-            "eps_yoy": _pct_change(eps, eps_ly),
-            "eps_last_year": eps_ly,
-            "revenue": round(rev / 1e5, 2) if rev is not None else None,  # 仟元→億元
-            "revenue_yoy": _pct_change(rev, rev_ly),
-            "revenue_qoq": _pct_change(rev, rev_pq),
-            "gross_margin": gross_margin,
-            "capex": capex,
-        }
-        cache[code] = {"v": 2, "period_key": [ty, ts], "data": data}
-        return data
-    return None
+def _load_business(code: str) -> dict | None:
+    """業務項目（data/business/{code}.json，由 build_business.py 產出）。"""
+    if not code:
+        return None
+    f = BUSINESS_DIR / f"{code}.json"
+    if not f.exists():
+        return None
+    try:
+        d = json.loads(f.read_text(encoding="utf-8"))
+    except ValueError:
+        return None
+    if not d.get("segments") and not d.get("tags"):
+        return None          # 查過但簡報裡沒有營收結構 → 前端不顯示空框
+    return {k: d.get(k) for k in
+            ("segments", "tags", "as_of", "confidence", "conf_date", "source")}
 
 
 def _load_segments(it_id: str, transcript: str):
@@ -752,17 +706,21 @@ def main() -> None:
     upcoming = fetch_upcoming()
     caps = fetch_market_caps()
     pes = fetch_pe_ratios()
+    industries = fetch_industry_map(get_session())
+    ind_pe = peer_pe_stats(pes, industries)
     fin_cache = _load_fin_cache()
-    # 財報逐檔抓 MOPS（t163sb01/t164sb05）。雲端(GitHub Actions)上又慢又不可靠：
-    # 未快取的股票各要打多支 MOPS（部分回 406）＋ _capex 內每檔 sleep，數百檔把 build
-    # 拖到 40+ 分。故雲端設環境變數 IR_SKIP_FINANCIALS=1 → 財報全用既有 .fin_cache.json、
-    # 完全不連 MOPS（約 5 分完成）；本機不設此旗標、照常抓財報並更新快取。
-    # 另留斷路器：萬一忘了設旗標、又連續 20 檔抓不到，自動止血改用快取。
-    mops_ok = not os.getenv("IR_SKIP_FINANCIALS")
-    consec_none = 0
-    FIN_FAIL_LIMIT = 20
-    if not mops_ok:
-        print("IR_SKIP_FINANCIALS 已設：財報全用既有快取、不連 MOPS（雲端部署加速）")
+    # 財報序列逐檔抓 FinMind。雲端(GitHub Actions)設 IR_SKIP_FINANCIALS=1 →
+    # 全用已提交的 .fin6q_cache.json、完全不連外（部署快、也不消耗 FinMind 免費額度）；
+    # 本機不設此旗標，照常補抓缺漏並更新快取，跑完 commit 快取即可。
+    fetch_ok = not os.getenv("IR_SKIP_FINANCIALS")
+    if not fetch_ok:
+        print("IR_SKIP_FINANCIALS 已設：財報全用既有快取、不連 FinMind（雲端部署加速）")
+    # FinMind 免費版有每小時請求上限，且一檔要兩次請求（損益表＋現金流量表）。
+    # 全站上千檔不可能一輪抓完 → 每輪限量、依日期新到舊優先補（讀者最常看近期場次），
+    # 快取跨輪累積，跑個幾輪就補滿。額度中途用盡也會自動改吃快取，不會讓整個 build 失敗。
+    fin_budget = int(os.getenv("IR_FIN_LIMIT", "120"))
+    fin_fetched = 0
+    fin_period_key = _latest_period(datetime.now(TAIPEI).date())
 
     PUBLIC_DIR.mkdir(parents=True, exist_ok=True)
     DETAIL_DIR.mkdir(parents=True, exist_ok=True)
@@ -783,24 +741,38 @@ def main() -> None:
             n_excluded += 1
             continue
         detail = {"id": it_id, **it}
-        if mops_ok:
-            fin = fetch_tw_financials(it["code"], fin_cache)
-            if fin is None:
-                consec_none += 1
-                if consec_none >= FIN_FAIL_LIMIT:
-                    mops_ok = False
-                    print(f"連續 {FIN_FAIL_LIMIT} 檔財報無結果（疑似 MOPS 擋/限流），"
-                          f"其餘改用既有快取、不再逐檔連線")
-            else:
-                consec_none = 0
+        code = it["code"]
+        cached = fin_cache.get(code)
+        is_fresh = (cached and cached.get("v") == 4
+                    and cached.get("period_key") == fin_period_key)
+        if fetch_ok and not is_fresh and fin_fetched < fin_budget:
+            try:
+                quarters = fetch_tw_financials(code, fin_cache)
+                fin_fetched += 1
+            except RateLimited as exc:
+                fetch_ok = False
+                quarters = cached.get("quarters") if cached else None
+                print(f"FinMind 額度用盡（{exc}），其餘改用既有快取、不再連線")
+            except Exception as exc:  # noqa: BLE001
+                quarters = cached.get("quarters") if cached else None
+                print(f"財報 {code} 抓取失敗：{exc}")
         else:
-            cached = fin_cache.get(it["code"])
-            fin = cached.get("data") if cached else None
-        if fin is not None:
-            fin = {**fin,  # 股價型數據每日變動，組裝時注入
-                   "market_cap": caps.get(it["code"]) or None,
-                   "pe": pes.get(it["code"])}
-        detail["financials"] = fin
+            quarters = cached.get("quarters") if cached else None
+
+        ind = industries.get(code, "")
+        # 股價型數據（市值、本益比）每日變動，不進快取，於此注入
+        fin = {
+            "quarters": quarters or [],
+            "market_cap": caps.get(code) or None,
+            "pe": pes.get(code),
+            "industry": industry_name(ind),
+            "industry_code": ind,
+            "industry_pe": ind_pe.get(ind),
+        }
+        detail["financials"] = fin if (quarters or fin["market_cap"]) else None
+        business = _load_business(code)
+        if business:
+            detail["business"] = business
         segs = _load_segments(it_id, it.get("transcript", ""))
         if segs:
             detail["transcript_segments"] = segs
@@ -821,12 +793,18 @@ def main() -> None:
             "summary": one_liner,
             "has_transcript": bool(it["transcript"]),
             "transcript_chars": len(it["transcript"]),
+            "industry": industry_name(ind),
+            "tags": (business or {}).get("tags") or [],
         })
 
     FIN_CACHE.write_text(json.dumps(fin_cache, ensure_ascii=False),
                          encoding="utf-8")
-    fin_n = sum(1 for d in details if d.get("financials"))
-    print(f"財報快照：{fin_n}/{len(details)} 筆有最新一季數據")
+    fin_n = sum(1 for d in details
+                if (d.get("financials") or {}).get("quarters"))
+    biz_n = sum(1 for d in details if d.get("business"))
+    print(f"財報序列：{fin_n}/{len(details)} 筆有近 {QUARTERS} 季數據"
+          f"（本輪新抓 {fin_fetched} 檔）")
+    print(f"業務項目：{biz_n} 筆有資料")
 
     generated_at = datetime.now(TAIPEI).strftime("%Y-%m-%d %H:%M")
     payload = {

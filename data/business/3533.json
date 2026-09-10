@@ -1,0 +1,52 @@
+{
+ "code": "3533",
+ "name": "嘉澤",
+ "conf_date": "2026-09-04",
+ "source": "pdf",
+ "built_at": "2026-09-10 20:17",
+ "segments": [
+  {
+   "name": "Server",
+   "pct": 55.36,
+   "note": "伺服器相關產品"
+  },
+  {
+   "name": "Desktop",
+   "pct": 14.46,
+   "note": "桌上型電腦相關產品"
+  },
+  {
+   "name": "Laptop",
+   "pct": 8.2,
+   "note": "筆記型電腦相關產品"
+  },
+  {
+   "name": "Strategic Customers",
+   "pct": 7.68,
+   "note": "策略客戶"
+  },
+  {
+   "name": "Automotive",
+   "pct": 7.63,
+   "note": "車用相關產品"
+  },
+  {
+   "name": "LINTES",
+   "pct": 4.31,
+   "note": "嘉基"
+  },
+  {
+   "name": "Industrial & Medical",
+   "pct": 2.35,
+   "note": "工控及醫療相關產品"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "連接器",
+  "伺服器",
+  "筆電/PC",
+  "車用電子"
+ ],
+ "confidence": "high"
+}

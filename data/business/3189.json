@@ -1,0 +1,41 @@
+{
+ "code": "3189",
+ "name": "景碩",
+ "conf_date": "2026-09-04",
+ "source": "pdf",
+ "built_at": "2026-09-10 20:14",
+ "segments": [
+  {
+   "name": "手機",
+   "pct": 35.0,
+   "note": ""
+  },
+  {
+   "name": "高效運算",
+   "pct": 22.0,
+   "note": "HPC"
+  },
+  {
+   "name": "消費產品",
+   "pct": 21.0,
+   "note": "含記憶體"
+  },
+  {
+   "name": "隱形眼鏡",
+   "pct": 17.0,
+   "note": "晶碩光學"
+  },
+  {
+   "name": "基地台",
+   "pct": 5.0,
+   "note": ""
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "IC基板",
+  "ABF載板",
+  "PCB"
+ ],
+ "confidence": "high"
+}

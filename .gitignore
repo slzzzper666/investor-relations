@@ -10,6 +10,9 @@ data/*
 !data/segments/
 !data/segments/**
 !data/excluded_ids.txt
+# 業務項目（AI 讀簡報產出），納入版控供 build_data 與 Actions 使用
+!data/business/
+!data/business/**
 *.log
 .venv/
 venv/
@@ -23,3 +26,9 @@ package-lock.json
 _*.py
 # list.json 由 build_data.py（含 Actions）從 Notion 重建，不需版控這份 1.7MB 生成檔
 site/public/list.json
+# 同理，台股 detail/*.json 與 c/*.html 每次 build 都先清空再整批重建
+#（build_data 的 unlink + rmtree），版控它們只是噪音。
+# 例外：美股 us-*.json 要保留——build_us 靠既有檔累積歷史季度，清掉就沒了。
+site/public/c/
+site/public/detail/*.json
+!site/public/detail/us-*.json

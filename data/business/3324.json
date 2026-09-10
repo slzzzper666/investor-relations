@@ -1,0 +1,36 @@
+{
+ "code": "3324",
+ "name": "雙鴻",
+ "conf_date": "2026-09-04",
+ "source": "pdf",
+ "built_at": "2026-09-10 20:06",
+ "segments": [
+  {
+   "name": "Server",
+   "pct": 78.0,
+   "note": "2026Q2"
+  },
+  {
+   "name": "PC",
+   "pct": 17.0,
+   "note": "2026Q2"
+  },
+  {
+   "name": "VGA",
+   "pct": 4.0,
+   "note": "2026Q2"
+  },
+  {
+   "name": "Others",
+   "pct": 1.0,
+   "note": "2026Q2"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "伺服器",
+  "筆電/PC",
+  "散熱"
+ ],
+ "confidence": "high"
+}

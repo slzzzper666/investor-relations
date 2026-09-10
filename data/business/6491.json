@@ -1,0 +1,25 @@
+{
+ "code": "6491",
+ "name": "晶碩",
+ "conf_date": "2026-09-04",
+ "source": "pdf",
+ "built_at": "2026-09-10 20:30",
+ "segments": [
+  {
+   "name": "代工",
+   "pct": 82.4,
+   "note": ""
+  },
+  {
+   "name": "品牌",
+   "pct": 17.6,
+   "note": ""
+  }
+ ],
+ "as_of": "2026 H1",
+ "tags": [
+  "醫療器材",
+  "美妝保健"
+ ],
+ "confidence": "high"
+}

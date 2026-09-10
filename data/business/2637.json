@@ -1,0 +1,29 @@
+{
+ "code": "2637",
+ "name": "慧洋-KY",
+ "conf_date": "2026-09-09",
+ "source": "pdf",
+ "built_at": "2026-09-10 20:23",
+ "segments": [
+  {
+   "name": "租金收入",
+   "pct": null,
+   "note": ">99%"
+  },
+  {
+   "name": "運費收入",
+   "pct": null,
+   "note": "<1%"
+  },
+  {
+   "name": "船舶管理收入",
+   "pct": null,
+   "note": "<1%"
+  }
+ ],
+ "as_of": "2026",
+ "tags": [
+  "航運"
+ ],
+ "confidence": "high"
+}

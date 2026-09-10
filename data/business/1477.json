@@ -1,0 +1,29 @@
+{
+ "code": "1477",
+ "name": "聚陽",
+ "conf_date": "2026-09-10",
+ "source": "pdf",
+ "built_at": "2026-09-10 19:54",
+ "segments": [
+  {
+   "name": "Active & Sportswear",
+   "pct": null,
+   "note": ""
+  },
+  {
+   "name": "Fashion Apparel",
+   "pct": null,
+   "note": ""
+  },
+  {
+   "name": "Others",
+   "pct": null,
+   "note": ""
+  }
+ ],
+ "as_of": "",
+ "tags": [
+  "紡織"
+ ],
+ "confidence": "low"
+}

@@ -1,0 +1,26 @@
+{
+ "code": "3715",
+ "name": "定穎投控",
+ "conf_date": "2026-09-09",
+ "source": "pdf",
+ "built_at": "2026-09-10 20:28",
+ "segments": [
+  {
+   "name": "多層板",
+   "pct": 55.0,
+   "note": ""
+  },
+  {
+   "name": "HDI",
+   "pct": 45.0,
+   "note": ""
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "PCB",
+  "車用電子",
+  "伺服器"
+ ],
+ "confidence": "high"
+}

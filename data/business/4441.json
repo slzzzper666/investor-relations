@@ -1,0 +1,34 @@
+{
+ "code": "4441",
+ "name": "振大環球",
+ "conf_date": "2026-09-08",
+ "source": "pdf",
+ "built_at": "2026-09-10 20:32",
+ "segments": [
+  {
+   "name": "線上商店",
+   "pct": 60.0,
+   "note": ""
+  },
+  {
+   "name": "實體通路",
+   "pct": 28.0,
+   "note": ""
+  },
+  {
+   "name": "國際品牌",
+   "pct": 9.0,
+   "note": ""
+  },
+  {
+   "name": "制服",
+   "pct": 3.0,
+   "note": ""
+  }
+ ],
+ "as_of": "2026 H1",
+ "tags": [
+  "紡織"
+ ],
+ "confidence": "high"
+}

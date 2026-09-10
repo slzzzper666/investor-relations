@@ -22,6 +22,15 @@
   var elCount = document.getElementById("count");
   var elQ = document.getElementById("q");
   var elMonth = document.getElementById("month");
+  var elGroup = document.getElementById("group");
+
+  // 詳細頁點族群會帶 ?tag=／?industry= 進來，等資料載完再套用
+  var pendingGroup = (function () {
+    var m = /[?&]tag=([^&]+)/.exec(location.search);
+    if (m) return "t:" + decodeURIComponent(m[1]);
+    m = /[?&]industry=([^&]+)/.exec(location.search);
+    return m ? "i:" + decodeURIComponent(m[1]) : "";
+  })();
   var elFooterMeta = document.getElementById("footer-meta");
   var elControls = document.getElementById("controls");
   var elTabList = document.getElementById("tab-list");
@@ -123,6 +132,9 @@
 
   function rowHtml(it) {
     var tags = [];
+    (it.tags || []).slice(0, 2).forEach(function (t) {
+      tags.push('<span class="tag tag-group">' + esc(t) + "</span>");
+    });
     if (it.has_transcript) tags.push('<span class="tag tag-strong">逐字稿</span>');
     if (it.pdf_url) tags.push('<span class="tag">簡報</span>');
     if (it.video_url) tags.push('<span class="tag">影音</span>');
@@ -215,11 +227,55 @@
     setupListObserver();
   }
 
+  /* 族群下拉：值編碼為 t:業務標籤（AI 標註，較細）或 i:產業別（官方，全站都有） */
+  function buildGroupOptions() {
+    if (!elGroup) return;
+    var tagCount = {};
+    var indCount = {};
+    var seenCode = {};
+    allItems.forEach(function (it) {
+      var key = it.code || it.company;
+      if (seenCode[key]) return;      // 同一家公司多場法說會只計一次
+      seenCode[key] = 1;
+      (it.tags || []).forEach(function (t) {
+        tagCount[t] = (tagCount[t] || 0) + 1;
+      });
+      if (it.industry) indCount[it.industry] = (indCount[it.industry] || 0) + 1;
+    });
+
+    function opts(counts, prefix) {
+      return Object.keys(counts).sort(function (a, b) {
+        return counts[b] - counts[a] || a.localeCompare(b, "zh-Hant");
+      }).map(function (name) {
+        return '<option value="' + esc(prefix + name) + '">' + esc(name) +
+               "（" + counts[name] + "）</option>";
+      }).join("");
+    }
+
+    var html = '<option value="">全部族群</option>';
+    var tagHtml = opts(tagCount, "t:");
+    if (tagHtml) {
+      html += '<optgroup label="業務族群">' + tagHtml + "</optgroup>";
+    }
+    html += '<optgroup label="產業別">' + opts(indCount, "i:") + "</optgroup>";
+    elGroup.innerHTML = html;
+    if (pendingGroup) {
+      elGroup.value = pendingGroup;
+      if (elGroup.value !== pendingGroup) elGroup.value = "";  // 該族群這批沒有成員
+      pendingGroup = "";
+    }
+  }
+
   function applyFilters() {
     var q = elQ.value.trim().toLowerCase();
     var month = elMonth.value;
+    var group = elGroup ? elGroup.value : "";
+    var gKind = group.slice(0, 2);
+    var gName = group.slice(2);
     var items = allItems.filter(function (it) {
       if (month && it.date.slice(0, 7) !== month) return false;
+      if (gKind === "t:" && (it.tags || []).indexOf(gName) === -1) return false;
+      if (gKind === "i:" && it.industry !== gName) return false;
       if (!q) return true;
       return it.company.toLowerCase().indexOf(q) !== -1 ||
              (it.code && it.code.indexOf(q) !== -1) ||
@@ -745,6 +801,7 @@
     elQ.value = "";
     elMonth.value = "";
     populateMonths();
+    buildGroupOptions();
     buildEvents();
     dataReady = true;
     calBuilt = false;
@@ -857,6 +914,7 @@
 
   elQ.addEventListener("input", applyFilters);
   elMonth.addEventListener("change", applyFilters);
+  if (elGroup) elGroup.addEventListener("change", applyFilters);
 
   elTabList.addEventListener("click", function () { setView("list"); });
   elTabCalendar.addEventListener("click", function () { setView("calendar"); });

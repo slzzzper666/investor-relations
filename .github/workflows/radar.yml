@@ -1,9 +1,9 @@
 name: 財報雷達每日推播
 
+# 2026-09-10 起停用每日排程（使用者決定不再需要財報雷達推播）。
+# 保留 workflow_dispatch，要臨時跑一次仍可在 Actions 頁手動觸發。
 on:
-  schedule:
-    - cron: "0 23 * * *"   # UTC 23:00 = 台北 07:00
-  workflow_dispatch:        # 可在 Actions 頁手動觸發測試
+  workflow_dispatch:
 
 concurrency:
   group: radar

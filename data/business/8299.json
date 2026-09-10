@@ -1,0 +1,45 @@
+{
+ "code": "8299",
+ "name": "群聯",
+ "conf_date": "2026-09-08",
+ "source": "pdf",
+ "built_at": "2026-09-10 20:39",
+ "segments": [
+  {
+   "name": "AI Ecosystem Module",
+   "pct": 38.0,
+   "note": "2Q26 營收貢獻"
+  },
+  {
+   "name": "Embedded ODM Module",
+   "pct": 33.0,
+   "note": "2Q26 營收貢獻"
+  },
+  {
+   "name": "Industrial Module",
+   "pct": 16.0,
+   "note": "2Q26 營收貢獻"
+  },
+  {
+   "name": "Controller",
+   "pct": 6.0,
+   "note": "2Q26 營收貢獻"
+  },
+  {
+   "name": "Retail Module",
+   "pct": 5.0,
+   "note": "2Q26 營收貢獻"
+  },
+  {
+   "name": "Others",
+   "pct": 2.0,
+   "note": "2Q26 營收貢獻"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "IC設計",
+  "記憶體"
+ ],
+ "confidence": "high"
+}

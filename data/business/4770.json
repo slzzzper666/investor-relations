@@ -1,0 +1,37 @@
+{
+ "code": "4770",
+ "name": "上品",
+ "conf_date": "2026-09-09",
+ "source": "pdf",
+ "built_at": "2026-09-10 20:32",
+ "segments": [
+  {
+   "name": "Lined Equipment",
+   "pct": 68.3,
+   "note": "內襯設備"
+  },
+  {
+   "name": "Other Material",
+   "pct": 16.7,
+   "note": ""
+  },
+  {
+   "name": "Lined Pipe & Fitting",
+   "pct": 9.6,
+   "note": "內襯管件"
+  },
+  {
+   "name": "Engineering",
+   "pct": 5.4,
+   "note": "工程"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "半導體設備",
+  "半導體材料",
+  "化工",
+  "機械設備"
+ ],
+ "confidence": "high"
+}

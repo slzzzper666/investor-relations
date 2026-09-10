@@ -998,7 +998,7 @@ a.m-row:hover {
 
 .doc-body {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 312px;
+  grid-template-columns: minmax(0, 1fr) 372px;
   gap: 48px;
   align-items: start;
   padding-top: 4px;
@@ -1006,9 +1006,18 @@ a.m-row:hover {
 
 .doc-body > article { min-width: 0; }
 
-.fin-panel {
+/* 側欄：業務項目 + 財報數據共用一個 sticky 容器 */
+.doc-side {
   position: sticky;
   top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.fin-panel,
+.biz-panel {
   background: var(--panel);
   border: 1px solid var(--line);
   border-radius: 6px;
@@ -1123,6 +1132,193 @@ a.m-row:hover {
   color: var(--text);
 }
 
+/* 列表列的業務族群標籤（有 AI 標註的公司才出現） */
+.tag-group {
+  color: var(--amber-dim);
+  border-color: var(--amber-dim);
+}
+
+.fin-mini-sub {
+  margin-top: 3px;
+  font-size: 10px;
+  line-height: 1.5;
+  color: var(--faint);
+}
+.fin-peer {
+  display: block;
+  font-family: var(--mono);
+  letter-spacing: 0.02em;
+}
+.fin-mini-sub .fin-delta { margin-top: 2px; }
+
+/* ---------- 近 N 季趨勢表 ---------- */
+
+.fin-trend { margin-top: 16px; }
+
+.fin-trend-head {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  color: var(--faint);
+  padding-bottom: 7px;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+/* 窄螢幕放不下 7 欄時橫向捲動，不讓整頁跟著橫捲 */
+.fin-table-wrap { overflow-x: auto; margin-top: 2px; }
+
+.fin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--mono);
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.fin-table th,
+.fin-table td {
+  padding: 6px 5px;
+  text-align: right;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.fin-table thead th {
+  font-size: 9.5px;
+  font-weight: 400;
+  line-height: 1.3;
+  letter-spacing: 0.04em;
+  color: var(--faint);
+  vertical-align: bottom;
+}
+.fin-table thead th.is-latest { color: var(--amber); }
+
+.fin-table tbody th[scope="row"] {
+  text-align: left;
+  font-weight: 400;
+  font-size: 11px;
+  color: var(--dim);
+  white-space: nowrap;
+  padding-left: 0;
+  position: sticky;            /* 橫捲時項目名固定在左側 */
+  left: 0;
+  background: var(--panel);
+}
+
+.q-unit {
+  margin-left: 3px;
+  font-size: 9px;
+  color: var(--faint);
+}
+
+/* 數值格：底條長度＝該列最大值的相對比例，數字之外多一層視覺比較 */
+.fin-table td {
+  position: relative;
+  color: var(--text);
+}
+.fin-table td.is-latest { color: var(--amber); }
+.fin-table td.is-neg .q-val { color: var(--down); }
+.fin-table td.is-na { color: var(--faint); }
+
+.q-bar {
+  position: absolute;
+  right: 4px;
+  bottom: 2px;
+  height: 2px;
+  background: var(--line);
+  border-radius: 1px;
+}
+.fin-table td.is-latest .q-bar { background: var(--amber); opacity: 0.55; }
+.fin-table td.is-neg .q-bar { background: var(--down); opacity: 0.5; }
+
+.q-val { position: relative; }
+
+/* ---------- 業務項目 ---------- */
+
+.biz-list {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.biz-item {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 8px 8px 9px;
+  background: var(--panel-2);
+  overflow: hidden;
+}
+.biz-item:first-child { border-radius: 5px 5px 0 0; }
+.biz-item:last-child { border-radius: 0 0 5px 5px; }
+
+/* 比重條：鋪在項目底層，一眼看出主力業務 */
+.biz-bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background: var(--amber);
+  opacity: 0.12;
+}
+
+.biz-name {
+  position: relative;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--text);
+  min-width: 0;
+}
+
+.biz-note {
+  display: block;
+  font-size: 10.5px;
+  color: var(--faint);
+  margin-top: 1px;
+}
+
+.biz-pct {
+  position: relative;
+  font-size: 13px;
+  color: var(--amber);
+  flex: none;
+}
+
+.biz-tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.biz-tags-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--faint);
+}
+
+.biz-tag {
+  display: inline-block;
+  padding: 3px 9px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--dim);
+  text-decoration: none;
+  transition: color 0.15s, border-color 0.15s;
+}
+.biz-tag:hover {
+  color: var(--amber);
+  border-color: var(--amber);
+}
+
 .fin-note {
   margin-top: 14px;
   font-size: 11px;
@@ -1133,9 +1329,9 @@ a.m-row:hover {
 
 @media (max-width: 900px) {
   .doc-body { grid-template-columns: 1fr; gap: 0; }
-  .fin-panel {
+  .doc-side {
     position: static;
-    order: -1;               /* 手機：財報數據移到內文上方 */
+    order: -1;               /* 手機：業務項目與財報數據移到內文上方 */
     margin: 4px 0 28px;
   }
 }

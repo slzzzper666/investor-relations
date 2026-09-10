@@ -1,0 +1,25 @@
+{
+ "code": "3583",
+ "name": "辛耘",
+ "conf_date": "2026-09-03",
+ "source": "pdf",
+ "built_at": "2026-09-10 20:25",
+ "segments": [
+  {
+   "name": "製造業",
+   "pct": 52.0,
+   "note": "含自製設備與晶圓再生"
+  },
+  {
+   "name": "代理",
+   "pct": 48.0,
+   "note": ""
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "半導體設備",
+  "先進封裝/CoWoS"
+ ],
+ "confidence": "high"
+}

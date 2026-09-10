@@ -1,0 +1,31 @@
+{
+ "code": "7730",
+ "name": "暉盛-創",
+ "conf_date": "2026-09-03",
+ "source": "pdf",
+ "built_at": "2026-09-10 20:34",
+ "segments": [
+  {
+   "name": "產品銷售",
+   "pct": 70.9,
+   "note": ""
+  },
+  {
+   "name": "維修收入",
+   "pct": 28.9,
+   "note": ""
+  },
+  {
+   "name": "加工收入",
+   "pct": 0.1,
+   "note": ""
+  }
+ ],
+ "as_of": "2026 H1",
+ "tags": [
+  "半導體設備",
+  "先進封裝/CoWoS",
+  "PCB"
+ ],
+ "confidence": "high"
+}

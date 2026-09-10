@@ -1,0 +1,32 @@
+{
+ "code": "4958",
+ "name": "臻鼎-KY",
+ "conf_date": "2026-09-09",
+ "source": "pdf",
+ "built_at": "2026-09-10 20:13",
+ "segments": [
+  {
+   "name": "行動通訊",
+   "pct": 53.6,
+   "note": ""
+  },
+  {
+   "name": "電腦消費",
+   "pct": 24.8,
+   "note": ""
+  },
+  {
+   "name": "伺服器/光模塊/IC載板及其他",
+   "pct": 21.6,
+   "note": ""
+  }
+ ],
+ "as_of": "2026 H1",
+ "tags": [
+  "PCB",
+  "IC基板",
+  "ABF載板",
+  "AI伺服器"
+ ],
+ "confidence": "high"
+}

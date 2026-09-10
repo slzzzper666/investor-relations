@@ -1,0 +1,24 @@
+{
+ "code": "6890",
+ "name": "來億-KY",
+ "conf_date": "2026-09-09",
+ "source": "pdf",
+ "built_at": "2026-09-10 20:28",
+ "segments": [
+  {
+   "name": "運動鞋",
+   "pct": 92.0,
+   "note": ""
+  },
+  {
+   "name": "休閒鞋",
+   "pct": 8.0,
+   "note": ""
+  }
+ ],
+ "as_of": "2026 H1",
+ "tags": [
+  "紡織"
+ ],
+ "confidence": "high"
+}

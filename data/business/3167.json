@@ -1,0 +1,37 @@
+{
+ "code": "3167",
+ "name": "大量",
+ "conf_date": "2026-09-04",
+ "source": "pdf",
+ "built_at": "2026-09-10 20:23",
+ "segments": [
+  {
+   "name": "Commodity",
+   "pct": null,
+   "note": "標準型鑽孔及成型機"
+  },
+  {
+   "name": "Premium",
+   "pct": null,
+   "note": "高階CCD鑽孔及成型機"
+  },
+  {
+   "name": "Semi",
+   "pct": null,
+   "note": "半導體檢測與量測設備"
+  },
+  {
+   "name": "Glass Coater",
+   "pct": null,
+   "note": "玻璃邊緣塗佈設備"
+  }
+ ],
+ "as_of": "2026 H1",
+ "tags": [
+  "PCB",
+  "半導體設備",
+  "先進封裝/CoWoS",
+  "機械設備"
+ ],
+ "confidence": "low"
+}

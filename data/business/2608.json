@@ -1,0 +1,29 @@
+{
+ "code": "2608",
+ "name": "嘉里大榮",
+ "conf_date": "2026-09-09",
+ "source": "pdf",
+ "built_at": "2026-09-10 20:32",
+ "segments": [
+  {
+   "name": "路線",
+   "pct": 80.0,
+   "note": ""
+  },
+  {
+   "name": "物流",
+   "pct": 19.0,
+   "note": ""
+  },
+  {
+   "name": "其他",
+   "pct": 1.0,
+   "note": ""
+  }
+ ],
+ "as_of": "2026 H1",
+ "tags": [
+  "貨運物流"
+ ],
+ "confidence": "high"
+}

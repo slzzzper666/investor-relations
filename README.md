@@ -51,5 +51,30 @@ ir/notion_db.py    階段五：Notion 寫入（upsert）
 ir/notify.py       階段五：TG/DC 推播
 ir/net.py          Proxy 自動偵測
 ir/logger.py       雙輸出 logging（Asia/Taipei）
+ir/fin6q.py        近 6 季財報序列（FinMind）
+ir/industry.py     官方產業別 + 同業本益比中位數
+ir/business.py     業務項目萃取（Gemini 讀簡報 PDF 的圖表）
 data/              音檔、逐字稿、PDF、處理紀錄（不進版控）
+data/business/     業務項目成果（進版控，供網站建置使用）
 ```
+
+## 網站資料建置
+
+```cmd
+.venv\Scripts\python site\build_data.py        台股：Notion → list.json / detail / 靜態頁
+.venv\Scripts\python site\build_business.py    業務項目：近 7 天的公司（AI 讀簡報）
+.venv\Scripts\python site\build_us.py          美股
+.venv\Scripts\python site\build_macro.py       總經
+```
+
+**財報數據**（詳細頁右欄）：近 6 季單季營收／EPS／毛利率／資本支出，加上本益比
+與同業中位數的折溢價比較。資料來自 FinMind（單季值、免金鑰），逐檔快取於
+`site/.fin6q_cache.json`。FinMind 免費版有每小時請求上限，`build_data.py` 每輪
+預設只補 120 檔（`IR_FIN_LIMIT` 可調），依日期新→舊優先，跑幾輪就補滿。
+雲端（GitHub Actions）設 `IR_SKIP_FINANCIALS=1` 全用已提交的快取、不連外。
+
+**業務項目**（產品別營收比重＋族群標籤）：比重多半畫在簡報的圓餅圖裡，純文字
+抽不到，所以把 PDF 交給 Gemini 多模態判讀。族群標籤限定 `ir/business.py` 的
+`TAXONOMY` 字彙，跨公司才連得起來（點族群 → 首頁篩選同族群）。
+**在本機跑、成果 commit 進版控**（同逐字稿分段的做法）；CI 不跑，因為 Actions
+產生的檔案不會回推 repo，每天重跑等於重複燒 AI 額度。

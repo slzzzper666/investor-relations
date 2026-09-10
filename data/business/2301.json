@@ -1,0 +1,32 @@
+{
+ "code": "2301",
+ "name": "光寶科",
+ "conf_date": "2026-09-09",
+ "source": "pdf",
+ "built_at": "2026-09-10 20:13",
+ "segments": [
+  {
+   "name": "雲端及物聯網部門",
+   "pct": 55.0,
+   "note": "Cloud/AIoT"
+  },
+  {
+   "name": "資訊及消費性電子部門",
+   "pct": 30.0,
+   "note": "IT/CE"
+  },
+  {
+   "name": "光電部門",
+   "pct": 15.0,
+   "note": "Opto-electronics"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "電源供應器",
+  "AI伺服器",
+  "車用電子",
+  "光通訊"
+ ],
+ "confidence": "high"
+}

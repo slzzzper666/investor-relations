@@ -1,0 +1,52 @@
+{
+ "code": "2313",
+ "name": "華通",
+ "conf_date": "2026-09-04",
+ "source": "pdf",
+ "built_at": "2026-09-10 20:15",
+ "segments": [
+  {
+   "name": "RF + FPC",
+   "pct": 24.0,
+   "note": ""
+  },
+  {
+   "name": "Aerospace",
+   "pct": 22.0,
+   "note": "航太/低軌衛星"
+  },
+  {
+   "name": "Mobile Phone",
+   "pct": 17.0,
+   "note": "智慧手機"
+  },
+  {
+   "name": "SMT",
+   "pct": 13.0,
+   "note": "表面黏著技術"
+  },
+  {
+   "name": "PC",
+   "pct": 11.0,
+   "note": "個人電腦"
+  },
+  {
+   "name": "Data Center",
+   "pct": 10.0,
+   "note": "資料中心"
+  },
+  {
+   "name": "Consumer & Others",
+   "pct": 4.0,
+   "note": "消費性及其他"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "PCB",
+  "衛星通訊",
+  "手機",
+  "筆電/PC"
+ ],
+ "confidence": "high"
+}

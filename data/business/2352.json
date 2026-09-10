@@ -1,0 +1,47 @@
+{
+ "code": "2352",
+ "name": "佳世達",
+ "conf_date": "2026-09-04",
+ "source": "pdf",
+ "built_at": "2026-09-10 20:27",
+ "segments": [
+  {
+   "name": "資訊 IT_原有事業",
+   "pct": 42.0,
+   "note": ""
+  },
+  {
+   "name": "智能方案 BSG",
+   "pct": 21.0,
+   "note": ""
+  },
+  {
+   "name": "醫療 Medical",
+   "pct": 15.0,
+   "note": ""
+  },
+  {
+   "name": "網路通訊 NCG",
+   "pct": 10.0,
+   "note": ""
+  },
+  {
+   "name": "資訊 IT_高值事業",
+   "pct": 7.0,
+   "note": ""
+  },
+  {
+   "name": "其他 Others",
+   "pct": 5.0,
+   "note": ""
+  }
+ ],
+ "as_of": "2026 H1",
+ "tags": [
+  "網通設備",
+  "醫療器材",
+  "醫療通路",
+  "工業電腦"
+ ],
+ "confidence": "high"
+}

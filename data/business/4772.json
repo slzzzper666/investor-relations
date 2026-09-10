@@ -1,0 +1,36 @@
+{
+ "code": "4772",
+ "name": "台特化",
+ "conf_date": "2026-09-09",
+ "source": "pdf",
+ "built_at": "2026-09-10 20:38",
+ "segments": [
+  {
+   "name": "HJT-清潔",
+   "pct": 42.0,
+   "note": "2026Q2業務佔比"
+  },
+  {
+   "name": "TSC-特氣",
+   "pct": 36.0,
+   "note": "2026Q2業務佔比"
+  },
+  {
+   "name": "HJT-Coating及新品",
+   "pct": 19.0,
+   "note": "2026Q2業務佔比"
+  },
+  {
+   "name": "HJT-其他",
+   "pct": 4.0,
+   "note": "2026Q2業務佔比"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "半導體材料",
+  "半導體設備",
+  "化工"
+ ],
+ "confidence": "high"
+}

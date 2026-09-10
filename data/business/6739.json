@@ -1,0 +1,31 @@
+{
+ "code": "6739",
+ "name": "竹陞科技",
+ "conf_date": "2026-09-09",
+ "source": "pdf",
+ "built_at": "2026-09-10 20:37",
+ "segments": [
+  {
+   "name": "GoVision",
+   "pct": 36.0,
+   "note": "115年1-8月"
+  },
+  {
+   "name": "Gobot iRPA",
+   "pct": 34.0,
+   "note": "115年1-8月"
+  },
+  {
+   "name": "AIoT iLink PLC",
+   "pct": 30.0,
+   "note": "115年1-8月"
+  }
+ ],
+ "as_of": "2026",
+ "tags": [
+  "自動化/機器人",
+  "半導體設備",
+  "軟體/SaaS"
+ ],
+ "confidence": "high"
+}
