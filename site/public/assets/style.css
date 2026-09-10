@@ -1705,7 +1705,7 @@ a.m-row:hover {
 }
 
 .sister-title::after {
-  content: " 92";
+  content: " →";
   color: var(--amber);
 }
 
