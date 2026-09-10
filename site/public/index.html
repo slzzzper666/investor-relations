@@ -133,7 +133,23 @@
   </div>
 </footer>
 
+<!-- 盤後籌碼快照浮層：內容以 iframe 載入同站 /chips/，開啟時才載入 -->
+<div class="chips-modal" id="chips-modal" hidden>
+  <div class="chips-backdrop" data-chips-close></div>
+  <div class="chips-panel" role="dialog" aria-modal="true" aria-labelledby="chips-modal-title">
+    <h2 class="sr-only" id="chips-modal-title">盤後籌碼快照</h2>
+    <button type="button" class="chips-close" id="chips-close" aria-label="關閉盤後籌碼快照">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M7 7 L17 17 M17 7 L7 17" />
+      </svg>
+    </button>
+    <div class="chips-loading" id="chips-loading">籌碼資料載入中</div>
+    <iframe class="chips-frame" id="chips-frame" title="盤後籌碼快照" src="about:blank"></iframe>
+  </div>
+</div>
+
 <script src="assets/app.js"></script>
+<script src="assets/chips-modal.js" defer></script>
 <script>
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", function () {

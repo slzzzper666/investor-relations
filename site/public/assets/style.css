@@ -1718,3 +1718,133 @@ a.m-row:hover {
   .sister-link { gap: 8px; padding: 10px 15px; }
   .sister-desc { font-size: 11.5px; }
 }
+
+
+/* ---------- 盤後籌碼快照浮層 ---------- */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+body.chips-open { overflow: hidden; }
+
+.chips-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 24px;
+}
+
+.chips-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(4, 6, 10, 0.78);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  opacity: 0;
+  transition: opacity .22s ease;
+}
+
+.chips-panel {
+  position: relative;
+  width: min(1180px, 100%);
+  height: min(88vh, 100%);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--panel);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, .6);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(10px) scale(.985);
+  transition: opacity .22s ease, transform .22s cubic-bezier(.22,.61,.36,1);
+}
+
+.chips-modal.is-open .chips-backdrop { opacity: 1; }
+.chips-modal.is-open .chips-panel {
+  opacity: 1;
+  transform: none;
+}
+
+.chips-frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #0A0A0B;
+  -webkit-overflow-scrolling: touch;
+}
+
+.chips-close {
+  position: absolute;
+  top: 14px; right: 14px;
+  z-index: 2;
+  width: 38px; height: 38px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, .16);
+  border-radius: 50%;
+  background: rgba(10, 10, 11, .72);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color .18s ease, background .18s ease, color .18s ease;
+}
+
+.chips-close svg {
+  width: 17px; height: 17px;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  fill: none;
+}
+
+.chips-close:hover,
+.chips-close:focus-visible {
+  border-color: var(--amber);
+  background: rgba(217, 161, 74, .16);
+  color: var(--amber);
+}
+
+.chips-loading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: .18em;
+  color: var(--faint);
+  background: #0A0A0B;
+  pointer-events: none;
+  transition: opacity .3s ease;
+}
+
+.chips-loading.is-done { opacity: 0; }
+
+@media (max-width: 720px) {
+  .chips-modal { padding: 0; }
+  .chips-panel {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+  }
+  .chips-close { top: 10px; right: 10px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chips-backdrop,
+  .chips-panel { transition: none; }
+  .chips-panel { transform: none; }
+}
