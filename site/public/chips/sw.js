@@ -1,4 +1,4 @@
-const CACHE = 'sanchou-2026-09-10';
+const CACHE = 'sanchou-2026-09-11';
 const CORE = ['./','./index.html','./logo.svg','./manifest.webmanifest','./icon-192.png','./icon-512.png','./maskable-512.png','./apple-touch-icon.png','./foreign_futures.png','./retail_futures.png'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE)).then(() => self.skipWaiting()));
