@@ -7,7 +7,6 @@ import json
 import time
 from datetime import date, datetime, timedelta
 
-from google import genai
 from google.genai import types
 from pydantic import BaseModel
 
@@ -56,12 +55,10 @@ name_zh 用台灣常見譯名（無慣用譯名則用英文公司簡稱）。"""
 
 def generate_whitelist() -> list[dict]:
     """呼叫 Gemini 產生龍頭白名單並寫入 WHITELIST_FILE。"""
-    client = genai.Client(api_key=config.GEMINI_API_KEY,
-                          http_options=types.HttpOptions(timeout=120_000))
     resp = generate_with_retry(
-        client,
-        contents=[_WL_PROMPT],
-        config=types.GenerateContentConfig(
+        [_WL_PROMPT],
+        timeout_ms=120_000,
+        config_=types.GenerateContentConfig(
             temperature=0.4,
             system_instruction=_WL_SYSTEM,
             response_mime_type="application/json",
@@ -232,12 +229,10 @@ def analyze(data: dict) -> dict:
     from ir.gemini_util import all_exhausted
     if not all_exhausted():
         try:
-            client = genai.Client(api_key=config.GEMINI_API_KEY,
-                                  http_options=types.HttpOptions(timeout=120_000))
             resp = generate_with_retry(
-                client,
-                contents=[prompt],
-                config=types.GenerateContentConfig(
+                [prompt],
+                timeout_ms=120_000,
+                config_=types.GenerateContentConfig(
                     temperature=0.3,
                     system_instruction=_AN_SYSTEM,
                     response_mime_type="application/json",
@@ -255,34 +250,44 @@ def analyze(data: dict) -> dict:
 
 
 def _analyze_groq(prompt: str) -> dict:
+    """Groq 備援：沿用 ir.analyze 的模型鏈（llama-3.3-70b 已下架，404 換下一個）。"""
     import json as _json
 
     import requests
 
-    for attempt in range(4):
-        r = requests.post(
-            "https://api.groq.com/openai/v1/chat/completions",
-            headers={"Authorization": f"Bearer {config.GROQ_API_KEY}"},
-            json={"model": "llama-3.3-70b-versatile",
-                  "messages": [
-                      {"role": "system", "content": _AN_SYSTEM + " Output valid JSON only."},
-                      {"role": "user", "content": prompt}],
-                  "temperature": 0.3,
-                  "response_format": {"type": "json_object"}},
-            timeout=180,
-        )
-        if r.status_code == 429:
-            ra = float(r.headers.get("retry-after", 30))
-            if ra > 120:
-                raise RuntimeError(f"Groq 當日額度耗盡（retry-after {ra:.0f}s）")
-            time.sleep(min(ra, 90) + 1)
+    from ir.analyze import GROQ_MODELS, _groq_gone
+
+    for model in GROQ_MODELS:
+        if model in _groq_gone:
             continue
-        r.raise_for_status()
-        result = _json.loads(r.json()["choices"][0]["message"]["content"])
-        parsed = _USAnalysis.model_validate(result)
-        log.info("US 分析完成（Groq llama 備援）")
-        return parsed.model_dump()
-    raise RuntimeError("Groq llama 連續限流")
+        for attempt in range(4):
+            r = requests.post(
+                "https://api.groq.com/openai/v1/chat/completions",
+                headers={"Authorization": f"Bearer {config.GROQ_API_KEY}"},
+                json={"model": model,
+                      "messages": [
+                          {"role": "system", "content": _AN_SYSTEM + " Output valid JSON only."},
+                          {"role": "user", "content": prompt}],
+                      "temperature": 0.3,
+                      "response_format": {"type": "json_object"}},
+                timeout=180,
+            )
+            if r.status_code == 404:
+                _groq_gone.add(model)
+                log.warning("Groq 模型 %s 已不存在（404），換下一個", model)
+                break
+            if r.status_code == 429:
+                ra = float(r.headers.get("retry-after", 30))
+                if ra > 120:
+                    raise RuntimeError(f"Groq 當日額度耗盡（retry-after {ra:.0f}s）")
+                time.sleep(min(ra, 90) + 1)
+                continue
+            r.raise_for_status()
+            result = _json.loads(r.json()["choices"][0]["message"]["content"])
+            parsed = _USAnalysis.model_validate(result)
+            log.info("US 分析完成（Groq %s 備援）", model)
+            return parsed.model_dump()
+    raise RuntimeError("Groq 所有模型皆不可用或連續限流")
 
 
 def fetch_earnings_history(symbol: str, since: str = "2026-01-01") -> list[dict]:

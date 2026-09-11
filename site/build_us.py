@@ -4,10 +4,13 @@
 與 build_data.py 共用 detail/，各自只清自己的命名空間（台股 vs us-*）。
 
 用法：
-  .venv\\Scripts\\python site\\build_us.py             沿用既有白名單
-  .venv\\Scripts\\python site\\build_us.py --whitelist  用 Gemini 重生白名單
+  python site/build_us.py                     沿用既有白名單
+  python site/build_us.py --whitelist         用 Gemini 重生白名單
+  python site/build_us.py --since 2026-06-15  回補：since 起每一季都收，不限最近 45 天
+環境變數 IR_US_MAX 可覆寫每次分析上限（預設 25；回補時設大一點）。
 """
 import json
+import os
 import sys
 import time
 from datetime import datetime, timedelta, timezone
@@ -22,12 +25,12 @@ sys.path.insert(0, str(ROOT_DIR))
 from ir.logger import get_logger                                    # noqa: E402
 from ir.radar import us as radar_us                                 # noqa: E402
 from ir.us_earn import (analyze_cached, fetch_earnings,             # noqa: E402
-                        load_whitelist)
+                        fetch_earnings_history, load_whitelist)
 
 log = get_logger("build_us")
 TAIPEI = timezone(timedelta(hours=8))
 
-MAX_ANALYSES = 25  # 每次最多分析幾檔（依市值大→小取）
+MAX_ANALYSES = int(os.getenv("IR_US_MAX", "25"))  # 每次最多分析幾檔（依市值大→小取）
 
 
 def _compose_summary(one_liner, highlights):
@@ -41,25 +44,34 @@ def _compose_view(ai_view, risks, label, sep):
     return v
 
 
-def build_reported(whitelist):
+def build_reported(whitelist, since: str | None = None):
+    """since=None：每檔只看最近 45 天內公布的那一季（每日模式）。
+    since 給日期：收 since 起每一季（回補模式；CI 停擺幾個月時用）。"""
     name_zh = {w["symbol"]: w.get("name_zh") or w["symbol"] for w in whitelist}
     syms = list(name_zh.keys())
-    log.info("掃描 %d 檔白名單近期財報…", len(syms))
+    log.info("掃描 %d 檔白名單%s…", len(syms),
+             f" {since} 起各季財報" if since else "近期財報")
 
     found = []
     for sym in syms:
         try:
-            data = fetch_earnings(sym)
+            rows = (fetch_earnings_history(sym, since) if since
+                    else [d for d in [fetch_earnings(sym)] if d])
         except Exception as e:  # noqa: BLE001
             log.warning("%s 抓取失敗：%s", sym, e)
-            data = None
-        if data:
-            found.append(data)
+            rows = []
+        found.extend(rows)
         time.sleep(1.0)  # Yahoo 節流
 
-    found.sort(key=lambda d: -(d.get("market_cap") or 0))
-    targets = found[:MAX_ANALYSES]
-    log.info("近期已公布 %d 檔，分析前 %d 檔", len(found), len(targets))
+    # 已有分析快取的季不算進上限，額度留給真正的新財報
+    cache_dir = ROOT_DIR / "data" / "us_analysis"
+    fresh = [d for d in found
+             if not (cache_dir / f"{d['symbol']}_{d['report_date']}.json").exists()]
+    cached = [d for d in found if d not in fresh]
+    fresh.sort(key=lambda d: -(d.get("market_cap") or 0))
+    targets = cached + fresh[:MAX_ANALYSES]
+    log.info("已公布 %d 季（快取 %d、新 %d），本次分析新財報 %d 季",
+             len(found), len(cached), len(fresh), min(len(fresh), MAX_ANALYSES))
 
     list_items, details = [], []
     for data in targets:
@@ -130,12 +142,13 @@ def build_upcoming(whitelist):
 
 def main():
     force = "--whitelist" in sys.argv
+    since = sys.argv[sys.argv.index("--since") + 1] if "--since" in sys.argv else None
     whitelist = load_whitelist(force=force)
     log.info("白名單 %d 檔", len(whitelist))
 
     DETAIL_DIR.mkdir(parents=True, exist_ok=True)
     # 不刪既有 us-* detail（保留歷史回補的場次）；本次抓到的新增/更新即可
-    list_items, details = build_reported(whitelist)
+    list_items, details = build_reported(whitelist, since=since)
     for d in details:
         (DETAIL_DIR / f"{d['id']}.json").write_text(
             json.dumps(d, ensure_ascii=False), encoding="utf-8")

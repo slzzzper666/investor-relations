@@ -167,14 +167,39 @@ FRED_SERIES = [
 
 
 def _fred_series(sid: str):
-    """回 [(date, value)]（已去除缺漏 '.'），失敗回 None。"""
+    """回 [(date, value)]（已去除缺漏 '.'），失敗回 None。
+
+    優先走官方 API（有 FRED_API_KEY 時；0.5 秒回應、雲端可達）。
+    fredgraph.csv 免金鑰端點 2026-09 起連本機都逾時，只留作無金鑰時的退路。
+    """
+    rows = []
+    if FRED_API_KEY:
+        try:
+            r = requests.get(
+                "https://api.stlouisfed.org/fred/series/observations",
+                params={"series_id": sid, "api_key": FRED_API_KEY,
+                        "file_type": "json", "sort_order": "asc",
+                        "observation_start": f"{datetime.now().year - 3}-01-01"},
+                timeout=20)
+            r.raise_for_status()
+            for o in r.json().get("observations", []):
+                v = o.get("value")
+                if v in (None, "", "."):
+                    continue
+                try:
+                    rows.append((o["date"], float(v)))
+                except ValueError:
+                    continue
+            if rows:
+                return rows
+        except Exception as exc:  # noqa: BLE001
+            print(f"  FRED API {sid} 失敗（{str(exc)[:60]}），改試 CSV")
     try:
         r = requests.get(FRED_CSV, params={"id": sid}, timeout=8,
                          headers={"User-Agent": "Mozilla/5.0"})
         r.raise_for_status()
     except Exception:  # noqa: BLE001
         return None
-    rows = []
     for line in StringIO(r.text).read().splitlines()[1:]:
         parts = line.split(",")
         if len(parts) < 2 or parts[1] in ("", "."):

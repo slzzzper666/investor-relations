@@ -46,6 +46,17 @@ jobs:
           GEMINI_API_KEY_2: ${{ secrets.GEMINI_API_KEY_2 }}
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
         run: python site/build_macro.py
+      - name: 總經歷史數據（FRED 接續已公布的 CPI/就業/PPI/GDP/零售，增量）
+        continue-on-error: true
+        env:
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+        run: python site/build_macro_history.py
+      - name: 總經每月回顧（已結束且尚無回顧的月份，Gemini 依 yfinance 月度數據撰寫）
+        continue-on-error: true
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_API_KEY_2: ${{ secrets.GEMINI_API_KEY_2 }}
+        run: python site/build_macro_monthly.py
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
