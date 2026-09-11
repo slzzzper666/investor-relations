@@ -320,7 +320,7 @@
     "</aside>";
   }
 
-  function financialsHtml(fin) {
+  function financialsHtml(fin, d) {
     if (fin && fin.market === "us") return usFinancialsHtml(fin);
     var quarters = (fin && fin.quarters) || [];
     var latest = quarters[0] || {};
@@ -367,8 +367,24 @@
     return '<aside class="fin-panel">' + head +
       (cards ? '<div class="fin-cards">' + cards + "</div>" : "") + miniBlock +
       trend +
+      finReportLinks(d) +
       '<p class="fin-note">單季數據 · 來源：公開財報（FinMind）／本益比與市值：TWSE、TPEx</p>' +
     "</aside>";
+  }
+
+  /* 財務報告書傳送門：連到公開資訊觀測站的電子書清單（各季合併／個體報表 PDF）。
+     PDF 本身要走站方的 JS 二次請求，無法直接深連結，所以連清單頁。 */
+  function finReportLinks(d) {
+    if (!d || !/^\d{4}$/.test(d.code || "")) return "";
+    var year = parseInt(String(d.date || "").slice(0, 4), 10) || new Date().getFullYear();
+    var roc = year - 1911;
+    var url = "https://doc.twse.com.tw/server-java/t57sb01?step=1&colorchg=1&co_id=" +
+      encodeURIComponent(d.code) + "&year=" + roc + "&seamon=&mtype=A&";
+    return '<div class="fin-links">' +
+      '<a class="fin-link" href="' + url + '" target="_blank" rel="noopener">' +
+        '財務報告書（各季三表 PDF）<span class="arrow">&nearr;</span></a>' +
+      '<span class="fin-links-note">公開資訊觀測站 · ' + (roc) + ' 年度</span>' +
+    "</div>";
   }
 
   function renderDoc(d) {
@@ -448,7 +464,7 @@
           transcriptSection +
         "</article>" +
         '<div class="doc-side">' +
-          businessHtml(d.business) + financialsHtml(d.financials) +
+          businessHtml(d.business) + financialsHtml(d.financials, d) +
         "</div>" +
       "</div>" +
       '<nav class="doc-foot-nav"><a href="index.html">' + L.back + "</a></nav>";

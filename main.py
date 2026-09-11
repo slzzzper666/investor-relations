@@ -21,7 +21,7 @@ from ir.mops import (Conference, download_pdf, get_conferences,
 from ir.media import get_audio
 from ir.stt import transcribe
 from ir.analyze import analyze
-from ir.notion_db import exists as notion_exists
+from ir.notion_db import status as notion_status
 from ir.notion_db import upsert_conference
 from ir.notify import push_discord, push_telegram
 
@@ -96,6 +96,30 @@ def process_one(conf: Conference, push: bool = True, audio: bool = True) -> bool
     return True
 
 
+def enrich_transcript(conf: Conference) -> bool:
+    """已在 Notion 但沒逐字稿的場次：錄影上傳了就補轉錄、重新分析、更新 Notion。
+
+    irconference 的錄影通常在法說會當晚 03:00 前後才上傳，01:00 的每日執行
+    抓不到；隔天回補時再試一次就有了。只更新 Notion、不重推 TG/DC。
+    回傳是否補到。
+    """
+    tag = f"{conf.stock_code} {conf.company_name}"
+    audio_path, video_url = get_audio(conf, config.AUDIO_DIR)
+    if not audio_path:
+        return False
+    t_file = config.TRANSCRIPT_DIR / f"{conf.stock_code}_{conf.date.isoformat()}.txt"
+    if t_file.exists():
+        transcript = t_file.read_text(encoding="utf-8")
+    else:
+        transcript = transcribe(audio_path)
+        t_file.write_text(transcript, encoding="utf-8")
+    analysis = analyze(conf.company_name, conf.stock_code, conf.date.isoformat(),
+                       transcript=transcript)
+    upsert_conference(conf, analysis, transcript, video_url)
+    log.info("%s：逐字稿已補上（%d 字）並重新分析", tag, len(transcript))
+    return True
+
+
 def run(target: date, limit: int = 0, push: bool = True, audio: bool = True,
         lookback: int = 3) -> None:
     """處理 target 當天，並順帶回補前 lookback 天「Notion 裡還沒有」的場次。
@@ -117,7 +141,7 @@ def run(target: date, limit: int = 0, push: bool = True, audio: bool = True,
         return
 
     processed = _load_processed()
-    ok = fail = skip = 0
+    ok = fail = skip = enriched = 0
     for conf in confs:
         key = f"{conf.stock_code}_{conf.date.isoformat()}"
         tag = f"{conf.stock_code} {conf.company_name}"
@@ -128,11 +152,21 @@ def run(target: date, limit: int = 0, push: bool = True, audio: bool = True,
         # Notion 才是「做過沒」的真相：Railway 的 processed.json 每次都是空的，
         # 手動重跑同一天也靠這個避免重複推播（每場多一次查詢，約 0.3 秒）
         try:
-            if notion_exists(conf):
-                skip += 1
-                continue
+            st = notion_status(conf)
         except Exception as e:  # noqa: BLE001
             log.warning("%s：查 Notion 失敗（%s），視為未處理", tag, e)
+            st = None
+        if st is not None:
+            # 做過但沒逐字稿、且 MOPS 有登載影音 → 錄影可能已上傳，補逐字稿
+            if (audio and conf.date != target and not st["has_transcript"]
+                    and conf.video_urls):
+                try:
+                    if enrich_transcript(conf):
+                        enriched += 1
+                except Exception as e:  # noqa: BLE001
+                    log.warning("%s：補逐字稿失敗：%s", tag, str(e)[:160])
+            skip += 1
+            continue
         if conf.date != target:
             log.info("%s：%s 的缺漏場次，回補", tag, conf.date.isoformat())
         try:
@@ -143,8 +177,8 @@ def run(target: date, limit: int = 0, push: bool = True, audio: bool = True,
             log.exception("%s 處理失敗", tag)
             fail += 1
 
-    log.info("===== 完成：成功 %d、失敗 %d、跳過 %d（共 %d 場）=====",
-             ok, fail, skip, len(confs))
+    log.info("===== 完成：成功 %d、失敗 %d、跳過 %d、補逐字稿 %d（共 %d 場）=====",
+             ok, fail, skip, enriched, len(confs))
 
 
 if __name__ == "__main__":

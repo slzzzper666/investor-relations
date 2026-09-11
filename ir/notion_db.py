@@ -49,14 +49,23 @@ def _find_page(n: Client, ds_id: str, conf: Conference) -> dict | None:
     return res["results"][0] if res["results"] else None
 
 
-def exists(conf: Conference) -> bool:
-    """這場法說會是否已在 Notion。
+def status(conf: Conference) -> dict | None:
+    """這場法說會在 Notion 的狀態：{'id', 'has_transcript'}；不存在回 None。
 
-    每日管線回補前幾天缺口時用：Railway 容器的 processed.json 是暫時性的，
-    Notion 才是「有沒有做過」唯一可靠的依據。
+    每日管線回補前幾天用：Railway 容器的 processed.json 是暫時性的，
+    Notion 才是「有沒有做過」唯一可靠的依據。has_transcript 讓管線知道
+    哪些場次還缺逐字稿（錄影通常比法說會晚幾小時到一天才上傳）。
     """
     n, ds_id = _get()
-    return _find_page(n, ds_id, conf) is not None
+    page = _find_page(n, ds_id, conf)
+    if page is None:
+        return None
+    rt = page.get("properties", {}).get("逐字稿", {}).get("rich_text") or []
+    return {"id": page["id"], "has_transcript": bool(rt)}
+
+
+def exists(conf: Conference) -> bool:
+    return status(conf) is not None
 
 
 def upsert_conference(conf: Conference, analysis: dict, transcript: str,

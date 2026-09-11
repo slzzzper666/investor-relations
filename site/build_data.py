@@ -308,10 +308,20 @@ def _fin_static_html(fin: dict | None) -> str:
             + row("資本支出（億元）", "capex")
             + "</tbody></table>")
 
-    if not head and not table:
+    # 財務報告書傳送門：公開資訊觀測站電子書清單（各季合併／個體報表 PDF）。
+    # PDF 本身要走站方 JS 二次請求，無法直接深連結，連清單頁最穩。
+    link = ""
+    code, year = fin.get("code"), fin.get("year")
+    if code and year:
+        url = (f"https://doc.twse.com.tw/server-java/t57sb01?step=1&colorchg=1"
+               f"&co_id={code}&year={year - 1911}&seamon=&mtype=A&")
+        link = (f"<p><a href='{url}' rel='nofollow noopener' target='_blank'>"
+                f"財務報告書（各季三表 PDF）</a>　公開資訊觀測站 {year - 1911} 年度</p>")
+
+    if not head and not table and not link:
         return ""
     ul = f"<ul>{''.join(head)}</ul>" if head else ""
-    return f"<h2>財務數據</h2>{ul}{table}"
+    return f"<h2>財務數據</h2>{ul}{table}{link}"
 
 
 def _business_static_html(biz: dict | None) -> str:
@@ -351,6 +361,13 @@ def render_static_page(d: dict) -> str:
         ai_block = ("<h2>AI 觀點與未來方向</h2>"
                     + "".join(f"<p>{_esc(p.strip())}</p>"
                               for p in d["ai_view"].split("\n") if p.strip()))
+
+    # 財報區塊需要代號與年份組財務報告書連結；沒有財報數據的公司也給傳送門
+    fin_static = None
+    if d.get("financials") or re.fullmatch(r"\d{4}", d.get("code") or ""):
+        fin_static = {**(d.get("financials") or {}),
+                      "code": d.get("code"),
+                      "year": int(d["date"][:4]) if d.get("date") else None}
 
     transcript_block = ""
     if d["transcript"]:
@@ -421,7 +438,7 @@ def render_static_page(d: dict) -> str:
 <h2>重點摘要</h2>
 {_summary_html(d['summary'])}
 {_business_static_html(d.get('business'))}
-{_fin_static_html(d.get('financials'))}
+{_fin_static_html(fin_static)}
 {ai_block}
 <p class="links">{'　'.join(links)}</p>
 {transcript_block}
