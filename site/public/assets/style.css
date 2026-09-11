@@ -1848,3 +1848,88 @@ body.chips-open { overflow: hidden; }
   .chips-panel { transition: none; }
   .chips-panel { transform: none; }
 }
+
+
+/* ---------- 族群打字搜尋（combobox） ---------- */
+.combo { position: relative; }
+
+.combo input {
+  width: 100%;
+  min-width: 190px;
+  padding-right: 34px;   /* 留給清除鈕 */
+}
+
+.combo-clear {
+  position: absolute;
+  top: 50%; right: 8px;
+  transform: translateY(-50%);
+  width: 22px; height: 22px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--faint);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+.combo-clear:hover { color: var(--amber); background: rgba(217, 161, 74, .12); }
+
+.combo-list {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0; right: 0;
+  z-index: 40;
+  max-height: 320px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 6px 0;
+  list-style: none;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, .5);
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+}
+
+.combo-section {
+  padding: 8px 12px 4px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.combo-section + .combo-item { border-top: 0; }
+
+.combo-item {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 12px;
+  font-size: 14px;
+  color: var(--text);
+  cursor: pointer;
+}
+.combo-item:hover,
+.combo-item.is-active { background: var(--panel-2); }
+.combo-item.is-selected .combo-name { color: var(--amber); }
+
+.combo-count {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--faint);
+}
+
+.combo-empty {
+  padding: 12px;
+  font-size: 13px;
+  color: var(--faint);
+  text-align: center;
+}
+
+@media (max-width: 560px) {
+  .combo-list { max-height: 260px; }
+}

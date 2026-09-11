@@ -73,4 +73,16 @@
     if (frame.src === "about:blank" || !loading) return;
     loading.classList.add("is-done");
   });
+
+  /* 進站自動先跳出籌碼：分享首頁網址就等於分享籌碼。
+     一個分頁只自動跳一次——關掉後去逛法說會、看完再回首頁不會再跳，
+     想再看就點入口。帶著 ?tag=／?industry= 進來的是刻意要看某族群清單，不打擾。 */
+  var AUTO_KEY = "chips-auto-shown";
+  var deepLinked = /[?&](tag|industry)=/.test(location.search);
+  var shown = false;
+  try { shown = sessionStorage.getItem(AUTO_KEY) === "1"; } catch (e) { /* 無痕 */ }
+  if (!deepLinked && !shown) {
+    try { sessionStorage.setItem(AUTO_KEY, "1"); } catch (e) { /* 無痕 */ }
+    setTimeout(function () { open(); }, 350);   // 讓首頁先畫出來，再淡入浮層
+  }
 })();

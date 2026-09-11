@@ -24,13 +24,17 @@
   var elMonth = document.getElementById("month");
   var elGroup = document.getElementById("group");
 
-  // 詳細頁點族群會帶 ?tag=／?industry= 進來，等資料載完再套用
+  // 詳細頁點族群會帶 ?tag=／?industry= 進來，等資料載完再套用；
+  // 沒帶參數時退回本分頁上次的篩選（sessionStorage），讓「返回清單」回到原本的族群頁
+  var FILTER_KEYS = { group: "ir-f-group", q: "ir-f-q", month: "ir-f-month" };
   var pendingGroup = (function () {
     var m = /[?&]tag=([^&]+)/.exec(location.search);
     if (m) return "t:" + decodeURIComponent(m[1]);
     m = /[?&]industry=([^&]+)/.exec(location.search);
-    return m ? "i:" + decodeURIComponent(m[1]) : "";
+    if (m) return "i:" + decodeURIComponent(m[1]);
+    try { return sessionStorage.getItem(FILTER_KEYS.group) || ""; } catch (e) { return ""; }
   })();
+  var restoreFiltersOnce = true;   // 只在本次載入的第一批資料還原搜尋與月份，切換分類時照舊重置
   var elFooterMeta = document.getElementById("footer-meta");
   var elControls = document.getElementById("controls");
   var elTabList = document.getElementById("tab-list");
@@ -272,6 +276,11 @@
     var group = elGroup ? elGroup.value : "";
     var gKind = group.slice(0, 2);
     var gName = group.slice(2);
+    try {   // 記住目前篩選，進詳細頁再回來時還原
+      sessionStorage.setItem(FILTER_KEYS.group, group);
+      sessionStorage.setItem(FILTER_KEYS.q, elQ.value);
+      sessionStorage.setItem(FILTER_KEYS.month, month);
+    } catch (e) { /* 無痕模式 */ }
     var items = allItems.filter(function (it) {
       if (month && it.date.slice(0, 7) !== month) return false;
       if (gKind === "t:" && (it.tags || []).indexOf(gName) === -1) return false;
@@ -802,6 +811,18 @@
     elMonth.value = "";
     populateMonths();
     buildGroupOptions();
+    if (restoreFiltersOnce) {   // 首次載入：還原離開前的搜尋字與月份（族群由 pendingGroup 處理）
+      restoreFiltersOnce = false;
+      try {
+        var savedQ = sessionStorage.getItem(FILTER_KEYS.q) || "";
+        var savedMonth = sessionStorage.getItem(FILTER_KEYS.month) || "";
+        if (savedQ) elQ.value = savedQ;
+        if (savedMonth) {
+          elMonth.value = savedMonth;
+          if (elMonth.value !== savedMonth) elMonth.value = "";   // 這批資料沒有該月份
+        }
+      } catch (e) { /* 無痕模式 */ }
+    }
     buildEvents();
     dataReady = true;
     calBuilt = false;

@@ -62,8 +62,15 @@
       <input id="q" type="search" placeholder="公司名稱或股票代號，例如：倉佑、1568" autocomplete="off">
     </div>
     <div class="field">
-      <label for="group">族群</label>
-      <select id="group">
+      <label for="group-q">族群</label>
+      <div class="combo" id="group-combo">
+        <input id="group-q" type="text" placeholder="輸入關鍵字或點選" autocomplete="off"
+               role="combobox" aria-expanded="false" aria-controls="group-list" aria-autocomplete="list">
+        <button type="button" class="combo-clear" id="group-clear" aria-label="清除族群" hidden>×</button>
+        <ul class="combo-list" id="group-list" role="listbox" hidden></ul>
+      </div>
+      <!-- 真正的值放這裡，app.js 照舊讀寫；上面的輸入框只是打字搜尋的殼 -->
+      <select id="group" hidden tabindex="-1" aria-hidden="true">
         <option value="">全部族群</option>
       </select>
     </div>
@@ -149,6 +156,7 @@
 </div>
 
 <script src="assets/app.js"></script>
+<script src="assets/group-search.js" defer></script>
 <script src="assets/chips-modal.js" defer></script>
 <script>
 if ("serviceWorker" in navigator) {
