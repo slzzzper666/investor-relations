@@ -13,7 +13,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="三籌資本">
-<meta property="og:title" content="三籌資本 ｜ 每日籌碼戰報 2026/09/10（四）">
+<meta property="og:title" content="三籌資本 ｜ 每日籌碼戰報 2026/09/11（五）">
 <meta property="og:description" content="台股三大法人 × 期貨籌碼 × 主力分點 每日彙整">
 <meta property="og:image" content="icon-512.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -155,6 +155,22 @@ footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--line);
   color:var(--txt3);font-size:12.5px;line-height:1.9}
 footer b{color:var(--txt2);font-weight:600}
 
+/* 回法說會觀測站（同站台，本頁位於 /chips/ 之下） */
+.backlink{display:inline-flex;align-items:baseline;gap:10px;flex-wrap:wrap;
+  margin-bottom:22px;padding:11px 18px;border:1px solid var(--line2);
+  border-radius:999px;background:rgba(139,140,248,.07);text-decoration:none;
+  color:var(--txt);transition:border-color .18s,background .18s,transform .18s}
+.backlink:hover,.backlink:focus-visible{border-color:var(--accent);
+  background:rgba(139,140,248,.13);transform:translateY(-1px)}
+.backlink .bk-k{font-family:var(--disp);font-size:10px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--accent)}
+.backlink .bk-t{font-family:var(--disp);font-size:15px;font-weight:600;letter-spacing:.02em}
+.backlink .bk-t::after{content:" \2192";color:var(--accent)}
+.backlink .bk-d{font-size:12px;color:var(--txt2)}
+@media(max-width:560px){.backlink{gap:7px;padding:10px 15px}.backlink .bk-d{font-size:11.5px}}
+/* 嵌在母站浮層裡時不顯示回連（關掉浮層才是返回方式） */
+html.is-embedded .backlink{display:none}
+
 /* 入場淡入 */
 @media(prefers-reduced-motion:no-preference){
   .masthead,section{animation:rise .7s cubic-bezier(.22,.61,.36,1) both}
@@ -180,9 +196,9 @@ footer b{color:var(--txt2);font-weight:600}
     <rect x="27" y="60" width="28" height="8" rx="4" fill="#8B8CF8"/></svg>
     <span class="wm">三籌資本</span>
   </div>
-  <div class="kicker">每日籌碼戰報 · 2026/09/10（四）</div>
+  <div class="kicker">每日籌碼戰報 · 2026/09/11（五）</div>
   <h1 class="head">三大法人籌碼<span class="sub">外資 · 投信 · 自營商 · 期貨 · 主力分點</span></h1>
-  <p class="lede">外資台指期淨未平倉 <b>-83,918</b> 口，P/C 未平倉比 <b>0.83</b>，散戶小台多空比 <b>+5.7%</b>。</p>
+  <p class="lede">外資台指期淨未平倉 <b>-85,067</b> 口，P/C 未平倉比 <b>0.88</b>，散戶小台多空比 <b>+5.8%</b>。</p>
 </header>
 
 
@@ -190,11 +206,11 @@ footer b{color:var(--txt2);font-weight:600}
       <div class="mq-row">
         <div class="mq-idx">
           <div class="mq-il">加權指數 · TAIEX</div>
-          <div class="mq-iv">46,940.49 <span class="mq-chg sell">▼ -243 · -0.51%</span></div>
+          <div class="mq-iv">46,184.85 <span class="mq-chg sell">▼ -756 · -1.61%</span></div>
         </div>
-        <div class="mq-side"><div class="mq-sl">成交金額</div><div class="mq-sv">0.75<span>兆元</span></div></div>
+        <div class="mq-side"><div class="mq-sl">成交金額</div><div class="mq-sv">0.76<span>兆元</span></div></div>
       </div>
-      <div class="mq-amts"><div class="mq-amt"><span class="mq-al">外資</span><span class="mq-av sell">-383</span></div><div class="mq-amt"><span class="mq-al">投信</span><span class="mq-av buy">+18</span></div><div class="mq-amt"><span class="mq-al">自營商</span><span class="mq-av sell">-138</span></div><div class="mq-amt"><span class="mq-al">三大法人合計</span><span class="mq-av sell">-503</span></div></div>
+      <div class="mq-amts"><div class="mq-amt"><span class="mq-al">外資</span><span class="mq-av sell">-893</span></div><div class="mq-amt"><span class="mq-al">投信</span><span class="mq-av buy">+71</span></div><div class="mq-amt"><span class="mq-al">自營商</span><span class="mq-av sell">-302</span></div><div class="mq-amt"><span class="mq-al">三大法人合計</span><span class="mq-av sell">-1,124</span></div></div>
     </div>
 
 <section>
@@ -205,19 +221,19 @@ footer b{color:var(--txt2);font-weight:600}
       <div class="cols">
         <div class="col">
           <div class="ch">買超<span class="u">億元</span></div>
-          <ul class="rank"><li><span class="rk">1</span><span class="code">2454</span><span class="nm">聯發科</span><span class="amt buy">+81.04</span></li>
-<li><span class="rk">2</span><span class="code">3711</span><span class="nm">日月光投控<span class="tag">連4日</span></span><span class="amt buy">+31.01</span></li>
-<li><span class="rk">3</span><span class="code">6770</span><span class="nm">力積電</span><span class="amt buy">+20.58</span></li>
-<li><span class="rk">4</span><span class="code">1303</span><span class="nm">南亞</span><span class="amt buy">+17.95</span></li>
-<li><span class="rk">5</span><span class="code">3189</span><span class="nm">景碩</span><span class="amt buy">+15.30</span></li></ul>
+          <ul class="rank"><li><span class="rk">1</span><span class="code">2368</span><span class="nm">金像電</span><span class="amt buy">+17.43</span></li>
+<li><span class="rk">2</span><span class="code">2412</span><span class="nm">中華電<span class="tag">連9日</span></span><span class="amt buy">+13.96</span></li>
+<li><span class="rk">3</span><span class="code">2609</span><span class="nm">陽明<span class="tag">連3日</span></span><span class="amt buy">+13.66</span></li>
+<li><span class="rk">4</span><span class="code">6510</span><span class="nm">精測</span><span class="amt buy">+13.56</span></li>
+<li><span class="rk">5</span><span class="code">6274</span><span class="nm">台燿<span class="tag">連3日</span></span><span class="amt buy">+11.42</span></li></ul>
         </div>
         <div class="col">
           <div class="ch">賣超<span class="u">億元</span></div>
-          <ul class="rank"><li><span class="rk">1</span><span class="code">2308</span><span class="nm">台達電</span><span class="amt sell">-145.86</span></li>
-<li><span class="rk">2</span><span class="code">3231</span><span class="nm">緯創</span><span class="amt sell">-62.45</span></li>
-<li><span class="rk">3</span><span class="code">2330</span><span class="nm">台積電</span><span class="amt sell">-47.63</span></li>
-<li><span class="rk">4</span><span class="code">6147</span><span class="nm">頎邦</span><span class="amt sell">-27.34</span></li>
-<li><span class="rk">5</span><span class="code">3406</span><span class="nm">玉晶光</span><span class="amt sell">-20.93</span></li></ul>
+          <ul class="rank"><li><span class="rk">1</span><span class="code">2330</span><span class="nm">台積電</span><span class="amt sell">-198.85</span></li>
+<li><span class="rk">2</span><span class="code">3661</span><span class="nm">世芯-KY</span><span class="amt sell">-73.01</span></li>
+<li><span class="rk">3</span><span class="code">2408</span><span class="nm">南亞科</span><span class="amt sell">-64.60</span></li>
+<li><span class="rk">4</span><span class="code">2308</span><span class="nm">台達電</span><span class="amt sell">-57.88</span></li>
+<li><span class="rk">5</span><span class="code">2344</span><span class="nm">華邦電</span><span class="amt sell">-53.47</span></li></ul>
         </div>
       </div>
     </div>
@@ -227,19 +243,19 @@ footer b{color:var(--txt2);font-weight:600}
       <div class="cols">
         <div class="col">
           <div class="ch">買超<span class="u">億元</span></div>
-          <ul class="rank"><li><span class="rk">1</span><span class="code">2303</span><span class="nm">聯電<span class="tag">連5日</span></span><span class="amt buy">+17.84</span></li>
-<li><span class="rk">2</span><span class="code">1815</span><span class="nm">富喬<span class="tag">連8日</span></span><span class="amt buy">+14.40</span></li>
-<li><span class="rk">3</span><span class="code">6531</span><span class="nm">愛普*</span><span class="amt buy">+8.76</span></li>
-<li><span class="rk">4</span><span class="code">3105</span><span class="nm">穩懋<span class="tag">連4日</span></span><span class="amt buy">+8.52</span></li>
-<li><span class="rk">5</span><span class="code">3008</span><span class="nm">大立光</span><span class="amt buy">+8.47</span></li></ul>
+          <ul class="rank"><li><span class="rk">1</span><span class="code">1815</span><span class="nm">富喬<span class="tag">連9日</span></span><span class="amt buy">+9.71</span></li>
+<li><span class="rk">2</span><span class="code">8996</span><span class="nm">高力</span><span class="amt buy">+8.74</span></li>
+<li><span class="rk">3</span><span class="code">2357</span><span class="nm">華碩</span><span class="amt buy">+8.14</span></li>
+<li><span class="rk">4</span><span class="code">3374</span><span class="nm">精材</span><span class="amt buy">+8.03</span></li>
+<li><span class="rk">5</span><span class="code">3406</span><span class="nm">玉晶光<span class="tag">連3日</span></span><span class="amt buy">+7.71</span></li></ul>
         </div>
         <div class="col">
           <div class="ch">賣超<span class="u">億元</span></div>
-          <ul class="rank"><li><span class="rk">1</span><span class="code">2308</span><span class="nm">台達電</span><span class="amt sell">-22.16</span></li>
-<li><span class="rk">2</span><span class="code">6488</span><span class="nm">環球晶</span><span class="amt sell">-15.76</span></li>
-<li><span class="rk">3</span><span class="code">2330</span><span class="nm">台積電</span><span class="amt sell">-12.07</span></li>
-<li><span class="rk">4</span><span class="code">4979</span><span class="nm">華星光</span><span class="amt sell">-7.87</span></li>
-<li><span class="rk">5</span><span class="code">2345</span><span class="nm">智邦</span><span class="amt sell">-7.72</span></li></ul>
+          <ul class="rank"><li><span class="rk">1</span><span class="code">8299</span><span class="nm">群聯</span><span class="amt sell">-15.38</span></li>
+<li><span class="rk">2</span><span class="code">2345</span><span class="nm">智邦</span><span class="amt sell">-12.28</span></li>
+<li><span class="rk">3</span><span class="code">6274</span><span class="nm">台燿</span><span class="amt sell">-12.13</span></li>
+<li><span class="rk">4</span><span class="code">2308</span><span class="nm">台達電</span><span class="amt sell">-8.51</span></li>
+<li><span class="rk">5</span><span class="code">2368</span><span class="nm">金像電</span><span class="amt sell">-8.15</span></li></ul>
         </div>
       </div>
     </div>
@@ -249,29 +265,29 @@ footer b{color:var(--txt2);font-weight:600}
       <div class="cols">
         <div class="col">
           <div class="ch">買超<span class="u">億元</span></div>
-          <ul class="rank"><li><span class="rk">1</span><span class="code">00403A</span><span class="nm">主動統一升級50<span class="tag">連5日</span></span><span class="amt buy">+4.40</span></li>
-<li><span class="rk">2</span><span class="code">00632R</span><span class="nm">元大台灣50反1</span><span class="amt buy">+3.83</span></li>
-<li><span class="rk">3</span><span class="code">3661</span><span class="nm">世芯-KY</span><span class="amt buy">+3.08</span></li>
-<li><span class="rk">4</span><span class="code">2327</span><span class="nm">國巨*</span><span class="amt buy">+2.95</span></li>
-<li><span class="rk">5</span><span class="code">3008</span><span class="nm">大立光<span class="tag">連3日</span></span><span class="amt buy">+2.01</span></li></ul>
+          <ul class="rank"><li><span class="rk">1</span><span class="code">00632R</span><span class="nm">元大台灣50反1</span><span class="amt buy">+14.65</span></li>
+<li><span class="rk">2</span><span class="code">2308</span><span class="nm">台達電</span><span class="amt buy">+4.92</span></li>
+<li><span class="rk">3</span><span class="code">00715L</span><span class="nm">期街口布蘭特正2<span class="tag">連9日</span></span><span class="amt buy">+4.56</span></li>
+<li><span class="rk">4</span><span class="code">2303</span><span class="nm">聯電</span><span class="amt buy">+3.34</span></li>
+<li><span class="rk">5</span><span class="code">00937B</span><span class="nm">群益ESG投等債20+<span class="tag">連4日</span></span><span class="amt buy">+1.55</span></li></ul>
         </div>
         <div class="col">
           <div class="ch">賣超<span class="u">億元</span></div>
-          <ul class="rank"><li><span class="rk">1</span><span class="code">00918</span><span class="nm">大華優利高填息30</span><span class="amt sell">-21.98</span></li>
-<li><span class="rk">2</span><span class="code">00919</span><span class="nm">群益台灣精選高息</span><span class="amt sell">-20.19</span></li>
-<li><span class="rk">3</span><span class="code">2308</span><span class="nm">台達電</span><span class="amt sell">-15.63</span></li>
-<li><span class="rk">4</span><span class="code">0050</span><span class="nm">元大台灣50</span><span class="amt sell">-13.07</span></li>
-<li><span class="rk">5</span><span class="code">00631L</span><span class="nm">元大台灣50正2</span><span class="amt sell">-11.56</span></li></ul>
+          <ul class="rank"><li><span class="rk">1</span><span class="code">00631L</span><span class="nm">元大台灣50正2</span><span class="amt sell">-29.05</span></li>
+<li><span class="rk">2</span><span class="code">0050</span><span class="nm">元大台灣50</span><span class="amt sell">-28.55</span></li>
+<li><span class="rk">3</span><span class="code">00919</span><span class="nm">群益台灣精選高息</span><span class="amt sell">-26.34</span></li>
+<li><span class="rk">4</span><span class="code">00918</span><span class="nm">大華優利高填息30</span><span class="amt sell">-21.85</span></li>
+<li><span class="rk">5</span><span class="code">00685L</span><span class="nm">群益臺灣加權正2</span><span class="amt sell">-21.64</span></li></ul>
         </div>
       </div>
     </div>
   <div class="invblock">
     <div class="invhead"><span class="zh">三大法人合計 淨買超 TOP5</span><span class="en">Net Total</span></div>
-    <ul class="rank"><li><span class="rk">1</span><span class="code">2454</span><span class="nm">聯發科</span><span class="amt buy">+84.07</span></li>
-<li><span class="rk">2</span><span class="code">3711</span><span class="nm">日月光投控</span><span class="amt buy">+28.20</span></li>
-<li><span class="rk">3</span><span class="code">1303</span><span class="nm">南亞</span><span class="amt buy">+22.57</span></li>
-<li><span class="rk">4</span><span class="code">6770</span><span class="nm">力積電</span><span class="amt buy">+22.18</span></li>
-<li><span class="rk">5</span><span class="code">3189</span><span class="nm">景碩</span><span class="amt buy">+18.22</span></li></ul>
+    <ul class="rank"><li><span class="rk">1</span><span class="code">2609</span><span class="nm">陽明</span><span class="amt buy">+14.11</span></li>
+<li><span class="rk">2</span><span class="code">2412</span><span class="nm">中華電</span><span class="amt buy">+14.03</span></li>
+<li><span class="rk">3</span><span class="code">1560</span><span class="nm">中砂</span><span class="amt buy">+11.55</span></li>
+<li><span class="rk">4</span><span class="code">6510</span><span class="nm">精測</span><span class="amt buy">+11.46</span></li>
+<li><span class="rk">5</span><span class="code">2603</span><span class="nm">長榮</span><span class="amt buy">+9.55</span></li></ul>
   </div>
 </section>
 
@@ -279,66 +295,72 @@ footer b{color:var(--txt2);font-weight:600}
   <div class="sec-h"><h2>期貨籌碼</h2><span class="en">Futures &amp; Options</span></div>
   <div class="meters">
     <div class="meter">
-      <div class="m-top"><span class="m-read lo">0.83</span></div>
+      <div class="m-top"><span class="m-read lo">0.88</span></div>
       <div class="m-bar">
-        <span class="m-fill" style="left:19.4%;width:7.9%"></span>
+        <span class="m-fill" style="left:21.7%;width:5.6%"></span>
         <span class="m-neutral" style="left:27.3%"></span>
-        <span class="m-dot" style="left:19.4%"></span>
+        <span class="m-dot" style="left:21.7%"></span>
       </div>
       <div class="m-label">P/C 未平倉比</div>
       <div class="m-sub">1.00 為多空均衡</div>
     </div>
     <div class="meter">
-      <div class="m-top"><span class="m-read hi">+5.7%</span></div>
+      <div class="m-top"><span class="m-read hi">+5.8%</span></div>
       <div class="m-bar">
         <span class="m-fill" style="left:50.0%;width:4.8%"></span>
         <span class="m-neutral" style="left:50.0%"></span>
-        <span class="m-dot" style="left:54.8%"></span>
+        <span class="m-dot" style="left:54.9%"></span>
       </div>
       <div class="m-label">散戶小台多空比</div>
       <div class="m-sub">正值偏多 · 負值偏空</div>
     </div>
     <div class="meter">
-      <div class="m-top"><span class="m-read hi">+35.7%</span></div>
+      <div class="m-top"><span class="m-read hi">+45.2%</span></div>
       <div class="m-bar">
-        <span class="m-fill" style="left:50.0%;width:29.7%"></span>
+        <span class="m-fill" style="left:50.0%;width:37.7%"></span>
         <span class="m-neutral" style="left:50.0%"></span>
-        <span class="m-dot" style="left:79.7%"></span>
+        <span class="m-dot" style="left:87.7%"></span>
       </div>
       <div class="m-label">散戶微台多空比</div>
       <div class="m-sub">正值偏多 · 負值偏空</div>
-    </div></div><div class="stats"><div class="stat"><div class="sl">外資台指期 淨未平倉</div><div class="sv">-83,918<span class="su">口</span><span class="d down">-2,852</span></div></div><div class="stat"><div class="sl">外資買權 CALL 淨OI</div><div class="sv">-1,959<span class="su">口</span><span class="d up">+245</span></div></div><div class="stat"><div class="sl">外資賣權 PUT 淨OI</div><div class="sv">+1,696<span class="su">口</span><span class="d up">+1,031</span></div></div><div class="stat"><div class="sl">散戶小台 淨未平倉</div><div class="sv">+2,078<span class="su">口</span><span class="d up">+535</span></div></div><div class="stat"><div class="sl">散戶微台 淨未平倉</div><div class="sv">+34,792<span class="su">口</span><span class="d up">+22,390</span></div></div></div><div class="charts"><figure><img src="foreign_futures.png" alt="期貨籌碼走勢圖" loading="lazy"></figure><figure><img src="retail_futures.png" alt="期貨籌碼走勢圖" loading="lazy"></figure></div>
+    </div></div><div class="stats"><div class="stat"><div class="sl">外資台指期 淨未平倉</div><div class="sv">-85,067<span class="su">口</span><span class="d down">-1,149</span></div></div><div class="stat"><div class="sl">外資買權 CALL 淨OI</div><div class="sv">-2,150<span class="su">口</span><span class="d down">-191</span></div></div><div class="stat"><div class="sl">外資賣權 PUT 淨OI</div><div class="sv">+2,181<span class="su">口</span><span class="d up">+485</span></div></div><div class="stat"><div class="sl">散戶小台 淨未平倉</div><div class="sv">+2,264<span class="su">口</span><span class="d up">+186</span></div></div><div class="stat"><div class="sl">散戶微台 淨未平倉</div><div class="sv">+51,803<span class="su">口</span><span class="d up">+17,011</span></div></div></div><div class="charts"><figure><img src="foreign_futures.png" alt="期貨籌碼走勢圖" loading="lazy"></figure><figure><img src="retail_futures.png" alt="期貨籌碼走勢圖" loading="lazy"></figure></div>
 </section>
 
 <section>
-  <div class="sec-h"><h2>主力分點異動</h2><span class="en">Broker · 2026/09/10（四）</span></div>
-  <div class="alert"><div class="ahead"><span class="zh">連續買超警報</span><span class="en">CONSECUTIVE</span></div><ul class="evt"><li><div class="ev-h"><b>2834 臺企銀</b><span class="ev-k">連 11 日</span></div><div class="sub">摩根大通・累積 40,720 張　均成本 17.28　<span class="buy">現價 17.90・獲利 +3.6%</span></div></li>
-<li><div class="ev-h"><b>2886 兆豐金</b><span class="ev-k">連 10 日</span></div><div class="sub">台灣摩根士丹利・累積 50,531 張　均成本 49.17　<span class="buy">現價 49.90・獲利 +1.5%</span></div></li>
-<li><div class="ev-h"><b>2889 國票金</b><span class="ev-k">連 9 日</span></div><div class="sub">台灣摩根士丹利・累積 29,831 張　均成本 16.34　<span class="buy">現價 16.55・獲利 +1.3%</span></div></li>
-<li><div class="ev-h"><b>2890 永豐金</b><span class="ev-k">連 9 日</span></div><div class="sub">美商高盛・累積 25,137 張　均成本 42.16　<span class="buy">現價 42.90・獲利 +1.8%</span></div></li>
-<li><div class="ev-h"><b>5347 世界</b><span class="ev-k">連 9 日</span></div><div class="sub">摩根大通・累積 12,436 張　均成本 151.41　<span class="buy">現價 161.50・獲利 +6.7%</span></div></li>
-<li><div class="ev-h"><b>2409 友達</b><span class="ev-k">連 9 日</span></div><div class="sub">花旗環球・累積 10,638 張　均成本 28.75　<span class="buy">現價 31.20・獲利 +8.5%</span></div></li></ul></div><div class="alert"><div class="ahead"><span class="zh">新進大戶</span><span class="en">NEW ENTRY</span></div><ul class="evt"><li><div class="ev-h"><b>6770 力積電</b><span class="ev-k">10,000 張</span></div><div class="sub">大和國泰 今日新進・佔成交 6.9%</div></li>
-<li><div class="ev-h"><b>2892 第一金</b><span class="ev-k">5,609 張</span></div><div class="sub">新光 今日新進・佔成交 19.3%</div></li>
-<li><div class="ev-h"><b>6770 力積電</b><span class="ev-k">3,884 張</span></div><div class="sub">凱基-站前 今日新進・佔成交 2.7%</div></li>
-<li><div class="ev-h"><b>6505 台塑化</b><span class="ev-k">2,584 張</span></div><div class="sub">統一 今日新進・佔成交 6.0%</div></li>
-<li><div class="ev-h"><b>5347 世界</b><span class="ev-k">2,083 張</span></div><div class="sub">大和國泰 今日新進・佔成交 10.0%</div></li>
-<li><div class="ev-h"><b>2409 友達</b><span class="ev-k">2,032 張</span></div><div class="sub">宏遠證券 今日新進・佔成交 0.4%</div></li></ul></div><div class="alert"><div class="ahead"><span class="zh">大量買超・佔成交 &gt;10%</span><span class="en">HEAVY VOLUME</span></div><ul class="evt"><li><div class="ev-h"><b>2102 泰豐</b><span class="ev-k">57.7%</span></div><div class="sub">摩根大通・買超 +311 張</div></li>
-<li><div class="ev-h"><b>2884 玉山金</b><span class="ev-k">28.6%</span></div><div class="sub">美林・買超 +16,290 張</div></li>
-<li><div class="ev-h"><b>5876 上海商銀</b><span class="ev-k">26.5%</span></div><div class="sub">台灣摩根士丹利・買超 +1,879 張</div></li>
-<li><div class="ev-h"><b>1815 富喬</b><span class="ev-k">25.8%</span></div><div class="sub">國泰證券・買超 +11,314 張</div></li>
-<li><div class="ev-h"><b>1402 遠東新</b><span class="ev-k">25.7%</span></div><div class="sub">台灣摩根士丹利・買超 +1,768 張</div></li>
-<li><div class="ev-h"><b>2029 盛餘</b><span class="ev-k">25.6%</span></div><div class="sub">花旗環球・買超 +107 張</div></li></ul></div>
+  <div class="sec-h"><h2>主力分點異動</h2><span class="en">Broker · 2026/09/11（五）</span></div>
+  <div class="alert"><div class="ahead"><span class="zh">連續買超警報</span><span class="en">CONSECUTIVE</span></div><ul class="evt"><li><div class="ev-h"><b>2834 臺企銀</b><span class="ev-k">連 12 日</span></div><div class="sub">摩根大通・累積 42,219 張　均成本 17.30　<span class="buy">現價 18.00・獲利 +4.0%</span></div></li>
+<li><div class="ev-h"><b>2886 兆豐金</b><span class="ev-k">連 11 日</span></div><div class="sub">台灣摩根士丹利・累積 53,415 張　均成本 49.31　<span class="buy">現價 51.70・獲利 +4.8%</span></div></li>
+<li><div class="ev-h"><b>2889 國票金</b><span class="ev-k">連 10 日</span></div><div class="sub">台灣摩根士丹利・累積 33,891 張　均成本 16.39　<span class="buy">現價 16.75・獲利 +2.2%</span></div></li>
+<li><div class="ev-h"><b>5347 世界</b><span class="ev-k">連 10 日</span></div><div class="sub">摩根大通・累積 14,428 張　均成本 152.25　<span class="buy">現價 157.50・獲利 +3.5%</span></div></li>
+<li><div class="ev-h"><b>2539 櫻花建</b><span class="ev-k">連 9 日</span></div><div class="sub">港商麥格理・累積 1,848 張　均成本 35.22　<span class="sell">現價 35.15・套牢 -0.2%</span></div></li>
+<li><div class="ev-h"><b>2892 第一金</b><span class="ev-k">連 8 日</span></div><div class="sub">摩根大通・累積 11,892 張　均成本 37.68　<span class="buy">現價 38.90・獲利 +3.2%</span></div></li></ul></div><div class="alert"><div class="ahead"><span class="zh">新進大戶</span><span class="en">NEW ENTRY</span></div><ul class="evt"><li><div class="ev-h"><b>2886 兆豐金</b><span class="ev-k">8,850 張</span></div><div class="sub">國票-敦北法人 今日新進・佔成交 24.6%</div></li>
+<li><div class="ev-h"><b>2883 凱基金</b><span class="ev-k">5,330 張</span></div><div class="sub">法銀巴黎 今日新進・佔成交 12.0%</div></li>
+<li><div class="ev-h"><b>2609 陽明</b><span class="ev-k">3,129 張</span></div><div class="sub">凱基-台北 今日新進・佔成交 3.9%</div></li>
+<li><div class="ev-h"><b>1815 富喬</b><span class="ev-k">2,611 張</span></div><div class="sub">國票-敦北法人 今日新進・佔成交 5.9%</div></li>
+<li><div class="ev-h"><b>2883 凱基金</b><span class="ev-k">1,996 張</span></div><div class="sub">凱基-台北 今日新進・佔成交 4.5%</div></li>
+<li><div class="ev-h"><b>9105 泰金寶-DR</b><span class="ev-k">1,535 張</span></div><div class="sub">台灣摩根士丹利 今日新進・佔成交 10.1%</div></li></ul></div><div class="alert"><div class="ahead"><span class="zh">大量買超・佔成交 &gt;10%</span><span class="en">HEAVY VOLUME</span></div><ul class="evt"><li><div class="ev-h"><b>4585 達明</b><span class="ev-k">63.9%</span></div><div class="sub">美商高盛・買超 +495 張</div></li>
+<li><div class="ev-h"><b>2539 櫻花建</b><span class="ev-k">29.1%</span></div><div class="sub">港商麥格理・買超 +252 張</div></li>
+<li><div class="ev-h"><b>7828 創新服務</b><span class="ev-k">28.2%</span></div><div class="sub">花旗環球・買超 +70 張</div></li>
+<li><div class="ev-h"><b>2892 第一金</b><span class="ev-k">27.6%</span></div><div class="sub">統一・買超 +9,637 張</div></li>
+<li><div class="ev-h"><b>1402 遠東新</b><span class="ev-k">26.9%</span></div><div class="sub">台灣摩根士丹利・買超 +2,319 張</div></li>
+<li><div class="ev-h"><b>5314 世紀*</b><span class="ev-k">26.8%</span></div><div class="sub">美林・買超 +5,074 張</div></li></ul></div>
 </section>
 
 <footer>
+  <a class="backlink" href="../"><span class="bk-k">同站台</span><span class="bk-t">法說會觀測站</span><span class="bk-d">逐字稿 · 重點摘要 · AI 觀點</span></a><br>
   <b>三籌資本</b> · 每交易日 18:00 自動更新 · 資料來源 TWSE / TPEX / TAIFEX<br>
-  本頁僅供參考，不構成投資建議 · 產製時間 2026/09/10 10:25
+  本頁僅供參考，不構成投資建議 · 產製時間 2026/09/11 10:23
 </footer>
 
 </div>
 <script>
 if ("serviceWorker" in navigator) {
   addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
+}
+// 被嵌在母站浮層裡時隱藏回連：那顆按鈕是給「整頁開啟」用的，
+// 在浮層內點下去只會讓 iframe 變成巢狀畫面，關掉浮層才是正確的返回方式。
+if (window.self !== window.top) {
+  document.documentElement.classList.add("is-embedded");
 }
 </script>
 </body>
