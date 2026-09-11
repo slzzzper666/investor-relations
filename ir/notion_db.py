@@ -33,6 +33,32 @@ def _rich_chunks(text: str, limit: int = 2000, max_chunks: int = 90) -> list[dic
     return [{"type": "text", "text": {"content": c}} for c in chunks]
 
 
+def _find_page(n: Client, ds_id: str, conf: Conference) -> dict | None:
+    """同公司同日期的既有頁面（沒有回 None）。"""
+    res = n.data_sources.query(
+        data_source_id=ds_id,
+        filter={"and": [
+            {"property": "日期", "date": {"equals": conf.date.isoformat()}},
+            {"property": "股票代號",
+             "number": {"equals": int(conf.stock_code)}}
+            if conf.stock_code.isdigit() else
+            {"property": "公司", "title": {"equals": conf.company_name}},
+        ]},
+        page_size=1,
+    )
+    return res["results"][0] if res["results"] else None
+
+
+def exists(conf: Conference) -> bool:
+    """這場法說會是否已在 Notion。
+
+    每日管線回補前幾天缺口時用：Railway 容器的 processed.json 是暫時性的，
+    Notion 才是「有沒有做過」唯一可靠的依據。
+    """
+    n, ds_id = _get()
+    return _find_page(n, ds_id, conf) is not None
+
+
 def upsert_conference(conf: Conference, analysis: dict, transcript: str,
                       video_url: str) -> str:
     """寫入/更新一列，回傳 Notion 頁面 URL。"""
@@ -60,20 +86,9 @@ def upsert_conference(conf: Conference, analysis: dict, transcript: str,
         props["逐字稿"] = {"rich_text": _rich_chunks(transcript)}
 
     # 同公司同日期 → 更新而非新增
-    existing = n.data_sources.query(
-        data_source_id=ds_id,
-        filter={"and": [
-            {"property": "日期", "date": {"equals": conf.date.isoformat()}},
-            {"property": "股票代號",
-             "number": {"equals": int(conf.stock_code)}}
-            if conf.stock_code.isdigit() else
-            {"property": "公司", "title": {"equals": conf.company_name}},
-        ]},
-        page_size=1,
-    )
-    if existing["results"]:
-        page = n.pages.update(page_id=existing["results"][0]["id"],
-                              properties=props)
+    existing = _find_page(n, ds_id, conf)
+    if existing:
+        page = n.pages.update(page_id=existing["id"], properties=props)
         log.info("Notion 已更新：%s %s", conf.stock_code, conf.company_name)
     else:
         page = n.pages.create(

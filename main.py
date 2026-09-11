@@ -5,6 +5,7 @@
   python main.py --date 2026-06-11  # 處理指定日期
   python main.py --limit 3          # 只處理前 N 家（測試用）
   python main.py --no-push          # 不推播（測試用）
+  python main.py --lookback 0       # 只處理目標日、不回補前幾天
 
 流程：MOPS 爬蟲 → 影音抽取 → STT 逐字稿 → AI 分析 → Notion → TG/DC 推播
 每家公司獨立容錯，單一公司失敗不影響其他公司。
@@ -15,10 +16,12 @@ from datetime import date, datetime, timedelta
 
 import config
 from ir.logger import TAIPEI, get_logger
-from ir.mops import Conference, download_pdf, get_conferences
+from ir.mops import (Conference, download_pdf, get_conferences,
+                     get_conferences_in_range)
 from ir.media import get_audio
 from ir.stt import transcribe
 from ir.analyze import analyze
+from ir.notion_db import exists as notion_exists
 from ir.notion_db import upsert_conference
 from ir.notify import push_discord, push_telegram
 
@@ -93,9 +96,20 @@ def process_one(conf: Conference, push: bool = True, audio: bool = True) -> bool
     return True
 
 
-def run(target: date, limit: int = 0, push: bool = True, audio: bool = True) -> None:
-    log.info("===== 法說會整理開始：%s =====", target.isoformat())
-    confs = get_conferences(target)
+def run(target: date, limit: int = 0, push: bool = True, audio: bool = True,
+        lookback: int = 3) -> None:
+    """處理 target 當天，並順帶回補前 lookback 天「Notion 裡還沒有」的場次。
+
+    Railway 容器每次都是全新的，processed.json 不保留；過去只跑「昨天」一次，
+    任何原因失敗（API 下架、限流、逾時）就永遠缺一場——2026 年 7~9 月因此掉了
+    124 場。回補以 Notion 為準判斷有沒有做過，補進來的一樣推播（晚到總比沒有好）。
+    """
+    start = target - timedelta(days=lookback)
+    log.info("===== 法說會整理開始：%s（回補至 %s）=====",
+             target.isoformat(), start.isoformat())
+    confs = get_conferences_in_range(start, target) if lookback else get_conferences(target)
+    # 當天的排前面、回補的排後面；同一天內維持 MOPS 順序
+    confs.sort(key=lambda c: c.date != target)
     if limit:
         confs = confs[:limit]
     if not confs:
@@ -106,16 +120,27 @@ def run(target: date, limit: int = 0, push: bool = True, audio: bool = True) -> 
     ok = fail = skip = 0
     for conf in confs:
         key = f"{conf.stock_code}_{conf.date.isoformat()}"
+        tag = f"{conf.stock_code} {conf.company_name}"
         if key in processed:
-            log.info("%s %s：已處理過，跳過", conf.stock_code, conf.company_name)
+            log.info("%s：已處理過，跳過", tag)
             skip += 1
             continue
+        # Notion 才是「做過沒」的真相：Railway 的 processed.json 每次都是空的，
+        # 手動重跑同一天也靠這個避免重複推播（每場多一次查詢，約 0.3 秒）
+        try:
+            if notion_exists(conf):
+                skip += 1
+                continue
+        except Exception as e:  # noqa: BLE001
+            log.warning("%s：查 Notion 失敗（%s），視為未處理", tag, e)
+        if conf.date != target:
+            log.info("%s：%s 的缺漏場次，回補", tag, conf.date.isoformat())
         try:
             process_one(conf, push=push, audio=audio)
             _mark_processed(key, processed)
             ok += 1
         except Exception:
-            log.exception("%s %s 處理失敗", conf.stock_code, conf.company_name)
+            log.exception("%s 處理失敗", tag)
             fail += 1
 
     log.info("===== 完成：成功 %d、失敗 %d、跳過 %d（共 %d 場）=====",
@@ -129,10 +154,13 @@ if __name__ == "__main__":
     parser.add_argument("--no-push", action="store_true", help="不推播 TG/DC")
     parser.add_argument("--pdf-only", action="store_true",
                         help="跳過影音與 STT，直接用簡報分析（回補用）")
+    parser.add_argument("--lookback", type=int, default=3,
+                        help="順帶回補前 N 天 Notion 沒有的場次（預設 3，0 關閉）")
     args = parser.parse_args()
 
     if args.date:
         target = date.fromisoformat(args.date)
     else:
         target = (datetime.now(TAIPEI) - timedelta(days=1)).date()
-    run(target, limit=args.limit, push=not args.no_push, audio=not args.pdf_only)
+    run(target, limit=args.limit, push=not args.no_push, audio=not args.pdf_only,
+        lookback=args.lookback)
