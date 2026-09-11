@@ -1,0 +1,30 @@
+{
+ "code": "3447",
+ "name": "展達",
+ "conf_date": "2026-09-10",
+ "source": "pdf",
+ "built_at": "2026-09-11 19:02",
+ "segments": [
+  {
+   "name": "Networking",
+   "pct": 62.0,
+   "note": "寬頻網路與網通產品"
+  },
+  {
+   "name": "AIOT",
+   "pct": 32.0,
+   "note": "智慧家庭物聯網"
+  },
+  {
+   "name": "Others",
+   "pct": 6.0,
+   "note": "其他業務"
+  }
+ ],
+ "as_of": "2026 H2",
+ "tags": [
+  "網通設備"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

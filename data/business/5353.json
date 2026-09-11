@@ -1,0 +1,17 @@
+{
+ "code": "5353",
+ "name": "台林",
+ "conf_date": "2026-09-10",
+ "source": "pdf",
+ "built_at": "2026-09-11 19:03",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "網通設備",
+  "工業電腦",
+  "車用電子",
+  "半導體設備"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

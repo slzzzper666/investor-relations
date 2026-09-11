@@ -1,0 +1,27 @@
+{
+ "code": "8210",
+ "name": "勤誠",
+ "conf_date": "2026-08-19",
+ "source": "pdf",
+ "built_at": "2026-09-11 19:09",
+ "segments": [
+  {
+   "name": "Server/Storage",
+   "pct": 99.7,
+   "note": ""
+  },
+  {
+   "name": "PC",
+   "pct": 0.3,
+   "note": ""
+  }
+ ],
+ "as_of": "2026 H1",
+ "tags": [
+  "機殼結構件",
+  "伺服器",
+  "AI伺服器"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.6-flash"
+}

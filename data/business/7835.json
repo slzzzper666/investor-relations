@@ -1,0 +1,16 @@
+{
+ "code": "7835",
+ "name": "永悅健康-創",
+ "conf_date": "2026-07-01",
+ "source": "pdf",
+ "built_at": "2026-09-11 19:03",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "軟體/SaaS",
+  "健康檢測",
+  "美妝保健"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

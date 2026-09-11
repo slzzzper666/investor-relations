@@ -1,0 +1,17 @@
+{
+ "code": "7825",
+ "name": "和亞智慧",
+ "conf_date": "2026-08-19",
+ "source": "pdf",
+ "built_at": "2026-09-11 19:03",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "半導體設備",
+  "自動化/機器人",
+  "光學鏡頭",
+  "車用電子"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

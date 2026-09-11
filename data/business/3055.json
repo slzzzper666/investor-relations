@@ -1,0 +1,16 @@
+{
+ "code": "3055",
+ "name": "蔚華科",
+ "conf_date": "2026-09-10",
+ "source": "pdf",
+ "built_at": "2026-09-11 18:58",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "半導體設備",
+  "先進封裝/CoWoS",
+  "封裝測試"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.7-flash"
+}

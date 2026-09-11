@@ -1,0 +1,46 @@
+{
+ "code": "1264",
+ "name": "德麥",
+ "conf_date": "2026-08-18",
+ "source": "pdf",
+ "built_at": "2026-09-11 19:04",
+ "segments": [
+  {
+   "name": "乳品類",
+   "pct": 35.0,
+   "note": "Dairy Products"
+  },
+  {
+   "name": "其他類",
+   "pct": 22.0,
+   "note": "Other Products"
+  },
+  {
+   "name": "添加類",
+   "pct": 12.0,
+   "note": "Additive Products"
+  },
+  {
+   "name": "麵粉類",
+   "pct": 11.0,
+   "note": "Flour Products"
+  },
+  {
+   "name": "預拌粉類",
+   "pct": 10.0,
+   "note": "Prepared Mix Products"
+  },
+  {
+   "name": "餡類",
+   "pct": 9.0,
+   "note": "Stuffing Products"
+  }
+ ],
+ "as_of": "2026 H1",
+ "tags": [
+  "食品",
+  "零售通路"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

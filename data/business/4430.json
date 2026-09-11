@@ -1,0 +1,31 @@
+{
+ "code": "4430",
+ "name": "耀億",
+ "conf_date": "2026-08-18",
+ "source": "pdf",
+ "built_at": "2026-09-11 19:04",
+ "segments": [
+  {
+   "name": "長纖事業群",
+   "pct": 55.0,
+   "note": "2026 H1 營收佔比"
+  },
+  {
+   "name": "短纖事業群",
+   "pct": 41.0,
+   "note": "2026 H1 營收佔比"
+  },
+  {
+   "name": "機能用品事業群",
+   "pct": 4.0,
+   "note": "2026 H1 營收佔比"
+  }
+ ],
+ "as_of": "2026 H1",
+ "tags": [
+  "紡織",
+  "自動化/機器人"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

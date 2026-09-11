@@ -1,0 +1,37 @@
+{
+ "code": "8284",
+ "name": "三竹",
+ "conf_date": "2026-08-25",
+ "source": "pdf",
+ "built_at": "2026-09-11 19:03",
+ "segments": [
+  {
+   "name": "簡訊發送",
+   "pct": 73.15,
+   "note": "受惠電商客戶與轉單效應"
+  },
+  {
+   "name": "金融看盤",
+   "pct": 24.94,
+   "note": "受惠股市熱絡及資訊加值服務增加"
+  },
+  {
+   "name": "APP開發",
+   "pct": 1.9,
+   "note": "政府、銀行、產壽險及各大型企業"
+  },
+  {
+   "name": "企業即時通",
+   "pct": 0.01,
+   "note": "CoLine企業內部即時通訊"
+  }
+ ],
+ "as_of": "2026 H1",
+ "tags": [
+  "資訊服務",
+  "軟體/SaaS",
+  "資安"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

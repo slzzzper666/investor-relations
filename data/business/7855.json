@@ -1,0 +1,14 @@
+{
+ "code": "7855",
+ "name": "和運租車",
+ "conf_date": "2026-07-16",
+ "source": "pdf",
+ "built_at": "2026-09-11 19:00",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "租賃"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash"
+}

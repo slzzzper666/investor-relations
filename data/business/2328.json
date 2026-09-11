@@ -1,0 +1,43 @@
+{
+ "code": "2328",
+ "name": "廣宇",
+ "conf_date": "2026-07-14",
+ "source": "pdf",
+ "built_at": "2026-09-11 19:10",
+ "segments": [
+  {
+   "name": "消費電子",
+   "pct": 55.0,
+   "note": ""
+  },
+  {
+   "name": "車用",
+   "pct": 16.0,
+   "note": ""
+  },
+  {
+   "name": "通訊",
+   "pct": 15.0,
+   "note": ""
+  },
+  {
+   "name": "工控",
+   "pct": 13.0,
+   "note": ""
+  },
+  {
+   "name": "AI+Robotics",
+   "pct": 1.0,
+   "note": ""
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "連接器",
+  "車用電子",
+  "自動化/機器人",
+  "AI伺服器"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.6-flash"
+}

@@ -1,0 +1,15 @@
+{
+ "code": "6136",
+ "name": "富爾特",
+ "conf_date": "2026-09-10",
+ "source": "pdf",
+ "built_at": "2026-09-11 19:02",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "資訊服務",
+  "其他"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash"
+}

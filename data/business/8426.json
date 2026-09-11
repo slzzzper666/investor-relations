@@ -1,0 +1,32 @@
+{
+ "code": "8426",
+ "name": "紅木-KY",
+ "conf_date": "2026-08-26",
+ "source": "pdf",
+ "built_at": "2026-09-11 19:03",
+ "segments": [
+  {
+   "name": "室內裝修",
+   "pct": 68.0,
+   "note": "2026H1業務占比"
+  },
+  {
+   "name": "一般工程",
+   "pct": 20.0,
+   "note": "2026H1業務占比"
+  },
+  {
+   "name": "門面裝修",
+   "pct": 12.0,
+   "note": "2026H1業務占比"
+  }
+ ],
+ "as_of": "2026 H1",
+ "tags": [
+  "建材",
+  "營建",
+  "其他"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

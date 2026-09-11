@@ -1,0 +1,35 @@
+{
+ "code": "1268",
+ "name": "漢來美食",
+ "conf_date": "2026-09-10",
+ "source": "pdf",
+ "built_at": "2026-09-11 19:03",
+ "segments": [
+  {
+   "name": "西式餐食",
+   "pct": 45.0,
+   "note": "2026H1營收占比"
+  },
+  {
+   "name": "中式餐食",
+   "pct": 32.0,
+   "note": "2026H1營收占比"
+  },
+  {
+   "name": "宴會",
+   "pct": 20.0,
+   "note": "2026H1營收占比"
+  },
+  {
+   "name": "其他",
+   "pct": 3.0,
+   "note": "包含日式餐食、飲品等"
+  }
+ ],
+ "as_of": "2026 H1",
+ "tags": [
+  "餐飲"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

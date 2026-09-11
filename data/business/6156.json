@@ -1,0 +1,31 @@
+{
+ "code": "6156",
+ "name": "松上",
+ "conf_date": "2026-08-05",
+ "source": "pdf",
+ "built_at": "2026-09-11 19:04",
+ "segments": [
+  {
+   "name": "印刷電路板",
+   "pct": 48.0,
+   "note": "2026年第二季"
+  },
+  {
+   "name": "磁性元件",
+   "pct": 29.0,
+   "note": "2026年第二季"
+  },
+  {
+   "name": "運動用品&其他",
+   "pct": 23.0,
+   "note": "2026年第二季"
+  }
+ ],
+ "as_of": "2026 Q2",
+ "tags": [
+  "PCB",
+  "被動元件"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

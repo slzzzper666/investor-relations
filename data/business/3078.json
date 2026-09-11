@@ -1,0 +1,30 @@
+{
+ "code": "3078",
+ "name": "僑威",
+ "conf_date": "2026-08-18",
+ "source": "pdf",
+ "built_at": "2026-09-11 19:04",
+ "segments": [
+  {
+   "name": "Desk PC電源",
+   "pct": 73.0,
+   "note": "Desk PC Power Supply"
+  },
+  {
+   "name": "其他類電源",
+   "pct": 26.0,
+   "note": "Other Power"
+  },
+  {
+   "name": "其他",
+   "pct": 1.0,
+   "note": "Others"
+  }
+ ],
+ "as_of": "2026",
+ "tags": [
+  "電源供應器"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

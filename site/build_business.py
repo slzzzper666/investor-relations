@@ -37,22 +37,25 @@ DATA_DIR = ROOT_DIR / "data"
 TRANSCRIPT_DIR = DATA_DIR / "transcripts"
 
 
-def _recent_companies(days: int) -> list[dict]:
-    """站上近 days 天的場次，依公司去重（留最新一場）、市值大→小。"""
+def _recent_companies(days: int) -> list[list[dict]]:
+    """站上近 days 天的場次，依公司分組（每組新→舊）、公司依市值大→小。
+
+    回傳每家公司的「全部」場次而非只留最新一場：MOPS 上較舊的簡報會被下架
+    （回 200 但 0 bytes），最新那場拿不到時要能退用前一場還在的。
+    """
     if not LIST_JSON.exists():
         raise SystemExit(f"找不到 {LIST_JSON}，請先跑 site/build_data.py")
     data = json.loads(LIST_JSON.read_text(encoding="utf-8"))
     cutoff = (datetime.now(TAIPEI).date() - timedelta(days=days)).isoformat()
 
-    best: dict[str, dict] = {}
+    groups: dict[str, list[dict]] = {}
     for it in data.get("items", []):
         code = it.get("code") or ""
         if not re.fullmatch(r"\d{4}", code) or it.get("date", "") < cutoff:
             continue
-        cur = best.get(code)
-        if cur is None or it["date"] > cur["date"]:
-            best[code] = it
-    return sorted(best.values(), key=lambda x: -(x.get("market_cap") or 0))
+        groups.setdefault(code, []).append(it)
+    out = [sorted(v, key=lambda x: x["date"], reverse=True) for v in groups.values()]
+    return sorted(out, key=lambda g: -(g[0].get("market_cap") or 0))
 
 
 def _download_pdf(url: str, code: str, date: str) -> Path | None:
@@ -78,7 +81,8 @@ def _download_pdf(url: str, code: str, date: str) -> Path | None:
             last = f"status={r.status_code}"
         except Exception as exc:  # noqa: BLE001
             last = str(exc)[:80]
-        time.sleep(3 * (attempt + 1))
+        # 限流時 MOPS 回 200 但內容是 HTML；短退避救不回來，拉長到 10/20/40 秒
+        time.sleep(10 * 2 ** attempt)
     log.warning("PDF 下載失敗 %s（%s）", code, last)
     return None
 
@@ -97,7 +101,8 @@ def main() -> None:
     log.info("站上近 %d 天共 %d 家公司", args.days, len(companies))
 
     done = skipped = failed = no_source = empty = 0
-    for it in companies:
+    for confs in companies:
+        it = confs[0]                    # 最新一場（存檔以它的日期為準）
         code, name, date = it["code"], it["company"], it["date"]
         out_file = BUSINESS_DIR / f"{code}.json"
         if out_file.exists() and not args.force:
@@ -118,12 +123,23 @@ def main() -> None:
             break
 
         tag = f"{code} {name}"
-        pdf_path = _download_pdf(it.get("pdf_url", ""), code, date)
+        # 新→舊逐場找還拿得到的簡報；MOPS 會下架舊簡報，最新一場常已不存在
+        pdf_path = None
+        for c in confs:
+            pdf_path = _download_pdf(c.get("pdf_url", ""), code, c["date"])
+            if pdf_path is not None:
+                if c is not it:
+                    log.info("%s：最新場簡報已下架，改用 %s 的", tag, c["date"])
+                    date = c["date"]
+                break
         transcript = ""
         if pdf_path is None:
-            t_file = TRANSCRIPT_DIR / f"{code}_{date}.txt"
-            if t_file.exists():
-                transcript = t_file.read_text(encoding="utf-8")
+            for c in confs:
+                t_file = TRANSCRIPT_DIR / f"{code}_{c['date']}.txt"
+                if t_file.exists():
+                    transcript = t_file.read_text(encoding="utf-8")
+                    date = c["date"]
+                    break
         if pdf_path is None and not transcript:
             log.info("%s：無簡報也無逐字稿，跳過", tag)
             no_source += 1

@@ -1,0 +1,52 @@
+{
+ "code": "3236",
+ "name": "千如",
+ "conf_date": "2026-09-10",
+ "source": "pdf",
+ "built_at": "2026-09-11 19:03",
+ "segments": [
+  {
+   "name": "SMD POWER INDUCTOR",
+   "pct": 57.1,
+   "note": "2026H1產線別營收比重"
+  },
+  {
+   "name": "SMD INDUCTOR/FILTER",
+   "pct": 29.2,
+   "note": "2026H1產線別營收比重"
+  },
+  {
+   "name": "SMD CHIP INDUCTOR",
+   "pct": 8.7,
+   "note": "2026H1產線別營收比重"
+  },
+  {
+   "name": "DIP INDUCTOR",
+   "pct": 3.3,
+   "note": "2026H1產線別營收比重"
+  },
+  {
+   "name": "OTHER",
+   "pct": 0.9,
+   "note": "2026H1產線別營收比重"
+  },
+  {
+   "name": "TRANSFORMER",
+   "pct": 0.8,
+   "note": "2026H1產線別營收比重"
+  },
+  {
+   "name": "LTCC",
+   "pct": 0.04,
+   "note": "2026H1產線別營收比重"
+  }
+ ],
+ "as_of": "2026 H1",
+ "tags": [
+  "被動元件",
+  "車用電子",
+  "網通設備"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

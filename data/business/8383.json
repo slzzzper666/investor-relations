@@ -1,0 +1,32 @@
+{
+ "code": "8383",
+ "name": "千附",
+ "conf_date": "2026-08-26",
+ "source": "pdf",
+ "built_at": "2026-09-11 19:03",
+ "segments": [
+  {
+   "name": "千附精密",
+   "pct": 49.0,
+   "note": "115H1營收占比"
+  },
+  {
+   "name": "廠工事業",
+   "pct": 48.0,
+   "note": "115H1營收占比"
+  },
+  {
+   "name": "機械事業",
+   "pct": 3.0,
+   "note": "115H1營收占比"
+  }
+ ],
+ "as_of": "",
+ "tags": [
+  "半導體設備",
+  "機械設備",
+  "環保工程"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

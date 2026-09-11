@@ -1,0 +1,31 @@
+{
+ "code": "7689",
+ "name": "大鵬科CLMX",
+ "conf_date": "2026-07-07",
+ "source": "pdf",
+ "built_at": "2026-09-11 18:59",
+ "segments": [
+  {
+   "name": "安防警報系統",
+   "pct": 73.61,
+   "note": ""
+  },
+  {
+   "name": "長照警報系統",
+   "pct": 25.23,
+   "note": ""
+  },
+  {
+   "name": "其他",
+   "pct": 1.16,
+   "note": ""
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "網通設備",
+  "醫療器材"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.8-flash"
+}
