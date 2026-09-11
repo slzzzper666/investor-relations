@@ -4,6 +4,7 @@
   https://mopsov.twse.com.tw/mops/web/ajax_t100sb02_1
 涵蓋上市(sii)與上櫃(otc)，依日期過濾出目標日的法說會。
 """
+import re
 from dataclasses import dataclass, field
 from datetime import date, timedelta
 from pathlib import Path
@@ -50,12 +51,21 @@ def _roc(d: date) -> tuple[str, str]:
     return str(d.year - 1911), f"{d.month:02d}"
 
 
+_ROC_DATE_RE = re.compile(r"(\d{2,3})/(\d{1,2})/(\d{1,2})")
+
+
 def _parse_date(roc_str: str) -> date | None:
-    """'115/06/05' → date(2026, 6, 5)"""
+    """'115/06/05' → date(2026, 6, 5)；多日公告「115/07/07 至 115/07/08」取起始日。
+
+    大公司的海外路演常登記成日期區間，原本用 split("/") 解析會整列略過，
+    等於每日管線永遠看不到鴻海、台達電、光寶科這類場次（2026-09 查明）。
+    """
+    m = _ROC_DATE_RE.search(roc_str or "")
+    if not m:
+        return None
     try:
-        y, m, d = roc_str.strip().split("/")
-        return date(int(y) + 1911, int(m), int(d))
-    except (ValueError, AttributeError):
+        return date(int(m.group(1)) + 1911, int(m.group(2)), int(m.group(3)))
+    except ValueError:
         return None
 
 

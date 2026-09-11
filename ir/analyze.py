@@ -129,38 +129,51 @@ def _analyze_gemini(company: str, code: str, conf_date: str, source_desc: str,
     return parsed.model_dump()
 
 
+# Groq 備援模型鏈（品質由高到低）。2026-09 llama-3.3-70b-versatile 已下架（回 404），
+# 換成仍在線的模型；404 就換下一個，全部不存在才放棄。
+GROQ_MODELS = ["openai/gpt-oss-120b", "qwen/qwen3.8-27b", "openai/gpt-oss-20b"]
+_groq_gone: set[str] = set()
+
+
 def _analyze_groq(prompt: str) -> dict:
     import json
     import time as _t
 
     import requests
 
-    for attempt in range(4):
-        r = requests.post(
-            "https://api.groq.com/openai/v1/chat/completions",
-            headers={"Authorization": f"Bearer {config.GROQ_API_KEY}"},
-            json={
-                "model": "llama-3.3-70b-versatile",
-                "messages": [
-                    {"role": "system", "content": _SYSTEM + " 只輸出合法 JSON。"},
-                    {"role": "user", "content": prompt},
-                ],
-                "temperature": 0.3,
-                "response_format": {"type": "json_object"},
-            },
-            timeout=300,
-        )
-        if r.status_code == 429:
-            ra = float(r.headers.get("retry-after", 30))
-            if ra > 120:  # retry-after 很大＝當日額度耗盡，別等，直接放棄
-                raise _GroqRateLimited(f"Groq 當日額度耗盡（retry-after {ra:.0f}s）")
-            wait = min(ra, 90) + 1
-            log.warning("Groq 限流，%ss 後重試（第 %d 次）", wait, attempt + 1)
-            _t.sleep(wait)
+    for model in GROQ_MODELS:
+        if model in _groq_gone:
             continue
-        r.raise_for_status()
-        result = json.loads(r.json()["choices"][0]["message"]["content"])
-        parsed = AnalysisResult.model_validate(result)
-        log.info("AI 分析完成（Groq llama 備援）")
-        return parsed.model_dump()
-    raise _GroqRateLimited("Groq llama 連續限流")
+        for attempt in range(4):
+            r = requests.post(
+                "https://api.groq.com/openai/v1/chat/completions",
+                headers={"Authorization": f"Bearer {config.GROQ_API_KEY}"},
+                json={
+                    "model": model,
+                    "messages": [
+                        {"role": "system", "content": _SYSTEM + " 只輸出合法 JSON。"},
+                        {"role": "user", "content": prompt},
+                    ],
+                    "temperature": 0.3,
+                    "response_format": {"type": "json_object"},
+                },
+                timeout=300,
+            )
+            if r.status_code == 404:
+                _groq_gone.add(model)
+                log.warning("Groq 模型 %s 已不存在（404），換下一個", model)
+                break
+            if r.status_code == 429:
+                ra = float(r.headers.get("retry-after", 30))
+                if ra > 120:  # retry-after 很大＝當日額度耗盡，別等，直接放棄
+                    raise _GroqRateLimited(f"Groq 當日額度耗盡（retry-after {ra:.0f}s）")
+                wait = min(ra, 90) + 1
+                log.warning("Groq %s 限流，%ss 後重試（第 %d 次）", model, wait, attempt + 1)
+                _t.sleep(wait)
+                continue
+            r.raise_for_status()
+            result = json.loads(r.json()["choices"][0]["message"]["content"])
+            parsed = AnalysisResult.model_validate(result)
+            log.info("AI 分析完成（Groq %s 備援）", model)
+            return parsed.model_dump()
+    raise _GroqRateLimited("Groq 所有模型皆不可用或連續限流")

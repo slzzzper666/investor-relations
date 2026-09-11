@@ -41,14 +41,18 @@ def _mark_processed(key: str, processed: set[str]) -> None:
                                          indent=1), encoding="utf-8")
 
 
-def process_one(conf: Conference, push: bool = True) -> bool:
-    """處理單一場法說會，成功回傳 True。"""
+def process_one(conf: Conference, push: bool = True, audio: bool = True) -> bool:
+    """處理單一場法說會，成功回傳 True。
+
+    audio=False 時跳過影音與 STT、直接用簡報分析（大量回補時先求有資料，
+    逐字稿由另一個慢速流程補）。
+    """
     tag = f"{conf.stock_code} {conf.company_name}"
     transcript = ""
     video_url = ""
 
     # 影音 → 逐字稿（找不到影音就退用 PDF）
-    audio_path, video_url = get_audio(conf, config.AUDIO_DIR)
+    audio_path, video_url = get_audio(conf, config.AUDIO_DIR) if audio else (None, "")
     if audio_path:
         t_file = config.TRANSCRIPT_DIR / f"{conf.stock_code}_{conf.date.isoformat()}.txt"
         if t_file.exists():
@@ -89,7 +93,7 @@ def process_one(conf: Conference, push: bool = True) -> bool:
     return True
 
 
-def run(target: date, limit: int = 0, push: bool = True) -> None:
+def run(target: date, limit: int = 0, push: bool = True, audio: bool = True) -> None:
     log.info("===== 法說會整理開始：%s =====", target.isoformat())
     confs = get_conferences(target)
     if limit:
@@ -107,7 +111,7 @@ def run(target: date, limit: int = 0, push: bool = True) -> None:
             skip += 1
             continue
         try:
-            process_one(conf, push=push)
+            process_one(conf, push=push, audio=audio)
             _mark_processed(key, processed)
             ok += 1
         except Exception:
@@ -123,10 +127,12 @@ if __name__ == "__main__":
     parser.add_argument("--date", help="目標日期 YYYY-MM-DD（預設＝台北時間的昨天）")
     parser.add_argument("--limit", type=int, default=0, help="只處理前 N 家（測試用）")
     parser.add_argument("--no-push", action="store_true", help="不推播 TG/DC")
+    parser.add_argument("--pdf-only", action="store_true",
+                        help="跳過影音與 STT，直接用簡報分析（回補用）")
     args = parser.parse_args()
 
     if args.date:
         target = date.fromisoformat(args.date)
     else:
         target = (datetime.now(TAIPEI) - timedelta(days=1)).date()
-    run(target, limit=args.limit, push=not args.no_push)
+    run(target, limit=args.limit, push=not args.no_push, audio=not args.pdf_only)

@@ -26,12 +26,21 @@ _YT_RE = re.compile(r"(youtube\.com/watch|youtu\.be/|youtube\.com/live)")
 _MEDIA_RE = re.compile(r"\.(mp4|mp3|m4a|wav|mov|avi|wmv)$", re.IGNORECASE)
 
 
+def _force_https(url: str) -> str:
+    """irconference 自 2026 年中起把 http 強制 301 轉 https，但 MOPS 登載的仍是
+    http 連結。ffmpeg 讀到這個轉址會卡住直到逾時（實測 http 卡死 60 秒以上、
+    https 19 秒完成），所以交給 ffmpeg 前一律改成 https。"""
+    if url.lower().startswith("http://irconference.twse.com.tw"):
+        return "https://" + url[len("http://"):]
+    return url
+
+
 def _pick_source(conf: Conference) -> tuple[str, str] | None:
     """回傳 (kind, url)，kind ∈ {direct, youtube}；找不到回傳 None。"""
     media = [u for u in conf.video_urls if _MEDIA_RE.search(u)]
     if media:
         ch = [u for u in media if "_ch" in u.lower()]
-        return ("direct", (ch or media)[0])
+        return ("direct", _force_https((ch or media)[0]))
     yts = [u for u in conf.video_urls if _YT_RE.search(u)]
     if yts:
         return ("youtube", yts[0])
