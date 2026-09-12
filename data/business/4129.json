@@ -3,12 +3,28 @@
  "name": "聯合",
  "conf_date": "2026-05-20",
  "source": "pdf",
- "built_at": "2026-09-11 03:28",
- "segments": [],
- "as_of": "2026 Q1",
+ "built_at": "2026-09-13 03:49",
+ "segments": [
+  {
+   "name": "亞太(APAC)",
+   "pct": null,
+   "note": "依據2026年4月營收結構"
+  },
+  {
+   "name": "歐洲中東非(EMEA)",
+   "pct": null,
+   "note": "依據2026年4月營收結構"
+  },
+  {
+   "name": "美洲(AMERICA)",
+   "pct": null,
+   "note": "依據2026年4月營收結構"
+  }
+ ],
+ "as_of": "2026",
  "tags": [
   "醫療器材"
  ],
- "confidence": "none",
- "model": "gemini-3.5-flash-lite"
+ "confidence": "medium",
+ "model": "gemini-3.1-flash-lite"
 }

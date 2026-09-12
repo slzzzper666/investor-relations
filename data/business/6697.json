@@ -1,0 +1,17 @@
+{
+ "code": "6697",
+ "name": "東捷資訊",
+ "conf_date": "2026-06-23",
+ "source": "pdf",
+ "built_at": "2026-09-13 03:41",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "資訊服務",
+  "軟體/SaaS",
+  "雲端服務",
+  "資安"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.1-flash-lite"
+}

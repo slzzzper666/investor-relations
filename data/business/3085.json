@@ -3,14 +3,15 @@
  "name": "新零售",
  "conf_date": "2026-08-24",
  "source": "pdf",
- "built_at": "2026-09-11 00:22",
+ "built_at": "2026-09-13 03:41",
  "segments": [],
  "as_of": "",
  "tags": [
-  "資訊服務",
-  "軟體/SaaS",
   "電商",
-  "零售通路"
+  "軟體/SaaS",
+  "貨運物流",
+  "資產管理"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.1-flash-lite"
 }

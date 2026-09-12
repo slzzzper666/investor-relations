@@ -3,12 +3,14 @@
  "name": "唐榮公司",
  "conf_date": "2026-05-12",
  "source": "pdf",
- "built_at": "2026-09-11 03:33",
+ "built_at": "2026-09-13 03:49",
  "segments": [],
  "as_of": "",
  "tags": [
-  "鋼鐵"
+  "鋼鐵",
+  "太陽能",
+  "環保工程"
  ],
  "confidence": "none",
- "model": "gemini-3.5-flash-lite"
+ "model": "gemini-3.1-flash-lite"
 }

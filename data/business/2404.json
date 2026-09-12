@@ -3,7 +3,7 @@
  "name": "漢唐",
  "conf_date": "2026-06-11",
  "source": "pdf",
- "built_at": "2026-09-11 01:14",
+ "built_at": "2026-09-13 03:09",
  "segments": [],
  "as_of": "",
  "tags": [
@@ -12,5 +12,5 @@
   "水處理"
  ],
  "confidence": "none",
- "model": "gemini-3.1-flash-lite"
+ "model": "gemini-3.6-flash"
 }

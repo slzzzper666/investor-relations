@@ -3,13 +3,13 @@
  "name": "潤德",
  "conf_date": "2026-08-20",
  "source": "pdf",
- "built_at": "2026-09-11 00:27",
+ "built_at": "2026-09-13 03:42",
  "segments": [],
  "as_of": "",
  "tags": [
   "建材",
-  "營建",
-  "環保工程"
+  "營建"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
 }

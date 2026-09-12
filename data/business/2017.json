@@ -1,0 +1,26 @@
+{
+ "code": "2017",
+ "name": "官田鋼",
+ "conf_date": "2026-06-05",
+ "source": "pdf",
+ "built_at": "2026-09-13 03:34",
+ "segments": [
+  {
+   "name": "鋼鐵原料工業",
+   "pct": 80.0,
+   "note": "115Q1營收來源"
+  },
+  {
+   "name": "休閒旅遊業",
+   "pct": 20.0,
+   "note": "115Q1營收來源"
+  }
+ ],
+ "as_of": "",
+ "tags": [
+  "鋼鐵",
+  "儲能"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

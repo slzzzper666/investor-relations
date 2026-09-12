@@ -3,11 +3,13 @@
  "name": "東哥遊艇",
  "conf_date": "2026-08-20",
  "source": "pdf",
- "built_at": "2026-09-10 22:41",
+ "built_at": "2026-09-13 03:28",
  "segments": [],
- "as_of": "2026 H1",
+ "as_of": "",
  "tags": [
-  "其他"
+  "航運",
+  "消費品牌"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
 }

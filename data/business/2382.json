@@ -1,9 +1,9 @@
 {
  "code": "2382",
  "name": "廣達",
- "conf_date": "2026-08-13",
+ "conf_date": "2026-09-09",
  "source": "pdf",
- "built_at": "2026-09-10 21:18",
+ "built_at": "2026-09-13 03:06",
  "segments": [],
  "as_of": "",
  "tags": [
@@ -11,5 +11,6 @@
   "伺服器",
   "AI伺服器"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.8-flash"
 }

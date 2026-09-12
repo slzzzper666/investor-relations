@@ -3,12 +3,40 @@
  "name": "東生華",
  "conf_date": "2026-08-27",
  "source": "pdf",
- "built_at": "2026-09-11 00:05",
- "segments": [],
- "as_of": "",
+ "built_at": "2026-09-13 03:40",
+ "segments": [
+  {
+   "name": "藥品",
+   "pct": null,
+   "note": "核心業務"
+  },
+  {
+   "name": "保健食品",
+   "pct": null,
+   "note": "核心業務"
+  },
+  {
+   "name": "檢測",
+   "pct": null,
+   "note": "核心業務"
+  },
+  {
+   "name": "疫苗",
+   "pct": null,
+   "note": "業務衰退"
+  },
+  {
+   "name": "勞務收入",
+   "pct": null,
+   "note": ""
+  }
+ ],
+ "as_of": "2026 H1",
  "tags": [
   "新藥研發",
+  "健康檢測",
   "美妝保健"
  ],
- "confidence": "none"
+ "confidence": "medium",
+ "model": "gemini-3.1-flash-lite"
 }

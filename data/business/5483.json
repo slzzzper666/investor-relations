@@ -3,14 +3,14 @@
  "name": "中美晶",
  "conf_date": "2026-08-07",
  "source": "pdf",
- "built_at": "2026-09-11 00:54",
+ "built_at": "2026-09-13 03:43",
  "segments": [],
  "as_of": "",
  "tags": [
   "半導體材料",
-  "化合物半導體",
-  "功率半導體",
-  "太陽能"
+  "太陽能",
+  "車用電子"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
 }

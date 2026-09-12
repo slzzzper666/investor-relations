@@ -3,11 +3,12 @@
  "name": "統一證",
  "conf_date": "2026-08-26",
  "source": "pdf",
- "built_at": "2026-09-10 21:43",
+ "built_at": "2026-09-13 03:12",
  "segments": [],
  "as_of": "",
  "tags": [
   "證券"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.5-flash"
 }

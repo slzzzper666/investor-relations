@@ -3,14 +3,15 @@
  "name": "國泰金",
  "conf_date": "2026-09-01",
  "source": "pdf",
- "built_at": "2026-09-10 21:18",
+ "built_at": "2026-09-13 03:06",
  "segments": [],
  "as_of": "",
  "tags": [
   "金控",
-  "銀行",
   "保險",
+  "銀行",
   "證券"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.8-flash"
 }

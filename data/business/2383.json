@@ -3,14 +3,29 @@
  "name": "台光電",
  "conf_date": "2026-09-04",
  "source": "pdf",
- "built_at": "2026-09-10 20:03",
- "segments": [],
- "as_of": "",
+ "built_at": "2026-09-13 03:05",
+ "segments": [
+  {
+   "name": "基礎設施",
+   "pct": null,
+   "note": "2Q26營收年增141%、季增46%"
+  },
+  {
+   "name": "行動裝置",
+   "pct": null,
+   "note": "2Q26營收年增42%、季增26%"
+  },
+  {
+   "name": "汽車/工業/其他",
+   "pct": null,
+   "note": "2Q26營收年增58%、季增46%"
+  }
+ ],
+ "as_of": "2026 Q2",
  "tags": [
   "銅箔基板",
-  "PCB",
-  "半導體材料",
-  "車用電子"
+  "PCB"
  ],
- "confidence": "none"
+ "confidence": "medium",
+ "model": "gemini-3.6-flash"
 }

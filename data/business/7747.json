@@ -3,13 +3,26 @@
  "name": "昕奇雲端",
  "conf_date": "2026-04-24",
  "source": "pdf",
- "built_at": "2026-09-11 03:36",
- "segments": [],
- "as_of": "",
+ "built_at": "2026-09-13 03:50",
+ "segments": [
+  {
+   "name": "雲端服務",
+   "pct": null,
+   "note": "簡報中僅提及雲端服務營收金額，未提供佔比百分比"
+  },
+  {
+   "name": "網通資安服務",
+   "pct": null,
+   "note": "簡報中未提供網通資安事業之營收佔比"
+  }
+ ],
+ "as_of": "2026 Q1",
  "tags": [
   "資訊服務",
-  "雲端服務"
+  "軟體/SaaS",
+  "雲端服務",
+  "資安"
  ],
- "confidence": "none",
- "model": "gemini-3.5-flash-lite"
+ "confidence": "medium",
+ "model": "gemini-3.1-flash-lite"
 }

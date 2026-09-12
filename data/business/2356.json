@@ -3,13 +3,14 @@
  "name": "英業達",
  "conf_date": "2026-09-01",
  "source": "pdf",
- "built_at": "2026-09-10 21:32",
+ "built_at": "2026-09-13 03:09",
  "segments": [],
  "as_of": "",
  "tags": [
+  "筆電/PC",
   "伺服器",
-  "AI伺服器",
-  "筆電/PC"
+  "AI伺服器"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.7-flash"
 }

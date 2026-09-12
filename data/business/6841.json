@@ -1,15 +1,16 @@
 {
  "code": "6841",
  "name": "長佳智能",
- "conf_date": "2026-03-23",
+ "conf_date": "2026-08-25",
  "source": "pdf",
- "built_at": "2026-09-11 03:47",
+ "built_at": "2026-09-13 03:41",
  "segments": [],
  "as_of": "",
  "tags": [
+  "軟體/SaaS",
   "醫療器材",
   "健康檢測",
-  "軟體/SaaS"
+  "美妝保健"
  ],
  "confidence": "none",
  "model": "gemini-3.5-flash-lite"

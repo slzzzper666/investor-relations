@@ -1,15 +1,38 @@
 {
  "code": "6570",
  "name": "維田",
- "conf_date": "2026-09-01",
+ "conf_date": "2026-09-04",
  "source": "pdf",
- "built_at": "2026-09-10 23:51",
- "segments": [],
- "as_of": "",
+ "built_at": "2026-09-13 03:39",
+ "segments": [
+  {
+   "name": "工業電腦及人機介面",
+   "pct": 67.0,
+   "note": "2026 H1 產品線占比"
+  },
+  {
+   "name": "工業主機",
+   "pct": 14.0,
+   "note": "2026 H1 產品線占比"
+  },
+  {
+   "name": "工業顯示器",
+   "pct": 10.0,
+   "note": "2026 H1 產品線占比"
+  },
+  {
+   "name": "其他",
+   "pct": 9.0,
+   "note": "2026 H1 產品線占比"
+  }
+ ],
+ "as_of": "2026 H1",
  "tags": [
   "工業電腦",
   "自動化/機器人",
-  "半導體設備"
+  "車用電子",
+  "醫療器材"
  ],
- "confidence": "none"
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
 }

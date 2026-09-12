@@ -3,12 +3,13 @@
  "name": "華固",
  "conf_date": "2026-09-04",
  "source": "pdf",
- "built_at": "2026-09-10 20:29",
+ "built_at": "2026-09-13 03:24",
  "segments": [],
  "as_of": "",
  "tags": [
   "營建",
   "資產開發"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.1-flash-lite"
 }

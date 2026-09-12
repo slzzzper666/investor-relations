@@ -3,11 +3,12 @@
  "name": "新興",
  "conf_date": "2026-08-21",
  "source": "pdf",
- "built_at": "2026-09-10 22:21",
+ "built_at": "2026-09-13 03:26",
  "segments": [],
  "as_of": "2026 H1",
  "tags": [
   "航運"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
 }

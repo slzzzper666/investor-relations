@@ -3,13 +3,14 @@
  "name": "華義*",
  "conf_date": "2026-08-20",
  "source": "pdf",
- "built_at": "2026-09-11 00:29",
+ "built_at": "2026-09-13 03:42",
  "segments": [],
  "as_of": "",
  "tags": [
   "遊戲",
   "電商",
-  "資訊服務"
+  "社群媒體/廣告"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
 }

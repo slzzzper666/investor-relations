@@ -3,14 +3,26 @@
  "name": "寶綠特-KY",
  "conf_date": "2026-03-09",
  "source": "pdf",
- "built_at": "2026-09-11 02:57",
- "segments": [],
- "as_of": "",
+ "built_at": "2026-09-13 03:36",
+ "segments": [
+  {
+   "name": "聚酯纖維",
+   "pct": 74.0,
+   "note": "化纖產品事業營收佔比"
+  },
+  {
+   "name": "其他",
+   "pct": 26.0,
+   "note": "包含歐洲、南美洲及其他地區銷售"
+  }
+ ],
+ "as_of": "2025",
  "tags": [
   "環保工程",
+  "機械設備",
   "紡織",
   "化工"
  ],
- "confidence": "none",
- "model": "gemini-3.5-flash-lite"
+ "confidence": "high",
+ "model": "gemini-3.1-flash-lite"
 }

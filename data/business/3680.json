@@ -3,13 +3,24 @@
  "name": "家登",
  "conf_date": "2026-09-01",
  "source": "pdf",
- "built_at": "2026-09-10 23:55",
- "segments": [],
- "as_of": "",
+ "built_at": "2026-09-13 03:40",
+ "segments": [
+  {
+   "name": "半導體事業",
+   "pct": null,
+   "note": "主力產品含光罩與晶圓傳載解決方案"
+  },
+  {
+   "name": "航太事業",
+   "pct": null,
+   "note": "主力產品含動力液壓阻尼油缸等"
+  }
+ ],
+ "as_of": "2026 Q2",
  "tags": [
   "半導體設備",
-  "半導體材料",
-  "航空"
+  "航太國防"
  ],
- "confidence": "none"
+ "confidence": "medium",
+ "model": "gemini-3.5-flash-lite"
 }

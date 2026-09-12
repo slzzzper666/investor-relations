@@ -3,14 +3,14 @@
  "name": "緯創",
  "conf_date": "2026-08-04",
  "source": "pdf",
- "built_at": "2026-09-10 21:26",
+ "built_at": "2026-09-13 03:08",
  "segments": [],
  "as_of": "",
  "tags": [
   "AI伺服器",
   "伺服器",
-  "筆電/PC",
-  "網通設備"
+  "筆電/PC"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.6-flash"
 }

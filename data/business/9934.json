@@ -3,13 +3,30 @@
  "name": "成霖",
  "conf_date": "2026-08-13",
  "source": "pdf",
- "built_at": "2026-09-10 23:20",
- "segments": [],
+ "built_at": "2026-09-13 03:33",
+ "segments": [
+  {
+   "name": "品牌",
+   "pct": null,
+   "note": "廚衛產品"
+  },
+  {
+   "name": "OEM/ODM",
+   "pct": null,
+   "note": "廚衛產品"
+  },
+  {
+   "name": "PJH",
+   "pct": null,
+   "note": "物流配送"
+  }
+ ],
  "as_of": "2026 H1",
  "tags": [
-  "手工具",
+  "消費品牌",
   "建材",
   "貨運物流"
  ],
- "confidence": "none"
+ "confidence": "medium",
+ "model": "gemini-3.5-flash-lite"
 }

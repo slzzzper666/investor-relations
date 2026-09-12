@@ -3,11 +3,12 @@
  "name": "康霈*",
  "conf_date": "2026-08-31",
  "source": "pdf",
- "built_at": "2026-09-10 21:38",
+ "built_at": "2026-09-13 03:11",
  "segments": [],
  "as_of": "",
  "tags": [
   "新藥研發"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.5-flash"
 }

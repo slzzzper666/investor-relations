@@ -3,13 +3,13 @@
  "name": "堤維西",
  "conf_date": "2026-03-19",
  "source": "pdf",
- "built_at": "2026-09-11 02:35",
+ "built_at": "2026-09-13 03:31",
  "segments": [],
  "as_of": "",
  "tags": [
   "汽車零組件",
-  "電動車",
-  "車用電子"
+  "車用電子",
+  "電動車"
  ],
  "confidence": "none",
  "model": "gemini-3.5-flash-lite"

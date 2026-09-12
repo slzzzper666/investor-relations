@@ -3,15 +3,14 @@
  "name": "技嘉",
  "conf_date": "2026-05-15",
  "source": "pdf",
- "built_at": "2026-09-11 01:11",
+ "built_at": "2026-09-13 03:09",
  "segments": [],
  "as_of": "",
  "tags": [
-  "伺服器",
   "AI伺服器",
-  "筆電/PC",
-  "散熱"
+  "伺服器",
+  "筆電/PC"
  ],
  "confidence": "none",
- "model": "gemini-2.5-flash"
+ "model": "gemini-3.7-flash"
 }

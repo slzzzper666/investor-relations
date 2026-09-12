@@ -1,0 +1,15 @@
+{
+ "code": "3014",
+ "name": "聯陽",
+ "conf_date": "2026-05-18",
+ "source": "pdf",
+ "built_at": "2026-09-13 03:26",
+ "segments": [],
+ "as_of": "",
+ "tags": [
+  "IC設計",
+  "筆電/PC"
+ ],
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
+}

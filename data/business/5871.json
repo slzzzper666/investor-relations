@@ -1,14 +1,41 @@
 {
  "code": "5871",
  "name": "中租-KY",
- "conf_date": "2026-08-25",
+ "conf_date": "2026-09-08",
  "source": "pdf",
- "built_at": "2026-09-10 21:33",
- "segments": [],
- "as_of": "",
+ "built_at": "2026-09-13 03:10",
+ "segments": [
+  {
+   "name": "利息收入",
+   "pct": 76.05,
+   "note": ""
+  },
+  {
+   "name": "銷貨收入",
+   "pct": 10.31,
+   "note": ""
+  },
+  {
+   "name": "租賃收入",
+   "pct": 7.37,
+   "note": ""
+  },
+  {
+   "name": "手續費及佣金收入",
+   "pct": 5.18,
+   "note": ""
+  },
+  {
+   "name": "其他營業收入",
+   "pct": 1.09,
+   "note": ""
+  }
+ ],
+ "as_of": "2026 Q2",
  "tags": [
   "租賃",
   "太陽能"
  ],
- "confidence": "none"
+ "confidence": "high",
+ "model": "gemini-3.6-flash"
 }

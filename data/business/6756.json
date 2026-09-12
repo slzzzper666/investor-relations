@@ -3,12 +3,11 @@
  "name": "威鋒電子",
  "conf_date": "2026-05-06",
  "source": "pdf",
- "built_at": "2026-09-11 02:39",
+ "built_at": "2026-09-13 03:32",
  "segments": [],
  "as_of": "",
  "tags": [
-  "IC設計",
-  "筆電/PC"
+  "IC設計"
  ],
  "confidence": "none",
  "model": "gemini-3.5-flash-lite"

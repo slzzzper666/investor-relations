@@ -3,13 +3,15 @@
  "name": "昶昕",
  "conf_date": "2026-08-28",
  "source": "pdf",
- "built_at": "2026-09-10 23:18",
+ "built_at": "2026-09-13 03:33",
  "segments": [],
- "as_of": "",
+ "as_of": "2026 Q2",
  "tags": [
   "PCB",
+  "半導體材料",
   "化工",
   "環保工程"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
 }

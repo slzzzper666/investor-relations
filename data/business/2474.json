@@ -3,13 +3,15 @@
  "name": "可成",
  "conf_date": "2026-08-26",
  "source": "pdf",
- "built_at": "2026-09-10 21:40",
+ "built_at": "2026-09-13 03:11",
  "segments": [],
  "as_of": "",
  "tags": [
-  "筆電/PC",
   "機殼結構件",
+  "筆電/PC",
+  "AI伺服器",
   "醫療器材"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.5-flash"
 }

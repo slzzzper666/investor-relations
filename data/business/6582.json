@@ -3,11 +3,13 @@
  "name": "申豐",
  "conf_date": "2026-06-24",
  "source": "pdf",
- "built_at": "2026-09-11 02:52",
+ "built_at": "2026-09-13 03:35",
  "segments": [],
  "as_of": "",
  "tags": [
-  "化工"
+  "化工",
+  "橡膠輪胎",
+  "造紙"
  ],
  "confidence": "none",
  "model": "gemini-3.5-flash-lite"

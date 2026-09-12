@@ -3,13 +3,14 @@
  "name": "泓德能源",
  "conf_date": "2026-05-13",
  "source": "pdf",
- "built_at": "2026-09-11 02:31",
+ "built_at": "2026-09-13 03:31",
  "segments": [],
  "as_of": "",
  "tags": [
   "太陽能",
   "儲能",
-  "電力設備"
+  "電力設備",
+  "資產管理"
  ],
  "confidence": "none",
  "model": "gemini-3.5-flash-lite"

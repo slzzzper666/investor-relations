@@ -3,13 +3,14 @@
  "name": "大同",
  "conf_date": "2026-08-18",
  "source": "pdf",
- "built_at": "2026-09-10 21:47",
+ "built_at": "2026-09-13 03:23",
  "segments": [],
  "as_of": "",
  "tags": [
   "電力設備",
   "資產開發",
-  "營建"
+  "儲能"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
 }

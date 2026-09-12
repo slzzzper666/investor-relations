@@ -3,12 +3,14 @@
  "name": "宏遠",
  "conf_date": "2026-06-23",
  "source": "pdf",
- "built_at": "2026-09-11 02:47",
+ "built_at": "2026-09-13 03:33",
  "segments": [],
  "as_of": "",
  "tags": [
-  "紡織"
+  "紡織",
+  "航太國防",
+  "運動用品"
  ],
  "confidence": "none",
- "model": "gemini-3.5-flash-lite"
+ "model": "gemini-3.1-flash-lite"
 }

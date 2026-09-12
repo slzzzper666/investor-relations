@@ -3,11 +3,12 @@
  "name": "燦坤",
  "conf_date": "2026-08-21",
  "source": "pdf",
- "built_at": "2026-09-10 23:39",
+ "built_at": "2026-09-13 03:37",
  "segments": [],
- "as_of": "2026 H1",
+ "as_of": "",
  "tags": [
   "零售通路"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.1-flash-lite"
 }

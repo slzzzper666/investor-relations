@@ -3,7 +3,7 @@
  "name": "全新",
  "conf_date": "2026-09-04",
  "source": "pdf",
- "built_at": "2026-09-10 20:22",
+ "built_at": "2026-09-13 03:12",
  "segments": [],
  "as_of": "",
  "tags": [
@@ -11,5 +11,6 @@
   "半導體材料",
   "光通訊"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.5-flash"
 }

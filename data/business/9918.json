@@ -3,11 +3,13 @@
  "name": "欣天然",
  "conf_date": "2026-08-28",
  "source": "pdf",
- "built_at": "2026-09-10 22:56",
+ "built_at": "2026-09-13 03:31",
  "segments": [],
- "as_of": "",
+ "as_of": "2026",
  "tags": [
-  "其他"
+  "公用事業",
+  "油氣"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
 }

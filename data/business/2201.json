@@ -3,14 +3,15 @@
  "name": "裕隆",
  "conf_date": "2026-08-26",
  "source": "pdf",
- "built_at": "2026-09-10 22:03",
+ "built_at": "2026-09-13 03:24",
  "segments": [],
- "as_of": "2026 Q2",
+ "as_of": "",
  "tags": [
-  "電動車",
-  "車用電子",
   "汽車零組件",
-  "資產開發"
+  "電動車",
+  "資產開發",
+  "儲能"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.1-flash-lite"
 }

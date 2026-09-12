@@ -1,15 +1,15 @@
 {
  "code": "2762",
  "name": "世界健身-KY",
- "conf_date": "2026-06-11",
+ "conf_date": "2026-09-10",
  "source": "pdf",
- "built_at": "2026-09-11 02:33",
+ "built_at": "2026-09-13 03:31",
  "segments": [],
- "as_of": "",
+ "as_of": "2026 H1",
  "tags": [
-  "觀光旅館",
-  "餐飲",
-  "零售通路"
+  "連鎖餐飲",
+  "消費品牌",
+  "運動用品"
  ],
  "confidence": "none",
  "model": "gemini-3.5-flash-lite"

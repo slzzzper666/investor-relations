@@ -3,13 +3,25 @@
  "name": "倚天酷碁-創",
  "conf_date": "2026-06-24",
  "source": "pdf",
- "built_at": "2026-09-11 03:02",
- "segments": [],
+ "built_at": "2026-09-13 03:37",
+ "segments": [
+  {
+   "name": "電腦周邊產品線",
+   "pct": null,
+   "note": "聚焦高需求PC周邊與高階連接"
+  },
+  {
+   "name": "智慧生活周邊產品線",
+   "pct": null,
+   "note": "涵蓋居家安全、生活風格與移動場景"
+  }
+ ],
  "as_of": "",
  "tags": [
   "筆電/PC",
-  "電商"
+  "電商",
+  "消費品牌"
  ],
- "confidence": "none",
- "model": "gemini-3.5-flash-lite"
+ "confidence": "low",
+ "model": "gemini-3.1-flash-lite"
 }

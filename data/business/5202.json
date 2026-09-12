@@ -3,7 +3,7 @@
  "name": "力新",
  "conf_date": "2026-08-24",
  "source": "pdf",
- "built_at": "2026-09-11 00:22",
+ "built_at": "2026-09-13 03:41",
  "segments": [],
  "as_of": "",
  "tags": [
@@ -11,5 +11,6 @@
   "軟體/SaaS",
   "資安"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.1-flash-lite"
 }

@@ -3,12 +3,34 @@
  "name": "達明",
  "conf_date": "2026-09-08",
  "source": "pdf",
- "built_at": "2026-09-10 20:30",
- "segments": [],
- "as_of": "",
+ "built_at": "2026-09-13 03:24",
+ "segments": [
+  {
+   "name": "DA+MB",
+   "pct": 37.5,
+   "note": "Direct Customers + Machine Builders"
+  },
+  {
+   "name": "Channel",
+   "pct": 32.2,
+   "note": "Distributors + System Integrators"
+  },
+  {
+   "name": "Omron",
+   "pct": 18.3,
+   "note": ""
+  },
+  {
+   "name": "Quanta",
+   "pct": 11.6,
+   "note": ""
+  }
+ ],
+ "as_of": "2026 H1",
  "tags": [
   "自動化/機器人",
-  "機械設備"
+  "AI伺服器"
  ],
- "confidence": "none"
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
 }

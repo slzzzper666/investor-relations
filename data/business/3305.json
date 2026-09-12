@@ -3,12 +3,14 @@
  "name": "昇貿",
  "conf_date": "2026-05-06",
  "source": "pdf",
- "built_at": "2026-09-11 02:18",
+ "built_at": "2026-09-13 03:27",
  "segments": [],
  "as_of": "",
  "tags": [
-  "半導體材料"
+  "半導體材料",
+  "PCB",
+  "車用電子"
  ],
  "confidence": "none",
- "model": "gemini-3.6-flash"
+ "model": "gemini-3.5-flash-lite"
 }

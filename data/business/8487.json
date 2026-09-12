@@ -3,13 +3,35 @@
  "name": "愛爾達-創",
  "conf_date": "2026-05-22",
  "source": "pdf",
- "built_at": "2026-09-11 03:02",
- "segments": [],
- "as_of": "",
- "tags": [
-  "資訊服務",
-  "雲端服務"
+ "built_at": "2026-09-13 03:37",
+ "segments": [
+  {
+   "name": "內容相關業務",
+   "pct": null,
+   "note": "包含數位內容產製暨代理"
+  },
+  {
+   "name": "轉授權暨代購業務",
+   "pct": null,
+   "note": "轉授權與代購業務"
+  },
+  {
+   "name": "廣告業務專案",
+   "pct": null,
+   "note": "數位廣告製播與委刊"
+  },
+  {
+   "name": "其他運動科技專案",
+   "pct": null,
+   "note": "賽事製播、影片後製等"
+  }
  ],
- "confidence": "none",
- "model": "gemini-3.5-flash-lite"
+ "as_of": "2026 Q1",
+ "tags": [
+  "串流媒體",
+  "社群媒體/廣告",
+  "資訊服務"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.1-flash-lite"
 }

@@ -3,7 +3,7 @@
  "name": "新代",
  "conf_date": "2026-09-07",
  "source": "pdf",
- "built_at": "2026-09-10 20:18",
+ "built_at": "2026-09-13 03:10",
  "segments": [],
  "as_of": "",
  "tags": [
@@ -11,5 +11,6 @@
   "工具機",
   "機械設備"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.5-flash"
 }

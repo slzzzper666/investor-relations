@@ -3,13 +3,15 @@
  "name": "力山",
  "conf_date": "2026-08-26",
  "source": "pdf",
- "built_at": "2026-09-10 23:06",
+ "built_at": "2026-09-13 03:32",
  "segments": [],
  "as_of": "",
  "tags": [
-  "醫療器材",
-  "無人機",
-  "機械設備"
+  "手工具",
+  "機械設備",
+  "運動用品",
+  "無人機"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.1-flash-lite"
 }

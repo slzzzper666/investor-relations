@@ -3,14 +3,14 @@
  "name": "華晶科",
  "conf_date": "2026-05-28",
  "source": "pdf",
- "built_at": "2026-09-11 02:26",
+ "built_at": "2026-09-13 03:29",
  "segments": [],
  "as_of": "",
  "tags": [
-  "光學鏡頭",
-  "自動化/機器人",
+  "醫療器材",
   "無人機",
-  "醫療器材"
+  "自動化/機器人",
+  "光學鏡頭"
  ],
  "confidence": "none",
  "model": "gemini-3.5-flash-lite"

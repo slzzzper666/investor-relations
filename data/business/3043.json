@@ -3,13 +3,13 @@
  "name": "科風",
  "conf_date": "2026-08-26",
  "source": "pdf",
- "built_at": "2026-09-10 23:44",
+ "built_at": "2026-09-13 03:38",
  "segments": [],
  "as_of": "",
  "tags": [
-  "電源供應器",
-  "儲能",
-  "電力設備"
+  "電力設備",
+  "儲能"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
 }

@@ -3,12 +3,13 @@
  "name": "湯石照明",
  "conf_date": "2026-08-06",
  "source": "pdf",
- "built_at": "2026-09-11 00:56",
+ "built_at": "2026-09-13 03:43",
  "segments": [],
  "as_of": "",
  "tags": [
   "LED",
   "建材"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
 }

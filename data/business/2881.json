@@ -1,9 +1,9 @@
 {
  "code": "2881",
  "name": "富邦金",
- "conf_date": "2026-08-24",
+ "conf_date": "2026-09-03",
  "source": "pdf",
- "built_at": "2026-09-10 21:17",
+ "built_at": "2026-09-13 03:05",
  "segments": [],
  "as_of": "2026 H1",
  "tags": [
@@ -12,5 +12,6 @@
   "銀行",
   "證券"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.8-flash"
 }

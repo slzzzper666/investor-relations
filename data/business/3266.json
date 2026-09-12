@@ -3,11 +3,14 @@
  "name": "昇陽",
  "conf_date": "2026-08-18",
  "source": "pdf",
- "built_at": "2026-09-10 23:17",
+ "built_at": "2026-09-13 03:33",
  "segments": [],
  "as_of": "",
  "tags": [
-  "營建"
+  "建材",
+  "營建",
+  "資產開發"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
 }

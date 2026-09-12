@@ -3,12 +3,24 @@
  "name": "櫻花",
  "conf_date": "2026-08-24",
  "source": "pdf",
- "built_at": "2026-09-10 22:27",
- "segments": [],
- "as_of": "",
- "tags": [
-  "建材",
-  "營建"
+ "built_at": "2026-09-13 03:26",
+ "segments": [
+  {
+   "name": "既有家庭換購",
+   "pct": 70.0,
+   "note": "來自家庭換購需求"
+  },
+  {
+   "name": "新屋市場",
+   "pct": 30.0,
+   "note": "來自新屋市場需求"
+  }
  ],
- "confidence": "none"
+ "as_of": "2025",
+ "tags": [
+  "消費品牌",
+  "建材"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.1-flash-lite"
 }

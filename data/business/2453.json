@@ -3,14 +3,14 @@
  "name": "凌群",
  "conf_date": "2026-03-31",
  "source": "pdf",
- "built_at": "2026-09-11 02:45",
+ "built_at": "2026-09-13 03:33",
  "segments": [],
  "as_of": "",
  "tags": [
   "資訊服務",
   "軟體/SaaS",
   "資安",
-  "雲端服務"
+  "自動化/機器人"
  ],
  "confidence": "none",
  "model": "gemini-3.5-flash-lite"

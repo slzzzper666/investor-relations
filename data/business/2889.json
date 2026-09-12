@@ -1,17 +1,38 @@
 {
  "code": "2889",
  "name": "國票金",
- "conf_date": "2026-03-31",
+ "conf_date": "2026-07-07",
  "source": "pdf",
- "built_at": "2026-09-11 01:49",
- "segments": [],
- "as_of": "",
+ "built_at": "2026-09-13 03:23",
+ "segments": [
+  {
+   "name": "票券業務",
+   "pct": 70.52,
+   "note": "國際票券業務佔比"
+  },
+  {
+   "name": "債券業務",
+   "pct": 16.29,
+   "note": "國際票券業務佔比"
+  },
+  {
+   "name": "股權業務",
+   "pct": 13.15,
+   "note": "國際票券業務佔比"
+  },
+  {
+   "name": "其他業務",
+   "pct": 0.04,
+   "note": "國際票券業務佔比"
+  }
+ ],
+ "as_of": "2026 H1",
  "tags": [
   "金控",
   "證券",
-  "銀行",
-  "租賃"
+  "租賃",
+  "數位金融"
  ],
- "confidence": "none",
- "model": "gemini-3.7-flash"
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
 }

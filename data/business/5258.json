@@ -3,13 +3,13 @@
  "name": "虹堡",
  "conf_date": "2026-08-13",
  "source": "pdf",
- "built_at": "2026-09-10 23:17",
+ "built_at": "2026-09-13 03:33",
  "segments": [],
  "as_of": "2026 H1",
  "tags": [
   "工業電腦",
-  "數位金融",
-  "雲端服務"
+  "支付"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
 }

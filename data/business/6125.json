@@ -3,14 +3,15 @@
  "name": "廣運",
  "conf_date": "2026-08-19",
  "source": "pdf",
- "built_at": "2026-09-11 00:30",
+ "built_at": "2026-09-13 03:42",
  "segments": [],
- "as_of": "",
+ "as_of": "2026 H1",
  "tags": [
   "自動化/機器人",
-  "機械設備",
+  "半導體設備",
   "太陽能",
   "儲能"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
 }

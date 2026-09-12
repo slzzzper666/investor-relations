@@ -3,12 +3,13 @@
  "name": "嘉基",
  "conf_date": "2026-06-09",
  "source": "pdf",
- "built_at": "2026-09-11 02:05",
+ "built_at": "2026-09-13 03:25",
  "segments": [],
- "as_of": "",
+ "as_of": "2026 Q1",
  "tags": [
-  "連接器"
+  "連接器",
+  "筆電/PC"
  ],
  "confidence": "none",
- "model": "gemini-3.1-flash-lite"
+ "model": "gemini-3.5-flash-lite"
 }

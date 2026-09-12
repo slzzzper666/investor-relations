@@ -3,14 +3,14 @@
  "name": "台橡",
  "conf_date": "2026-05-20",
  "source": "pdf",
- "built_at": "2026-09-11 02:10",
+ "built_at": "2026-09-13 03:26",
  "segments": [],
- "as_of": "",
+ "as_of": "2026 Q1",
  "tags": [
   "塑化",
   "化工",
   "橡膠輪胎"
  ],
  "confidence": "none",
- "model": "gemini-3.1-flash-lite"
+ "model": "gemini-3.5-flash-lite"
 }

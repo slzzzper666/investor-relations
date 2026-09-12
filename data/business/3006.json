@@ -3,7 +3,7 @@
  "name": "晶豪科",
  "conf_date": "2026-03-10",
  "source": "pdf",
- "built_at": "2026-09-11 01:20",
+ "built_at": "2026-09-13 03:12",
  "segments": [],
  "as_of": "",
  "tags": [
@@ -12,5 +12,5 @@
   "感測元件"
  ],
  "confidence": "none",
- "model": "gemini-3.1-flash-lite"
+ "model": "gemini-3.5-flash"
 }

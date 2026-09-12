@@ -1,17 +1,16 @@
 {
  "code": "6442",
  "name": "光聖",
- "conf_date": "2026-06-09",
+ "conf_date": "2026-09-10",
  "source": "pdf",
- "built_at": "2026-09-11 01:16",
+ "built_at": "2026-09-13 03:11",
  "segments": [],
  "as_of": "",
  "tags": [
-  "連接器",
   "光通訊",
-  "AI伺服器",
-  "醫療器材"
+  "連接器",
+  "網通設備"
  ],
  "confidence": "none",
- "model": "gemini-3.1-flash-lite"
+ "model": "gemini-3.5-flash"
 }

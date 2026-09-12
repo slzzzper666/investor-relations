@@ -3,14 +3,14 @@
  "name": "友霖",
  "conf_date": "2026-04-28",
  "source": "pdf",
- "built_at": "2026-09-11 03:36",
+ "built_at": "2026-09-13 03:50",
  "segments": [],
- "as_of": "2025",
+ "as_of": "",
  "tags": [
   "新藥研發",
   "學名藥",
   "原料藥"
  ],
  "confidence": "none",
- "model": "gemini-3.5-flash-lite"
+ "model": "gemini-3.1-flash-lite"
 }

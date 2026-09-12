@@ -3,13 +3,31 @@
  "name": "微程式",
  "conf_date": "2026-09-01",
  "source": "pdf",
- "built_at": "2026-09-10 23:27",
- "segments": [],
+ "built_at": "2026-09-13 03:34",
+ "segments": [
+  {
+   "name": "電子支付服務收入",
+   "pct": null,
+   "note": "包含系統維運與客製化開發"
+  },
+  {
+   "name": "智慧設備設備買賣",
+   "pct": null,
+   "note": "包含單車、停車及IoT硬體"
+  },
+  {
+   "name": "半導體感測控制整合解決方案",
+   "pct": null,
+   "note": "包含設備銷售與系統整合"
+  }
+ ],
  "as_of": "",
  "tags": [
   "資訊服務",
+  "支付",
   "半導體設備",
-  "車用電子"
+  "感測元件"
  ],
- "confidence": "none"
+ "confidence": "medium",
+ "model": "gemini-3.1-flash-lite"
 }

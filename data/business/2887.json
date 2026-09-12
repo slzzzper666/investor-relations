@@ -1,16 +1,17 @@
 {
  "code": "2887",
  "name": "台新新光金",
- "conf_date": "2026-09-01",
+ "conf_date": "2026-09-07",
  "source": "pdf",
- "built_at": "2026-09-10 21:20",
+ "built_at": "2026-09-13 03:06",
  "segments": [],
- "as_of": "2026 Q2",
+ "as_of": "2026 H1",
  "tags": [
   "金控",
   "銀行",
   "保險",
   "證券"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.7-flash"
 }

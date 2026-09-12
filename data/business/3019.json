@@ -3,11 +3,12 @@
  "name": "亞光",
  "conf_date": "2026-08-18",
  "source": "pdf",
- "built_at": "2026-09-10 21:56",
+ "built_at": "2026-09-13 03:24",
  "segments": [],
  "as_of": "",
  "tags": [
   "光學鏡頭"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
 }

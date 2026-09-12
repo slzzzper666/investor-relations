@@ -3,14 +3,14 @@
  "name": "拓凱",
  "conf_date": "2026-03-25",
  "source": "pdf",
- "built_at": "2026-09-11 02:18",
+ "built_at": "2026-09-13 03:27",
  "segments": [],
  "as_of": "",
  "tags": [
-  "醫療器材",
-  "航空",
-  "其他"
+  "運動用品",
+  "航太國防",
+  "醫療器材"
  ],
  "confidence": "none",
- "model": "gemini-3.6-flash"
+ "model": "gemini-3.5-flash-lite"
 }

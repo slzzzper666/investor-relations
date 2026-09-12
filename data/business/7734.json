@@ -3,12 +3,14 @@
  "name": "印能科技",
  "conf_date": "2026-08-27",
  "source": "pdf",
- "built_at": "2026-09-11 00:06",
+ "built_at": "2026-09-13 03:40",
  "segments": [],
  "as_of": "",
  "tags": [
   "先進封裝/CoWoS",
-  "半導體設備"
+  "半導體設備",
+  "光通訊"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
 }

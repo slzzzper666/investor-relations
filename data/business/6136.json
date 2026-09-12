@@ -3,13 +3,14 @@
  "name": "富爾特",
  "conf_date": "2026-09-10",
  "source": "pdf",
- "built_at": "2026-09-11 19:02",
+ "built_at": "2026-09-13 03:36",
  "segments": [],
  "as_of": "",
  "tags": [
   "資訊服務",
-  "其他"
+  "電信",
+  "社群媒體/廣告"
  ],
  "confidence": "none",
- "model": "gemini-3.5-flash"
+ "model": "gemini-3.5-flash-lite"
 }

@@ -3,14 +3,30 @@
  "name": "隆大",
  "conf_date": "2026-06-24",
  "source": "pdf",
- "built_at": "2026-09-11 02:43",
- "segments": [],
+ "built_at": "2026-09-13 03:32",
+ "segments": [
+  {
+   "name": "不動產開發",
+   "pct": null,
+   "note": "主要業務為集合住宅"
+  },
+  {
+   "name": "建築工程承攬",
+   "pct": null,
+   "note": "含住宅、辦公、廠房、學校、醫院、棒球場"
+  },
+  {
+   "name": "不動產租賃及一般旅館業務",
+   "pct": null,
+   "note": "包含海外不動產投資"
+  }
+ ],
  "as_of": "",
  "tags": [
   "營建",
   "資產開發",
   "觀光旅館"
  ],
- "confidence": "none",
- "model": "gemini-3.5-flash-lite"
+ "confidence": "medium",
+ "model": "gemini-3.1-flash-lite"
 }

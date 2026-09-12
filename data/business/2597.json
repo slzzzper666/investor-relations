@@ -3,13 +3,29 @@
  "name": "潤弘",
  "conf_date": "2026-07-17",
  "source": "pdf",
- "built_at": "2026-09-11 01:51",
- "segments": [],
+ "built_at": "2026-09-13 03:23",
+ "segments": [
+  {
+   "name": "統包",
+   "pct": null,
+   "note": "設計加施工"
+  },
+  {
+   "name": "總包",
+   "pct": null,
+   "note": "民間住宅與商辦大樓"
+  },
+  {
+   "name": "專業包",
+   "pct": null,
+   "note": "預鑄樑柱、格子版、外牆版、鋁模工程"
+  }
+ ],
  "as_of": "",
  "tags": [
   "營建",
   "建材"
  ],
- "confidence": "none",
+ "confidence": "medium",
  "model": "gemini-3.1-flash-lite"
 }

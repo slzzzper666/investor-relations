@@ -3,13 +3,13 @@
  "name": "華建",
  "conf_date": "2026-08-28",
  "source": "pdf",
- "built_at": "2026-09-10 22:31",
+ "built_at": "2026-09-13 03:27",
  "segments": [],
  "as_of": "",
  "tags": [
   "營建",
-  "資產開發",
-  "建材"
+  "資產開發"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
 }

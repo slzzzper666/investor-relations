@@ -3,14 +3,14 @@
  "name": "越峰",
  "conf_date": "2026-08-28",
  "source": "pdf",
- "built_at": "2026-09-10 23:59",
+ "built_at": "2026-09-13 03:40",
  "segments": [],
  "as_of": "",
  "tags": [
   "被動元件",
   "化合物半導體",
-  "功率半導體",
   "半導體材料"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
 }

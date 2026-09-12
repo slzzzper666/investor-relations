@@ -3,13 +3,14 @@
  "name": "艾恩特",
  "conf_date": "2026-08-21",
  "source": "pdf",
- "built_at": "2026-09-11 00:25",
+ "built_at": "2026-09-13 03:42",
  "segments": [],
  "as_of": "",
  "tags": [
   "連接器",
   "車用電子",
-  "汽車零組件"
+  "電動車"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
 }

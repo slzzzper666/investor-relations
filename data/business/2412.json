@@ -3,13 +3,31 @@
  "name": "中華電",
  "conf_date": "2026-08-31",
  "source": "pdf",
- "built_at": "2026-09-10 21:20",
- "segments": [],
+ "built_at": "2026-09-13 03:06",
+ "segments": [
+  {
+   "name": "個人家庭事業群",
+   "pct": null,
+   "note": "2Q26營收35.73十億元"
+  },
+  {
+   "name": "企業客戶事業群",
+   "pct": null,
+   "note": "2Q26營收19.68十億元"
+  },
+  {
+   "name": "國際電信事業群",
+   "pct": null,
+   "note": "2Q26營收3.93十億元"
+  }
+ ],
  "as_of": "2026 Q2",
  "tags": [
-  "網通設備",
+  "電信",
+  "雲端服務",
   "資安",
-  "雲端服務"
+  "衛星通訊"
  ],
- "confidence": "none"
+ "confidence": "medium",
+ "model": "gemini-3.8-flash"
 }

@@ -3,12 +3,13 @@
  "name": "致和證",
  "conf_date": "2026-06-16",
  "source": "pdf",
- "built_at": "2026-09-11 03:17",
+ "built_at": "2026-09-13 03:45",
  "segments": [],
  "as_of": "",
  "tags": [
-  "證券"
+  "證券",
+  "數位金融"
  ],
  "confidence": "none",
- "model": "gemini-3.5-flash-lite"
+ "model": "gemini-3.1-flash-lite"
 }

@@ -3,14 +3,15 @@
  "name": "強新",
  "conf_date": "2026-04-28",
  "source": "pdf",
- "built_at": "2026-09-11 03:36",
+ "built_at": "2026-09-13 03:50",
  "segments": [],
  "as_of": "",
  "tags": [
   "鋼鐵",
   "汽車零組件",
-  "手工具"
+  "半導體設備",
+  "機械設備"
  ],
  "confidence": "none",
- "model": "gemini-3.5-flash-lite"
+ "model": "gemini-3.1-flash-lite"
 }

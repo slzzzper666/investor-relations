@@ -1,13 +1,14 @@
 {
  "code": "6446",
  "name": "藥華藥",
- "conf_date": "2026-08-25",
+ "conf_date": "2026-09-10",
  "source": "pdf",
- "built_at": "2026-09-10 21:27",
+ "built_at": "2026-09-13 03:08",
  "segments": [],
  "as_of": "",
  "tags": [
   "新藥研發"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.6-flash"
 }

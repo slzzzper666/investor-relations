@@ -3,11 +3,12 @@
  "name": "達發",
  "conf_date": "2026-09-09",
  "source": "pdf",
- "built_at": "2026-09-10 20:22",
+ "built_at": "2026-09-13 03:11",
  "segments": [],
  "as_of": "",
  "tags": [
   "IC設計"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.5-flash"
 }

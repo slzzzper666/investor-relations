@@ -1,0 +1,25 @@
+{
+ "code": "8021",
+ "name": "尖點",
+ "conf_date": "2026-06-09",
+ "source": "pdf",
+ "built_at": "2026-09-13 03:22",
+ "segments": [
+  {
+   "name": "PCB鑽針",
+   "pct": 67.4,
+   "note": "按產品別營收"
+  },
+  {
+   "name": "鑽孔服務",
+   "pct": 32.6,
+   "note": "按產品別營收"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "PCB"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

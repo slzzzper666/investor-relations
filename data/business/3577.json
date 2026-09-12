@@ -3,15 +3,45 @@
  "name": "泓格",
  "conf_date": "2026-05-26",
  "source": "pdf",
- "built_at": "2026-09-11 03:26",
- "segments": [],
- "as_of": "",
+ "built_at": "2026-09-13 03:47",
+ "segments": [
+  {
+   "name": "亞(台灣內銷)",
+   "pct": 63.69,
+   "note": "2026年第一季區域別銷售"
+  },
+  {
+   "name": "亞(中國大陸.其他)",
+   "pct": 18.2,
+   "note": "2026年第一季區域別銷售"
+  },
+  {
+   "name": "歐洲(EUROPE)",
+   "pct": 13.51,
+   "note": "2026年第一季區域別銷售"
+  },
+  {
+   "name": "美(AMER)",
+   "pct": 4.34,
+   "note": "2026年第一季區域別銷售"
+  },
+  {
+   "name": "大洋洲(AUST)",
+   "pct": 0.14,
+   "note": "2026年第一季區域別銷售"
+  },
+  {
+   "name": "非(AFRI)",
+   "pct": 0.12,
+   "note": "2026年第一季區域別銷售"
+  }
+ ],
+ "as_of": "2026 Q1",
  "tags": [
-  "工業電腦",
   "自動化/機器人",
   "醫療器材",
   "化工"
  ],
- "confidence": "none",
- "model": "gemini-3.5-flash-lite"
+ "confidence": "high",
+ "model": "gemini-3.1-flash-lite"
 }

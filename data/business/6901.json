@@ -3,14 +3,14 @@
  "name": "鑽石投資",
  "conf_date": "2026-06-26",
  "source": "pdf",
- "built_at": "2026-09-11 02:24",
+ "built_at": "2026-09-13 03:28",
  "segments": [],
- "as_of": "",
+ "as_of": "2026 Q2",
  "tags": [
+  "資產管理",
   "新藥研發",
-  "醫療器材",
-  "其他"
+  "醫療器材"
  ],
  "confidence": "none",
- "model": "gemini-3.5-flash"
+ "model": "gemini-3.5-flash-lite"
 }

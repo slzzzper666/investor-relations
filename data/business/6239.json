@@ -3,15 +3,35 @@
  "name": "力成",
  "conf_date": "2026-07-28",
  "source": "pdf",
- "built_at": "2026-09-11 01:13",
- "segments": [],
+ "built_at": "2026-09-13 03:09",
+ "segments": [
+  {
+   "name": "Logic",
+   "pct": 41.0,
+   "note": ""
+  },
+  {
+   "name": "NAND",
+   "pct": 29.0,
+   "note": ""
+  },
+  {
+   "name": "DRAM",
+   "pct": 19.0,
+   "note": ""
+  },
+  {
+   "name": "SiP/Module",
+   "pct": 11.0,
+   "note": ""
+  }
+ ],
  "as_of": "2026 Q2",
  "tags": [
   "封裝測試",
-  "先進封裝/CoWoS",
   "記憶體",
-  "車用電子"
+  "先進封裝/CoWoS"
  ],
- "confidence": "none",
- "model": "gemini-3.1-flash-lite"
+ "confidence": "high",
+ "model": "gemini-3.7-flash"
 }

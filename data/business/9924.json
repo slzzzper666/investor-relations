@@ -3,12 +3,13 @@
  "name": "福興",
  "conf_date": "2026-08-17",
  "source": "pdf",
- "built_at": "2026-09-10 23:04",
+ "built_at": "2026-09-13 03:32",
  "segments": [],
  "as_of": "",
  "tags": [
-  "建材",
-  "手工具"
+  "手工具",
+  "消費品牌"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
 }

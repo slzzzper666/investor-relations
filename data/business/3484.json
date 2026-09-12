@@ -1,0 +1,43 @@
+{
+ "code": "3484",
+ "name": "崧騰",
+ "conf_date": "2026-04-08",
+ "source": "pdf",
+ "built_at": "2026-09-13 03:39",
+ "segments": [
+  {
+   "name": "電動工具",
+   "pct": 73.0,
+   "note": ""
+  },
+  {
+   "name": "家電",
+   "pct": 12.0,
+   "note": ""
+  },
+  {
+   "name": "能源車",
+   "pct": 6.0,
+   "note": ""
+  },
+  {
+   "name": "其他",
+   "pct": 5.0,
+   "note": ""
+  },
+  {
+   "name": "資通訊",
+   "pct": 4.0,
+   "note": ""
+  }
+ ],
+ "as_of": "2025",
+ "tags": [
+  "電動車",
+  "車用電子",
+  "手工具",
+  "連接器"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
+}

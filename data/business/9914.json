@@ -1,0 +1,30 @@
+{
+ "code": "9914",
+ "name": "美利達",
+ "conf_date": "2026-06-26",
+ "source": "pdf",
+ "built_at": "2026-09-13 03:25",
+ "segments": [
+  {
+   "name": "台灣廠",
+   "pct": 51.0,
+   "note": "台灣廠外銷營收佔比"
+  },
+  {
+   "name": "子公司",
+   "pct": 33.0,
+   "note": "子公司營收佔比"
+  },
+  {
+   "name": "大陸內銷",
+   "pct": 16.0,
+   "note": "大陸內銷營收佔比"
+  }
+ ],
+ "as_of": "2026 Q1",
+ "tags": [
+  "運動用品"
+ ],
+ "confidence": "high",
+ "model": "gemini-3.1-flash-lite"
+}

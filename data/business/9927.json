@@ -3,12 +3,13 @@
  "name": "泰銘",
  "conf_date": "2026-08-26",
  "source": "pdf",
- "built_at": "2026-09-10 22:54",
+ "built_at": "2026-09-13 03:31",
  "segments": [],
  "as_of": "",
  "tags": [
   "化工",
   "環保工程"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
 }

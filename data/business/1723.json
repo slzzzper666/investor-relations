@@ -3,14 +3,41 @@
  "name": "中碳",
  "conf_date": "2026-08-25",
  "source": "pdf",
- "built_at": "2026-09-10 22:24",
- "segments": [],
+ "built_at": "2026-09-13 03:26",
+ "segments": [
+  {
+   "name": "煤焦油",
+   "pct": 57.0,
+   "note": "合併營收占比"
+  },
+  {
+   "name": "苯",
+   "pct": 22.0,
+   "note": "合併營收占比"
+  },
+  {
+   "name": "軟瀝青",
+   "pct": 18.0,
+   "note": "合併營收占比"
+  },
+  {
+   "name": "碳材料產品",
+   "pct": 6.0,
+   "note": "合併營收占比"
+  },
+  {
+   "name": "焦炭",
+   "pct": 6.0,
+   "note": "合併營收占比"
+  }
+ ],
  "as_of": "",
  "tags": [
   "化工",
-  "電池模組",
   "電動車",
-  "儲能"
+  "儲能",
+  "電池模組"
  ],
- "confidence": "none"
+ "confidence": "high",
+ "model": "gemini-3.5-flash-lite"
 }

@@ -3,12 +3,13 @@
  "name": "統新",
  "conf_date": "2026-08-26",
  "source": "pdf",
- "built_at": "2026-09-10 22:43",
+ "built_at": "2026-09-13 03:29",
  "segments": [],
  "as_of": "",
  "tags": [
   "光通訊",
   "被動元件"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
 }

@@ -3,12 +3,13 @@
  "name": "濾能",
  "conf_date": "2026-09-01",
  "source": "pdf",
- "built_at": "2026-09-10 23:49",
+ "built_at": "2026-09-13 03:39",
  "segments": [],
  "as_of": "",
  "tags": [
   "半導體材料",
   "環保工程"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.5-flash-lite"
 }

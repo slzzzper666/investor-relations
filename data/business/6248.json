@@ -3,11 +3,13 @@
  "name": "沛波",
  "conf_date": "2026-09-01",
  "source": "pdf",
- "built_at": "2026-09-10 23:53",
+ "built_at": "2026-09-13 03:39",
  "segments": [],
  "as_of": "",
  "tags": [
-  "鋼鐵"
+  "鋼鐵",
+  "建材"
  ],
- "confidence": "none"
+ "confidence": "none",
+ "model": "gemini-3.1-flash-lite"
 }
