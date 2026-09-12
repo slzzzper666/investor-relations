@@ -13,7 +13,7 @@ from pydantic import BaseModel
 import config
 from ir.gemini_util import generate_with_retry
 from ir.logger import get_logger
-from ir.radar.us import ZH_NAMES, _yahoo_symbol
+from ir.us_calendar import ZH_NAMES, _yahoo_symbol
 
 log = get_logger("ir.us_earn")
 

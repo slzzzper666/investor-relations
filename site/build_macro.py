@@ -353,33 +353,9 @@ def fetch_fred_calendar() -> list[dict]:
 
 
 def fetch_macro_calendar() -> list[dict]:
-    """即將公布的總經數據（與 radar 推 TG/DC 同源：Investing.com）。
-
-    Investing.com 擋雲端資料中心 IP → 雲端會抓到 0；由 main 的保護機制保留
-    本機（家用 IP）建好並提交的 macro_upcoming.json。
-    """
-    from datetime import date, timedelta
-    try:
-        from ir.radar import macro as radar_macro
-        evs = radar_macro.fetch_calendar(date.today(),
-                                         date.today() + timedelta(days=75))
-    except Exception as e:  # noqa: BLE001
-        print(f"  總經行事曆抓取失敗（{type(e).__name__}: {e}）")
-        return []
-    items = []
-    for e in evs:
-        items.append({
-            "date": e.dt_taipei.strftime("%Y-%m-%d"),
-            "time": e.dt_taipei.strftime("%H:%M"),
-            "country": e.country,
-            "name": e.name,
-            "previous": e.previous or "",
-            "forecast": e.forecast or "",
-            "impact": e.impact,
-        })
-    items.sort(key=lambda x: (x["date"], x["time"]))
-    return items
-
+    """（已停用）原自 Investing.com 抓總經行事曆；該站自 2026-06 起連家用 IP 都 403，
+    行事曆改由 FOMC 官網＋FRED release/dates 提供（見下方兩個函式），此處恆回空。"""
+    return []
 
 def load_ai() -> dict:
     """讀手寫基準版 macro_ai.json（Gemini 失敗時的安全網）。"""

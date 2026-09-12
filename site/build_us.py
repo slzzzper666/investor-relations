@@ -1,6 +1,6 @@
 """美股網站資料建置：白名單 → 近期財報 + AI 中英分析 → us_list.json / detail/us-*.json。
 
-依賴 ir.us_earn（白名單/抓取/分析）與 ir.radar.us（行事曆）。
+依賴 ir.us_earn（白名單/抓取/分析）與 ir.us_calendar（行事曆）。
 與 build_data.py 共用 detail/，各自只清自己的命名空間（台股 vs us-*）。
 
 用法：
@@ -22,8 +22,9 @@ PUBLIC_DIR = BASE_DIR / "public"
 DETAIL_DIR = PUBLIC_DIR / "detail"
 
 sys.path.insert(0, str(ROOT_DIR))
+from config import TZ_US_EAST                                       # noqa: E402
 from ir.logger import get_logger                                    # noqa: E402
-from ir.radar import us as radar_us                                 # noqa: E402
+from ir import us_calendar                                          # noqa: E402
 from ir.us_earn import (analyze_cached, fetch_earnings,             # noqa: E402
                         fetch_earnings_history, load_whitelist)
 from ir.us_profile import (extract_business, fetch_profile,        # noqa: E402
@@ -126,10 +127,10 @@ def build_reported(whitelist, since: str | None = None):
 
 def build_upcoming(whitelist):
     wl = {w["symbol"] for w in whitelist}
-    today = datetime.now(radar_us.TZ_US_EAST).date()
+    today = datetime.now(TZ_US_EAST).date()
     end = today + timedelta(days=30)
     try:
-        evs = radar_us.fetch_calendar(today, end)
+        evs = us_calendar.fetch_calendar(today, end)
     except Exception as e:  # noqa: BLE001
         log.warning("美股行事曆抓取失敗：%s", e)
         return []
