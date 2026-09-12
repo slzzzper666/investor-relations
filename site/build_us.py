@@ -28,7 +28,7 @@ from ir import us_calendar                                          # noqa: E402
 from ir.us_earn import (analyze_cached, fetch_earnings,             # noqa: E402
                         fetch_earnings_history, load_whitelist)
 from ir.us_profile import (extract_business, fetch_profile,        # noqa: E402
-                           fetch_quarters, peer_pe_by_sector)
+                           fetch_quarters, fetch_sp500_pe, peer_pe_by_sector)
 
 log = get_logger("build_us")
 TAIPEI = timezone(timedelta(hours=8))
@@ -36,6 +36,7 @@ TAIPEI = timezone(timedelta(hours=8))
 MAX_ANALYSES = int(os.getenv("IR_US_MAX", "25"))  # 每次最多分析幾檔（依市值大→小取）
 PROFILE_CACHE = BASE_DIR / ".us6q_cache.json"     # {sym: {asof, quarters, profile}}，隨 repo 提交
 BUSINESS_DIR = ROOT_DIR / "data" / "us_business"  # {SYM}.json 族群／業務項目（Gemini，隨 repo 提交）
+SP500_PE_CACHE = BASE_DIR / ".sp500_pe.json"      # S&P500 全體 sector+PE，同業本益比樣本（隨 repo 提交）
 
 
 def _compose_summary(one_liner, highlights):
@@ -207,7 +208,13 @@ def enrich_all(whitelist) -> None:
     if new_biz:
         log.info("美股族群：新建 %d 檔", new_biz)
 
-    peer = peer_pe_by_sector({s: (c.get("profile") or {}) for s, c in cache.items()})
+    # 同業本益比：S&P 500 全體（各產業樣本 20～80 檔）；抓不到才退回白名單 92 檔
+    sp = {}
+    try:
+        sp = fetch_sp500_pe(SP500_PE_CACHE)
+    except Exception as e:  # noqa: BLE001
+        log.warning("S&P500 本益比抓取失敗：%s", e)
+    peer = peer_pe_by_sector(sp or {s: (c.get("profile") or {}) for s, c in cache.items()})
 
     # 回寫所有 detail
     for f in files:

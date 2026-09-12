@@ -34,6 +34,7 @@ PUBLIC_DIR = BASE_DIR / "public"
 DETAIL_DIR = PUBLIC_DIR / "detail"
 SEGMENTS_DIR = ROOT_DIR / "data" / "segments"   # 逐字稿分段（錨點），由 Claude/AI 產出
 BUSINESS_DIR = ROOT_DIR / "data" / "business"   # 業務項目（AI 讀簡報產出，見 build_business.py）
+COMPARE_DIR = ROOT_DIR / "data" / "compare"     # 與上次法說會比較（Gemini，見 ir/compare.py）
 EXCLUDED_FILE = ROOT_DIR / "data" / "excluded_ids.txt"  # 壞源（假法說會）排除清單
 
 
@@ -669,6 +670,111 @@ def _load_business(code: str) -> dict | None:
             ("segments", "tags", "as_of", "confidence", "conf_date", "source")}
 
 
+def _one_liner(d: dict) -> str:
+    return (d.get("summary") or "").split("\n")[0].strip()
+
+
+def write_tags_index(details: list[dict]) -> None:
+    """族群索引 site/public/tags.json：族群／產業別 → 成員公司（去重、留最新一場）。
+
+    供族群落地頁使用：成員帶最新一句話總結與最新一季成長數字，頁面只需載這一檔。
+    """
+    by_tag: dict[str, dict[str, dict]] = {}
+    by_industry: dict[str, dict[str, dict]] = {}
+    for d in sorted(details, key=lambda x: x["date"], reverse=True):
+        code = d.get("code")
+        if not code:
+            continue
+        fin = d.get("financials") or {}
+        q0 = (fin.get("quarters") or [{}])[0]
+        entry = {
+            "code": code, "company": d["company"], "id": d["id"], "date": d["date"],
+            "market_cap": fin.get("market_cap") or 0, "pe": fin.get("pe"),
+            "industry": fin.get("industry") or "",
+            "summary": _one_liner(d)[:80],
+            "rev_yoy": q0.get("revenue_yoy"), "eps": q0.get("eps"),
+            "gross_margin": q0.get("gross_margin"), "period": q0.get("period", ""),
+            "tags": (d.get("business") or {}).get("tags") or [],
+        }
+        if entry["industry"]:
+            by_industry.setdefault(entry["industry"], {}).setdefault(code, entry)
+        for t in entry["tags"]:
+            by_tag.setdefault(t, {}).setdefault(code, entry)
+
+    def pack(groups):
+        out = []
+        for name, members in groups.items():
+            ms = sorted(members.values(), key=lambda m: -(m.get("market_cap") or 0))
+            pes = sorted(m["pe"] for m in ms if m.get("pe"))
+            med = (pes[len(pes) // 2] if len(pes) % 2 else
+                   round((pes[len(pes) // 2 - 1] + pes[len(pes) // 2]) / 2, 2)) if pes else None
+            out.append({"name": name, "count": len(ms), "pe_median": med, "members": ms})
+        out.sort(key=lambda g: -g["count"])
+        return out
+
+    generated_at = datetime.now(TAIPEI).strftime("%Y-%m-%d %H:%M")
+    industries, tags = pack(by_industry), pack(by_tag)
+    # 族群頁一次只看一個族群，整包 1.5MB 太重 → 每個族群一個小檔 group/{kind}_{slug}.json
+    # （檔名不能含「/」，「自動化/機器人」這類標籤把 / 換成 _；前端做同樣的換算）
+    gdir = PUBLIC_DIR / "group"
+    gdir.mkdir(parents=True, exist_ok=True)
+    for f in gdir.glob("*.json"):
+        f.unlink()
+    for kind, groups in (("tag", tags), ("industry", industries)):
+        for g in groups:
+            slug = g["name"].replace("/", "_")
+            (gdir / f"{kind}_{slug}.json").write_text(
+                json.dumps({"generated_at": generated_at, "kind": kind, **g},
+                           ensure_ascii=False), encoding="utf-8")
+    # 總索引只留名稱與家數（首頁／站內導覽用），不帶成員
+    slim = {"generated_at": generated_at,
+            "industries": [{"name": g["name"], "count": g["count"], "pe_median": g["pe_median"]}
+                           for g in industries],
+            "tags": [{"name": g["name"], "count": g["count"], "pe_median": g["pe_median"]}
+                     for g in tags]}
+    path = PUBLIC_DIR / "tags.json"
+    path.write_text(json.dumps(slim, ensure_ascii=False), encoding="utf-8")
+    print(f"tags.json：{len(industries)} 個產業、{len(tags)} 個業務族群"
+          f"（索引 {path.stat().st_size:,} bytes，成員拆到 group/ 共 {len(industries) + len(tags)} 檔）")
+
+
+COMPANY_DIR = PUBLIC_DIR / "company"
+
+
+def write_company_pages(details: list[dict]) -> None:
+    """公司頁資料 site/public/company/{code}.json：公司層級的財報／業務／族群 + 歷次法說會。
+
+    財報、業務組合是公司屬性，每場法說會頁重複同一份其實是錯位；公司頁才是它們的家，
+    也是「台積電 法說會」這類搜尋最自然的落地點。
+    """
+    COMPANY_DIR.mkdir(parents=True, exist_ok=True)
+    for f in COMPANY_DIR.glob("*.json"):
+        f.unlink()
+    by_code: dict[str, list[dict]] = {}
+    for d in details:
+        if re.fullmatch(r"\d{4}", d.get("code") or ""):
+            by_code.setdefault(d["code"], []).append(d)
+
+    generated_at = datetime.now(TAIPEI).strftime("%Y-%m-%d %H:%M")
+    for code, ds in by_code.items():
+        ds.sort(key=lambda x: x["date"], reverse=True)
+        latest = ds[0]
+        payload = {
+            "code": code, "company": latest["company"], "generated_at": generated_at,
+            "financials": latest.get("financials") or {},
+            "business": latest.get("business"),
+            "conferences": [{
+                "id": d["id"], "date": d["date"], "summary": _one_liner(d),
+                "has_transcript": bool(d.get("transcript")),
+                "transcript_chars": len(d.get("transcript") or ""),
+                "pdf_url": d.get("pdf_url") or "", "video_url": d.get("video_url") or "",
+            } for d in ds],
+        }
+        (COMPANY_DIR / f"{code}.json").write_text(
+            json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+    print(f"company/：{len(by_code)} 家公司頁資料")
+
+
 def _load_segments(it_id: str, transcript: str, segments_json: str = ""):
     """依「錨點」把原始逐字稿切成結構化段落。
 
@@ -800,6 +906,12 @@ def main() -> None:
         business = _load_business(code)
         if business:
             detail["business"] = business
+        cmp_f = COMPARE_DIR / f"{it_id}.json"
+        if cmp_f.exists():
+            try:
+                detail["compare"] = json.loads(cmp_f.read_text(encoding="utf-8"))
+            except ValueError:
+                pass
         segs = _load_segments(it_id, it.get("transcript", ""), it.get("segments_json", ""))
         detail.pop("segments_json", None)      # 錨點不需進 detail（已切成 transcript_segments）
         if segs:
@@ -833,6 +945,8 @@ def main() -> None:
     print(f"財報序列：{fin_n}/{len(details)} 筆有近 {QUARTERS} 季數據"
           f"（本輪新抓 {fin_fetched} 檔）")
     print(f"業務項目：{biz_n} 筆有資料")
+    write_tags_index(details)
+    write_company_pages(details)
 
     generated_at = datetime.now(TAIPEI).strftime("%Y-%m-%d %H:%M")
     payload = {

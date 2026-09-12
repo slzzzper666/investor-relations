@@ -1960,3 +1960,105 @@ body.chips-open { overflow: hidden; }
   color: var(--faint);
   letter-spacing: 0.02em;
 }
+
+/* ── 公司頁 ── */
+.company-tags { margin-top: 14px; }
+.company-ledger .row-code { font-size: 13px; }
+.tag-on { color: var(--amber); border-color: var(--amber); }
+
+/* ── 族群落地頁 ── */
+.g-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 28px;
+  margin-top: 18px;
+}
+.g-stat { display: flex; flex-direction: column; gap: 2px; }
+.g-stat-v {
+  font-family: var(--mono);
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--amber);
+  letter-spacing: 0.02em;
+}
+.g-stat-l { font-size: 12px; color: var(--muted); letter-spacing: 0.04em; }
+.g-list { border-top: 1px solid var(--line); overflow-x: auto; }
+.g-row {
+  display: grid;
+  grid-template-columns: 56px minmax(220px, 1fr) 92px 72px 72px 118px;
+  align-items: center;
+  gap: 4px 16px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line-soft);
+  text-decoration: none;
+  color: inherit;
+  min-width: 720px;
+  transition: background-color .15s, box-shadow .15s;
+}
+.g-row:hover { background: var(--panel); box-shadow: inset 2px 0 0 var(--amber); }
+.g-head, .g-head:hover {
+  background: none; box-shadow: none;
+  font-size: 11px; color: var(--faint); letter-spacing: 0.06em;
+  padding-top: 8px; padding-bottom: 8px;
+}
+.g-code { font-family: var(--mono); font-size: 13px; color: var(--amber); }
+.g-main { min-width: 0; }
+.g-company { font-family: var(--serif); font-weight: 600; font-size: 16px; display: block; }
+.g-summary {
+  display: block; margin-top: 2px; color: var(--muted); font-size: 12.5px; line-height: 1.6;
+  overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+}
+.g-num { font-family: var(--mono); font-size: 13.5px; text-align: right; }
+.g-num .g-label { display: none; }
+.g-num .fin-delta { font-size: 13.5px; }
+.g-sub { font-size: 11px; margin-left: 2px; }
+.g-sub.up { color: var(--up, #4CAF7D); }
+.g-sub.down { color: var(--down, #E06C6C); }
+.g-na { color: var(--faint); }
+@media (max-width: 720px) {
+  .g-row { min-width: 0; grid-template-columns: 48px minmax(0, 1fr); }
+  .g-num { text-align: left; font-size: 12.5px; }
+  .g-num .g-label { display: inline; color: var(--faint); font-size: 11px; margin-right: 6px; }
+  .g-head { display: none; }
+}
+
+/* ── 與上次法說會比較 ── */
+.cmp-list { border-top: 1px solid var(--line); margin-top: 6px; }
+.cmp-row {
+  display: grid;
+  grid-template-columns: 28px 96px minmax(0, 1fr) 22px minmax(0, 1fr);
+  gap: 6px 10px;
+  align-items: start;
+  padding: 10px 4px;
+  border-bottom: 1px solid var(--line-soft);
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+.cmp-head { font-size: 11px; color: var(--faint); letter-spacing: 0.06em; padding: 6px 4px; }
+.cmp-dir {
+  font-family: var(--mono); font-weight: 500; text-align: center;
+  border: 1px solid var(--line); border-radius: 2px; padding: 0 4px; font-size: 12px;
+}
+.cmp-up .cmp-dir { color: var(--up); border-color: var(--up); }
+.cmp-down .cmp-dir { color: var(--down); border-color: var(--down); }
+.cmp-new .cmp-dir { color: var(--amber); border-color: var(--amber); }
+.cmp-gone .cmp-dir { color: var(--faint); }
+.cmp-topic { font-weight: 500; }
+.cmp-before { color: var(--muted); }
+.cmp-before em { color: var(--faint); font-style: normal; }
+.cmp-arrow { color: var(--faint); text-align: center; }
+.cmp-after { color: var(--text); }
+.cmp-watch { margin-top: 14px; font-size: 13px; color: var(--muted); line-height: 1.7; }
+.cmp-watch-label {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em;
+  color: var(--amber); margin-right: 10px;
+}
+@media (max-width: 640px) {
+  .cmp-row { grid-template-columns: 24px minmax(0, 1fr); }
+  .cmp-head { display: none; }
+  .cmp-topic { grid-column: 2; }
+  .cmp-before, .cmp-after { grid-column: 2; }
+  .cmp-before::before { content: "上次 "; color: var(--faint); font-size: 11px; }
+  .cmp-after::before { content: "這次 "; color: var(--amber); font-size: 11px; }
+  .cmp-arrow { display: none; }
+}

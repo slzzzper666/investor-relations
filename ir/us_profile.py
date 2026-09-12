@@ -152,8 +152,58 @@ def fetch_profile(symbol: str) -> dict | None:
     }
 
 
+SP500_PE_TTL_DAYS = 14  # 同業中位數變動慢；CI 不提交快取，過期才重抓（約 10 分鐘）
+
+
+def fetch_sp500_pe(cache_path, ttl_days: int = SP500_PE_TTL_DAYS) -> dict[str, dict]:
+    """S&P 500 全體的 {symbol: {sector_zh, pe}}，供同業本益比用（樣本比白名單 92 檔大得多）。
+
+    成分股清單用 ir.us_calendar 的快取；sector 與 PE 逐檔 yfinance info（約 500 次、
+    每次 1 秒節流）。結果存 cache_path，ttl 內直接用。
+    """
+    import json
+    from datetime import date, datetime
+    from pathlib import Path
+
+    import yfinance as yf
+
+    from ir.us_calendar import _load_sp500
+
+    cp = Path(cache_path)
+    if cp.exists():
+        try:
+            c = json.loads(cp.read_text(encoding="utf-8"))
+            age = (date.today() - date.fromisoformat(c.get("date", "2000-01-01"))).days
+            if age <= ttl_days and c.get("data"):
+                log.info("S&P500 本益比：使用快取（%d 檔、%d 天前）", len(c["data"]), age)
+                return c["data"]
+        except (ValueError, KeyError):
+            pass
+
+    symbols = sorted(_load_sp500())
+    if not symbols:
+        return {}
+    log.info("S&P500 本益比：重抓 %d 檔（約 %d 分鐘）", len(symbols), len(symbols) // 60 + 1)
+    out: dict[str, dict] = {}
+    for i, sym in enumerate(symbols, 1):
+        try:
+            info = yf.Ticker(_yahoo_symbol(sym)).info or {}
+            sec = info.get("sector") or ""
+            out[sym] = {"sector_zh": SECTOR_ZH.get(sec, sec), "pe": _f(info.get("trailingPE"))}
+        except Exception:  # noqa: BLE001
+            pass
+        time.sleep(1.0)
+        if i % 100 == 0:
+            log.info("  …%d/%d", i, len(symbols))
+    cp.write_text(json.dumps({"date": date.today().isoformat(),
+                              "fetched_at": datetime.now().isoformat(), "data": out},
+                             ensure_ascii=False), encoding="utf-8")
+    return out
+
+
 def peer_pe_by_sector(profiles: dict[str, dict], min_samples: int = 4) -> dict[str, dict]:
-    """{sector_zh: {median, mean, n}}，樣本＝白名單內同 sector 有本益比者。"""
+    """{sector_zh: {median, mean, n}}，樣本＝傳入 profiles 中同 sector 有本益比者
+    （build_us 傳 S&P 500 全體；白名單只是退路）。"""
     buckets: dict[str, list[float]] = {}
     for p in profiles.values():
         if p and p.get("pe") and p["pe"] > 0 and p.get("sector_zh"):

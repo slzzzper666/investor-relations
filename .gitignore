@@ -16,6 +16,9 @@ data/*
 # 美股族群／業務項目（Gemini 讀公司描述產出），同理納入版控
 !data/us_business/
 !data/us_business/**
+# 與上次法說會比較（Gemini 產出），納入版控
+!data/compare/
+!data/compare/**
 *.log
 .venv/
 venv/
@@ -35,3 +38,6 @@ site/public/list.json
 site/public/c/
 site/public/detail/*.json
 !site/public/detail/us-*.json
+# 公司頁資料每次 build 重建（同 detail/）
+site/public/company/
+site/public/group/
