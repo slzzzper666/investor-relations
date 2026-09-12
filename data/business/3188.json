@@ -3,14 +3,39 @@
  "name": "鑫龍騰",
  "conf_date": "2026-03-23",
  "source": "pdf",
- "built_at": "2026-09-11 03:47",
- "segments": [],
+ "built_at": "2026-09-13 03:52",
+ "segments": [
+  {
+   "name": "鑫悅待交屋及未售戶",
+   "pct": null,
+   "note": "115年營收組成"
+  },
+  {
+   "name": "鑫巨蛋二待交屋及未售戶",
+   "pct": null,
+   "note": "115年營收組成"
+  },
+  {
+   "name": "鑫天地二待交屋及未售戶",
+   "pct": null,
+   "note": "115年營收組成"
+  },
+  {
+   "name": "鑫首席待交屋及未售戶",
+   "pct": null,
+   "note": "115年營收組成"
+  },
+  {
+   "name": "後港東未售戶",
+   "pct": null,
+   "note": "115年營收組成"
+  }
+ ],
  "as_of": "2026",
  "tags": [
-  "建材",
   "營建",
   "資產開發"
  ],
- "confidence": "none",
- "model": "gemini-3.5-flash-lite"
+ "confidence": "medium",
+ "model": "gemini-3.1-flash-lite"
 }

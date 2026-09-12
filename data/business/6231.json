@@ -3,14 +3,15 @@
  "name": "系微",
  "conf_date": "2026-02-05",
  "source": "pdf",
- "built_at": "2026-09-11 03:50",
+ "built_at": "2026-09-13 03:53",
  "segments": [],
  "as_of": "",
  "tags": [
   "軟體/SaaS",
   "筆電/PC",
-  "伺服器"
+  "伺服器",
+  "AI伺服器"
  ],
  "confidence": "none",
- "model": "gemini-3.5-flash-lite"
+ "model": "gemini-3.1-flash-lite"
 }
