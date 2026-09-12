@@ -1,0 +1,48 @@
+name: 每月健康回報與保活
+
+# 每月 1 日台北 09:00：①把站台／管線健康摘要推到 TG/DC；②提交一個時間戳
+# 讓 repo 有 commit 活動——GitHub 對 60 天無 commit 的公開 repo 會靜默停用所有
+# 排程 workflow（2026-08-25 曾因此全站停更兩週）。
+on:
+  schedule:
+    - cron: "0 1 1 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests python-dotenv tzdata
+
+      - name: 取線上站台資料（list.json 不進版控，以使用者實際看到的為準）
+        run: |
+          B=https://slzzzper666.github.io/investor-relations
+          for f in list.json us_list.json macro_future.json macro_history.json macro_monthly.json; do
+            curl -sSf -m 60 "$B/$f?t=$(date +%s)" -o "site/public/$f" || echo "取 $f 失敗"
+          done
+
+      - name: 推播月報
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python site/monthly_report.py
+
+      - name: 保活 commit（60 天無活動排程會被停用）
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -- site/public || true
+          date -u +"%Y-%m-%dT%H:%M:%SZ" > site/.keepalive
+          git add site/.keepalive
+          git commit -m "chore: 每月保活 $(date -u +%Y-%m)" || echo "無變更"
+          git push
