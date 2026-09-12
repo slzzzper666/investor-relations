@@ -23,6 +23,7 @@ from ir.stt import transcribe
 from ir.analyze import analyze
 from ir.notion_db import status as notion_status
 from ir.notion_db import upsert_conference
+from ir.segment import plan_segments
 from ir.notify import push_discord, push_telegram
 
 log = get_logger("ir.main")
@@ -89,7 +90,8 @@ def process_one(conf: Conference, push: bool = True, audio: bool = True) -> bool
                 "ai_view": "",
             }
 
-    notion_url = upsert_conference(conf, analysis, transcript, video_url)
+    notion_url = upsert_conference(conf, analysis, transcript, video_url,
+                                   segments=_segments_safe(conf, transcript))
     if push:
         push_telegram(conf, analysis, video_url, notion_url)
         push_discord(conf, analysis, video_url, notion_url)
@@ -115,9 +117,22 @@ def enrich_transcript(conf: Conference) -> bool:
         t_file.write_text(transcript, encoding="utf-8")
     analysis = analyze(conf.company_name, conf.stock_code, conf.date.isoformat(),
                        transcript=transcript)
-    upsert_conference(conf, analysis, transcript, video_url)
+    upsert_conference(conf, analysis, transcript, video_url,
+                      segments=_segments_safe(conf, transcript))
     log.info("%s：逐字稿已補上（%d 字）並重新分析", tag, len(transcript))
     return True
+
+
+def _segments_safe(conf: Conference, transcript: str) -> dict | None:
+    """逐字稿分段（Gemini）；失敗只記 log，不影響主流程（沒分段＝前端整篇顯示）。"""
+    if not transcript:
+        return None
+    try:
+        return plan_segments(conf.company_name, conf.stock_code,
+                             conf.date.isoformat(), transcript)
+    except Exception as e:  # noqa: BLE001
+        log.warning("%s %s：分段失敗 %s", conf.stock_code, conf.company_name, str(e)[:120])
+        return None
 
 
 def run(target: date, limit: int = 0, push: bool = True, audio: bool = True,

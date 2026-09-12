@@ -60,17 +60,44 @@ def status(conf: Conference) -> dict | None:
     page = _find_page(n, ds_id, conf)
     if page is None:
         return None
-    rt = page.get("properties", {}).get("逐字稿", {}).get("rich_text") or []
-    return {"id": page["id"], "has_transcript": bool(rt)}
+    pr = page.get("properties", {})
+    rt = pr.get("逐字稿", {}).get("rich_text") or []
+    sg = pr.get("分段", {}).get("rich_text") or []
+    return {"id": page["id"], "has_transcript": bool(rt), "has_segments": bool(sg)}
 
 
 def exists(conf: Conference) -> bool:
     return status(conf) is not None
 
 
+def segments_to_text(plan: dict | None) -> str:
+    """錨點檔 → 存進「分段」欄位的 JSON 字串（只存 segments，精簡到 2000 字內為佳）。"""
+    if not plan or not plan.get("segments"):
+        return ""
+    import json
+    return json.dumps({"v": plan.get("v", 1), "by": plan.get("by", "gemini"),
+                       "segments": plan["segments"]}, ensure_ascii=False,
+                      separators=(",", ":"))
+
+
+def save_segments(conf: Conference, plan: dict | None) -> bool:
+    """只更新「分段」欄位（逐字稿補段用）。頁面不存在回 False。"""
+    text = segments_to_text(plan)
+    if not text:
+        return False
+    n, ds_id = _get()
+    page = _find_page(n, ds_id, conf)
+    if page is None:
+        return False
+    n.pages.update(page_id=page["id"], properties={"分段": {"rich_text": _rich_chunks(text)}})
+    log.info("Notion 分段已更新：%s %s（%d 段）", conf.stock_code, conf.company_name,
+             len(plan["segments"]))
+    return True
+
+
 def upsert_conference(conf: Conference, analysis: dict, transcript: str,
-                      video_url: str) -> str:
-    """寫入/更新一列，回傳 Notion 頁面 URL。"""
+                      video_url: str, segments: dict | None = None) -> str:
+    """寫入/更新一列，回傳 Notion 頁面 URL。segments 為錨點檔（有逐字稿時可帶）。"""
     n, ds_id = _get()
 
     highlights = "\n".join(f"• {h}" for h in analysis.get("highlights", []))
@@ -93,6 +120,9 @@ def upsert_conference(conf: Conference, analysis: dict, transcript: str,
         props["YT"] = {"url": video_url}
     if transcript:
         props["逐字稿"] = {"rich_text": _rich_chunks(transcript)}
+        seg_text = segments_to_text(segments)
+        if seg_text:
+            props["分段"] = {"rich_text": _rich_chunks(seg_text)}
 
     # 同公司同日期 → 更新而非新增
     existing = _find_page(n, ds_id, conf)
