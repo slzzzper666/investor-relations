@@ -1,0 +1,36 @@
+{
+ "symbol": "CEG",
+ "segments": [
+  {
+   "name": "Mid-Atlantic",
+   "pct": null,
+   "note": "生產與銷售能源產品與服務"
+  },
+  {
+   "name": "Midwest",
+   "pct": null,
+   "note": "生產與銷售能源產品與服務"
+  },
+  {
+   "name": "New York",
+   "pct": null,
+   "note": "生產與銷售能源產品與服務"
+  },
+  {
+   "name": "ERCOT",
+   "pct": null,
+   "note": "生產與銷售能源產品與服務"
+  },
+  {
+   "name": "Other Power Regions",
+   "pct": null,
+   "note": "生產與銷售能源產品與服務"
+  }
+ ],
+ "tags": [
+  "公用事業",
+  "太陽能",
+  "風電"
+ ],
+ "model": "gemini-3.5-flash-lite"
+}

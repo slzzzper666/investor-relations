@@ -1,0 +1,30 @@
+{
+ "symbol": "LMT",
+ "segments": [
+  {
+   "name": "航空業務",
+   "pct": null,
+   "note": "提供戰鬥機、空中機動飛機與無人飛行載具"
+  },
+  {
+   "name": "飛彈與火控",
+   "pct": null,
+   "note": "提供防空飛彈系統與戰術飛彈"
+  },
+  {
+   "name": "旋翼與任務系統",
+   "pct": null,
+   "note": "提供軍用直升機與水面艦艇系統"
+  },
+  {
+   "name": "太空業務",
+   "pct": null,
+   "note": "提供衛星與太空運輸系統"
+  }
+ ],
+ "tags": [
+  "航太國防",
+  "無人機"
+ ],
+ "model": "gemini-3.5-flash-lite"
+}

@@ -1,0 +1,21 @@
+{
+ "symbol": "NVDA",
+ "segments": [
+  {
+   "name": "運算與網路",
+   "pct": null,
+   "note": "提供資料中心加速運算與網路平台、AI解決方案與軟體及車用平台"
+  },
+  {
+   "name": "繪圖處理器",
+   "pct": null,
+   "note": "提供遊戲與PC用GeForce GPU以及企業工作站用RTX GPU"
+  }
+ ],
+ "tags": [
+  "IC設計",
+  "AI伺服器",
+  "GPU/AI晶片"
+ ],
+ "model": "gemini-3.5-flash-lite"
+}

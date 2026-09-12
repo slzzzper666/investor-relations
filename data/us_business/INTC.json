@@ -1,0 +1,27 @@
+{
+ "symbol": "INTC",
+ "segments": [
+  {
+   "name": "用戶端運算",
+   "pct": null,
+   "note": "包含客戶端與商用 CPU、GPU、邊緣運算與連線產品"
+  },
+  {
+   "name": "資料中心與人工智慧",
+   "pct": null,
+   "note": "包含伺服器 CPU、GPU 與網路產品"
+  },
+  {
+   "name": "英特爾晶圓代工",
+   "pct": null,
+   "note": "包含晶圓製造、基板及相關產品與服務"
+  }
+ ],
+ "tags": [
+  "晶圓代工",
+  "IC設計",
+  "伺服器",
+  "筆電/PC"
+ ],
+ "model": "gemini-3.5-flash-lite"
+}

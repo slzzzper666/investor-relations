@@ -1,0 +1,29 @@
+{
+ "symbol": "MU",
+ "segments": [
+  {
+   "name": "雲端記憶體業務",
+   "pct": null,
+   "note": ""
+  },
+  {
+   "name": "核心資料中心業務",
+   "pct": null,
+   "note": ""
+  },
+  {
+   "name": "行動與客戶端業務",
+   "pct": null,
+   "note": ""
+  },
+  {
+   "name": "車用與嵌入式業務",
+   "pct": null,
+   "note": ""
+  }
+ ],
+ "tags": [
+  "記憶體"
+ ],
+ "model": "gemini-3.5-flash-lite"
+}

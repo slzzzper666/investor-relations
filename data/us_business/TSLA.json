@@ -1,0 +1,21 @@
+{
+ "symbol": "TSLA",
+ "segments": [
+  {
+   "name": "汽車業務",
+   "pct": null,
+   "note": "電動車與相關服務"
+  },
+  {
+   "name": "能源業務",
+   "pct": null,
+   "note": "太陽能與儲能系統"
+  }
+ ],
+ "tags": [
+  "電動車",
+  "儲能",
+  "車用電子"
+ ],
+ "model": "gemini-3.5-flash-lite"
+}

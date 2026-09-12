@@ -1,0 +1,30 @@
+{
+ "symbol": "SNOW",
+ "segments": [
+  {
+   "name": "雲端數據平台",
+   "pct": null,
+   "note": "提供基於雲端的數據平台服務"
+  },
+  {
+   "name": "AI數據雲",
+   "pct": null,
+   "note": "協助客戶整合數據並應用人工智慧"
+  },
+  {
+   "name": "資料應用開發",
+   "pct": null,
+   "note": "支援客戶建構資料應用程式"
+  },
+  {
+   "name": "資料共享與產品",
+   "pct": null,
+   "note": "提供數據與資料產品的共享功能"
+  }
+ ],
+ "tags": [
+  "軟體/SaaS",
+  "雲端服務"
+ ],
+ "model": "gemini-3.5-flash-lite"
+}

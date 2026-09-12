@@ -1,0 +1,30 @@
+{
+ "symbol": "MDB",
+ "segments": [
+  {
+   "name": "MongoDB Atlas",
+   "pct": null,
+   "note": "代管多雲資料庫即服務解決方案"
+  },
+  {
+   "name": "Enterprise Advanced",
+   "pct": null,
+   "note": "企業版商用資料庫伺服器"
+  },
+  {
+   "name": "Community Server",
+   "pct": null,
+   "note": "免費下載版資料庫"
+  },
+  {
+   "name": "專業服務",
+   "pct": null,
+   "note": "包含諮詢與培訓"
+  }
+ ],
+ "tags": [
+  "軟體/SaaS",
+  "雲端服務"
+ ],
+ "model": "gemini-3.5-flash-lite"
+}

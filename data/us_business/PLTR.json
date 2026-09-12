@@ -1,0 +1,32 @@
+{
+ "symbol": "PLTR",
+ "segments": [
+  {
+   "name": "Palantir Gotham國防情報平台",
+   "pct": null,
+   "note": "協助情報與國防單位進行戰場分析與決策"
+  },
+  {
+   "name": "Palantir Foundry數據作業系統",
+   "pct": null,
+   "note": "協助組織整合並分析各類數據資源"
+  },
+  {
+   "name": "Palantir Apollo軟體部署工具",
+   "pct": null,
+   "note": "支援軟體更新與跨環境部署管理"
+  },
+  {
+   "name": "Palantir AI人工智慧平台",
+   "pct": null,
+   "note": "提供大型語言模型整合與AI代理應用"
+  }
+ ],
+ "tags": [
+  "軟體/SaaS",
+  "資訊服務",
+  "航太國防",
+  "AI伺服器"
+ ],
+ "model": "gemini-3.1-flash-lite"
+}

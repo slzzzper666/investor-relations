@@ -1,0 +1,26 @@
+{
+ "symbol": "INTU",
+ "segments": [
+  {
+   "name": "全球商業解決方案",
+   "pct": null,
+   "note": "包含QuickBooks財務管理與Mailchimp行銷自動化服務"
+  },
+  {
+   "name": "消費者稅務與金融服務",
+   "pct": null,
+   "note": "包含TurboTax稅務準備與Credit Karma個人金融服務"
+  },
+  {
+   "name": "專業稅務軟體",
+   "pct": null,
+   "note": "包含Lacerte、ProSeries等專業稅務準備軟體與電子申報服務"
+  }
+ ],
+ "tags": [
+  "軟體/SaaS",
+  "數位金融",
+  "支付"
+ ],
+ "model": "gemini-3.1-flash-lite"
+}

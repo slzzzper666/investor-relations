@@ -1,0 +1,30 @@
+{
+ "symbol": "ADSK",
+ "segments": [
+  {
+   "name": "建築工程與施工軟體",
+   "pct": null,
+   "note": ""
+  },
+  {
+   "name": "產品設計與製造軟體",
+   "pct": null,
+   "note": ""
+  },
+  {
+   "name": "媒體與娛樂創作軟體",
+   "pct": null,
+   "note": ""
+  },
+  {
+   "name": "AutoCAD設計軟體",
+   "pct": null,
+   "note": ""
+  }
+ ],
+ "tags": [
+  "軟體/SaaS",
+  "雲端服務"
+ ],
+ "model": "gemini-3.5-flash"
+}

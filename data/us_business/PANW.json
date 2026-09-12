@@ -1,0 +1,31 @@
+{
+ "symbol": "PANW",
+ "segments": [
+  {
+   "name": "網路安全與防火牆解決方案",
+   "pct": null,
+   "note": "包含次世代防火牆、Prisma系列與網路安全管理工具"
+  },
+  {
+   "name": "人工智慧安全平台",
+   "pct": null,
+   "note": "提供AI存取安全、AI閘道與模型安全防護"
+  },
+  {
+   "name": "雲端與端點安全防護",
+   "pct": null,
+   "note": "包含SaaS安全、資料外洩防護與裝置安全"
+  },
+  {
+   "name": "資安營運與身分識別管理",
+   "pct": null,
+   "note": "包含Cortex平台、身分存取管理與威脅情報服務"
+  }
+ ],
+ "tags": [
+  "資安",
+  "軟體/SaaS",
+  "雲端服務"
+ ],
+ "model": "gemini-3.1-flash-lite"
+}

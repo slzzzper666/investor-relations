@@ -1,0 +1,27 @@
+{
+ "symbol": "GOOGL",
+ "segments": [
+  {
+   "name": "Google 服務業務",
+   "pct": null,
+   "note": "包含搜尋、廣告、YouTube、Android、Chrome 及硬體產品"
+  },
+  {
+   "name": "Google 雲端服務",
+   "pct": null,
+   "note": "提供 AI 解決方案、數據分析、資安及企業協作工具"
+  },
+  {
+   "name": "其他創新業務",
+   "pct": null,
+   "note": "包含交通運輸與網際網路相關服務"
+  }
+ ],
+ "tags": [
+  "社群媒體/廣告",
+  "雲端服務",
+  "軟體/SaaS",
+  "資安"
+ ],
+ "model": "gemini-3.1-flash-lite"
+}

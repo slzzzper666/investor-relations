@@ -1,0 +1,29 @@
+{
+ "symbol": "CPRI",
+ "segments": [
+  {
+   "name": "Michael Kors",
+   "pct": null,
+   "note": "公司經營的兩大主要業務分部之一"
+  },
+  {
+   "name": "Jimmy Choo",
+   "pct": null,
+   "note": "公司經營的兩大主要業務分部之一"
+  },
+  {
+   "name": "男女服飾與鞋類",
+   "pct": null,
+   "note": "設計、行銷、經銷與零售之品牌服飾與鞋類"
+  },
+  {
+   "name": "配件與皮革製品",
+   "pct": null,
+   "note": "提供手袋、小型皮革製品、珠寶、圍巾及皮帶等配件"
+  }
+ ],
+ "tags": [
+  "消費品牌"
+ ],
+ "model": "gemini-3.5-flash-lite"
+}

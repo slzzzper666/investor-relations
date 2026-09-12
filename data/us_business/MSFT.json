@@ -1,0 +1,27 @@
+{
+ "symbol": "MSFT",
+ "segments": [
+  {
+   "name": "生產力與業務處理",
+   "pct": null,
+   "note": "提供Microsoft 365、LinkedIn、Dynamics 365等產品與雲端服務"
+  },
+  {
+   "name": "智慧雲端",
+   "pct": null,
+   "note": "提供伺服器產品、雲端及AI服務、GitHub與企業支援服務"
+  },
+  {
+   "name": "個人運算",
+   "pct": null,
+   "note": "提供Windows作業系統、Surface硬體、Xbox遊戲與搜尋廣告"
+  }
+ ],
+ "tags": [
+  "軟體/SaaS",
+  "雲端服務",
+  "遊戲",
+  "社群媒體/廣告"
+ ],
+ "model": "gemini-3.5-flash-lite"
+}

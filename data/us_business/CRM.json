@@ -1,0 +1,30 @@
+{
+ "symbol": "CRM",
+ "segments": [
+  {
+   "name": "客戶關係管理服務",
+   "pct": null,
+   "note": "提供客戶關係管理技術服務與平台"
+  },
+  {
+   "name": "人工智慧代理平台",
+   "pct": null,
+   "note": "提供Agentforce等自主AI代理服務"
+  },
+  {
+   "name": "協作介面與數據管理",
+   "pct": null,
+   "note": "包含Slack與Data 360等數據及協作工具"
+  },
+  {
+   "name": "行銷與商務解決方案",
+   "pct": null,
+   "note": "提供行銷平台與全通路商務服務"
+  }
+ ],
+ "tags": [
+  "軟體/SaaS",
+  "雲端服務"
+ ],
+ "model": "gemini-3.5-flash-lite"
+}

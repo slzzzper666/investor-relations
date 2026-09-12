@@ -1,0 +1,31 @@
+{
+ "symbol": "CHPT",
+ "segments": [
+  {
+   "name": "聯網充電系統",
+   "pct": null,
+   "note": ""
+  },
+  {
+   "name": "充電管理系統",
+   "pct": null,
+   "note": ""
+  },
+  {
+   "name": "行動應用程式",
+   "pct": null,
+   "note": ""
+  },
+  {
+   "name": "e-mobility服務",
+   "pct": null,
+   "note": ""
+  }
+ ],
+ "tags": [
+  "電動車",
+  "車用電子",
+  "電力設備"
+ ],
+ "model": "gemini-3.5-flash-lite"
+}

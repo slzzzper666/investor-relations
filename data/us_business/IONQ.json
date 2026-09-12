@@ -1,0 +1,35 @@
+{
+ "symbol": "IONQ",
+ "segments": [
+  {
+   "name": "量子計算系統銷售",
+   "pct": null,
+   "note": "銷售不同量子位元容量的計算系統"
+  },
+  {
+   "name": "量子計算雲端服務",
+   "pct": null,
+   "note": "透過AWS、Azure、Google等平台提供存取"
+  },
+  {
+   "name": "量子硬體設計與開發",
+   "pct": null,
+   "note": "提供硬體設計、建造及維護支援服務"
+  },
+  {
+   "name": "量子演算法諮詢服務",
+   "pct": null,
+   "note": "協助客戶共同開發量子計算演算法"
+  },
+  {
+   "name": "半導體製造服務",
+   "pct": null,
+   "note": "提供相關半導體製造與生產服務"
+  }
+ ],
+ "tags": [
+  "雲端服務",
+  "其他"
+ ],
+ "model": "gemini-3.1-flash-lite"
+}

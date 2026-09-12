@@ -1,0 +1,31 @@
+{
+ "symbol": "RIVN",
+ "segments": [
+  {
+   "name": "汽車製造與銷售",
+   "pct": null,
+   "note": "包含R1T皮卡與R1S休旅車及商用電動貨車"
+  },
+  {
+   "name": "軟體與服務",
+   "pct": null,
+   "note": "包含車用軟體、訂閱服務、維修與保險等"
+  },
+  {
+   "name": "充電基礎設施",
+   "pct": null,
+   "note": "開發與製造Rivian Adventure Network快充設備"
+  },
+  {
+   "name": "車隊管理平台",
+   "pct": null,
+   "note": "提供FleetOS集中式車隊管理訂閱服務"
+  }
+ ],
+ "tags": [
+  "電動車",
+  "車用電子",
+  "軟體/SaaS"
+ ],
+ "model": "gemini-3.1-flash-lite"
+}

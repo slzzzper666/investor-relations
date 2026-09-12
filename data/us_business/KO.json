@@ -1,0 +1,30 @@
+{
+ "symbol": "KO",
+ "segments": [
+  {
+   "name": "氣泡軟性飲料",
+   "pct": null,
+   "note": "包含 Trademark Coca-Cola 等碳酸飲料"
+  },
+  {
+   "name": "水與運動飲料",
+   "pct": null,
+   "note": "包含水、運動飲料、咖啡與茶"
+  },
+  {
+   "name": "果汁與乳製品",
+   "pct": null,
+   "note": "包含果汁、加值乳製品與植物基飲料"
+  },
+  {
+   "name": "濃縮液與糖漿",
+   "pct": null,
+   "note": "提供給販售商與通路之濃縮液與糖漿"
+  }
+ ],
+ "tags": [
+  "消費品牌",
+  "食品"
+ ],
+ "model": "gemini-3.5-flash-lite"
+}

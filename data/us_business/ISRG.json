@@ -1,0 +1,35 @@
+{
+ "symbol": "ISRG",
+ "segments": [
+  {
+   "name": "達文西手術系統",
+   "pct": null,
+   "note": "提供微創手術解決方案"
+  },
+  {
+   "name": "Ion內視鏡系統",
+   "pct": null,
+   "note": "用於肺部微創切片診斷"
+  },
+  {
+   "name": "手術器械與耗材",
+   "pct": null,
+   "note": "包含縫合與能量器械"
+  },
+  {
+   "name": "客戶服務與技術支援",
+   "pct": null,
+   "note": "提供安裝維修與系統監控"
+  },
+  {
+   "name": "數位化整合服務",
+   "pct": null,
+   "note": "提供醫院營運效能分析"
+  }
+ ],
+ "tags": [
+  "醫療器材",
+  "自動化/機器人"
+ ],
+ "model": "gemini-3.1-flash-lite"
+}

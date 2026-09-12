@@ -1,0 +1,21 @@
+{
+ "symbol": "SNPS",
+ "segments": [
+  {
+   "name": "設計自動化",
+   "pct": null,
+   "note": "Design Automation 營運部門"
+  },
+  {
+   "name": "設計IP",
+   "pct": null,
+   "note": "Design IP 營運部門"
+  }
+ ],
+ "tags": [
+  "IC設計",
+  "矽智財IP",
+  "軟體/SaaS"
+ ],
+ "model": "gemini-3.5-flash-lite"
+}

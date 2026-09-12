@@ -1,0 +1,35 @@
+{
+ "symbol": "ABBV",
+ "segments": [
+  {
+   "name": "自體免疫與發炎藥物",
+   "pct": null,
+   "note": "包含 Skyrizi、Rinvoq 等"
+  },
+  {
+   "name": "腫瘤與癌症治療藥物",
+   "pct": null,
+   "note": "包含 Imbruvica、Venclexta、Elahere 等"
+  },
+  {
+   "name": "醫學美容與護膚產品",
+   "pct": null,
+   "note": "包含 Botox Cosmetic、Juvederm 等"
+  },
+  {
+   "name": "神經與精神疾病藥物",
+   "pct": null,
+   "note": "包含 Vraylar、Duodopa、Ubrelvy 等"
+  },
+  {
+   "name": "眼科照護及其他藥物",
+   "pct": null,
+   "note": "包含眼科產品、C肝藥物 Mavyret、消化道藥物等"
+  }
+ ],
+ "tags": [
+  "新藥研發",
+  "美妝保健"
+ ],
+ "model": "gemini-3.7-flash"
+}

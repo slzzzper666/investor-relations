@@ -1,0 +1,30 @@
+{
+ "symbol": "ZM",
+ "segments": [
+  {
+   "name": "視訊與通訊會議",
+   "pct": null,
+   "note": "Zoom Meetings與Zoom Phone等通訊服務"
+  },
+  {
+   "name": "協作與辦公工具",
+   "pct": null,
+   "note": "Zoom Team Chat與Zoom Docs等協作平台"
+  },
+  {
+   "name": "企業解決方案",
+   "pct": null,
+   "note": "Zoom Contact Center與Zoom Revenue Accelerator等"
+  },
+  {
+   "name": "開發者與應用平台",
+   "pct": null,
+   "note": "Zoom Developer Platform與App Marketplace"
+  }
+ ],
+ "tags": [
+  "軟體/SaaS",
+  "雲端服務"
+ ],
+ "model": "gemini-3.5-flash-lite"
+}

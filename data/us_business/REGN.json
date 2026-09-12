@@ -1,0 +1,34 @@
+{
+ "symbol": "REGN",
+ "segments": [
+  {
+   "name": "眼科疾病藥物開發",
+   "pct": null,
+   "note": "包含EYLEA等眼科治療藥物"
+  },
+  {
+   "name": "過敏與發炎疾病藥物",
+   "pct": null,
+   "note": "包含Dupixent等治療藥物"
+  },
+  {
+   "name": "癌症與血液疾病治療",
+   "pct": null,
+   "note": "包含Libtayo等腫瘤治療藥物"
+  },
+  {
+   "name": "代謝與心血管疾病藥物",
+   "pct": null,
+   "note": "包含Praluent等治療藥物"
+  },
+  {
+   "name": "基因編輯與創新療法",
+   "pct": null,
+   "note": "與外部合作開發RNAi及基因編輯技術"
+  }
+ ],
+ "tags": [
+  "新藥研發"
+ ],
+ "model": "gemini-3.1-flash-lite"
+}

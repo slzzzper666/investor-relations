@@ -13,6 +13,9 @@ data/*
 # 業務項目（AI 讀簡報產出），納入版控供 build_data 與 Actions 使用
 !data/business/
 !data/business/**
+# 美股族群／業務項目（Gemini 讀公司描述產出），同理納入版控
+!data/us_business/
+!data/us_business/**
 *.log
 .venv/
 venv/

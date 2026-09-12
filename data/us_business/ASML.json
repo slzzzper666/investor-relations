@@ -1,0 +1,34 @@
+{
+ "symbol": "ASML",
+ "segments": [
+  {
+   "name": "極紫外光微影系統",
+   "pct": null,
+   "note": "提供EUV微影系統解決方案"
+  },
+  {
+   "name": "深紫外光微影系統",
+   "pct": null,
+   "note": "包含浸潤式與乾式微影系統"
+  },
+  {
+   "name": "量測與檢測系統",
+   "pct": null,
+   "note": "包含YieldStar與HMI電子束解決方案"
+  },
+  {
+   "name": "運算微影與軟體",
+   "pct": null,
+   "note": "提供運算微影與控制軟體解決方案"
+  },
+  {
+   "name": "設備升級與服務",
+   "pct": null,
+   "note": "提供系統翻新、升級與客戶支援"
+  }
+ ],
+ "tags": [
+  "半導體設備"
+ ],
+ "model": "gemini-3.5-flash-lite"
+}

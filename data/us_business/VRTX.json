@@ -1,0 +1,29 @@
+{
+ "symbol": "VRTX",
+ "segments": [
+  {
+   "name": "囊性纖維化藥物",
+   "pct": null,
+   "note": "提供TRIKAFTA、KAFTRIO等治療藥物"
+  },
+  {
+   "name": "基因編輯療法",
+   "pct": null,
+   "note": "開發CASGEVY治療鐮刀型紅血球疾病等"
+  },
+  {
+   "name": "急性疼痛治療藥物",
+   "pct": null,
+   "note": "開發JOURNAVX等急性疼痛治療藥物"
+  },
+  {
+   "name": "腎臟與內分泌新藥",
+   "pct": null,
+   "note": "開發inaxaplin與罕見內分泌疾病藥物"
+  }
+ ],
+ "tags": [
+  "新藥研發"
+ ],
+ "model": "gemini-3.5-flash-lite"
+}

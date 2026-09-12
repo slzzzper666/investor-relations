@@ -1,0 +1,24 @@
+{
+ "symbol": "COST",
+ "segments": [
+  {
+   "name": "會員倉儲零售",
+   "pct": null,
+   "note": "經營會員制倉儲賣場並販售各類商品"
+  },
+  {
+   "name": "附屬設施服務",
+   "pct": null,
+   "note": "提供加油站、藥局及美食街等業務"
+  },
+  {
+   "name": "電子商務",
+   "pct": null,
+   "note": "經營線上購物與相關數位業務"
+  }
+ ],
+ "tags": [
+  "零售通路"
+ ],
+ "model": "gemini-3.5-flash-lite"
+}

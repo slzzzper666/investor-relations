@@ -1,0 +1,31 @@
+{
+ "symbol": "F",
+ "segments": [
+  {
+   "name": "Ford Blue燃油與混合動力車",
+   "pct": null,
+   "note": "銷售Ford與Lincoln品牌燃油及混合動力車"
+  },
+  {
+   "name": "Ford Model e電動車業務",
+   "pct": null,
+   "note": "開發電動車技術、軟體及充電解決方案"
+  },
+  {
+   "name": "Ford Pro商用車與服務",
+   "pct": null,
+   "note": "提供商用車、車隊管理及數位服務"
+  },
+  {
+   "name": "Ford Credit金融租賃服務",
+   "pct": null,
+   "note": "提供車輛融資、租賃及經銷商貸款業務"
+  }
+ ],
+ "tags": [
+  "電動車",
+  "車用電子",
+  "租賃"
+ ],
+ "model": "gemini-3.1-flash-lite"
+}

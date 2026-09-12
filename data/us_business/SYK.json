@@ -1,0 +1,19 @@
+{
+ "symbol": "SYK",
+ "segments": [
+  {
+   "name": "外科與神經科技",
+   "pct": null,
+   "note": "提供手術設備、導航系統、內視鏡與神經血管治療產品"
+  },
+  {
+   "name": "骨科與植入物",
+   "pct": null,
+   "note": "提供人工關節置換與智慧手術機器人系統"
+  }
+ ],
+ "tags": [
+  "醫療器材"
+ ],
+ "model": "gemini-3.5-flash-lite"
+}

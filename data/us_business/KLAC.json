@@ -1,0 +1,24 @@
+{
+ "symbol": "KLAC",
+ "segments": [
+  {
+   "name": "半導體製程控制",
+   "pct": null,
+   "note": "提供晶圓、光罩及積體電路之製程控制解決方案"
+  },
+  {
+   "name": "特殊半導體製程",
+   "pct": null,
+   "note": "提供特殊半導體製造與相關技術"
+  },
+  {
+   "name": "印刷電路板與元件檢測",
+   "pct": null,
+   "note": "提供PCB與元件檢測解決方案"
+  }
+ ],
+ "tags": [
+  "半導體設備"
+ ],
+ "model": "gemini-3.5-flash-lite"
+}

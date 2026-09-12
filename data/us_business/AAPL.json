@@ -1,0 +1,37 @@
+{
+ "symbol": "AAPL",
+ "segments": [
+  {
+   "name": "iPhone智慧型手機",
+   "pct": null,
+   "note": ""
+  },
+  {
+   "name": "Mac個人電腦",
+   "pct": null,
+   "note": ""
+  },
+  {
+   "name": "iPad平板電腦",
+   "pct": null,
+   "note": ""
+  },
+  {
+   "name": "穿戴式及家居配件",
+   "pct": null,
+   "note": ""
+  },
+  {
+   "name": "數位與雲端服務",
+   "pct": null,
+   "note": ""
+  }
+ ],
+ "tags": [
+  "手機",
+  "筆電/PC",
+  "消費品牌",
+  "串流媒體"
+ ],
+ "model": "gemini-3.6-flash"
+}

@@ -1,0 +1,31 @@
+{
+ "symbol": "ABNB",
+ "segments": [
+  {
+   "name": "住宿預訂平台",
+   "pct": null,
+   "note": ""
+  },
+  {
+   "name": "體驗活動預訂",
+   "pct": null,
+   "note": ""
+  },
+  {
+   "name": "空間預訂服務",
+   "pct": null,
+   "note": ""
+  },
+  {
+   "name": "禮物卡銷售",
+   "pct": null,
+   "note": ""
+  }
+ ],
+ "tags": [
+  "電商",
+  "觀光旅館",
+  "資訊服務"
+ ],
+ "model": "gemini-3.5-flash"
+}

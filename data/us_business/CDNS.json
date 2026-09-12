@@ -1,0 +1,36 @@
+{
+ "symbol": "CDNS",
+ "segments": [
+  {
+   "name": "計算與AI驅動軟體",
+   "pct": null,
+   "note": ""
+  },
+  {
+   "name": "硬體與晶片矽智財",
+   "pct": null,
+   "note": ""
+  },
+  {
+   "name": "功能驗證服務",
+   "pct": null,
+   "note": ""
+  },
+  {
+   "name": "數位與自訂IC設計",
+   "pct": null,
+   "note": ""
+  },
+  {
+   "name": "系統設計與分析平台",
+   "pct": null,
+   "note": ""
+  }
+ ],
+ "tags": [
+  "IC設計",
+  "矽智財IP",
+  "軟體/SaaS"
+ ],
+ "model": "gemini-3.5-flash-lite"
+}

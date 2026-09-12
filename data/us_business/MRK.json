@@ -1,0 +1,19 @@
+{
+ "symbol": "MRK",
+ "segments": [
+  {
+   "name": "人類健康製藥",
+   "pct": null,
+   "note": "提供多項人類健康相關的處方藥與疫苗產品"
+  },
+  {
+   "name": "動物健康產品",
+   "pct": null,
+   "note": "提供家畜與伴侶動物的製藥、疫苗與健康管理解決方案"
+  }
+ ],
+ "tags": [
+  "新藥研發"
+ ],
+ "model": "gemini-3.5-flash-lite"
+}

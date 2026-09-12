@@ -1,0 +1,35 @@
+{
+ "symbol": "V",
+ "segments": [
+  {
+   "name": "交易處理網路",
+   "pct": null,
+   "note": "運營VisaNet進行交易授權、清算與結算"
+  },
+  {
+   "name": "支付卡產品",
+   "pct": null,
+   "note": "提供信用卡、簽帳金融卡與預付卡產品"
+  },
+  {
+   "name": "資金流動平台",
+   "pct": null,
+   "note": "提供Visa Direct平台實現跨網路資金收付與轉換"
+  },
+  {
+   "name": "發卡與收單解決方案",
+   "pct": null,
+   "note": "提供機場貴賓室、全通路支付整合等服務"
+  },
+  {
+   "name": "風險與諮詢服務",
+   "pct": null,
+   "note": "提供風險偵測防範、顧問諮詢與數據分析服務"
+  }
+ ],
+ "tags": [
+  "數位金融",
+  "支付"
+ ],
+ "model": "gemini-3.5-flash-lite"
+}

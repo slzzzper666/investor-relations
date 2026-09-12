@@ -26,11 +26,15 @@ from ir.logger import get_logger                                    # noqa: E402
 from ir.radar import us as radar_us                                 # noqa: E402
 from ir.us_earn import (analyze_cached, fetch_earnings,             # noqa: E402
                         fetch_earnings_history, load_whitelist)
+from ir.us_profile import (extract_business, fetch_profile,        # noqa: E402
+                           fetch_quarters, peer_pe_by_sector)
 
 log = get_logger("build_us")
 TAIPEI = timezone(timedelta(hours=8))
 
 MAX_ANALYSES = int(os.getenv("IR_US_MAX", "25"))  # 每次最多分析幾檔（依市值大→小取）
+PROFILE_CACHE = BASE_DIR / ".us6q_cache.json"     # {sym: {asof, quarters, profile}}，隨 repo 提交
+BUSINESS_DIR = ROOT_DIR / "data" / "us_business"  # {SYM}.json 族群／業務項目（Gemini，隨 repo 提交）
 
 
 def _compose_summary(one_liner, highlights):
@@ -140,6 +144,98 @@ def build_upcoming(whitelist):
     return items
 
 
+def enrich_all(whitelist) -> None:
+    """讓美股詳細頁與台股同版面：近 6 季序列、產業別、同業本益比、業務族群。
+
+    對「全部」us-* detail 檔補欄位（不只本次新分析的），資料進 PROFILE_CACHE／
+    BUSINESS_DIR 隨 repo 提交；同一檔只在出現更新的財報日時才重抓 yfinance，
+    族群只在第一次見到該公司時才呼叫 Gemini。
+    """
+    name_zh = {w["symbol"]: w.get("name_zh") or w["symbol"] for w in whitelist}
+    cache: dict = {}
+    if PROFILE_CACHE.exists():
+        try:
+            cache = json.loads(PROFILE_CACHE.read_text(encoding="utf-8"))
+        except ValueError:
+            cache = {}
+    BUSINESS_DIR.mkdir(parents=True, exist_ok=True)
+
+    # 每檔最新財報日（由 detail 檔推得）→ 判斷快取是否過期
+    latest: dict[str, str] = {}
+    files = list(DETAIL_DIR.glob("us-*.json"))
+    for f in files:
+        sym, rd = f.stem.split("-", 2)[1:]
+        if rd > latest.get(sym, ""):
+            latest[sym] = rd
+
+    refreshed = 0
+    for sym, rd in sorted(latest.items()):
+        ent = cache.get(sym) or {}
+        if ent.get("asof") == rd and ent.get("quarters"):
+            continue
+        try:
+            q = fetch_quarters(sym)
+            prof = fetch_profile(sym)
+        except Exception as e:  # noqa: BLE001
+            log.warning("%s 輪廓抓取失敗：%s", sym, e)
+            continue
+        if q or prof:
+            cache[sym] = {"asof": rd, "quarters": q or [], "profile": prof or {}}
+            refreshed += 1
+        time.sleep(1.0)
+    log.info("美股輪廓：%d 檔、本次重抓 %d 檔", len(latest), refreshed)
+    PROFILE_CACHE.write_text(json.dumps(cache, ensure_ascii=False), encoding="utf-8")
+
+    # 族群（Gemini）：只做還沒有檔的；額度耗盡就停，下次接著補
+    new_biz = 0
+    for sym in sorted(latest):
+        bf = BUSINESS_DIR / f"{sym}.json"
+        if bf.exists():
+            continue
+        prof = (cache.get(sym) or {}).get("profile") or {}
+        try:
+            biz = extract_business(sym, name_zh.get(sym, sym), prof)
+        except Exception as e:  # noqa: BLE001
+            log.warning("%s 族群抽取失敗：%s", sym, str(e)[:120])
+            if "額度" in str(e):
+                break
+            continue
+        bf.write_text(json.dumps({"symbol": sym, **biz}, ensure_ascii=False, indent=1),
+                      encoding="utf-8")
+        new_biz += 1
+    if new_biz:
+        log.info("美股族群：新建 %d 檔", new_biz)
+
+    peer = peer_pe_by_sector({s: (c.get("profile") or {}) for s, c in cache.items()})
+
+    # 回寫所有 detail
+    for f in files:
+        d = json.loads(f.read_text(encoding="utf-8"))
+        sym = d["code"]
+        ent = cache.get(sym) or {}
+        prof = ent.get("profile") or {}
+        fin = d.get("financials") or {"market": "us"}
+        fin["quarters"] = ent.get("quarters") or []
+        fin["industry"] = prof.get("sector_zh") or ""
+        fin["industry_en"] = prof.get("industry") or ""
+        fin["industry_pe"] = peer.get(fin["industry"])
+        if prof.get("pe") is not None and fin.get("pe") is None:
+            fin["pe"] = prof["pe"]
+        d["financials"] = fin
+        bf = BUSINESS_DIR / f"{sym}.json"
+        if bf.exists():
+            try:
+                b = json.loads(bf.read_text(encoding="utf-8"))
+                if b.get("segments") or b.get("tags"):
+                    d["business"] = {"segments": b.get("segments") or [],
+                                     "tags": b.get("tags") or [], "as_of": "",
+                                     "confidence": "medium", "source": "profile"}
+            except ValueError:
+                pass
+        f.write_text(json.dumps(d, ensure_ascii=False), encoding="utf-8")
+    log.info("美股詳細頁已補欄位：%d 檔（同業本益比 %d 個產業）", len(files), len(peer))
+
+
 def main():
     force = "--whitelist" in sys.argv
     since = sys.argv[sys.argv.index("--since") + 1] if "--since" in sys.argv else None
@@ -152,6 +248,8 @@ def main():
     for d in details:
         (DETAIL_DIR / f"{d['id']}.json").write_text(
             json.dumps(d, ensure_ascii=False), encoding="utf-8")
+
+    enrich_all(whitelist)
 
     upcoming = build_upcoming(whitelist)
     up_path = PUBLIC_DIR / "us_upcoming.json"
@@ -175,6 +273,9 @@ def main():
             "market_cap": 0, "pdf_url": "", "video_url": "",
             "summary": dd["summary"], "ai_view": dd["ai_view"],
             "has_transcript": False, "transcript_chars": 0,
+            # 首頁族群篩選用（與台股同欄位名）
+            "industry": (dd.get("financials") or {}).get("industry") or "",
+            "tags": (dd.get("business") or {}).get("tags") or [],
         })
     all_items.sort(key=lambda x: (x["date"], x["code"]), reverse=True)
 

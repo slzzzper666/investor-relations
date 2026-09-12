@@ -189,24 +189,49 @@
 
   /* 近 N 季趨勢表：欄＝季別（舊→新，趨勢由左往右讀），列＝指標。
      每格帶一條與同列最大值等比的底條，數字之外還能一眼看出高低。 */
-  function quartersHtml(quarters) {
+  var TW_ROWS = [
+    { key: "revenue", label: "營收", unit: "億", digits: 1 },
+    { key: "revenue_yoy", label: "營收 YoY", unit: "%", digits: 1, signed: true },
+    { key: "eps", label: "EPS", unit: "元", digits: 2 },
+    { key: "gross_margin", label: "毛利率", unit: "%", digits: 1 },
+    { key: "capex", label: "資本支出", unit: "億", digits: 1 }
+  ];
+  /* 美股：yfinance 只給 5～7 季、YoY 多數季算不出來，改放市場最在意的「EPS vs 預期」 */
+  var US_ROWS = [
+    { key: "revenue", label: "營收", unit: "億美元", digits: 1, scale: 1e-8 },
+    { key: "revenue_qoq", label: "營收 QoQ", unit: "%", digits: 1, signed: true },
+    { key: "eps", label: "EPS", unit: "美元", digits: 2 },
+    { key: "eps_estimate", label: "EPS 預期", unit: "美元", digits: 2 },
+    { key: "surprise_pct", label: "驚奇", unit: "%", digits: 1, signed: true },
+    { key: "gross_margin", label: "毛利率", unit: "%", digits: 1 },
+    { key: "capex", label: "資本支出", unit: "億美元", digits: 1, scale: 1e-8 }
+  ];
+
+  /* 期別標頭：台股 "2026 Q2" → 兩行；美股季底 "2026-07" → 年／月 */
+  function periodHead(p) {
+    var s = String(p || "");
+    if (s.indexOf("-") !== -1) {
+      var parts = s.split("-");
+      return esc(parts[0]) + "<br>" + esc(parts[1]) + "月";
+    }
+    return esc(s).replace(" ", "<br>");
+  }
+
+  function quartersHtml(quarters, rowsSpec) {
     if (!quarters || !quarters.length) return "";
     var qs = quarters.slice().reverse();   // 傳入是新→舊
-    var rows = [
-      { key: "revenue", label: "營收", unit: "億", digits: 1 },
-      { key: "revenue_yoy", label: "營收 YoY", unit: "%", digits: 1, signed: true },
-      { key: "eps", label: "EPS", unit: "元", digits: 2 },
-      { key: "gross_margin", label: "毛利率", unit: "%", digits: 1 },
-      { key: "capex", label: "資本支出", unit: "億", digits: 1 }
-    ];
+    var rows = rowsSpec || TW_ROWS;
 
     var head = '<tr><th scope="col">季別</th>' + qs.map(function (q, i) {
       var cls = i === qs.length - 1 ? ' class="is-latest"' : "";
-      return "<th scope=\"col\"" + cls + ">" + esc(q.period).replace(" ", "<br>") + "</th>";
+      return "<th scope=\"col\"" + cls + ">" + periodHead(q.period) + "</th>";
     }).join("") + "</tr>";
 
     var body = rows.map(function (r) {
-      var vals = qs.map(function (q) { return q[r.key]; });
+      var vals = qs.map(function (q) {
+        var v = q[r.key];
+        return (v != null && r.scale) ? v * r.scale : v;
+      });
       var present = vals.filter(function (v) { return v != null; });
       if (!present.length) return "";       // 整列都沒資料（如金控無毛利率）就不顯示
       var max = Math.max.apply(null, present.map(Math.abs));
@@ -214,7 +239,7 @@
       var digits = r.digits;
       if (r.key === "revenue" || r.key === "capex") digits = max >= 1000 ? 0 : 1;
       var tds = qs.map(function (q, i) {
-        var v = q[r.key];
+        var v = vals[i];
         var latest = i === qs.length - 1 ? " is-latest" : "";
         if (v == null) return '<td class="is-na' + latest + '">—</td>';
         var pctW = max > 0 ? Math.round(Math.abs(v) / max * 100) : 0;
@@ -237,8 +262,9 @@
   }
 
   /* 業務項目：公司自己的營收結構 + 可點的族群標籤 */
-  function businessHtml(biz) {
+  function businessHtml(biz, cat) {
     if (!biz || (!biz.segments || !biz.segments.length)) return "";
+    var catQ = cat ? "cat=" + encodeURIComponent(cat) + "&" : "";
     // 比重條用絕對佔比（55% 就填 55% 寬），不做相對最大項的等比放大——
     // 這是營收結構，條的長度本身就該等於佔比。
     var items = biz.segments.map(function (s) {
@@ -254,7 +280,7 @@
     }).join("");
 
     var tags = (biz.tags || []).map(function (t) {
-      return '<a class="biz-tag" href="index.html?tag=' +
+      return '<a class="biz-tag" href="index.html?' + catQ + 'tag=' +
         encodeURIComponent(t) + '">' + esc(t) + "</a>";
     }).join("");
 
@@ -265,7 +291,9 @@
       '<ul class="biz-list">' + items + "</ul>" +
       (tags ? '<div class="biz-tags"><span class="biz-tags-label">族群</span>' +
         tags + "</div>" : "") +
-      '<p class="fin-note">營收結構由 AI 讀取法說會簡報整理 · 點族群看同類公司</p>' +
+      '<p class="fin-note">' + (cat === "us"
+        ? "業務項目由 AI 讀取公司公開描述整理 · 點族群看同類公司"
+        : "營收結構由 AI 讀取法說會簡報整理 · 點族群看同類公司") + "</p>" +
     "</aside>";
   }
 
@@ -288,7 +316,11 @@
     var cards = "";
     if (fin.market_cap != null) {
       var mc = usdParts(fin.market_cap);
-      cards += finCard(FIN_ICONS.cap, "市值", mc[0], mc[1], "");
+      var indLabel = fin.industry
+        ? '<span class="fin-peer">' + esc(fin.industry) +
+          (fin.industry_en ? " · " + esc(fin.industry_en) : "") + "</span>"
+        : "";
+      cards += finCard(FIN_ICONS.cap, "市值", mc[0], mc[1], indLabel);
     }
     if (fin.revenue != null) {
       var rv = usdParts(fin.revenue);
@@ -301,22 +333,27 @@
         finDelta("驚奇", fin.surprise_pct));
     }
 
+    var latest = (fin.quarters || [])[0] || {};
     var mini =
-      finMini("本益比", fin.pe != null ? finNum(fin.pe, 1) + "倍" : null) +
+      finMini("本益比", fin.pe != null ? finNum(fin.pe, 1) + "倍" : null, peerPeSub(fin)) +
       finMini("EPS 預期", fin.eps_estimate != null
         ? finNum(fin.eps_estimate, 2) : null) +
+      finMini("毛利率", latest.gross_margin != null
+        ? finNum(latest.gross_margin, 1) + "%" : null) +
       finMini("公布後反應", fin.price_reaction != null
         ? (fin.price_reaction >= 0 ? "+" : "") + finNum(fin.price_reaction, 1) + "%"
         : null);
     var miniBlock = mini ? '<div class="fin-mini">' + mini + "</div>" : "";
+    var trend = quartersHtml(fin.quarters, US_ROWS);
 
-    if (!cards && !miniBlock) {
+    if (!cards && !miniBlock && !trend) {
       return '<aside class="fin-panel">' + head +
         '<p class="fin-empty">本檔暫無財報數據。</p></aside>';
     }
     return '<aside class="fin-panel">' + head +
-      '<div class="fin-cards">' + cards + "</div>" + miniBlock +
-      '<p class="fin-note">資料來源：Yahoo Finance · 數據僅供參考</p>' +
+      (cards ? '<div class="fin-cards">' + cards + "</div>" : "") + miniBlock +
+      trend +
+      '<p class="fin-note">資料來源：Yahoo Finance · EPS 為調整後數字 · 同業中位為白名單內同產業 · 僅供參考</p>' +
     "</aside>";
   }
 
@@ -464,7 +501,7 @@
           transcriptSection +
         "</article>" +
         '<div class="doc-side">' +
-          businessHtml(d.business) + financialsHtml(d.financials, d) +
+          businessHtml(d.business, isUs ? "us" : "") + financialsHtml(d.financials, d) +
         "</div>" +
       "</div>" +
       '<nav class="doc-foot-nav"><a href="index.html">' + L.back + "</a></nav>";

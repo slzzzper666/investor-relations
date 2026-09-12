@@ -1,0 +1,32 @@
+{
+ "symbol": "NOW",
+ "segments": [
+  {
+   "name": "數位工作流程與IT服務",
+   "pct": null,
+   "note": "提供資產管理、IT服務管理與資安等產品"
+  },
+  {
+   "name": "客戶與現場服務管理",
+   "pct": null,
+   "note": "提供客戶服務與現場服務管理應用程式"
+  },
+  {
+   "name": "員工與企業營運服務",
+   "pct": null,
+   "note": "提供人力資源、法律合約與採購等作業服務"
+  },
+  {
+   "name": "應用程式引擎與平台",
+   "pct": null,
+   "note": "提供App Engine、自動化引擎與資料庫產品"
+  }
+ ],
+ "tags": [
+  "軟體/SaaS",
+  "雲端服務",
+  "資安",
+  "資訊服務"
+ ],
+ "model": "gemini-3.5-flash-lite"
+}

@@ -1,0 +1,29 @@
+{
+ "symbol": "UNH",
+ "segments": [
+  {
+   "name": "Optum Health 照護服務",
+   "pct": null,
+   "note": "提供照護傳遞與管理、健康金融服務"
+  },
+  {
+   "name": "Optum Insight 軟體服務",
+   "pct": null,
+   "note": "提供軟體、資訊產品與管理服務外包"
+  },
+  {
+   "name": "Optum Rx 藥事服務",
+   "pct": null,
+   "note": "提供藥物照護與處方管理服務"
+  },
+  {
+   "name": "UnitedHealthcare 保險計畫",
+   "pct": null,
+   "note": "提供各類消費導向的健康福利計畫"
+  }
+ ],
+ "tags": [
+  "醫療保險"
+ ],
+ "model": "gemini-3.5-flash-lite"
+}

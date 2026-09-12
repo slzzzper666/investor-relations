@@ -1,0 +1,24 @@
+{
+ "symbol": "PFE",
+ "segments": [
+  {
+   "name": "生技製藥",
+   "pct": null,
+   "note": "Biopharma"
+  },
+  {
+   "name": "初級醫療",
+   "pct": null,
+   "note": "PC1"
+  },
+  {
+   "name": "輝瑞引領",
+   "pct": null,
+   "note": "Pfizer Ignite"
+  }
+ ],
+ "tags": [
+  "新藥研發"
+ ],
+ "model": "gemini-3.5-flash-lite"
+}

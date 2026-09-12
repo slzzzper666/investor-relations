@@ -1,0 +1,25 @@
+{
+ "symbol": "UBER",
+ "segments": [
+  {
+   "name": "Mobility",
+   "pct": null,
+   "note": "連接消費者與多種交通方式、金融合作夥伴產品及廣告服務"
+  },
+  {
+   "name": "Delivery",
+   "pct": null,
+   "note": "提供餐廳、雜貨、零售商的餐點與商品外送及廣告服務"
+  },
+  {
+   "name": "Freight",
+   "pct": null,
+   "note": "管理運輸與物流網路，連接貨主與承運商的數位市場"
+  }
+ ],
+ "tags": [
+  "軟體/SaaS",
+  "貨運物流"
+ ],
+ "model": "gemini-3.5-flash-lite"
+}

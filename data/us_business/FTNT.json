@@ -1,0 +1,32 @@
+{
+ "symbol": "FTNT",
+ "segments": [
+  {
+   "name": "網路安全與防火牆解決方案",
+   "pct": null,
+   "note": "包含FortiGate防火牆及網路安全整合產品"
+  },
+  {
+   "name": "安全存取與邊緣運算服務",
+   "pct": null,
+   "note": "包含SASE、SD-WAN及零信任網路存取"
+  },
+  {
+   "name": "雲端與AI驅動安全營運",
+   "pct": null,
+   "note": "包含FortiCloud、FortiAI及各類偵測防禦系統"
+  },
+  {
+   "name": "資安威脅情報與技術支援",
+   "pct": null,
+   "note": "包含FortiGuard Labs研究與FortiCare支援服務"
+  }
+ ],
+ "tags": [
+  "資安",
+  "軟體/SaaS",
+  "網通設備",
+  "雲端服務"
+ ],
+ "model": "gemini-3.1-flash-lite"
+}

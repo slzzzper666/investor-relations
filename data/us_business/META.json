@@ -1,0 +1,20 @@
+{
+ "symbol": "META",
+ "segments": [
+  {
+   "name": "Family of Apps",
+   "pct": null,
+   "note": "包含 Facebook、Instagram、Messenger、WhatsApp 與 Threads 等社交與通訊應用程式"
+  },
+  {
+   "name": "Reality Labs",
+   "pct": null,
+   "note": "包含虛擬實境與擴增實境產品、穿戴式裝置及 Meta Quest 設備"
+  }
+ ],
+ "tags": [
+  "社群媒體/廣告",
+  "雲端服務"
+ ],
+ "model": "gemini-3.5-flash-lite"
+}

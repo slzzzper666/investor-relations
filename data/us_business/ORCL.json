@@ -1,0 +1,31 @@
+{
+ "symbol": "ORCL",
+ "segments": [
+  {
+   "name": "雲端軟體與SaaS應用",
+   "pct": null,
+   "note": "包含ERP、EPM、SCM、HCM及NetSuite等應用程式"
+  },
+  {
+   "name": "雲端基礎設施與資料庫",
+   "pct": null,
+   "note": "包含Oracle資料庫、MySQL、運算、儲存及網路服務"
+  },
+  {
+   "name": "軟體授權與支援服務",
+   "pct": null,
+   "note": "提供雲端與地端軟體授權及相關技術支援"
+  },
+  {
+   "name": "硬體系統與相關服務",
+   "pct": null,
+   "note": "包含工程系統、伺服器、儲存設備及諮詢服務"
+  }
+ ],
+ "tags": [
+  "軟體/SaaS",
+  "雲端服務",
+  "資訊服務"
+ ],
+ "model": "gemini-3.1-flash-lite"
+}

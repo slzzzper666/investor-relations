@@ -1,0 +1,24 @@
+{
+ "symbol": "RTX",
+ "segments": [
+  {
+   "name": "柯林斯航太系統",
+   "pct": null,
+   "note": "提供商用及軍用航空產品與售後服務"
+  },
+  {
+   "name": "普惠發動機",
+   "pct": null,
+   "note": "生產與維修商用及軍用飛機發動機"
+  },
+  {
+   "name": "雷神防務",
+   "pct": null,
+   "note": "提供防禦與進攻性威脅偵測及追蹤能力"
+  }
+ ],
+ "tags": [
+  "航太國防"
+ ],
+ "model": "gemini-3.5-flash-lite"
+}

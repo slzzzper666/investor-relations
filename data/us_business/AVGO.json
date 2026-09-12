@@ -1,0 +1,22 @@
+{
+ "symbol": "AVGO",
+ "segments": [
+  {
+   "name": "半導體解決方案",
+   "pct": null,
+   "note": "設計、開發並供應各種半導體元件"
+  },
+  {
+   "name": "基礎設施軟體",
+   "pct": null,
+   "note": "提供私有雲與企業軟體解決方案"
+  }
+ ],
+ "tags": [
+  "IC設計",
+  "網通設備",
+  "軟體/SaaS",
+  "資安"
+ ],
+ "model": "gemini-3.5-flash-lite"
+}

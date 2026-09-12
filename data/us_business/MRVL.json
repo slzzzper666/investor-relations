@@ -1,0 +1,31 @@
+{
+ "symbol": "MRVL",
+ "segments": [
+  {
+   "name": "乙太網路解決方案",
+   "pct": null,
+   "note": "包含控制器、網路 adapters、收發器與交換器"
+  },
+  {
+   "name": "客製化特殊應用晶片",
+   "pct": null,
+   "note": "提供 ASIC 與相關處理器"
+  },
+  {
+   "name": "互連與光通訊產品",
+   "pct": null,
+   "note": "包含 DSP、雷達驅動器與矽光子晶片組"
+  },
+  {
+   "name": "光纖通道與儲存控制器",
+   "pct": null,
+   "note": "包含硬碟與固態硬碟的儲存控制器"
+  }
+ ],
+ "tags": [
+  "IC設計",
+  "網通設備",
+  "光通訊"
+ ],
+ "model": "gemini-3.5-flash-lite"
+}

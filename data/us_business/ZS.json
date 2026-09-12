@@ -1,0 +1,31 @@
+{
+ "symbol": "ZS",
+ "segments": [
+  {
+   "name": "零信任SASE雲端安全平台",
+   "pct": null,
+   "note": "提供工作負載與應用程式的安全連接服務"
+  },
+  {
+   "name": "網路存取與威脅防護",
+   "pct": null,
+   "note": "包含Zscaler Internet Access與Private Access"
+  },
+  {
+   "name": "AI驅動的安全營運解決方案",
+   "pct": null,
+   "note": "包含AI安全、自動化營運與威脅偵測"
+  },
+  {
+   "name": "數位體驗監控服務",
+   "pct": null,
+   "note": "監控終端使用者體驗並解決效能問題"
+  }
+ ],
+ "tags": [
+  "軟體/SaaS",
+  "資安",
+  "雲端服務"
+ ],
+ "model": "gemini-3.1-flash-lite"
+}

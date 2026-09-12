@@ -1,0 +1,27 @@
+{
+ "symbol": "SBUX",
+ "segments": [
+  {
+   "name": "北美地區營運",
+   "pct": null,
+   "note": "經營咖啡與飲品零售業務"
+  },
+  {
+   "name": "國際市場營運",
+   "pct": null,
+   "note": "全球咖啡與飲品零售業務"
+  },
+  {
+   "name": "通路開發業務",
+   "pct": null,
+   "note": "授權商標與包裝食品銷售"
+  }
+ ],
+ "tags": [
+  "餐飲",
+  "連鎖餐飲",
+  "零售通路",
+  "消費品牌"
+ ],
+ "model": "gemini-3.1-flash-lite"
+}

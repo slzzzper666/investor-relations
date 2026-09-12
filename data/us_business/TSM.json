@@ -1,0 +1,25 @@
+{
+ "symbol": "TSM",
+ "segments": [
+  {
+   "name": "積體電路製造",
+   "pct": null,
+   "note": "製造積體電路與其他半導體元件"
+  },
+  {
+   "name": "晶圓製造製程服務",
+   "pct": null,
+   "note": "提供多種晶圓製造製程技術"
+  },
+  {
+   "name": "半導體封裝與測試",
+   "pct": null,
+   "note": "封裝與測試半導體設備"
+  }
+ ],
+ "tags": [
+  "晶圓代工",
+  "封裝測試"
+ ],
+ "model": "gemini-3.5-flash-lite"
+}

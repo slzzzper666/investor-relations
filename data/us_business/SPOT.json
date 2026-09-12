@@ -1,0 +1,19 @@
+{
+ "symbol": "SPOT",
+ "segments": [
+  {
+   "name": "付費訂閱服務",
+   "pct": null,
+   "note": "提供音樂、播客、影片及有聲書的線上與離線串流存取"
+  },
+  {
+   "name": "廣告支援服務",
+   "pct": null,
+   "note": "提供有限的隨選音樂及播客線上與離線存取"
+  }
+ ],
+ "tags": [
+  "串流媒體"
+ ],
+ "model": "gemini-3.5-flash-lite"
+}

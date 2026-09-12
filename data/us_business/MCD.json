@@ -1,0 +1,31 @@
+{
+ "symbol": "MCD",
+ "segments": [
+  {
+   "name": "漢堡與三明治",
+   "pct": null,
+   "note": ""
+  },
+  {
+   "name": "飲料與甜點",
+   "pct": null,
+   "note": ""
+  },
+  {
+   "name": "早餐系列",
+   "pct": null,
+   "note": ""
+  },
+  {
+   "name": "特約加盟餐飲服務",
+   "pct": null,
+   "note": ""
+  }
+ ],
+ "tags": [
+  "餐飲",
+  "連鎖餐飲",
+  "消費品牌"
+ ],
+ "model": "gemini-3.5-flash-lite"
+}

@@ -1,0 +1,32 @@
+{
+ "symbol": "WMT",
+ "segments": [
+  {
+   "name": "美國沃爾瑪零售",
+   "pct": null,
+   "note": "Walmart U.S. 營業部門"
+  },
+  {
+   "name": "國際零售業務",
+   "pct": null,
+   "note": "Walmart International 營業部門"
+  },
+  {
+   "name": "山姆會員店",
+   "pct": null,
+   "note": "Sam's Club U.S. 營業部門"
+  },
+  {
+   "name": "電子商務",
+   "pct": null,
+   "note": "涵蓋多個電商網站與行動應用程式"
+  }
+ ],
+ "tags": [
+  "零售通路",
+  "電商",
+  "數位金融",
+  "消費品牌"
+ ],
+ "model": "gemini-3.5-flash-lite"
+}

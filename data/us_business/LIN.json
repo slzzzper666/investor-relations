@@ -1,0 +1,24 @@
+{
+ "symbol": "LIN",
+ "segments": [
+  {
+   "name": "大氣氣體",
+   "pct": null,
+   "note": "提供氧氣、氮氣、氬氣及稀有氣體"
+  },
+  {
+   "name": "製程氣體",
+   "pct": null,
+   "note": "提供氫氣、氦氣、二氧化碳、電子氣體及特種氣體等"
+  },
+  {
+   "name": "工程與統包廠",
+   "pct": null,
+   "note": "設計與建造空氣分離與氫氣等製程工廠"
+  }
+ ],
+ "tags": [
+  "化工"
+ ],
+ "model": "gemini-3.5-flash-lite"
+}

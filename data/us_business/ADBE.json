@@ -1,0 +1,25 @@
+{
+ "symbol": "ADBE",
+ "segments": [
+  {
+   "name": "數位媒體部門",
+   "pct": null,
+   "note": ""
+  },
+  {
+   "name": "數位體驗部門",
+   "pct": null,
+   "note": ""
+  },
+  {
+   "name": "出版與廣告部門",
+   "pct": null,
+   "note": ""
+  }
+ ],
+ "tags": [
+  "軟體/SaaS",
+  "雲端服務"
+ ],
+ "model": "gemini-3.5-flash"
+}

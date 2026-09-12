@@ -1,0 +1,27 @@
+{
+ "symbol": "AMD",
+ "segments": [
+  {
+   "name": "資料中心業務",
+   "pct": null,
+   "note": "Data Center"
+  },
+  {
+   "name": "客戶端與遊戲業務",
+   "pct": null,
+   "note": "Client and Gaming"
+  },
+  {
+   "name": "嵌入式業務",
+   "pct": null,
+   "note": "Embedded"
+  }
+ ],
+ "tags": [
+  "IC設計",
+  "GPU/AI晶片",
+  "伺服器",
+  "AI伺服器"
+ ],
+ "model": "gemini-3.5-flash-lite"
+}

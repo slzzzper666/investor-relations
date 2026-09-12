@@ -984,11 +984,13 @@
     if (ev.key === "Escape") closeModal();
   });
 
-  // 還原上次選擇的分類與檢視
+  // 還原上次選擇的分類與檢視；網址 ?cat=us 優先（詳細頁族群連結跳回對應分頁用）
   try {
     var savedCat = localStorage.getItem(CAT_KEY);
     if (savedCat && CATS[savedCat]) currentCat = savedCat;
     if (localStorage.getItem(VIEW_KEY) === "calendar") currentView = "calendar";
   } catch (e) { /* 無痕模式 */ }
+  var catParam = /[?&]cat=(tw|us|macro)(?=&|$)/.exec(location.search);
+  if (catParam) { currentCat = catParam[1]; currentView = "list"; }
   loadCategory(currentCat);
 })();

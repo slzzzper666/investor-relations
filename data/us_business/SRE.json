@@ -1,0 +1,26 @@
+{
+ "symbol": "SRE",
+ "segments": [
+  {
+   "name": "加州公用事業",
+   "pct": null,
+   "note": "提供天然氣與電力服務"
+  },
+  {
+   "name": "德州公用事業",
+   "pct": null,
+   "note": "從事受監管的電力輸配電業務"
+  },
+  {
+   "name": "基礎設施服務",
+   "pct": null,
+   "note": "開發與營運能源基礎設施"
+  }
+ ],
+ "tags": [
+  "公用事業",
+  "電力設備",
+  "儲能"
+ ],
+ "model": "gemini-3.5-flash-lite"
+}
