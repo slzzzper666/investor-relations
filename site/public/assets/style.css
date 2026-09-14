@@ -175,10 +175,22 @@ a { color: inherit; }
 /* ---------- 檢視切換 ---------- */
 
 .view-tabs {
+  position: relative;
   display: flex;
   gap: 4px;
   margin-top: 26px;
   border-bottom: 1px solid var(--line);
+}
+
+/* 檢視列的滑動底線：位置由 app.js 依啟用鈕設定 */
+.view-thumb {
+  position: absolute;
+  left: 0; bottom: -1px;
+  height: 2px;
+  width: 0;
+  background: var(--amber);
+  transition: transform .4s cubic-bezier(.2, .8, .2, 1), width .4s cubic-bezier(.2, .8, .2, 1);
+  pointer-events: none;
 }
 
 .cat-tabs + .view-tabs,
@@ -202,8 +214,9 @@ a { color: inherit; }
 
 .view-tab.is-active {
   color: var(--amber);
-  border-bottom-color: var(--amber);
 }
+/* 沒有 JS 量位置（底線寬 0）時退回原本的底線 */
+.view-tabs:not(.has-thumb) .view-tab.is-active { border-bottom-color: var(--amber); }
 
 /* ---------- 搜尋與篩選 ---------- */
 
@@ -297,16 +310,17 @@ a { color: inherit; }
   from { opacity: 0; transform: translateY(14px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-.ledger.is-leaving, .cat-panel.is-leaving {
+.ledger.is-leaving, .cat-panel.is-leaving, .view-panel.is-leaving {
   animation: ledgerOut .22s ease-in both; pointer-events: none;
 }
-.ledger.is-entering, .cat-panel.is-entering {
+.ledger.is-entering, .cat-panel.is-entering, .view-panel.is-entering {
   animation: ledgerIn .5s cubic-bezier(.2, .8, .2, 1) both;
 }
 @media (prefers-reduced-motion: reduce) {
-  .seg-thumb, .cat-thumb { transition: none; }
+  .seg-thumb, .cat-thumb, .view-thumb { transition: none; }
   .ledger.is-leaving, .ledger.is-entering,
-  .cat-panel.is-leaving, .cat-panel.is-entering { animation-duration: .01s; }
+  .cat-panel.is-leaving, .cat-panel.is-entering,
+  .view-panel.is-leaving, .view-panel.is-entering { animation-duration: .01s; }
 }
 
 /* 依公司列表（重用族群頁 .g-row 樣式，多一欄最新場次） */

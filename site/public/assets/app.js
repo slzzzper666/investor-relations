@@ -105,6 +105,7 @@
   var macroMonthly = [];   // 總經每月回顧（macro_monthly.json）
 
   var elCatPanel = document.getElementById("cat-panel");
+  var elViewPanel = document.getElementById("view-panel");
   var elCatTabs = document.querySelector(".cat-tabs");
   var elCatTw = document.getElementById("cat-tw");
   var elCatUs = document.getElementById("cat-us");
@@ -336,7 +337,7 @@
 
   function setMode(mode) {
     mode = mode === "company" ? "company" : "date";
-    if (mode === currentMode || modeSwitching || catSwitching) return;
+    if (mode === currentMode || modeSwitching || catSwitching || viewSwitching) return;
     currentMode = mode;
     try { localStorage.setItem(MODE_KEY, currentMode); } catch (e) { /* 無痕 */ }
     updateModeSeg();
@@ -989,12 +990,38 @@
     if (elCalFilter) elCalFilter.hidden = currentCat === "macro";
     if (isCal && !calBuilt) buildCalendar();
     if (isFuture) renderFuture();
+    updateViewThumb();
   }
 
+  /* 檢視列底線滑到啟用的頁籤下 */
+  function updateViewThumb() {
+    var thumb = elViewTabs && elViewTabs.querySelector(".view-thumb");
+    if (!thumb) return;
+    var active = elViewTabs.querySelector(".view-tab.is-active:not([hidden])");
+    if (!active || elViewTabs.hidden) return;
+    elViewTabs.classList.add("has-thumb");
+    thumb.style.width = active.offsetWidth + "px";
+    thumb.style.transform = "translateX(" + active.offsetLeft + "px)";
+  }
+
+  var viewSwitching = false;
+
   function setView(view) {
+    if (view === currentView || viewSwitching || catSwitching || modeSwitching) return;
     currentView = view;
     try { localStorage.setItem(VIEW_KEY, view); } catch (e) { /* 無痕模式 */ }
-    applyView();
+    if (!dataReady || !elViewPanel) { applyView(); return; }
+    // 先把底線滑過去（頁籤在面板外，不跟著淡出），內容再淡出→換→滑入
+    [[elTabList, "list"], [elTabCalendar, "calendar"], [elTabFuture, "future"]].forEach(function (p) {
+      p[0].classList.toggle("is-active", view === p[1]);
+    });
+    updateViewThumb();
+    viewSwitching = true;
+    fadeOut(elViewPanel).then(function () {
+      applyView();
+      fadeIn(elViewPanel);
+      viewSwitching = false;
+    });
   }
 
   /* ---------- 載入資料 ---------- */
@@ -1164,7 +1191,7 @@
      首次載入不動畫。 */
   function loadCategory(cat, animate) {
     if (!CATS[cat]) cat = "tw";
-    if (catSwitching || modeSwitching) return;
+    if (catSwitching || modeSwitching || viewSwitching) return;
     if (animate && cat === currentCat) return;
     currentCat = cat;
     try { localStorage.setItem(CAT_KEY, cat); } catch (e) { /* 無痕模式 */ }
@@ -1209,9 +1236,9 @@
     });
     updateModeSeg();
   }
-  window.addEventListener("resize", function () { updateModeSeg(); updateCatTabs(); });
+  window.addEventListener("resize", function () { updateModeSeg(); updateCatTabs(); updateViewThumb(); });
   if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(function () { updateModeSeg(); updateCatTabs(); });
+    document.fonts.ready.then(function () { updateModeSeg(); updateCatTabs(); updateViewThumb(); });
   }
 
   elTabList.addEventListener("click", function () { setView("list"); });
