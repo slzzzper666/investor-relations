@@ -17,7 +17,7 @@ import os
 import re
 import shutil
 import sys
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 import requests
@@ -634,22 +634,67 @@ def _latest_period(today) -> str:
     return f"{y - 1} Q3"
 
 
+FIN_CACHE_V = 5           # v5：加 pretax_margin、金融業營收科目對應、fetched_at
+FIN_RETRY_DAYS = 7        # 最新季 EPS 缺（來源尚未提供）的檔，隔幾天再試一次
+
+
+def _fin_cache_fresh(cached: dict | None, period_key: str, today) -> bool:
+    """快取是否可直接用（不必連 FinMind）。
+
+    - 跨季一律重抓。
+    - 最新季 EPS 缺但更早有：來源（FinMind）尚未補上該季，每 FIN_RETRY_DAYS 天重試，
+      補上前就先用舊快取顯示。2026 起金融業（金控／銀行／保險）普遍如此。
+    - v4 舊格式沒有 pretax_margin，只有「毛利率整列缺」的檔才需要升級重抓
+      （其餘一般業顯示完全相同，留到跨季自然更新，省免費額度）。
+    """
+    if not cached or cached.get("period_key") != period_key:
+        return False
+    qs = cached.get("quarters") or []
+    if cached.get("v") == FIN_CACHE_V:
+        if qs and qs[0].get("eps") is None and any(q.get("eps") is not None for q in qs):
+            fetched = cached.get("fetched_at") or "2000-01-01"
+            return (today - date.fromisoformat(fetched)).days < FIN_RETRY_DAYS
+        return True
+    if cached.get("v") == 4:
+        return any(q.get("gross_margin") is not None for q in qs)
+    return False
+
+
+def _fin_notes(quarters: list[dict] | None) -> list[str]:
+    """財報面板下方的說明：哪些欄位為什麼是空的（讓讀者知道不是壞掉）。"""
+    if not quarters:
+        return []
+    notes = []
+    if (all(q.get("gross_margin") is None for q in quarters)
+            and any(q.get("pretax_margin") is not None for q in quarters)):
+        note = "本檔損益表無毛利小計（金融業或合併保險子公司），改列稅前淨利率"
+        if all(q.get("capex") is None for q in quarters):
+            note += "；資本支出亦非金融業報表項目"
+        notes.append(note)
+    missing = [q["period"] for q in quarters if q.get("eps") is None]
+    if missing and len(missing) < len(quarters):
+        notes.append("資料來源尚未提供 " + "、".join(reversed(missing)) + " 單季 EPS，補上後自動更新")
+    return notes
+
+
 def fetch_tw_financials(code: str, cache: dict) -> list[dict] | None:
     """單檔台股近 N 季財報序列（新→舊），來源 FinMind（見 ir/fin6q.py）。
 
-    依「目前最新已公布季」快取於 .fin6q_cache.json，同季不重抓。
+    依「目前最新已公布季」快取於 .fin6q_cache.json，同季不重抓（見 _fin_cache_fresh）。
     市值、本益比為股價型（每日變動），不在此處，於組裝階段注入。
     """
     if not re.fullmatch(r"\d{4}", code or ""):
         return None
 
-    period_key = _latest_period(datetime.now(TAIPEI).date())
+    today = datetime.now(TAIPEI).date()
+    period_key = _latest_period(today)
     cached = cache.get(code)
-    if cached and cached.get("v") == 4 and cached.get("period_key") == period_key:
+    if _fin_cache_fresh(cached, period_key, today):
         return cached.get("quarters")
 
     quarters = fetch_quarters(code)          # RateLimited 由呼叫端處理
-    cache[code] = {"v": 4, "period_key": period_key, "quarters": quarters}
+    cache[code] = {"v": FIN_CACHE_V, "period_key": period_key,
+                   "fetched_at": today.isoformat(), "quarters": quarters}
     return quarters
 
 
@@ -853,7 +898,8 @@ def main() -> None:
     # 快取跨輪累積，跑個幾輪就補滿。額度中途用盡也會自動改吃快取，不會讓整個 build 失敗。
     fin_budget = int(os.getenv("IR_FIN_LIMIT", "120"))
     fin_fetched = 0
-    fin_period_key = _latest_period(datetime.now(TAIPEI).date())
+    fin_today = datetime.now(TAIPEI).date()
+    fin_period_key = _latest_period(fin_today)
 
     PUBLIC_DIR.mkdir(parents=True, exist_ok=True)
     DETAIL_DIR.mkdir(parents=True, exist_ok=True)
@@ -876,8 +922,7 @@ def main() -> None:
         detail = {"id": it_id, **it}
         code = it["code"]
         cached = fin_cache.get(code)
-        is_fresh = (cached and cached.get("v") == 4
-                    and cached.get("period_key") == fin_period_key)
+        is_fresh = _fin_cache_fresh(cached, fin_period_key, fin_today)
         if fetch_ok and not is_fresh and fin_fetched < fin_budget:
             try:
                 quarters = fetch_tw_financials(code, fin_cache)
@@ -902,6 +947,9 @@ def main() -> None:
             "industry_code": ind,
             "industry_pe": ind_pe.get(ind),
         }
+        notes = _fin_notes(quarters)
+        if notes:
+            fin["notes"] = notes
         detail["financials"] = fin if (quarters or fin["market_cap"]) else None
         business = _load_business(code)
         if business:

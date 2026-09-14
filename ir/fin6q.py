@@ -7,6 +7,18 @@
 為什麼不用 MOPS：t163sb01 是累計值，單季要兩次呼叫；近 6 季就得打十幾次，
 而 MOPS 對密集請求回 406（雲端與本機皆曾被擋）。FinMind 一檔兩次請求就拿到
 完整歷史，是這個需求唯一撐得住的來源。
+
+科目因行業而異（FinMind 依 MOPS 各業別報表原樣給）：
+  一般業   Revenue / CostOfGoodsSold / GrossProfit / EPS
+  金控     Revenue（淨收益）／無毛利
+  銀行     NetInterestIncome + NetNonInterestIncome（淨收益）／無毛利
+  證券     Income（收益）／OperatingIncome／無毛利
+  保險     Revenue（營業收入）／無毛利
+少數一般業（和泰車、三商、新纖…因合併保險子公司）沒有 GrossProfit 小計；
+它們的 CostOfGoodsSold 其實是「營收－稅前淨利」的差額而非真正營業成本
+（實測 2905/2207 相減恰等於稅前淨利），所以**不能**拿來反推毛利。
+金融業與這些公司一律另給稅前淨利率（pretax_margin），前端在毛利率整列缺時
+以它替代顯示。
 """
 import time
 from datetime import date
@@ -78,6 +90,26 @@ def _prev_quarter_date(d: str) -> str:
     return f"{y}-{['03-31', '06-30', '09-30', '12-31'][q - 1]}"
 
 
+def _first(d: dict, *keys):
+    """依序取第一個非 None 的科目（0 也算有值，不能用 or）。"""
+    for k in keys:
+        v = d.get(k)
+        if v is not None:
+            return v
+    return None
+
+
+def _revenue(cur: dict):
+    """營收：一般業／金控／保險 Revenue；證券 Income；銀行 利息淨收益＋利息以外淨收益。"""
+    v = _first(cur, "Revenue", "Income")
+    if v is not None:
+        return v
+    nii, nnii = cur.get("NetInterestIncome"), cur.get("NetNonInterestIncome")
+    if nii is None and nnii is None:
+        return None
+    return (nii or 0) + (nnii or 0)
+
+
 def _pct(a, b):
     """年／季增率。基期為零或負數時回 None。
 
@@ -129,20 +161,25 @@ def fetch(code: str, quarters: int = QUARTERS) -> list[dict] | None:
     out: list[dict] = []
     for qd in dates[:quarters]:
         cur = by_q[qd]
-        rev, eps = cur.get("Revenue"), cur.get("EPS")
-        gross = cur.get("GrossProfit")
+        rev, eps = _revenue(cur), cur.get("EPS")
+        gross = cur.get("GrossProfit")     # 沒小計就不給（見模組說明，不能用營業成本反推）
+        pretax = _first(cur, "PreTaxIncome", "IncomeBeforeTaxFromContinuingOperations")
         ly = by_q.get(f"{int(qd[:4]) - 1}{qd[4:]}", {})
         pq = by_q.get(_prev_quarter_date(qd), {})
         cx = capex_single(qd)
+        # 保險業偶有負營收（IFRS 17 評價損失），比率算不出意義 → 只在營收為正時給
+        pos_rev = rev if rev is not None and rev > 0 else None
         out.append({
             "period": _q_label(qd),
             "revenue": round(rev / 1e8, 2) if rev is not None else None,   # 元→億
             "eps": round(eps, 2) if eps is not None else None,
-            "gross_margin": (round(gross / rev * 100, 1)
-                             if gross is not None and rev else None),
+            "gross_margin": (round(gross / pos_rev * 100, 1)
+                             if gross is not None and pos_rev else None),
+            "pretax_margin": (round(pretax / pos_rev * 100, 1)
+                              if pretax is not None and pos_rev else None),
             "capex": round(cx / 1e8, 2) if cx is not None else None,       # 元→億
-            "revenue_yoy": _pct(rev, ly.get("Revenue")),
-            "revenue_qoq": _pct(rev, pq.get("Revenue")),
+            "revenue_yoy": _pct(rev, _revenue(ly)),
+            "revenue_qoq": _pct(rev, _revenue(pq)),
             "eps_yoy": _pct(eps, ly.get("EPS")),
         })
     return out or None

@@ -79,7 +79,9 @@
     { key: "revenue", label: "營收", unit: "億", digits: 1 },
     { key: "revenue_yoy", label: "營收 YoY", unit: "%", digits: 1, signed: true },
     { key: "eps", label: "EPS", unit: "元", digits: 2 },
-    { key: "gross_margin", label: "毛利率", unit: "%", digits: 1 },
+    /* 金融業（及合併保險子公司的少數公司）損益表沒有毛利小計，整列缺時改列稅前淨利率 */
+    { key: "gross_margin", label: "毛利率", unit: "%", digits: 1,
+      alt: { key: "pretax_margin", label: "稅前淨利率", unit: "%", digits: 1 } },
     { key: "capex", label: "資本支出", unit: "億", digits: 1 }
   ];
   /* 美股：yfinance 只給 5～7 季、YoY 多數季算不出來，改放市場最在意的「EPS vs 預期」 */
@@ -106,7 +108,11 @@
   function quartersHtml(quarters, rowsSpec) {
     if (!quarters || !quarters.length) return "";
     var qs = quarters.slice().reverse();   // 傳入是新→舊
-    var rows = rowsSpec || TW_ROWS;
+    var rows = (rowsSpec || TW_ROWS).map(function (r) {
+      if (!r.alt) return r;
+      var has = qs.some(function (q) { return q[r.key] != null; });
+      return has ? r : r.alt;
+    });
 
     var head = '<tr><th scope="col">季別</th>' + qs.map(function (q, i) {
       var cls = i === qs.length - 1 ? ' class="is-latest"' : "";
@@ -272,15 +278,19 @@
         finDelta("年", latest.eps_yoy));
     }
 
-    var mini =
-      finMini("毛利率", latest.gross_margin != null
-        ? finNum(latest.gross_margin, 1) + "%" : null) +
+    var marginMini = latest.gross_margin != null
+      ? finMini("毛利率", finNum(latest.gross_margin, 1) + "%")
+      : finMini("稅前淨利率", latest.pretax_margin != null
+          ? finNum(latest.pretax_margin, 1) + "%" : null);
+    var mini = marginMini +
       finMini("本益比", fin.pe != null
         ? finNum(fin.pe, 1) + "倍" : null, peerPeSub(fin)) +
       finMini("資本支出", latest.capex != null
         ? finNum(latest.capex, 1) + "億" : null);
     var miniBlock = mini ? '<div class="fin-mini">' + mini + "</div>" : "";
     var trend = quartersHtml(quarters);
+    var notes = (fin.notes || []).length
+      ? '<p class="fin-note fin-note-why">' + fin.notes.map(esc).join("<br>") + "</p>" : "";
 
     if (!cards && !miniBlock && !trend) {
       return '<aside class="fin-panel">' + head +
@@ -289,7 +299,7 @@
 
     return '<aside class="fin-panel">' + head +
       (cards ? '<div class="fin-cards">' + cards + "</div>" : "") + miniBlock +
-      trend +
+      trend + notes +
       finReportLinks(d) +
       '<p class="fin-note">單季數據 · 來源：公開財報（FinMind）／本益比與市值：TWSE、TPEx</p>' +
     "</aside>";

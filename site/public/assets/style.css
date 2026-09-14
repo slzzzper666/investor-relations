@@ -1326,6 +1326,14 @@ a.m-row:hover {
   letter-spacing: 0.02em;
   color: var(--faint);
 }
+/* 欄位為何是空的（金融業無毛利、來源尚缺 EPS）：比一般註腳顯眼一點，讀者才不會以為壞掉 */
+.fin-note-why {
+  margin-top: 10px;
+  padding: 8px 10px;
+  border-left: 2px solid var(--amber);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--muted, var(--faint));
+}
 
 @media (max-width: 900px) {
   .doc-body { grid-template-columns: 1fr; gap: 0; }
