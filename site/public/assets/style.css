@@ -353,6 +353,11 @@ a { color: inherit; }
   color: var(--faint);
   padding-bottom: 10px;
   letter-spacing: 0.04em;
+  /* 固定寬度：數字位數變了（273 場 ↔ 92 家）不能把左邊的搜尋欄擠寬縮窄，切換時整排才不會位移 */
+  flex: 0 0 auto;
+  min-width: 15ch;
+  text-align: right;
+  white-space: nowrap;
 }
 
 /* ---------- 日期脊柱帳冊 ---------- */
