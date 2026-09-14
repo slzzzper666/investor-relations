@@ -80,6 +80,13 @@
         <option value="">全部月份</option>
       </select>
     </div>
+    <div class="field">
+      <label id="mode-label">排列</label>
+      <div class="seg" id="mode-seg" role="radiogroup" aria-labelledby="mode-label">
+        <button type="button" class="seg-btn is-active" data-mode="date" role="radio" aria-checked="true">依日期</button>
+        <button type="button" class="seg-btn" data-mode="company" role="radio" aria-checked="false">依公司</button>
+      </div>
+    </div>
     <p class="count mono" id="count" role="status" aria-live="polite"></p>
   </section>
 

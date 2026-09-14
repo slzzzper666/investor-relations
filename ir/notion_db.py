@@ -3,8 +3,14 @@
 沿用使用者已建立的欄位：
   公司(title)、股票代號(number)、日期(date)、簡報(url)、YT(url)、
   逐字稿(rich_text)、重點摘要(rich_text)、AI 觀點與未來方向分析(rich_text)
+管線後加的欄位（皆 rich_text 存 JSON 字串）：
+  分段：逐字稿分段錨點（ir/segment.py）
+  比較：與同公司上一場法說會的對照（ir/compare.py）
 同公司同日期重跑時會更新既有列，不會重複新增。
 """
+import json
+from datetime import timedelta
+
 from notion_client import Client
 
 import config
@@ -15,6 +21,7 @@ log = get_logger("ir.notion")
 
 _client: Client | None = None
 _ds_id: str | None = None
+MIN_GAP_DAYS = 21   # 「上一場」至少要早這麼多天（見 previous_conference）
 
 
 def _get() -> tuple[Client, str]:
@@ -31,6 +38,20 @@ def _rich_chunks(text: str, limit: int = 2000, max_chunks: int = 90) -> list[dic
     text = text.strip()
     chunks = [text[i:i + limit] for i in range(0, len(text), limit)][:max_chunks]
     return [{"type": "text", "text": {"content": c}} for c in chunks]
+
+
+def _plain(prop: dict) -> str:
+    """rich_text 屬性 → 純文字（查詢回應每個屬性最多帶 25 段 = 5 萬字，比較用途足夠）。"""
+    return "".join(t.get("plain_text", "") for t in prop.get("rich_text") or [])
+
+
+def analysis_texts(analysis: dict) -> tuple[str, str]:
+    """分析結果 → (重點摘要, AI 觀點) 兩段文字；寫 Notion 與「比較」的輸入都用同一格式。"""
+    highlights = "\n".join(f"• {h}" for h in analysis.get("highlights", []))
+    summary_text = f"{analysis.get('one_liner', '')}\n{highlights}"
+    view_text = (f"{analysis.get('ai_view', '')}\n\n"
+                 f"【展望】{analysis.get('outlook', '')}")
+    return summary_text, view_text
 
 
 def _find_page(n: Client, ds_id: str, conf: Conference) -> dict | None:
@@ -63,18 +84,74 @@ def status(conf: Conference) -> dict | None:
     pr = page.get("properties", {})
     rt = pr.get("逐字稿", {}).get("rich_text") or []
     sg = pr.get("分段", {}).get("rich_text") or []
-    return {"id": page["id"], "has_transcript": bool(rt), "has_segments": bool(sg)}
+    cp = pr.get("比較", {}).get("rich_text") or []
+    return {"id": page["id"], "has_transcript": bool(rt), "has_segments": bool(sg),
+            "has_compare": bool(cp)}
 
 
 def exists(conf: Conference) -> bool:
     return status(conf) is not None
 
 
+def previous_conference(conf: Conference) -> dict | None:
+    """同公司、日期早於 conf 的最近一場：{id, date, summary, ai_view, transcript}；沒有回 None。
+
+    「與上次法說會比較」的輸入。逐字稿只取查詢回應帶回的前段（ir/compare 只用前 6000 字）。
+    """
+    if not conf.stock_code.isdigit():
+        return None
+    n, ds_id = _get()
+    # 同一場法說會常分兩天（中／英文場、上下午場），隔天那場沒有可比性：
+    # 「上一場」須早於 MIN_GAP_DAYS 天，才會是上一季的法說會
+    cutoff = (conf.date - timedelta(days=MIN_GAP_DAYS - 1)).isoformat()
+    res = n.data_sources.query(
+        data_source_id=ds_id,
+        filter={"and": [
+            {"property": "股票代號", "number": {"equals": int(conf.stock_code)}},
+            {"property": "日期", "date": {"before": cutoff}},
+        ]},
+        sorts=[{"property": "日期", "direction": "descending"}],
+        page_size=1,
+    )
+    if not res["results"]:
+        return None
+    page = res["results"][0]
+    pr = page.get("properties", {})
+    return {"id": page["id"],
+            "date": ((pr.get("日期", {}).get("date") or {}).get("start") or "")[:10],
+            "summary": _plain(pr.get("重點摘要", {})),
+            "ai_view": _plain(pr.get("AI 觀點與未來方向分析", {})),
+            "transcript": _plain(pr.get("逐字稿", {}))}
+
+
+def compare_to_text(result: dict | None) -> str:
+    """比較結果 → 存進「比較」欄位的 JSON 字串。"""
+    if not result or not result.get("items"):
+        return ""
+    keep = {k: result[k] for k in ("prev_date", "prev_id", "verdict", "items", "watch", "model")
+            if k in result}
+    return json.dumps(keep, ensure_ascii=False, separators=(",", ":"))
+
+
+def save_compare(conf: Conference, result: dict | None) -> bool:
+    """只更新「比較」欄位（回補用）。頁面不存在或沒結果回 False。"""
+    text = compare_to_text(result)
+    if not text:
+        return False
+    n, ds_id = _get()
+    page = _find_page(n, ds_id, conf)
+    if page is None:
+        return False
+    n.pages.update(page_id=page["id"], properties={"比較": {"rich_text": _rich_chunks(text)}})
+    log.info("Notion 比較已更新：%s %s（vs %s，%d 項）", conf.stock_code, conf.company_name,
+             result.get("prev_date", ""), len(result["items"]))
+    return True
+
+
 def segments_to_text(plan: dict | None) -> str:
     """錨點檔 → 存進「分段」欄位的 JSON 字串（只存 segments，精簡到 2000 字內為佳）。"""
     if not plan or not plan.get("segments"):
         return ""
-    import json
     return json.dumps({"v": plan.get("v", 1), "by": plan.get("by", "gemini"),
                        "segments": plan["segments"]}, ensure_ascii=False,
                       separators=(",", ":"))
@@ -96,14 +173,14 @@ def save_segments(conf: Conference, plan: dict | None) -> bool:
 
 
 def upsert_conference(conf: Conference, analysis: dict, transcript: str,
-                      video_url: str, segments: dict | None = None) -> str:
-    """寫入/更新一列，回傳 Notion 頁面 URL。segments 為錨點檔（有逐字稿時可帶）。"""
-    n, ds_id = _get()
+                      video_url: str, segments: dict | None = None,
+                      compare: dict | None = None) -> str:
+    """寫入/更新一列，回傳 Notion 頁面 URL。
 
-    highlights = "\n".join(f"• {h}" for h in analysis.get("highlights", []))
-    summary_text = f"{analysis.get('one_liner', '')}\n{highlights}"
-    view_text = (f"{analysis.get('ai_view', '')}\n\n"
-                 f"【展望】{analysis.get('outlook', '')}")
+    segments 為分段錨點檔（有逐字稿時可帶）；compare 為與上一場的比較結果。
+    """
+    n, ds_id = _get()
+    summary_text, view_text = analysis_texts(analysis)
 
     props: dict = {
         "公司": {"title": [{"type": "text",
@@ -123,6 +200,9 @@ def upsert_conference(conf: Conference, analysis: dict, transcript: str,
         seg_text = segments_to_text(segments)
         if seg_text:
             props["分段"] = {"rich_text": _rich_chunks(seg_text)}
+    cmp_text = compare_to_text(compare)
+    if cmp_text:
+        props["比較"] = {"rich_text": _rich_chunks(cmp_text)}
 
     # 同公司同日期 → 更新而非新增
     existing = _find_page(n, ds_id, conf)

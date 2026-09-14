@@ -155,11 +155,14 @@
 
   /* 業務項目：公司自己的營收結構 + 可點的族群標籤 */
   function businessHtml(biz, cat) {
-    if (!biz || (!biz.segments || !biz.segments.length)) return "";
+    if (!biz) return "";
+    var segs = biz.segments || [];
+    var tagList = biz.tags || [];
+    if (!segs.length && !tagList.length) return "";
     var catQ = cat ? "cat=" + encodeURIComponent(cat) + "&" : "";
     // 比重條用絕對佔比（55% 就填 55% 寬），不做相對最大項的等比放大——
     // 這是營收結構，條的長度本身就該等於佔比。
-    var items = biz.segments.map(function (s) {
+    var items = segs.map(function (s) {
       var pct = s.pct != null ? finNum(s.pct, 1) + "%" : "";
       var w = s.pct != null ? Math.max(0, Math.min(100, s.pct)) : 0;
       return '<li class="biz-item">' +
@@ -171,21 +174,24 @@
       "</li>";
     }).join("");
 
-    var tags = (biz.tags || []).map(function (t) {
+    var tags = tagList.map(function (t) {
       return '<a class="biz-tag" href="index.html?' + catQ + 'tag=' +
         encodeURIComponent(t) + '">' + esc(t) + "</a>";
     }).join("");
 
+    // 簡報裡沒有營收結構、只標到族群：仍給框（族群連結是首頁篩選的入口），註明沒有比重
+    var note = cat === "us"
+      ? "業務項目由 AI 讀取公司公開描述整理 · 點族群看同類公司"
+      : (segs.length ? "營收結構由 AI 讀取法說會簡報整理 · 點族群看同類公司"
+                     : "簡報中未列營收比重，族群由 AI 依業務內容標註 · 點族群看同類公司");
     return '<aside class="biz-panel">' +
-      '<div class="fin-head"><span class="fin-title">業務項目</span>' +
+      '<div class="fin-head"><span class="fin-title">' + (segs.length ? "業務項目" : "業務族群") + "</span>" +
         (biz.as_of ? '<span class="fin-period mono">' + esc(biz.as_of) + "</span>" : "") +
       "</div>" +
-      '<ul class="biz-list">' + items + "</ul>" +
+      (items ? '<ul class="biz-list">' + items + "</ul>" : "") +
       (tags ? '<div class="biz-tags"><span class="biz-tags-label">族群</span>' +
         tags + "</div>" : "") +
-      '<p class="fin-note">' + (cat === "us"
-        ? "業務項目由 AI 讀取公司公開描述整理 · 點族群看同類公司"
-        : "營收結構由 AI 讀取法說會簡報整理 · 點族群看同類公司") + "</p>" +
+      '<p class="fin-note">' + note + "</p>" +
     "</aside>";
   }
 

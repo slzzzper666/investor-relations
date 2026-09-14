@@ -126,6 +126,7 @@ def parse_page(page: dict) -> dict | None:
         "ai_view": _rich_text(p.get("AI 觀點與未來方向分析", {})),
         "transcript": _rich_text(p.get("逐字稿", {})),
         "segments_json": _rich_text(p.get("分段", {})),   # 錨點 JSON（管線用 Gemini 產）
+        "compare_json": _rich_text(p.get("比較", {})),    # 與上一場比較 JSON（同上）
     }
 
 
@@ -794,7 +795,8 @@ def write_company_pages(details: list[dict]) -> None:
     """
     COMPANY_DIR.mkdir(parents=True, exist_ok=True)
     for f in COMPANY_DIR.glob("*.json"):
-        f.unlink()
+        if not f.name.startswith("us-"):     # 美股公司頁由 build_us.py 產，這裡只清台股
+            f.unlink()
     by_code: dict[str, list[dict]] = {}
     for d in details:
         if re.fullmatch(r"\d{4}", d.get("code") or ""):
@@ -954,10 +956,15 @@ def main() -> None:
         business = _load_business(code)
         if business:
             detail["business"] = business
+        # 與上次法說會比較：本機 data/compare/{id}.json（示範／覆寫）優先，否則 Notion「比較」欄位
         cmp_f = COMPARE_DIR / f"{it_id}.json"
-        if cmp_f.exists():
+        cmp_raw = cmp_f.read_text(encoding="utf-8") if cmp_f.exists() else it.get("compare_json", "")
+        detail.pop("compare_json", None)
+        if cmp_raw:
             try:
-                detail["compare"] = json.loads(cmp_f.read_text(encoding="utf-8"))
+                cmp = json.loads(cmp_raw)
+                if cmp.get("items"):
+                    detail["compare"] = cmp
             except ValueError:
                 pass
         segs = _load_segments(it_id, it.get("transcript", ""), it.get("segments_json", ""))
@@ -983,6 +990,11 @@ def main() -> None:
             "transcript_chars": len(it["transcript"]),
             "industry": industry_name(ind),
             "tags": (business or {}).get("tags") or [],
+            # 首頁「依公司」列表用：最新一季單季數字與本益比（族群抬頭的中位數也由此算）
+            "pe": pes.get(it["code"]),
+            "rev_yoy": (quarters or [{}])[0].get("revenue_yoy"),
+            "eps": (quarters or [{}])[0].get("eps"),
+            "period": (quarters or [{}])[0].get("period", ""),
         })
 
     FIN_CACHE.write_text(json.dumps(fin_cache, ensure_ascii=False),

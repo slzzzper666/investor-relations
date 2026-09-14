@@ -237,6 +237,53 @@ a { color: inherit; }
 
 .field select option { background: var(--panel); }
 
+/* 依日期／依公司 切換鈕：與輸入框同高同框 */
+.seg {
+  display: inline-flex;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--panel);
+  overflow: hidden;
+}
+.seg-btn {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  background: none;
+  border: none;
+  padding: 9px 14px;
+  cursor: pointer;
+  transition: color .15s, background-color .15s;
+}
+.seg-btn + .seg-btn { border-left: 1px solid var(--line); }
+.seg-btn:hover { color: var(--text); }
+.seg-btn.is-active { color: var(--amber); background: var(--panel-2); }
+
+/* 依公司列表（重用族群頁 .g-row 樣式，多一欄最新場次） */
+.co-list { padding-bottom: 56px; }
+.co-row {
+  grid-template-columns: 56px minmax(220px, 1fr) 104px 92px 72px 118px;
+  min-width: 760px;
+}
+.co-ind {
+  font-family: var(--mono); font-weight: 400; font-size: 11px; color: var(--faint);
+  margin-left: 10px; letter-spacing: 0.04em;
+}
+.co-tags { display: block; margin-top: 6px; }
+.co-tags .tag { margin-right: 4px; }
+.co-date { line-height: 1.5; }
+.co-date .mono { display: block; }
+.co-n { display: block; font-size: 11px; color: var(--faint); }
+.g-inline { padding: 26px 0 18px; }
+.g-inline .doc-eyebrow { margin-bottom: 6px; }
+.g-inline-name { font-family: var(--serif); font-size: 26px; margin: 0; }
+.g-inline .g-stats { margin-top: 12px; }
+@media (max-width: 720px) {
+  .co-row { min-width: 0; }
+  .co-n { font-size: 10px; }
+}
+
 .count {
   margin-left: auto;
   font-size: 12px;
@@ -2024,9 +2071,22 @@ body.chips-open { overflow: hidden; }
 .g-sub.down { color: var(--down, #E06C6C); }
 .g-na { color: var(--faint); }
 @media (max-width: 720px) {
-  .g-row { min-width: 0; grid-template-columns: 48px minmax(0, 1fr); }
+  /* 手機：第一列 代號＋公司，第二列四個數字各佔一格（標籤放數字上方） */
+  .g-row {
+    min-width: 0;
+    grid-template-columns: auto 1fr 1fr 1fr;
+    grid-template-areas: "code main main main" "n3 n4 n5 n6";
+    row-gap: 10px;
+  }
+  .g-row > :nth-child(1) { grid-area: code; }
+  .g-row > :nth-child(2) { grid-area: main; }
+  .g-row > :nth-child(3) { grid-area: n3; }
+  .g-row > :nth-child(4) { grid-area: n4; }
+  .g-row > :nth-child(5) { grid-area: n5; }
+  .g-row > :nth-child(6) { grid-area: n6; }
   .g-num { text-align: left; font-size: 12.5px; }
-  .g-num .g-label { display: inline; color: var(--faint); font-size: 11px; margin-right: 6px; }
+  .g-num .g-label { display: block; color: var(--faint); font-size: 10px; letter-spacing: 0.04em; }
+  .g-sub { display: block; margin-left: 0; }   /* 本益比 vs 族群的折溢價換行放，不擠成兩行半 */
   .g-head { display: none; }
 }
 

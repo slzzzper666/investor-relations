@@ -76,7 +76,7 @@
       '<header class="doc-head">' +
         '<p class="doc-eyebrow">' + (kind === "tag" ? "業務族群" : "產業別") +
           '<span class="sep">·</span><a href="index.html?' + kind + "=" + encodeURIComponent(name) +
-          '">在首頁篩選這個族群</a></p>' +
+          '&mode=company">在首頁篩選這個族群</a></p>' +
         "<h1>" + esc(name) + "</h1>" + stats +
       "</header>" +
       '<section class="doc-section"><h2>成員公司' +

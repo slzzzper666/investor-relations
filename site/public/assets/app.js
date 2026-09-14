@@ -35,6 +35,13 @@
     try { return sessionStorage.getItem(FILTER_KEYS.group) || ""; } catch (e) { return ""; }
   })();
   var restoreFiltersOnce = true;   // 只在本次載入的第一批資料還原搜尋與月份，切換分類時照舊重置
+  // 列表模式：date＝依日期（一場一列）、company＝依公司（一家一列，進公司頁；有族群篩選時上方帶族群統計）
+  var MODE_KEY = "ir-mode";
+  var currentMode = "date";
+  try { if (localStorage.getItem(MODE_KEY) === "company") currentMode = "company"; } catch (e) { /* 無痕 */ }
+  if (/[?&]mode=company(?=&|$)/.test(location.search)) currentMode = "company";
+  else if (/[?&]mode=date(?=&|$)/.test(location.search)) currentMode = "date";
+  var elModeSeg = document.getElementById("mode-seg");
   var elFooterMeta = document.getElementById("footer-meta");
   var elControls = document.getElementById("controls");
   var elTabList = document.getElementById("tab-list");
@@ -158,6 +165,156 @@
     filteredItems = items;
     listLimit = LIST_PAGE;   // 每次重新篩選都從頭、只先畫前段
     paintList();
+  }
+
+  /* ---------- 依公司 ---------- */
+
+  function finNum(n, digits) {
+    if (n == null) return "—";
+    return Number(n).toLocaleString("zh-Hant-TW", {
+      minimumFractionDigits: digits, maximumFractionDigits: digits
+    });
+  }
+
+  function pctHtml(v) {
+    if (v == null) return '<span class="g-na">—</span>';
+    return '<span class="fin-delta ' + (v >= 0 ? "up" : "down") + '">' +
+      (v >= 0 ? "+" : "") + finNum(v, 1) + "%</span>";
+  }
+
+  function median(nums) {
+    var a = nums.slice().sort(function (x, y) { return x - y; });
+    if (!a.length) return null;
+    var mid = a.length >> 1;
+    return a.length % 2 ? a[mid] : Math.round((a[mid - 1] + a[mid]) * 50) / 100;
+  }
+
+  /* 場次 → 公司：同公司只留最新一場（資料已新→舊），並數總場次／逐字稿場次 */
+  function toCompanies(items) {
+    var seen = {};
+    var out = [];
+    items.forEach(function (it) {
+      var key = it.code || it.company;
+      if (!seen[key]) {
+        seen[key] = { latest: it, n: 0, tr: 0 };
+        out.push(seen[key]);
+      }
+      seen[key].n += 1;
+      if (it.has_transcript) seen[key].tr += 1;
+    });
+    return out;
+  }
+
+  function companyRow(c, groupPe) {
+    var it = c.latest;
+    var tags = (it.tags || []).slice(0, 3).map(function (t) {
+      return '<span class="tag tag-group">' + esc(t) + "</span>";
+    }).join("");
+    var peTxt = '<span class="g-na">—</span>';
+    if (it.pe != null) {
+      peTxt = finNum(it.pe, 1) + "×";
+      if (groupPe) {
+        var r = it.pe / groupPe;
+        peTxt += ' <span class="g-sub ' + (r >= 1 ? "up" : "down") + '">' +
+          (r >= 1 ? "＋" : "－") + finNum(Math.abs(r - 1) * 100, 0) + "%</span>";
+      }
+    }
+    var href = "company.html?code=" + encodeURIComponent(it.code || "");
+    return '<a class="g-row co-row" href="' + href + '">' +
+      '<span class="g-code mono">' + (esc(it.code) || "—") + "</span>" +
+      '<span class="g-main">' +
+        '<span class="g-company">' + esc(it.company) +
+          (it.industry ? '<span class="co-ind">' + esc(it.industry) + "</span>" : "") + "</span>" +
+        (it.summary ? '<span class="g-summary">' + esc(oneLiner(it.summary)) + "</span>" : "") +
+        (tags ? '<span class="co-tags">' + tags + "</span>" : "") +
+      "</span>" +
+      '<span class="g-num co-date"><span class="g-label">最新</span>' +
+        '<span class="mono">' + esc((it.date || "").slice(2).replace(/-/g, "/")) + "</span>" +
+        '<span class="co-n">' + c.n + " 場" + (c.tr ? " · 稿 " + c.tr : "") + "</span></span>" +
+      '<span class="g-num"><span class="g-label">營收 YoY</span>' + pctHtml(it.rev_yoy) + "</span>" +
+      '<span class="g-num"><span class="g-label">EPS</span>' +
+        (it.eps != null ? finNum(it.eps, 2) : '<span class="g-na">—</span>') + "</span>" +
+      '<span class="g-num"><span class="g-label">本益比</span>' + peTxt + "</span>" +
+    "</a>";
+  }
+
+  /* 族群篩選時的抬頭：與族群落地頁同一組統計（家數／本益比中位／營收年增為正） */
+  function groupHeadHtml(kind, name, cos, groupPe) {
+    var withYoy = cos.filter(function (c) { return c.latest.rev_yoy != null; });
+    var growing = withYoy.filter(function (c) { return c.latest.rev_yoy > 0; }).length;
+    var period = (cos.find(function (c) { return c.latest.period; }) || { latest: {} }).latest.period || "";
+    var pageHref = "group.html?" + (kind === "t:" ? "tag" : "industry") + "=" + encodeURIComponent(name);
+    return '<header class="g-inline">' +
+      '<p class="doc-eyebrow">' + (kind === "t:" ? "業務族群" : "產業別") +
+        (currentCat === "tw" ? '<span class="sep">·</span><a href="' + pageHref + '">獨立族群頁 &nearr;</a>' : "") +
+      "</p>" +
+      '<h2 class="g-inline-name">' + esc(name) + "</h2>" +
+      '<div class="g-stats">' +
+        '<div class="g-stat"><span class="g-stat-v">' + cos.length + '</span><span class="g-stat-l">家公司</span></div>' +
+        '<div class="g-stat"><span class="g-stat-v">' + (groupPe != null ? finNum(groupPe, 1) + "×" : "—") +
+          '</span><span class="g-stat-l">本益比中位數</span></div>' +
+        (withYoy.length ? '<div class="g-stat"><span class="g-stat-v">' + growing + "/" + withYoy.length +
+          '</span><span class="g-stat-l">最新季營收年增為正' + (period ? "（" + esc(period) + "）" : "") + "</span></div>" : "") +
+      "</div>" +
+    "</header>";
+  }
+
+  function renderCompanies(items, gKind, gName) {
+    var cos = toCompanies(items);
+    var total = toCompanies(allItems).length;
+    filteredItems = [];   // 依公司不走漸進載入
+    if (!cos.length) {
+      elLedger.innerHTML = "";
+      elEmpty.hidden = false;
+      elCount.textContent = "0 / " + total + " 家";
+      return;
+    }
+    elEmpty.hidden = true;
+    var groupPe = gName ? median(cos.map(function (c) { return c.latest.pe; })
+      .filter(function (v) { return v != null && v > 0; })) : null;
+    var head = '<div class="g-row co-row g-head">' +
+      '<span class="g-code">代號</span><span class="g-main">公司 · 最新法說會一句話 · 族群</span>' +
+      '<span class="g-num">最新場次</span><span class="g-num">營收 YoY</span>' +
+      '<span class="g-num">EPS</span><span class="g-num">本益比' + (gName ? " vs 族群" : "") + "</span>" +
+    "</div>";
+    elLedger.innerHTML =
+      (gName ? groupHeadHtml(gKind, gName, cos, groupPe) : "") +
+      '<div class="g-list co-list">' + head +
+        cos.map(function (c) { return companyRow(c, groupPe); }).join("") +
+      "</div>";
+    elCount.textContent = cos.length + " / " + total + " 家";
+  }
+
+  function setMode(mode) {
+    currentMode = mode === "company" ? "company" : "date";
+    try { localStorage.setItem(MODE_KEY, currentMode); } catch (e) { /* 無痕 */ }
+    updateModeSeg();
+    if (dataReady && currentView === "list") applyFilters();
+  }
+
+  function updateModeSeg() {
+    if (!elModeSeg) return;
+    Array.prototype.forEach.call(elModeSeg.querySelectorAll("[data-mode]"), function (b) {
+      var on = b.getAttribute("data-mode") === currentMode;
+      b.classList.toggle("is-active", on);
+      b.setAttribute("aria-checked", String(on));
+    });
+  }
+
+  /* 網址跟著目前狀態走（replaceState，不產生歷史）：
+     詳細頁的「返回清單」是 history.back()，回來若重新載入會以網址參數為準——
+     所以把族群拿掉、換分類、切模式都要即時反映到網址，否則會退回舊的 ?tag=。 */
+  function syncUrl() {
+    var params = [];
+    if (currentCat !== "tw") params.push("cat=" + currentCat);
+    var group = (currentCat !== "macro" && elGroup) ? elGroup.value : "";
+    if (group.slice(0, 2) === "t:") params.push("tag=" + encodeURIComponent(group.slice(2)));
+    else if (group.slice(0, 2) === "i:") params.push("industry=" + encodeURIComponent(group.slice(2)));
+    if (currentMode === "company" && currentCat !== "macro") params.push("mode=company");
+    var next = location.pathname + (params.length ? "?" + params.join("&") : "") + location.hash;
+    if (next !== location.pathname + location.search + location.hash) {
+      try { history.replaceState(history.state, "", next); } catch (e) { /* file:// 等 */ }
+    }
   }
 
   function extendList() {
@@ -290,7 +447,9 @@
              (it.code && it.code.indexOf(q) !== -1) ||
              (it.summary && it.summary.toLowerCase().indexOf(q) !== -1);
     });
-    render(items);
+    if (currentMode === "company") renderCompanies(items, gKind, gName);
+    else render(items);
+    syncUrl();
   }
 
   /* ---------- 行事曆資料 ---------- */
@@ -880,6 +1039,7 @@
       ((macroData && macroData.generated_at) || "");
     elCount.textContent = "";
     applyView();
+    syncUrl();
   }
 
   function loadMacro() {
@@ -936,6 +1096,14 @@
   elQ.addEventListener("input", applyFilters);
   elMonth.addEventListener("change", applyFilters);
   if (elGroup) elGroup.addEventListener("change", applyFilters);
+
+  if (elModeSeg) {
+    elModeSeg.addEventListener("click", function (ev) {
+      var b = ev.target.closest ? ev.target.closest("[data-mode]") : null;
+      if (b) setMode(b.getAttribute("data-mode"));
+    });
+    updateModeSeg();
+  }
 
   elTabList.addEventListener("click", function () { setView("list"); });
   elTabCalendar.addEventListener("click", function () { setView("calendar"); });

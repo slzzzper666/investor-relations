@@ -7,7 +7,7 @@
   python main.py --no-push          # 不推播（測試用）
   python main.py --lookback 0       # 只處理目標日、不回補前幾天
 
-流程：MOPS 爬蟲 → 影音抽取 → STT 逐字稿 → AI 分析 → Notion → TG/DC 推播
+流程：MOPS 爬蟲 → 影音抽取 → STT 逐字稿 → AI 分析（＋分段、與上一場比較）→ Notion → TG/DC 推播
 每家公司獨立容錯，單一公司失敗不影響其他公司。
 """
 import argparse
@@ -21,8 +21,9 @@ from ir.mops import (Conference, download_pdf, get_conferences,
 from ir.media import get_audio
 from ir.stt import transcribe
 from ir.analyze import analyze
+from ir.compare import compare as compare_conferences
+from ir.notion_db import analysis_texts, previous_conference, upsert_conference
 from ir.notion_db import status as notion_status
-from ir.notion_db import upsert_conference
 from ir.segment import plan_segments
 from ir.notify import push_discord, push_telegram
 
@@ -91,7 +92,8 @@ def process_one(conf: Conference, push: bool = True, audio: bool = True) -> bool
             }
 
     notion_url = upsert_conference(conf, analysis, transcript, video_url,
-                                   segments=_segments_safe(conf, transcript))
+                                   segments=_segments_safe(conf, transcript),
+                                   compare=_compare_safe(conf, analysis, transcript))
     if push:
         push_telegram(conf, analysis, video_url, notion_url)
         push_discord(conf, analysis, video_url, notion_url)
@@ -118,9 +120,27 @@ def enrich_transcript(conf: Conference) -> bool:
     analysis = analyze(conf.company_name, conf.stock_code, conf.date.isoformat(),
                        transcript=transcript)
     upsert_conference(conf, analysis, transcript, video_url,
-                      segments=_segments_safe(conf, transcript))
+                      segments=_segments_safe(conf, transcript),
+                      compare=_compare_safe(conf, analysis, transcript))
     log.info("%s：逐字稿已補上（%d 字）並重新分析", tag, len(transcript))
     return True
+
+
+def _compare_safe(conf: Conference, analysis: dict, transcript: str) -> dict | None:
+    """與同公司上一場法說會比較（Gemini）；沒有上一場或失敗都回 None，不影響主流程。"""
+    if not analysis.get("ai_view"):          # 只有基本資訊（無簡報無影音）的場次沒東西可比
+        return None
+    try:
+        prev = previous_conference(conf)
+        if not prev:
+            return None
+        summary_text, view_text = analysis_texts(analysis)
+        cur = {"date": conf.date.isoformat(), "summary": summary_text,
+               "ai_view": view_text, "transcript": transcript}
+        return compare_conferences(conf.company_name, conf.stock_code, cur, prev)
+    except Exception as e:  # noqa: BLE001
+        log.warning("%s %s：比較失敗 %s", conf.stock_code, conf.company_name, str(e)[:120])
+        return None
 
 
 def _segments_safe(conf: Conference, transcript: str) -> dict | None:

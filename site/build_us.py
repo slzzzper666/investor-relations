@@ -244,6 +244,45 @@ def enrich_all(whitelist) -> None:
     log.info("美股詳細頁已補欄位：%d 檔（同業本益比 %d 個產業）", len(files), len(peer))
 
 
+def write_company_pages() -> None:
+    """美股公司頁 site/public/company/us-{SYM}.json（與台股 build_data.write_company_pages 同結構）。"""
+    company_dir = PUBLIC_DIR / "company"
+    company_dir.mkdir(parents=True, exist_ok=True)
+    for f in company_dir.glob("us-*.json"):
+        f.unlink()
+    by_sym: dict[str, list[dict]] = {}
+    for f in DETAIL_DIR.glob("us-*.json"):
+        dd = json.loads(f.read_text(encoding="utf-8"))
+        by_sym.setdefault(dd["code"], []).append(dd)
+    generated_at = datetime.now(TAIPEI).strftime("%Y-%m-%d %H:%M")
+    for sym, ds in by_sym.items():
+        ds.sort(key=lambda x: x["date"], reverse=True)
+        latest = ds[0]
+        # 每場對應的財報季：季底月 ≤ 公布月的最近一季（yfinance 季別以季底年月表示，如 2026-08）
+        periods = sorted(q.get("period", "") for q in (latest.get("financials") or {}).get("quarters") or [])
+
+        def title_of(d):
+            per = max((p for p in periods if p and p <= d["date"][:7]), default="")
+            return f"{per} 季報" if per else f"{d['date'][:4]} 年財報"
+
+        payload = {
+            "code": sym, "market": "us", "company": latest["company"],
+            "company_en": latest.get("company_en") or sym, "generated_at": generated_at,
+            "financials": latest.get("financials") or {},
+            "business": latest.get("business"),
+            "conferences": [{
+                "id": d["id"], "date": d["date"],
+                "title": title_of(d),
+                "summary": (d.get("summary") or "").split("\n")[0].strip(),
+                "beat_or_miss": d.get("beat_or_miss") or "",
+                "has_transcript": False, "transcript_chars": 0, "pdf_url": "", "video_url": "",
+            } for d in ds],
+        }
+        (company_dir / f"us-{sym}.json").write_text(
+            json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+    log.info("美股公司頁：%d 家", len(by_sym))
+
+
 def main():
     force = "--whitelist" in sys.argv
     since = sys.argv[sys.argv.index("--since") + 1] if "--since" in sys.argv else None
@@ -284,8 +323,15 @@ def main():
             # 首頁族群篩選用（與台股同欄位名）
             "industry": (dd.get("financials") or {}).get("industry") or "",
             "tags": (dd.get("business") or {}).get("tags") or [],
+            # 首頁「依公司」列表用（與台股同欄位名）
+            "pe": (round(dd["financials"]["pe"], 2)
+                   if (dd.get("financials") or {}).get("pe") is not None else None),
+            "rev_yoy": ((dd.get("financials") or {}).get("quarters") or [{}])[0].get("revenue_yoy"),
+            "eps": ((dd.get("financials") or {}).get("quarters") or [{}])[0].get("eps"),
+            "period": ((dd.get("financials") or {}).get("quarters") or [{}])[0].get("period", ""),
         })
     all_items.sort(key=lambda x: (x["date"], x["code"]), reverse=True)
+    write_company_pages()
 
     generated_at = datetime.now(TAIPEI).strftime("%Y-%m-%d %H:%M")
     (PUBLIC_DIR / "us_list.json").write_text(
