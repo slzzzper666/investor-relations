@@ -45,11 +45,14 @@
 
 <main class="wrap">
   <nav class="cat-tabs" role="tablist" aria-label="市場分類">
+    <span class="cat-thumb" aria-hidden="true"></span>
     <button type="button" id="cat-tw" class="cat-tab is-active" role="tab" aria-selected="true">台股</button>
     <button type="button" id="cat-us" class="cat-tab" role="tab" aria-selected="false">美股</button>
     <button type="button" id="cat-macro" class="cat-tab" role="tab" aria-selected="false">總經</button>
   </nav>
 
+  <!-- 分類面板：切換台股／美股／總經時整塊淡出再滑入 -->
+  <div class="cat-panel" id="cat-panel">
   <div class="view-tabs" id="view-tabs" role="tablist" aria-label="檢視切換">
     <button type="button" id="tab-list" class="view-tab is-active" role="tab" aria-selected="true" aria-controls="ledger">列表</button>
     <button type="button" id="tab-future" class="view-tab" role="tab" aria-selected="false" aria-controls="future" hidden>未來</button>
@@ -123,6 +126,7 @@
   </section>
 
   <section id="future" class="future" hidden aria-label="總經未來展望"></section>
+  </div>
 </main>
 
 <div id="day-modal" class="day-modal" hidden>

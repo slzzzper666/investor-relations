@@ -104,6 +104,8 @@
   var macroEvents = [];    // 總經行事曆事件（macro_upcoming.json ＋ macro_history.json）
   var macroMonthly = [];   // 總經每月回顧（macro_monthly.json）
 
+  var elCatPanel = document.getElementById("cat-panel");
+  var elCatTabs = document.querySelector(".cat-tabs");
   var elCatTw = document.getElementById("cat-tw");
   var elCatUs = document.getElementById("cat-us");
   var elCatMacro = document.getElementById("cat-macro");
@@ -299,39 +301,53 @@
     setupListObserver();
   }
 
+  /* ---------- 過場：淡出 → 重畫 → 滑入 ----------
+     舊內容先淡出上移，趁看不見時重畫，新內容再從下方滑入；重排藏在動畫裡就不會「卡一下再跳」。
+     只認自己那支動畫的 animationend（淡出的結束事件可能在保險計時器之後才派送，
+     不檢查名稱會把剛加上的淡入立刻取消掉）。 */
+  function fadeOut(el) {
+    return new Promise(function (resolve) {
+      var done = false;
+      function fin(ev) {
+        if (done || (ev && ev.animationName !== "ledgerOut")) return;
+        done = true;
+        el.removeEventListener("animationend", fin);
+        resolve();                       // is-leaving 留著（停在透明），交給 fadeIn 換成滑入
+      }
+      el.classList.remove("is-entering");
+      el.classList.add("is-leaving");
+      el.addEventListener("animationend", fin);
+      setTimeout(fin, 260);              // 保險：動畫被停用或事件沒來（略長於 CSS 的 220ms）
+    });
+  }
+
+  function fadeIn(el) {
+    el.classList.remove("is-leaving");
+    el.classList.add("is-entering");
+    el.addEventListener("animationend", function onIn(e) {
+      if (e.animationName !== "ledgerIn") return;
+      el.removeEventListener("animationend", onIn);
+      el.classList.remove("is-entering");
+    });
+  }
+
   var modeSwitching = false;
+  var catSwitching = false;
 
   function setMode(mode) {
     mode = mode === "company" ? "company" : "date";
-    if (mode === currentMode || modeSwitching) return;
+    if (mode === currentMode || modeSwitching || catSwitching) return;
     currentMode = mode;
     try { localStorage.setItem(MODE_KEY, currentMode); } catch (e) { /* 無痕 */ }
     updateModeSeg();
     if (!(dataReady && currentView === "list")) return;
 
-    // 舊列表先淡出，趁看不見時重畫，再讓新列表滑入——切換有個過場，也把重排藏在動畫裡
     modeSwitching = true;
-    elLedger.classList.remove("is-entering");
-    elLedger.classList.add("is-leaving");
-    var done = false;
-    // 只認自己那支動畫的結束事件：淡出的 animationend 可能在保險計時器之後才派送，
-    // 不檢查名稱會把剛加上的淡入立刻取消掉
-    function swap(ev) {
-      if (done || (ev && ev.animationName !== "ledgerOut")) return;
-      done = true;
-      elLedger.removeEventListener("animationend", swap);
-      elLedger.classList.remove("is-leaving");
+    fadeOut(elLedger).then(function () {
       applyFilters();
-      elLedger.classList.add("is-entering");
-      elLedger.addEventListener("animationend", function onIn(e) {
-        if (e.animationName !== "ledgerIn") return;
-        elLedger.removeEventListener("animationend", onIn);
-        elLedger.classList.remove("is-entering");
-      });
+      fadeIn(elLedger);
       modeSwitching = false;
-    }
-    elLedger.addEventListener("animationend", swap);
-    setTimeout(swap, 260);   // 保險：動畫被停用或事件沒來（略長於 CSS ledgerOut 的 220ms）
+    });
   }
 
   /* 切換鈕的滑動底塊：量目前啟用鈕的位置，用 transform 滑過去 */
@@ -1066,11 +1082,18 @@
   }
 
   function updateCatTabs() {
+    var active = null;
     [["tw", elCatTw], ["us", elCatUs], ["macro", elCatMacro]].forEach(function (p) {
       var on = currentCat === p[0];
       p[1].classList.toggle("is-active", on);
       p[1].setAttribute("aria-selected", String(on));
+      if (on) active = p[1];
     });
+    var thumb = elCatTabs && elCatTabs.querySelector(".cat-thumb");
+    if (thumb && active) {
+      thumb.style.width = active.offsetWidth + "px";
+      thumb.style.transform = "translateX(" + active.offsetLeft + "px)";
+    }
     var views = CATS[currentCat].views;
     elTabList.hidden = views.indexOf("list") === -1;
     elTabCalendar.hidden = views.indexOf("calendar") === -1;
@@ -1099,31 +1122,50 @@
     syncUrl();
   }
 
-  function loadMacro() {
-    if (macroData) { showMacro(); return; }
-    elTape.textContent = "總經 載入中";
-    Promise.all([
-      fetchJson(CATS.macro.future),
-      fetchJson(CATS.macro.calendar).catch(function () { return { items: [] }; }),
-      fetchJson(CATS.macro.history).catch(function () { return { items: [] }; }),
-      fetchJson(CATS.macro.monthly).catch(function () { return { months: [] }; })
-    ]).then(function (res) {
-      macroData = res[0];
-      macroMonthly = (res[3] && res[3].months) || [];
-      var upc = (res[1] && res[1].items) || [];
-      var hist = (res[2] && res[2].items) || [];
-      // 歷史（已公布、含實際值）＋ 未來（待公布）合併；同日同名以未來版本為準
-      var seen = {};
-      upc.forEach(function (e) { seen[e.date + "|" + e.country + "|" + e.name] = true; });
-      macroEvents = upc.concat(hist.filter(function (e) {
-        return !seen[e.date + "|" + e.country + "|" + e.name];
-      }));
-      showMacro();
-    }).catch(function () { showCategoryPending("macro"); });
+  /* 分類資料：台美股回 {data, up}（快取於 dataCache）；總經填 macroData／macroEvents／macroMonthly。
+     已有快取就立刻 resolve，切換時只剩過場動畫的時間。 */
+  function fetchCategory(cat) {
+    if (cat === "macro") {
+      if (macroData) return Promise.resolve(null);
+      return Promise.all([
+        fetchJson(CATS.macro.future),
+        fetchJson(CATS.macro.calendar).catch(function () { return { items: [] }; }),
+        fetchJson(CATS.macro.history).catch(function () { return { items: [] }; }),
+        fetchJson(CATS.macro.monthly).catch(function () { return { months: [] }; })
+      ]).then(function (res) {
+        macroData = res[0];
+        macroMonthly = (res[3] && res[3].months) || [];
+        var upc = (res[1] && res[1].items) || [];
+        var hist = (res[2] && res[2].items) || [];
+        // 歷史（已公布、含實際值）＋ 未來（待公布）合併；同日同名以未來版本為準
+        var seen = {};
+        upc.forEach(function (e) { seen[e.date + "|" + e.country + "|" + e.name] = true; });
+        macroEvents = upc.concat(hist.filter(function (e) {
+          return !seen[e.date + "|" + e.country + "|" + e.name];
+        }));
+        return null;
+      });
+    }
+    if (dataCache[cat]) return Promise.resolve(dataCache[cat]);
+    return Promise.all([
+      fetchJson(CATS[cat].list),
+      fetchJson(CATS[cat].upcoming).catch(function () { return null; })
+    ]).then(function (results) {
+      dataCache[cat] = { data: results[0], up: results[1] };
+      return dataCache[cat];
+    });
   }
 
-  function loadCategory(cat) {
+  function applyCategory(cat, bundle) {
+    if (cat === "macro") showMacro(); else applyCategoryData(bundle);
+  }
+
+  /* animate=true（使用者點頁籤）：面板淡出的同時抓資料，兩者都好了再套用、滑入；
+     首次載入不動畫。 */
+  function loadCategory(cat, animate) {
     if (!CATS[cat]) cat = "tw";
+    if (catSwitching || modeSwitching) return;
+    if (animate && cat === currentCat) return;
     currentCat = cat;
     try { localStorage.setItem(CAT_KEY, cat); } catch (e) { /* 無痕模式 */ }
     updateCatTabs();
@@ -1132,19 +1174,25 @@
       currentView = CATS[cat].views[0];
     }
 
-    if (cat === "macro") { loadMacro(); return; }
+    var cached = cat === "macro" ? !!macroData : !!dataCache[cat];
+    if (!cached) elTape.textContent = CATS[cat].label + " 載入中";
+    var loading = fetchCategory(cat).then(
+      function (b) { return { ok: true, bundle: b }; },
+      function () { return { ok: false }; });
 
-    if (dataCache[cat]) { applyCategoryData(dataCache[cat]); return; }
-
-    elTape.textContent = CATS[cat].label + " 載入中";
-    Promise.all([
-      fetchJson(CATS[cat].list),
-      fetchJson(CATS[cat].upcoming).catch(function () { return null; })
-    ]).then(function (results) {
-      dataCache[cat] = { data: results[0], up: results[1] };
-      applyCategoryData(dataCache[cat]);
-    }).catch(function () {
-      showCategoryPending(cat);
+    if (!animate || !elCatPanel) {
+      loading.then(function (r) {
+        if (r.ok) applyCategory(cat, r.bundle); else showCategoryPending(cat);
+      });
+      return;
+    }
+    catSwitching = true;
+    Promise.all([fadeOut(elCatPanel), loading]).then(function (rs) {
+      var r = rs[1];
+      if (currentCat !== cat) return;     // 期間又被切走（理論上被 catSwitching 擋住）
+      if (r.ok) applyCategory(cat, r.bundle); else showCategoryPending(cat);
+      fadeIn(elCatPanel);
+      catSwitching = false;
     });
   }
 
@@ -1160,17 +1208,19 @@
       if (b) setMode(b.getAttribute("data-mode"));
     });
     updateModeSeg();
-    window.addEventListener("resize", updateModeSeg);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(updateModeSeg);
+  }
+  window.addEventListener("resize", function () { updateModeSeg(); updateCatTabs(); });
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(function () { updateModeSeg(); updateCatTabs(); });
   }
 
   elTabList.addEventListener("click", function () { setView("list"); });
   elTabCalendar.addEventListener("click", function () { setView("calendar"); });
   elTabFuture.addEventListener("click", function () { setView("future"); });
 
-  elCatTw.addEventListener("click", function () { loadCategory("tw"); });
-  elCatUs.addEventListener("click", function () { loadCategory("us"); });
-  elCatMacro.addEventListener("click", function () { loadCategory("macro"); });
+  elCatTw.addEventListener("click", function () { loadCategory("tw", true); });
+  elCatUs.addEventListener("click", function () { loadCategory("us", true); });
+  elCatMacro.addEventListener("click", function () { loadCategory("macro", true); });
 
   if (elCalToday) {
     elCalToday.addEventListener("click", function () {

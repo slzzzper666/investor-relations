@@ -130,12 +130,27 @@ a { color: inherit; }
 /* ---------- 市場分類（台股／美股／總經） ---------- */
 
 .cat-tabs {
+  position: relative;
   display: flex;
   gap: 8px;
   margin-top: 30px;
 }
 
+/* 分類頁籤的滑動底塊：位置由 app.js 依啟用鈕設定，啟用鈕本身變透明讓底塊透出 */
+.cat-thumb {
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 0;
+  border: 1px solid var(--amber-dim);
+  border-radius: 4px;
+  background: var(--panel-2);
+  box-sizing: border-box;
+  transition: transform .45s cubic-bezier(.2, .8, .2, 1), width .45s cubic-bezier(.2, .8, .2, 1);
+  pointer-events: none;
+}
+
 .cat-tab {
+  position: relative;
   font-family: var(--serif);
   font-size: 16px;
   font-weight: 600;
@@ -146,15 +161,15 @@ a { color: inherit; }
   border-radius: 4px;
   padding: 9px 24px;
   cursor: pointer;
-  transition: color 0.15s, border-color 0.15s, background-color 0.15s;
+  transition: color 0.3s, border-color 0.3s, background-color 0.3s;
 }
 
 .cat-tab:hover { color: var(--text); border-color: #303a4c; }
 
 .cat-tab.is-active {
   color: var(--amber);
-  border-color: var(--amber-dim);
-  background: var(--panel-2);
+  border-color: transparent;
+  background: transparent;
 }
 
 /* ---------- 檢視切換 ---------- */
@@ -166,7 +181,8 @@ a { color: inherit; }
   border-bottom: 1px solid var(--line);
 }
 
-.cat-tabs + .view-tabs { margin-top: 16px; }
+.cat-tabs + .view-tabs,
+.cat-panel > .view-tabs { margin-top: 16px; }
 
 .view-tab {
   font-family: var(--mono);
@@ -281,11 +297,16 @@ a { color: inherit; }
   from { opacity: 0; transform: translateY(14px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-.ledger.is-leaving  { animation: ledgerOut .22s ease-in both; pointer-events: none; }
-.ledger.is-entering { animation: ledgerIn .5s cubic-bezier(.2, .8, .2, 1) both; }
+.ledger.is-leaving, .cat-panel.is-leaving {
+  animation: ledgerOut .22s ease-in both; pointer-events: none;
+}
+.ledger.is-entering, .cat-panel.is-entering {
+  animation: ledgerIn .5s cubic-bezier(.2, .8, .2, 1) both;
+}
 @media (prefers-reduced-motion: reduce) {
-  .seg-thumb { transition: none; }
-  .ledger.is-leaving, .ledger.is-entering { animation-duration: .01s; }
+  .seg-thumb, .cat-thumb { transition: none; }
+  .ledger.is-leaving, .ledger.is-entering,
+  .cat-panel.is-leaving, .cat-panel.is-entering { animation-duration: .01s; }
 }
 
 /* 依公司列表（重用族群頁 .g-row 樣式，多一欄最新場次） */
