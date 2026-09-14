@@ -101,7 +101,7 @@
   }
   var code = decodeURIComponent(m[1]);
   var file = /^\d{4}$/.test(code) ? code : "us-" + code.toUpperCase();
-  fetch("company/" + file + ".json", { cache: "no-cache" })
+  fetch("company/" + file + ".json")
     .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
     .then(render)
     .catch(function () { fail("找不到這家公司", "可能尚未收錄任何法說會，或代號有誤。"); });

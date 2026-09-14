@@ -95,7 +95,7 @@
 
   // 每個族群一個小檔（build_data 的 write_tags_index 產出）；檔名把「/」換成「_」
   var slug = want.replace(/\//g, "_");
-  fetch("group/" + kind + "_" + encodeURIComponent(slug) + ".json", { cache: "no-cache" })
+  fetch("group/" + kind + "_" + encodeURIComponent(slug) + ".json")
     .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
     .then(function (g) { render(kind, g); })
     .catch(function () { fail("找不到這個族群", want); });

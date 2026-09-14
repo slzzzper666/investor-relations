@@ -68,6 +68,10 @@
   var filteredItems = [];  // 目前篩選結果（完整），列表只漸進渲染其前段
   var listLimit = 0;       // 目前已渲染到第幾筆
   var LIST_PAGE = 120;     // 初始與每次延伸的筆數
+  var companyList = null;  // 依公司模式：篩選後的公司陣列（同樣漸進渲染）
+  var companyHead = "";    // 依公司模式：族群抬頭 HTML（漸進延伸時不重算）
+  var companyGroupPe = null;
+  var allCompanyCount = 0; // 本分類公司總數（載入時算一次）
   var listObserver = null; // 清單底部哨兵的 IntersectionObserver
   var eventsByDate = {};   // "YYYY-MM-DD" -> [{code, company, mcap, id, time}]
   var dataReady = false;
@@ -147,8 +151,8 @@
       tags.push('<span class="tag tag-group">' + esc(t) + "</span>");
     });
     if (it.has_transcript) tags.push('<span class="tag tag-strong">逐字稿</span>');
-    if (it.pdf_url) tags.push('<span class="tag">簡報</span>');
-    if (it.video_url) tags.push('<span class="tag">影音</span>');
+    if (it.has_pdf || it.pdf_url) tags.push('<span class="tag">簡報</span>');
+    if (it.has_video || it.video_url) tags.push('<span class="tag">影音</span>');
     return (
       '<a class="row" href="detail.html?id=' + encodeURIComponent(it.id) + '">' +
         '<span class="row-code">' + (esc(it.code) || "—") + "</span>" +
@@ -261,44 +265,90 @@
 
   function renderCompanies(items, gKind, gName) {
     var cos = toCompanies(items);
-    var total = toCompanies(allItems).length;
-    filteredItems = [];   // 依公司不走漸進載入
+    filteredItems = [];
+    companyList = cos;
+    listLimit = LIST_PAGE;
     if (!cos.length) {
       elLedger.innerHTML = "";
       elEmpty.hidden = false;
-      elCount.textContent = "0 / " + total + " 家";
+      elCount.textContent = "0 / " + allCompanyCount + " 家";
       return;
     }
     elEmpty.hidden = true;
-    var groupPe = gName ? median(cos.map(function (c) { return c.latest.pe; })
+    companyGroupPe = gName ? median(cos.map(function (c) { return c.latest.pe; })
       .filter(function (v) { return v != null && v > 0; })) : null;
-    var head = '<div class="g-row co-row g-head">' +
-      '<span class="g-code">代號</span><span class="g-main">公司 · 最新法說會一句話 · 族群</span>' +
-      '<span class="g-num">最新場次</span><span class="g-num">營收 YoY</span>' +
-      '<span class="g-num">EPS</span><span class="g-num">本益比' + (gName ? " vs 族群" : "") + "</span>" +
-    "</div>";
-    elLedger.innerHTML =
-      (gName ? groupHeadHtml(gKind, gName, cos, groupPe) : "") +
-      '<div class="g-list co-list">' + head +
-        cos.map(function (c) { return companyRow(c, groupPe); }).join("") +
+    companyHead =
+      (gName ? groupHeadHtml(gKind, gName, cos, companyGroupPe) : "") +
+      '<div class="g-row co-row g-head">' +
+        '<span class="g-code">代號</span><span class="g-main">公司 · 最新法說會一句話 · 族群</span>' +
+        '<span class="g-num">最新場次</span><span class="g-num">營收 YoY</span>' +
+        '<span class="g-num">EPS</span><span class="g-num">本益比' + (gName ? " vs 族群" : "") + "</span>" +
       "</div>";
-    elCount.textContent = cos.length + " / " + total + " 家";
+    elCount.textContent = cos.length + " / " + allCompanyCount + " 家";
+    paintCompanies();
   }
+
+  /* 依公司列表漸進渲染：一次只畫 listLimit 家（千家一次塞進 DOM 要 1 秒，切換會頓） */
+  function paintCompanies() {
+    var cos = companyList || [];
+    var shown = cos.slice(0, listLimit);
+    elLedger.innerHTML = companyHead +
+      '<div class="g-list co-list">' +
+        shown.map(function (c) { return companyRow(c, companyGroupPe); }).join("") +
+      "</div>";
+    setupListObserver();
+  }
+
+  var modeSwitching = false;
 
   function setMode(mode) {
-    currentMode = mode === "company" ? "company" : "date";
+    mode = mode === "company" ? "company" : "date";
+    if (mode === currentMode || modeSwitching) return;
+    currentMode = mode;
     try { localStorage.setItem(MODE_KEY, currentMode); } catch (e) { /* 無痕 */ }
     updateModeSeg();
-    if (dataReady && currentView === "list") applyFilters();
+    if (!(dataReady && currentView === "list")) return;
+
+    // 舊列表先淡出，趁看不見時重畫，再讓新列表滑入——切換有個過場，也把重排藏在動畫裡
+    modeSwitching = true;
+    elLedger.classList.remove("is-entering");
+    elLedger.classList.add("is-leaving");
+    var done = false;
+    // 只認自己那支動畫的結束事件：淡出的 animationend 可能在保險計時器之後才派送，
+    // 不檢查名稱會把剛加上的淡入立刻取消掉
+    function swap(ev) {
+      if (done || (ev && ev.animationName !== "ledgerOut")) return;
+      done = true;
+      elLedger.removeEventListener("animationend", swap);
+      elLedger.classList.remove("is-leaving");
+      applyFilters();
+      elLedger.classList.add("is-entering");
+      elLedger.addEventListener("animationend", function onIn(e) {
+        if (e.animationName !== "ledgerIn") return;
+        elLedger.removeEventListener("animationend", onIn);
+        elLedger.classList.remove("is-entering");
+      });
+      modeSwitching = false;
+    }
+    elLedger.addEventListener("animationend", swap);
+    setTimeout(swap, 260);   // 保險：動畫被停用或事件沒來（略長於 CSS ledgerOut 的 220ms）
   }
 
+  /* 切換鈕的滑動底塊：量目前啟用鈕的位置，用 transform 滑過去 */
   function updateModeSeg() {
     if (!elModeSeg) return;
+    var active = null;
     Array.prototype.forEach.call(elModeSeg.querySelectorAll("[data-mode]"), function (b) {
       var on = b.getAttribute("data-mode") === currentMode;
       b.classList.toggle("is-active", on);
       b.setAttribute("aria-checked", String(on));
+      if (on) active = b;
     });
+    var thumb = elModeSeg.querySelector(".seg-thumb");
+    if (thumb && active) {
+      thumb.style.width = active.offsetWidth + "px";
+      thumb.style.transform = "translateX(" + active.offsetLeft + "px)";
+    }
   }
 
   /* 網址跟著目前狀態走（replaceState，不產生歷史）：
@@ -319,6 +369,12 @@
 
   function extendList() {
     if (currentView !== "list") return;
+    if (currentMode === "company") {
+      if (!companyList || listLimit >= companyList.length) return;
+      listLimit += LIST_PAGE;
+      paintCompanies();
+      return;
+    }
     if (listLimit >= filteredItems.length) return;
     listLimit += LIST_PAGE;
     paintList();
@@ -968,6 +1024,7 @@
 
     elQ.value = "";
     elMonth.value = "";
+    allCompanyCount = toCompanies(allItems).length;
     populateMonths();
     buildGroupOptions();
     if (restoreFiltersOnce) {   // 首次載入：還原離開前的搜尋字與月份（族群由 pendingGroup 處理）
@@ -1103,6 +1160,8 @@
       if (b) setMode(b.getAttribute("data-mode"));
     });
     updateModeSeg();
+    window.addEventListener("resize", updateModeSeg);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(updateModeSeg);
   }
 
   elTabList.addEventListener("click", function () { setView("list"); });

@@ -87,6 +87,21 @@ def _download_pdf(url: str, code: str, date: str) -> Path | None:
     return None
 
 
+def _pdf_url_of(c: dict) -> str:
+    """簡報網址：list.json 已瘦身成旗標，網址本體讀 detail/{id}.json。"""
+    if c.get("pdf_url"):
+        return c["pdf_url"]
+    if not c.get("has_pdf", True):
+        return ""
+    f = LIST_JSON.parent / "detail" / f"{c['id']}.json"
+    if not f.exists():
+        return ""
+    try:
+        return json.loads(f.read_text(encoding="utf-8")).get("pdf_url") or ""
+    except ValueError:
+        return ""
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description="業務項目建置")
     ap.add_argument("--days", type=int, default=7, help="回溯天數（預設 7）")
@@ -126,7 +141,7 @@ def main() -> None:
         # 新→舊逐場找還拿得到的簡報；MOPS 會下架舊簡報，最新一場常已不存在
         pdf_path = None
         for c in confs:
-            pdf_path = _download_pdf(c.get("pdf_url", ""), code, c["date"])
+            pdf_path = _download_pdf(_pdf_url_of(c), code, c["date"])
             if pdf_path is not None:
                 if c is not it:
                     log.info("%s：最新場簡報已下架，改用 %s 的", tag, c["date"])

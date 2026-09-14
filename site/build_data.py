@@ -983,8 +983,8 @@ def main() -> None:
             "code": it["code"],
             "date": it["date"],
             "market_cap": caps.get(it["code"], 0),
-            "pdf_url": it["pdf_url"],
-            "video_url": it["video_url"],
+            "has_pdf": bool(it["pdf_url"]),      # 網址本體在 detail 檔；列表只需旗標（省三成體積）
+            "has_video": bool(it["video_url"]),
             "summary": one_liner,
             "has_transcript": bool(it["transcript"]),
             "transcript_chars": len(it["transcript"]),

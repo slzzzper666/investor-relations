@@ -317,7 +317,7 @@ def main():
         all_items.append({
             "id": dd["id"], "code": dd["code"], "company": dd["company"],
             "company_en": dd.get("company_en") or dd["code"], "date": dd["date"],
-            "market_cap": 0, "pdf_url": "", "video_url": "",
+            "market_cap": 0, "has_pdf": False, "has_video": False,
             "summary": dd["summary"], "ai_view": dd["ai_view"],
             "has_transcript": False, "transcript_chars": 0,
             # 首頁族群篩選用（與台股同欄位名）
