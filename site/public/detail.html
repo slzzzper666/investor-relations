@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com; connect-src 'self' https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://*.googletagmanager.com https://stats.g.doubleclick.net https://www.google.com https://www.google.com.tw; img-src 'self' data: https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://*.googletagmanager.com https://www.google.com https://www.google.com.tw https://stats.g.doubleclick.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; frame-src 'self'; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
 <title>法說會內容｜法說會觀測站</title>
 <meta name="description" content="單場法人說明會的重點摘要、AI 觀點與完整逐字稿。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,28 +35,7 @@
 
 <script src="assets/panels.js"></script>
 <script src="assets/detail.js"></script>
-<script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", function () {
-    navigator.serviceWorker.register("sw.js").catch(function () { /* 忽略 */ });
-  });
-}
-
-/* 「返回清單」：若是從本站清單頁點進來的，就用瀏覽器上一頁回去——
-   這樣會回到原本的族群篩選與捲動位置，而不是重新載入一個全新的首頁。
-   直接用網址開進來（沒有上一頁可回）時，維持原本的連結行為。 */
-document.addEventListener("click", function (e) {
-  var a = e.target.closest ? e.target.closest('a[href="index.html"]') : null;
-  if (!a) return;
-  if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
-  var here = location.href.replace(/detail\.html.*$/, "");
-  var ref = document.referrer || "";
-  var fromList = ref.indexOf(here) === 0 && ref.indexOf("detail.html") === -1;
-  if (fromList && history.length > 1) {
-    e.preventDefault();
-    history.back();
-  }
-});
-</script>
+<script src="assets/sw-register.js"></script>
+<script src="assets/back-nav.js"></script>
 </body>
 </html>

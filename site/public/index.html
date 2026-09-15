@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com; connect-src 'self' https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://*.googletagmanager.com https://stats.g.doubleclick.net https://www.google.com https://www.google.com.tw; img-src 'self' data: https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://*.googletagmanager.com https://www.google.com https://www.google.com.tw https://stats.g.doubleclick.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; frame-src 'self'; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
 <title>法說會觀測站｜台股法人說明會逐字稿與 AI 分析</title>
 <meta name="description" content="台灣上市櫃公司法人說明會的逐字稿、重點摘要與 AI 觀點，每日自動更新，可依公司名稱、股票代號與月份查詢。">
 <meta name="google-site-verification" content="xxKQnntRSKh-Ct6T0fEeasnsmvE3_5y4QJ7DHOr-czk">
@@ -174,12 +175,6 @@
 <script src="assets/app.js"></script>
 <script src="assets/group-search.js" defer></script>
 <script src="assets/chips-modal.js" defer></script>
-<script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", function () {
-    navigator.serviceWorker.register("sw.js").catch(function () { /* 忽略 */ });
-  });
-}
-</script>
+<script src="assets/sw-register.js"></script>
 </body>
 </html>

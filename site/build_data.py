@@ -398,6 +398,7 @@ def render_static_page(d: dict) -> str:
 <title>{_esc(title)}｜法說會觀測站</title>
 <meta name="description" content="{desc}">
 <link rel="canonical" href="{url}">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com; connect-src 'self' https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://*.googletagmanager.com https://stats.g.doubleclick.net https://www.google.com https://www.google.com.tw; img-src 'self' data: https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://*.googletagmanager.com https://www.google.com https://www.google.com.tw https://stats.g.doubleclick.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; frame-src 'self'; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta property="og:type" content="article">
 <meta property="og:title" content="{_esc(title)}">
 <meta property="og:description" content="{desc}">

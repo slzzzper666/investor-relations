@@ -1,0 +1,13 @@
+# GitHub Actions 建置用（pages.yml / monthly.yml）。版本鎖死＝與本機驗證過的一致，
+# 不讓「當天 PyPI 最新版」直接進到拿得到全部 secrets 的建置環境（供應鏈防護）。
+# 升級流程：本機 pip install -U 測過 → 改這裡 → push。
+requests==2.34.2
+beautifulsoup4==4.15.0
+lxml==6.1.1
+python-dotenv==1.2.2
+notion-client==3.1.0
+yfinance==1.4.1
+pandas==3.0.3
+numpy==2.4.6
+google-genai==2.8.0
+tzdata==2026.2

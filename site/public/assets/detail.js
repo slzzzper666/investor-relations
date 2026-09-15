@@ -6,6 +6,11 @@
   var elDoc = document.getElementById("doc");
   var lang = "zh";   // 美股詳情頁的中／英切換狀態
 
+  /* 外部連結只放行 http(s)：資料若被竄改成 javascript: 也不會變成可點的腳本 */
+  function safeUrl(u) {
+    return /^https?:\/\//i.test(String(u || "")) ? u : "";
+  }
+
   function esc(s) {
     return String(s == null ? "" : s)
       .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
@@ -112,11 +117,11 @@
   function linksHtml(d) {
     var links = [];
     if (d.pdf_url) {
-      links.push('<a class="btn" href="' + esc(d.pdf_url) +
+      links.push('<a class="btn" href="' + esc(safeUrl(d.pdf_url)) +
         '" target="_blank" rel="noopener">法說會簡報 PDF <span class="arrow">&nearr;</span></a>');
     }
     if (d.video_url) {
-      links.push('<a class="btn" href="' + esc(d.video_url) +
+      links.push('<a class="btn" href="' + esc(safeUrl(d.video_url)) +
         '" target="_blank" rel="noopener">影音紀錄 <span class="arrow">&nearr;</span></a>');
     }
     return links.length
