@@ -81,6 +81,14 @@
   var calObserver = null;  // 上下哨兵的 IntersectionObserver（無限延伸）
   var calCurRaf = 0;       // 目前顯示月份標籤更新節流
   var CAL_DONE_KEY = "ir-cal-only-done";
+  /* 總經行事曆的事件類別：data 數據／cb 央行／settle 結算到期／tw 台股制度；關掉的存 localStorage */
+  var CAL_KINDS_KEY = "ir-cal-kinds-off";
+  var KIND_LABEL = { data: "數據", cb: "央行", settle: "結算", tw: "台股制度" };
+  var kindsOff = {};
+  try { (JSON.parse(localStorage.getItem(CAL_KINDS_KEY) || "[]") || []).forEach(function (k) { kindsOff[k] = true; }); }
+  catch (e) { /* 無痕 */ }
+  var elCalKinds = document.getElementById("cal-kinds");
+  var marketDays = {};      // market_days.json：{日期: {label, impact}}，台股／美股行事曆格子角落的小標
   var calOnlyDone = false; // 只看已整理（行事曆隱藏未收錄的 pending 場次）
   try { calOnlyDone = localStorage.getItem(CAL_DONE_KEY) === "1"; } catch (e) { /* 無痕 */ }
   var currentView = "list";
@@ -537,7 +545,7 @@
         country: e.country || "", name: e.name || "",
         previous: e.previous || "", forecast: e.forecast || "",
         actual: e.actual || "", interpretation: e.interpretation || "",
-        impact: e.impact || 0,
+        impact: e.impact || 0, ekind: e.kind || "data",
         company: (e.country ? e.country + " " : "") + (e.name || ""),
         code: "", id: "", mcap: 0
       });
@@ -598,6 +606,9 @@
     if (calOnlyDone && currentCat !== "macro") {
       evts = evts.filter(function (e) { return !!e.id; });
     }
+    if (currentCat === "macro") {
+      evts = evts.filter(function (e) { return !kindsOff[e.ekind]; });
+    }
     return evts;
   }
 
@@ -624,9 +635,14 @@
       var evts = cellEvents(dateStr);
       var cls = "cal-cell" + (dateStr === todayStr ? " is-today" : "");
       var inner = '<span class="cal-day-num">' + d + "</span>";
+      var mark = currentCat !== "macro" && marketDays[dateStr];
+      if (mark) {
+        inner += '<span class="cal-mark imp' + (mark.impact || 1) + '" title="' + esc(mark.label) + '">' +
+          esc(mark.label) + "</span>";
+      }
       evts.slice(0, MAX_PER_CELL).forEach(function (e) {
         if (e.kind === "macro") {
-          inner += '<span class="cal-evt cal-macro imp' + (e.impact || 1) + '">' +
+          inner += '<span class="cal-evt cal-macro imp' + (e.impact || 1) + " kind-" + esc(e.ekind) + '">' +
             esc(e.company) + "</span>";
         } else {
           inner += '<span class="cal-evt' + (e.id ? "" : " is-pending") + '">' +
@@ -790,10 +806,14 @@
       if (e.previous) vals.push("前值 " + esc(e.previous));
       var interp = e.interpretation
         ? '<span class="m-interp">' + esc(e.interpretation) + "</span>" : "";
-      return '<div class="m-row m-macro imp' + (e.impact || 1) +
+      var n = Math.max(1, Math.min(3, e.impact || 1));
+      var stars = '<span class="m-stars" aria-label="重要度 ' + n + '">' +
+        "★★★".slice(0, n) + '<span class="m-stars-off">' + "★★★".slice(n) + "</span></span>";
+      return '<div class="m-row m-macro imp' + (e.impact || 1) + " kind-" + esc(e.ekind) +
         (e.actual ? " is-published" : "") + '">' +
         '<span class="m-country">' + esc(e.country) + "</span>" +
-        '<span class="m-name">' + esc(e.name) + "</span>" +
+        '<span class="m-name">' + esc(e.name) +
+          '<span class="m-kind">' + esc(KIND_LABEL[e.ekind] || "") + "</span></span>" + stars +
         '<span class="m-time mono">' + esc(e.time) + "</span>" +
         '<span class="m-fc mono">' + vals.join("　") + "</span>" +
         interp +
@@ -988,6 +1008,7 @@
     elTabFuture.setAttribute("aria-selected", String(isFuture));
 
     if (elCalFilter) elCalFilter.hidden = currentCat === "macro";
+    if (elCalKinds) elCalKinds.hidden = currentCat !== "macro";
     if (isCal && !calBuilt) buildCalendar();
     if (isFuture) renderFuture();
     updateViewThumb();
@@ -1265,6 +1286,30 @@
       });
     }, { passive: true });
   }
+
+  if (elCalKinds) {
+    elCalKinds.addEventListener("click", function (ev) {
+      var b = ev.target.closest ? ev.target.closest("[data-kind]") : null;
+      if (!b) return;
+      var k = b.getAttribute("data-kind");
+      kindsOff[k] = !kindsOff[k];
+      b.classList.toggle("is-on", !kindsOff[k]);
+      b.setAttribute("aria-pressed", String(!kindsOff[k]));
+      try { localStorage.setItem(CAL_KINDS_KEY, JSON.stringify(Object.keys(kindsOff).filter(function (x) { return kindsOff[x]; }))); }
+      catch (e) { /* 無痕 */ }
+      applyOnlyDone();   // 同「只看已整理」：重畫並留在原月份
+    });
+    Array.prototype.forEach.call(elCalKinds.querySelectorAll("[data-kind]"), function (b) {
+      var on = !kindsOff[b.getAttribute("data-kind")];
+      b.classList.toggle("is-on", on);
+      b.setAttribute("aria-pressed", String(on));
+    });
+  }
+  // 結算／財報截止小標（台股、美股行事曆用）；很小，一開始就載
+  fetchJson("market_days.json").then(function (d) {
+    marketDays = d || {};
+    if (calBuilt && currentCat !== "macro") applyOnlyDone();
+  }).catch(function () { /* 沒有就不標 */ });
 
   if (elCalOnlyDone) {
     elCalOnlyDone.addEventListener("change", function () {

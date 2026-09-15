@@ -295,7 +295,7 @@ def fetch_fomc_calendar() -> list[dict]:
         out[tp.strftime("%Y-%m-%d")] = {
             "date": tp.strftime("%Y-%m-%d"), "time": tp.strftime("%H:%M"),
             "country": "\U0001F1FA\U0001F1F8", "name": "聯準會利率決策(FOMC)",
-            "previous": "", "forecast": "", "impact": 3,
+            "previous": "", "forecast": "", "impact": 3, "kind": "cb",
         }
     return sorted(out.values(), key=lambda x: x["date"])
 
@@ -345,11 +345,48 @@ def fetch_fred_calendar() -> list[dict]:
             out.append({
                 "date": ds, "time": "20:30" if edt else "21:30",
                 "country": US_FLAG, "name": name,
-                "previous": "", "forecast": "", "impact": impact,
+                "previous": "", "forecast": "", "impact": impact, "kind": "data",
             })
             n += 1
         print(f"  FRED {name}：{n} 筆")
     return out
+
+
+TW_HOLIDAY_CACHE = BASE_DIR / ".tw_holidays.json"   # TWSE 休市表快取（逐年累積，隨 repo 提交）
+
+
+def fetch_rule_events() -> list[dict]:
+    """規則可算的市場事件（見 ir/market_calendar）：上月 1 日起、往後 15 個月。"""
+    from datetime import date as _date
+    from ir.market_calendar import TwHolidays, generate
+    tw = TwHolidays(TW_HOLIDAY_CACHE)
+    tw.refresh()
+    today = _date.today()
+    start = _date(today.year if today.month > 1 else today.year - 1,
+                  today.month - 1 if today.month > 1 else 12, 1)
+    end_m = today.month + 15
+    end = _date(today.year + (end_m - 1) // 12, (end_m - 1) % 12 + 1, 28)
+    return generate(start, end, tw)
+
+
+def write_market_days(rules: list[dict]) -> None:
+    """market_days.json：{日期: {label, impact}}，台股／美股分頁的行事曆在格子角落標一個小標
+    （只放月／季結算與財報申報截止，週選太密不放）。"""
+    days = {}
+    for ev in rules:
+        n = ev["name"]
+        if "季結算" in n:
+            label = "季結算"
+        elif "月結算" in n:
+            label = "月結算"
+        elif "財報申報截止" in n:
+            label = n.replace("上市櫃 ", "").replace(" 財報申報截止", " 財報截止")
+        else:
+            continue
+        days[ev["date"]] = {"label": label, "impact": ev["impact"]}
+    (PUBLIC_DIR / "market_days.json").write_text(
+        json.dumps(days, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    print(f"  market_days.json：{len(days)} 天")
 
 
 def fetch_macro_calendar() -> list[dict]:
@@ -431,19 +468,26 @@ def main() -> None:
     fresh = fetch_macro_calendar()          # Investing（雲端常被擋 → []）
     fomc = fetch_fomc_calendar()            # Fed 官網 → 年底前的利率決策
     fred = fetch_fred_calendar()            # FRED → CPI/就業/PPI/GDP 排到年底
-    print(f"  Investing {len(fresh)}、FOMC {len(fomc)}、FRED {len(fred)}、既有 {len(existing)} 筆")
+    rules = fetch_rule_events()             # 結算／到期／申報截止／指數調整（曆法規則）
+    print(f"  Investing {len(fresh)}、FOMC {len(fomc)}、FRED {len(fred)}、規則 {len(rules)}、既有 {len(existing)} 筆")
     today = datetime.now(TAIPEI).strftime("%Y-%m-%d")
     merged = {}
-    # 美國事件改由 FOMC/FRED 權威來源提供；既有/Investing 的美國筆丟掉避免重複
+    # 美國事件改由 FOMC/FRED 權威來源提供；既有/Investing 的美國筆丟掉避免重複；
+    # 規則事件每次整批重算，舊檔裡的規則事件也丟掉（改名或改規則才不會留殘影）
     for ev in existing + fresh:
-        if ev.get("country") == US_FLAG or not ev.get("date") or ev["date"] < today:
+        if (ev.get("country") == US_FLAG or ev.get("rule") or not ev.get("date")
+                or ev["date"] < today):
             continue
+        ev.setdefault("kind", "data")
         merged[(ev["date"], ev.get("country", ""), ev["name"])] = ev
     for ev in fomc + fred:
         if not ev.get("date") or ev["date"] < today:
             continue
         merged[(ev["date"], ev.get("country", ""), ev["name"])] = ev
+    for ev in rules:                        # 規則事件連上個月的也放，行事曆往回捲也看得到
+        merged[(ev["date"], ev.get("country", ""), ev["name"])] = ev
     cal = sorted(merged.values(), key=lambda x: (x["date"], x.get("time", "")))
+    write_market_days(rules)
     if not cal and existing:
         print("  合併後 0 筆，保留既有不覆蓋")
     else:

@@ -121,6 +121,12 @@
       <label class="cal-filter" id="cal-filter">
         <input type="checkbox" id="cal-only-done"> 只看已整理
       </label>
+      <div class="cal-kinds" id="cal-kinds" role="group" aria-label="事件類別" hidden>
+        <button type="button" class="cal-kind is-on" data-kind="data" aria-pressed="true">數據</button>
+        <button type="button" class="cal-kind is-on" data-kind="cb" aria-pressed="true">央行</button>
+        <button type="button" class="cal-kind is-on" data-kind="settle" aria-pressed="true">結算</button>
+        <button type="button" class="cal-kind is-on" data-kind="tw" aria-pressed="true">台股制度</button>
+      </div>
     </div>
     <div class="cal-scroll" id="cal-scroll" tabindex="0" aria-label="行事曆，可上下捲動">
       <div class="cal-sentinel" id="cal-top-sentinel" aria-hidden="true"></div>

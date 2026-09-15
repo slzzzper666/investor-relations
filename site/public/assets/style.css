@@ -505,6 +505,44 @@ a { color: inherit; }
 
 .cal-filter input { accent-color: var(--amber); cursor: pointer; }
 
+/* 總經行事曆：事件類別 chip（點掉＝隱藏該類） */
+.cal-kinds { display: inline-flex; gap: 6px; flex-wrap: wrap; }
+.cal-kind {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+  color: var(--faint);
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 4px 10px;
+  cursor: pointer;
+  text-decoration: line-through;
+  transition: color .15s, border-color .15s, background-color .15s;
+}
+.cal-kind.is-on { color: var(--text); border-color: #303a4c; background: var(--panel); text-decoration: none; }
+.cal-kind.is-on[data-kind="settle"] { color: var(--teal, #5FB3B3); border-color: rgba(95, 179, 179, .45); }
+.cal-kind.is-on[data-kind="cb"] { color: var(--amber); border-color: var(--amber-dim); }
+
+/* 台股／美股行事曆：格子角落的結算／財報截止小標 */
+.cal-cell { position: relative; }
+.cal-mark {
+  position: absolute;
+  top: 5px; right: 6px;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  padding: 3px 5px;
+  border-radius: 2px;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  background: var(--bg);
+  pointer-events: none;
+}
+.cal-mark.imp3 { color: var(--amber); border-color: var(--amber-dim); }
+.cal-mark.imp2 { color: var(--text); }
+
 /* 行事曆獨立滾動視窗：上下滑動都在這個框內完成，整頁不跟著跑 */
 .cal-scroll {
   position: relative;
@@ -1762,6 +1800,11 @@ a.m-row:hover {
 }
 .cal-evt.cal-macro.imp2 { color: var(--text); border-left-color: var(--amber-dim); }
 .cal-evt.cal-macro.imp3 { color: var(--amber); border-left-color: var(--amber); }
+/* 結算／到期類用青色系區分數據類；重要度仍決定明暗 */
+.cal-evt.cal-macro.kind-settle { border-left-color: rgba(95, 179, 179, .5); }
+.cal-evt.cal-macro.kind-settle.imp2 { border-left-color: #5FB3B3; }
+.cal-evt.cal-macro.kind-settle.imp3 { color: #7FD1D1; border-left-color: #7FD1D1; }
+.cal-evt.cal-macro.kind-tw { border-left-color: rgba(233, 228, 216, .35); }
 
 /* 當日視窗的總經數據列 */
 .m-row.m-macro {
@@ -1775,6 +1818,15 @@ a.m-row:hover {
 .m-row.m-macro .m-time { color: var(--muted); font-size: 12.5px; }
 .m-row.m-macro .m-fc { flex-basis: 100%; color: var(--faint); font-size: 12.5px; }
 .m-row.m-macro.imp3 .m-name { color: var(--amber); }
+.m-row.m-macro.kind-settle.imp3 .m-name { color: #7FD1D1; }
+.m-row.m-macro .m-kind {
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.06em;
+  color: var(--faint); border: 1px solid var(--line); border-radius: 2px;
+  padding: 1px 5px; margin-left: 8px; vertical-align: 1px;
+}
+.m-row.m-macro .m-stars { font-size: 12px; letter-spacing: 1px; color: var(--amber); white-space: nowrap; }
+.m-row.m-macro.kind-settle .m-stars { color: #7FD1D1; }
+.m-row.m-macro .m-stars-off { color: var(--line); }
 .m-row.m-macro .m-actual { color: var(--text); font-weight: 600; }
 .m-row.m-macro.is-published .m-actual { color: var(--amber); }
 .m-row.m-macro .m-interp {
