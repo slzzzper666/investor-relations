@@ -91,6 +91,8 @@
       "</div>" +
       '<nav class="doc-foot-nav"><a href="index.html' + (isUs ? "?cat=us" : "") +
         '">&larr; 返回清單</a></nav>';
+
+    P.followSide(elDoc.querySelector(".doc-side"));
   }
 
   // 台股四位數代號 → company/2330.json；美股代號（字母，可含 . -）→ company/us-ADBE.json

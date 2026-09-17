@@ -359,6 +359,11 @@ def render_static_page(d: dict) -> str:
         links.append(f"<a href='{_esc(d['video_url'])}' rel='nofollow'>法說會影音</a>")
     links.append(f"<a href='../detail.html?id={d['id']}'>互動介面開啟</a>")
 
+    company_link = ""
+    if re.fullmatch(r"\d{4}", d.get("code") or ""):
+        company_link = (f" · <a href='../company.html?code={d['code']}'>"
+                        f"{_esc(d['company'])} 公司頁（歷次法說會與財報）</a>")
+
     ai_block = ""
     if d["ai_view"]:
         ai_block = ("<h2>AI 觀點與未來方向</h2>"

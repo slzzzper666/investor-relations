@@ -1160,6 +1160,25 @@ a.m-row:hover {
 .doc-body > article { min-width: 0; }
 
 /* 側欄：業務項目 + 財報數據共用一個 sticky 容器 */
+/* 公司名＝公司頁入口：維持標題外觀，滑過才顯出可點 */
+.doc-company {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color .15s, border-color .15s;
+}
+.doc-company:hover { color: var(--amber); border-bottom-color: var(--amber-dim); }
+.doc-company-go {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--faint);
+  margin-left: 14px;
+  vertical-align: 6px;
+  white-space: nowrap;
+}
+.doc-company:hover .doc-company-go { color: var(--amber); }
+
 .doc-side {
   position: sticky;
   top: 24px;

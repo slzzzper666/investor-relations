@@ -1,7 +1,10 @@
-"""與上次法說會比較：兩場法說會的重點對照（Gemini）。
+"""與上一季法說會比較：兩場法說會的重點對照（Gemini）。
 
 單場摘要網路上到處都有，「跨時間追蹤」才是差異化：上次說要擴產 50%，這次進度？
 毛利率指引從 58% 上修到 60%？哪個議題上次沒提、這次突然出現？
+
+比較對象是「上一季的最後一場」而不是「前一場」：同一季公司常開好幾場法說會
+（自辦一場＋券商協辦數場），講的是同一份財報，比了只會逐條重複（見 ir/season）。
 
 輸入用兩場的摘要與 AI 觀點（都是站上既有資料），有逐字稿再各附前 6000 字當佐證。
 嚴禁引用未提供的內容；沒有可比的就回空陣列，不硬湊。
@@ -13,6 +16,7 @@ from pydantic import BaseModel, Field
 
 from ir.gemini_util import all_exhausted, generate_with_retry
 from ir.logger import get_logger
+from ir.season import season_label, season_of
 
 log = get_logger("ir.compare")
 
@@ -38,15 +42,15 @@ _SYSTEM = (
     "沒有可比的項目就少寫，不要硬湊。輸出繁體中文（台灣用語），不用 emoji。"
 )
 
-_PROMPT = """{company}（{code}）兩場法說會的對照。
+_PROMPT = """{company}（{code}）兩場法說會的對照（{prev_season} → {cur_season}）。
 
-【上次：{prev_date}】
+【上一季（{prev_season} 財報）：{prev_date}】
 重點摘要：
 {prev_summary}
 AI 觀點：
 {prev_view}
 {prev_transcript}
-【這次：{cur_date}】
+【這一季（{cur_season} 財報）：{cur_date}】
 重點摘要：
 {cur_summary}
 AI 觀點：
@@ -62,7 +66,8 @@ AI 觀點：
  "watch": ["下次法說會要追蹤的重點（各 25 字內）"]
 }}
 items 3～8 項，優先放：財測／毛利率指引、產能與資本支出、訂單能見度、主要產品線動能、
-上次承諾的事這次的進度。before/after 盡量帶原文數字。"""
+上次承諾的事這次的進度。before/after 盡量帶原文數字。
+兩場相隔一季，若某項目確實沒有變化，寫 direction="same" 即可，不要為了湊數改寫措辭。"""
 
 
 def _tr(t: str, label: str) -> str:
@@ -78,8 +83,11 @@ def compare(company: str, code: str, cur: dict, prev: dict) -> dict | None:
         raise RuntimeError("Gemini 今日額度已耗盡")
     if not (prev.get("summary") and cur.get("summary")):
         return None
+    cur_season = season_of(cur["date"])
+    prev_season = prev.get("season") or season_of(prev["date"])
     prompt = _PROMPT.format(
         company=company, code=code,
+        cur_season=season_label(cur_season), prev_season=season_label(prev_season),
         prev_date=prev["date"], prev_summary=prev["summary"], prev_view=prev.get("ai_view", ""),
         prev_transcript=_tr(prev.get("transcript", ""), "上次"),
         cur_date=cur["date"], cur_summary=cur["summary"], cur_view=cur.get("ai_view", ""),
@@ -101,9 +109,11 @@ def compare(company: str, code: str, cur: dict, prev: dict) -> dict | None:
             i["direction"] = "same"
     if not items:
         return None
-    log.info("比較 %s %s：%s vs %s → %d 項（%s）", code, company, cur["date"], prev["date"],
-             len(items), getattr(resp, "model_version", ""))
+    log.info("比較 %s %s：%s（%s）vs %s（%s）→ %d 項（%s）", code, company,
+             cur["date"], cur_season, prev["date"], prev_season, len(items),
+             getattr(resp, "model_version", ""))
     return {"prev_date": prev["date"], "prev_id": prev.get("id", ""),
+            "prev_season": prev_season, "cur_season": cur_season,
             "verdict": parsed.verdict.strip(), "items": items,
             "watch": [w.strip() for w in parsed.watch if w.strip()][:3],
             "model": getattr(resp, "model_version", "") or ""}

@@ -9,19 +9,19 @@
 同公司同日期重跑時會更新既有列，不會重複新增。
 """
 import json
-from datetime import timedelta
 
 from notion_client import Client
 
 import config
 from ir.logger import get_logger
 from ir.mops import Conference
+from ir.season import MIN_GAP_DAYS, pick_previous, season_of
 
 log = get_logger("ir.notion")
 
 _client: Client | None = None
 _ds_id: str | None = None
-MIN_GAP_DAYS = 21   # 「上一場」至少要早這麼多天（見 previous_conference）
+PREV_SCAN = 12      # 往回掃幾場找「上一季那場」（同一季最多看過一家開 12 場）
 
 
 def _get() -> tuple[Client, str]:
@@ -94,31 +94,32 @@ def exists(conf: Conference) -> bool:
 
 
 def previous_conference(conf: Conference) -> dict | None:
-    """同公司、日期早於 conf 的最近一場：{id, date, summary, ai_view, transcript}；沒有回 None。
+    """同公司「上一季」的最後一場：{id, date, season, summary, ai_view, transcript}；沒有回 None。
 
-    「與上次法說會比較」的輸入。逐字稿只取查詢回應帶回的前段（ir/compare 只用前 6000 字）。
+    「與上次法說會比較」的輸入。同一季公司常開好幾場（自辦＋券商協辦），彼此講的是同一份
+    財報，比了等於沒比——所以往回掃 PREV_SCAN 場，挑第一個「財報季不同且相隔夠久」的
+    （見 ir/season）。逐字稿只取查詢回應帶回的前段（ir/compare 只用前 6000 字）。
     """
     if not conf.stock_code.isdigit():
         return None
     n, ds_id = _get()
-    # 同一場法說會常分兩天（中／英文場、上下午場），隔天那場沒有可比性：
-    # 「上一場」須早於 MIN_GAP_DAYS 天，才會是上一季的法說會
-    cutoff = (conf.date - timedelta(days=MIN_GAP_DAYS - 1)).isoformat()
     res = n.data_sources.query(
         data_source_id=ds_id,
         filter={"and": [
             {"property": "股票代號", "number": {"equals": int(conf.stock_code)}},
-            {"property": "日期", "date": {"before": cutoff}},
+            {"property": "日期", "date": {"before": conf.date.isoformat()}},
         ]},
         sorts=[{"property": "日期", "direction": "descending"}],
-        page_size=1,
+        page_size=PREV_SCAN,
     )
-    if not res["results"]:
+    rows = [{"page": p,
+             "date": ((p.get("properties", {}).get("日期", {}).get("date") or {}).get("start") or "")[:10]}
+            for p in res["results"]]
+    hit = pick_previous(conf.date, rows)
+    if not hit:
         return None
-    page = res["results"][0]
-    pr = page.get("properties", {})
-    return {"id": page["id"],
-            "date": ((pr.get("日期", {}).get("date") or {}).get("start") or "")[:10],
+    pr = hit["page"].get("properties", {})
+    return {"id": hit["page"]["id"], "date": hit["date"], "season": season_of(hit["date"]),
             "summary": _plain(pr.get("重點摘要", {})),
             "ai_view": _plain(pr.get("AI 觀點與未來方向分析", {})),
             "transcript": _plain(pr.get("逐字稿", {}))}
@@ -128,8 +129,8 @@ def compare_to_text(result: dict | None) -> str:
     """比較結果 → 存進「比較」欄位的 JSON 字串。"""
     if not result or not result.get("items"):
         return ""
-    keep = {k: result[k] for k in ("prev_date", "prev_id", "verdict", "items", "watch", "model")
-            if k in result}
+    keep = {k: result[k] for k in ("prev_date", "prev_id", "prev_season", "cur_season",
+                                   "verdict", "items", "watch", "model") if k in result}
     return json.dumps(keep, ensure_ascii=False, separators=(",", ":"))
 
 

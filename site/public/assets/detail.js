@@ -129,7 +129,8 @@
       : "";
   }
 
-  /* 與上次法說會比較：逐項對照 + 方向標記 + 下次追蹤 */
+  /* 與上一季法說會比較：逐項對照 + 方向標記 + 下次追蹤
+     比較對象是上一季的最後一場（同一季常有多場券商協辦場，內容重複） */
   function compareHtml(c) {
     if (!c || !c.items || !c.items.length) return "";
     var DIR = { up: ["↑", "上修／轉佳"], down: ["↓", "下修／轉弱"], same: ["＝", "維持"],
@@ -147,11 +148,15 @@
     var watch = (c.watch || []).length
       ? '<p class="cmp-watch"><span class="cmp-watch-label">下次追蹤</span>' +
         c.watch.map(esc).join("　·　") + "</p>" : "";
+    function seasonLabel(s) { return s && s.length === 6 ? s.slice(0, 4) + " " + s.slice(4) : ""; }
+    var prevText = esc(c.prev_date) +
+      (c.prev_season ? "（" + esc(seasonLabel(c.prev_season)) + " 財報）" : "");
     var prevLink = c.prev_id
-      ? '<a href="detail.html?id=' + encodeURIComponent(c.prev_id) + '">' + esc(c.prev_date) + "</a>"
-      : esc(c.prev_date);
+      ? '<a href="detail.html?id=' + encodeURIComponent(c.prev_id) + '">' + prevText + "</a>"
+      : prevText;
     return '<section class="doc-section cmp">' +
-      "<h2>與上次法說會比較" + '<span class="h2-note">上次：' + prevLink + " · AI 對照 · 僅供參考</span></h2>" +
+      "<h2>與上一季法說會比較" + '<span class="h2-note">對照：' + prevLink +
+        " · AI 對照 · 僅供參考</span></h2>" +
       (c.verdict ? '<p class="lead">' + esc(c.verdict) + "</p>" : "") +
       '<div class="cmp-list">' +
         '<div class="cmp-row cmp-head"><span></span><span>議題</span><span>上次</span><span></span><span>這次</span></div>' +
@@ -178,6 +183,13 @@
       : { conf: isUs ? "財報電話會議" : "法人說明會", summary: "重點摘要",
           aiview: "AI 觀點與未來方向", ainote: "AI 彙整 · 僅供參考",
           back: "&larr; 返回清單" };
+
+    // 公司名連到公司頁（台股四位數代號、美股代號都有公司頁）
+    var codeOk = d.code && /^(\d{4}|[A-Za-z][A-Za-z.\-]{0,9})$/.test(d.code);
+    var h1 = codeOk
+      ? '<h1><a class="doc-company" href="company.html?code=' + encodeURIComponent(d.code) +
+        '">' + esc(company) + '<span class="doc-company-go">公司頁 &nearr;</span></a></h1>'
+      : "<h1>" + esc(company) + "</h1>";
 
     document.title = company + " " + d.date +
       (isUs ? "" : " 法說會") + "｜法說會觀測站";
@@ -226,8 +238,7 @@
     elDoc.innerHTML =
       '<header class="doc-head">' +
         '<p class="doc-eyebrow">' + eyebrowBits.join('<span class="sep">·</span>') + "</p>" +
-        "<h1>" + esc(company) + "</h1>" +
-        linksHtml(d) + langToggle +
+        h1 + linksHtml(d) + langToggle +
       "</header>" +
       '<div class="doc-body">' +
         '<article>' +
@@ -246,6 +257,8 @@
         "</div>" +
       "</div>" +
       '<nav class="doc-foot-nav"><a href="index.html">' + L.back + "</a></nav>";
+
+    P.followSide(elDoc.querySelector(".doc-side"));
 
     var toggle = document.getElementById("transcript-toggle");
     if (toggle) {

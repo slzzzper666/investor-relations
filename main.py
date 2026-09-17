@@ -6,6 +6,7 @@
   python main.py --limit 3          # 只處理前 N 家（測試用）
   python main.py --no-push          # 不推播（測試用）
   python main.py --lookback 0       # 只處理目標日、不回補前幾天
+  python main.py --sweep            # 每月普查：回補 45 天內所有缺漏（每月 1 日自動）
 
 流程：MOPS 爬蟲 → 影音抽取 → STT 逐字稿 → AI 分析（＋分段、與上一場比較）→ Notion → TG/DC 推播
 每家公司獨立容錯，單一公司失敗不影響其他公司。
@@ -155,13 +156,19 @@ def _segments_safe(conf: Conference, transcript: str) -> dict | None:
         return None
 
 
+MONTHLY_LOOKBACK = 45   # 每月普查回看幾天（涵蓋一整個財報季的尾巴）
+MONTHLY_MAX_NEW = 40    # 每月普查最多新處理幾場（避免單次執行拖太久）
+
+
 def run(target: date, limit: int = 0, push: bool = True, audio: bool = True,
-        lookback: int = 3) -> None:
+        lookback: int = 3, max_new: int = 0) -> None:
     """處理 target 當天，並順帶回補前 lookback 天「Notion 裡還沒有」的場次。
 
     Railway 容器每次都是全新的，processed.json 不保留；過去只跑「昨天」一次，
     任何原因失敗（API 下架、限流、逾時）就永遠缺一場——2026 年 7~9 月因此掉了
     124 場。回補以 Notion 為準判斷有沒有做過，補進來的一樣推播（晚到總比沒有好）。
+
+    max_new 限制「回補」的處理量（目標日當天的不受限），每月普查用。
     """
     start = target - timedelta(days=lookback)
     log.info("===== 法說會整理開始：%s（回補至 %s）=====",
@@ -176,7 +183,7 @@ def run(target: date, limit: int = 0, push: bool = True, audio: bool = True,
         return
 
     processed = _load_processed()
-    ok = fail = skip = enriched = 0
+    ok = fail = skip = enriched = capped = 0
     for conf in confs:
         key = f"{conf.stock_code}_{conf.date.isoformat()}"
         tag = f"{conf.stock_code} {conf.company_name}"
@@ -203,6 +210,9 @@ def run(target: date, limit: int = 0, push: bool = True, audio: bool = True,
             skip += 1
             continue
         if conf.date != target:
+            if max_new and ok >= max_new:
+                capped += 1
+                continue
             log.info("%s：%s 的缺漏場次，回補", tag, conf.date.isoformat())
         try:
             process_one(conf, push=push, audio=audio)
@@ -212,8 +222,9 @@ def run(target: date, limit: int = 0, push: bool = True, audio: bool = True,
             log.exception("%s 處理失敗", tag)
             fail += 1
 
-    log.info("===== 完成：成功 %d、失敗 %d、跳過 %d、補逐字稿 %d（共 %d 場）=====",
-             ok, fail, skip, enriched, len(confs))
+    log.info("===== 完成：成功 %d、失敗 %d、跳過 %d、補逐字稿 %d%s（共 %d 場）=====",
+             ok, fail, skip, enriched,
+             f"、因上限未處理 {capped}（下次執行續補）" if capped else "", len(confs))
 
 
 if __name__ == "__main__":
@@ -225,11 +236,23 @@ if __name__ == "__main__":
                         help="跳過影音與 STT，直接用簡報分析（回補用）")
     parser.add_argument("--lookback", type=int, default=3,
                         help="順帶回補前 N 天 Notion 沒有的場次（預設 3，0 關閉）")
+    parser.add_argument("--sweep", action="store_true",
+                        help=f"每月普查：回看 {MONTHLY_LOOKBACK} 天補齊缺漏"
+                             f"（最多新處理 {MONTHLY_MAX_NEW} 場）")
+    parser.add_argument("--no-sweep", action="store_true",
+                        help="即使今天是 1 號也不做每月普查")
     args = parser.parse_args()
 
     if args.date:
         target = date.fromisoformat(args.date)
     else:
         target = (datetime.now(TAIPEI) - timedelta(days=1)).date()
+    # 每月 1 日自動做一次普查：影音上傳延遲、MOPS 補登、當時 API 掛掉的場次，
+    # 每日的 3 天回補視窗都涵蓋不到，累積起來就是缺漏（2026 年 7~9 月掉了 124 場的成因）。
+    sweep = args.sweep or (datetime.now(TAIPEI).day == 1 and not args.no_sweep)
+    lookback, max_new = args.lookback, 0
+    if sweep:
+        lookback, max_new = max(args.lookback, MONTHLY_LOOKBACK), MONTHLY_MAX_NEW
+        log.info("每月普查：回看 %d 天、最多新處理 %d 場", lookback, max_new)
     run(target, limit=args.limit, push=not args.no_push, audio=not args.pdf_only,
-        lookback=args.lookback)
+        lookback=lookback, max_new=max_new)

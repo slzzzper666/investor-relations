@@ -327,8 +327,32 @@
   }
 
 
+  /* 側欄跟隨捲動：內容比視窗高時，position:sticky 只會把「上緣」釘在 top，
+     下半部（近 6 季趨勢）得捲到文章末尾才看得到。這裡依捲動方向動態調整 top：
+     往下捲時 top 逐漸變負，側欄跟著往上走，直到整塊的下緣停在視窗底部就不再動；
+     往上捲時反向回到 top:GAP。內容比視窗矮時就是原本的行為。 */
+  function followSide(el) {
+    if (!el || !window.requestAnimationFrame) return;
+    var GAP = 24, cur = GAP, lastY = window.pageYOffset, raf = 0;
+    function apply() {
+      raf = 0;
+      var y = window.pageYOffset;
+      var dy = y - lastY;
+      lastY = y;
+      var min = window.innerHeight - el.offsetHeight - GAP;
+      cur = min >= GAP ? GAP                      // 側欄比視窗矮：維持釘在上方
+                       : Math.max(min, Math.min(GAP, cur - dy));
+      el.style.top = Math.round(cur) + "px";
+    }
+    function onScroll() { if (!raf) raf = window.requestAnimationFrame(apply); }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    apply();
+  }
+
   window.IRPanels = {
     esc: esc,
+    followSide: followSide,
     finNum: finNum,
     finDelta: finDelta,
     finCard: finCard,
