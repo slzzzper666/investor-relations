@@ -12,6 +12,8 @@ import re
 import subprocess
 from pathlib import Path
 
+import shutil
+
 import imageio_ffmpeg
 
 from ir.logger import get_logger
@@ -19,7 +21,18 @@ from ir.mops import Conference
 
 log = get_logger("ir.media")
 
-FFMPEG = imageio_ffmpeg.get_ffmpeg_exe()
+def _find_ffmpeg() -> str:
+    """優先用系統 ffmpeg，找不到才退回 imageio-ffmpeg 附帶的執行檔。
+
+    2026-09 下旬起 irconference 的 HTTPS 連線會讓 imageio-ffmpeg 的 Linux 靜態版
+    （johnvansickle 7.0.2）直接 Segmentation fault——連以前成功過的網址也一樣，
+    stderr 只剩版本資訊、沒有錯誤訊息。Debian 套件版 ffmpeg 正常。
+    Railway 的 Dockerfile 會 apt 安裝 ffmpeg；本機 Windows 沒有就用 imageio 版（Windows 版無此問題）。
+    """
+    return shutil.which("ffmpeg") or imageio_ffmpeg.get_ffmpeg_exe()
+
+
+FFMPEG = _find_ffmpeg()
 
 _YT_RE = re.compile(r"(youtube\.com/watch|youtu\.be/|youtube\.com/live)")
 # 直接可下載的音/視訊檔（irconference 有 .mp4 也有 .mp3）
@@ -150,7 +163,9 @@ def _direct_download_audio(url: str, out_base: Path) -> Path | None:
             log.info("直接抽取音檔完成：%s（%.1f MB）", mp3.name,
                      mp3.stat().st_size / 1e6)
             return mp3
-        log.warning("ffmpeg 抽取失敗 %s：%s", url, r.stderr[-300:] if r.stderr else "")
+        # 帶上結束碼：負值＝被訊號終止（-11 是崩潰），stderr 這時往往只有版本資訊
+        log.warning("ffmpeg 抽取失敗（rc=%s）%s：%s", r.returncode, url,
+                    r.stderr[-300:] if r.stderr else "")
     except subprocess.TimeoutExpired:
         log.warning("ffmpeg 抽取逾時：%s", url)
     return None

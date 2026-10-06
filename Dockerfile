@@ -8,9 +8,14 @@ ENV PYTHONUNBUFFERED=1 \
 
 WORKDIR /app
 
+# 系統 ffmpeg：imageio-ffmpeg 附帶的 Linux 靜態版自 2026-09 下旬起連 irconference 會崩潰
+# （Segmentation fault），Debian 套件版正常。ir/media.py 會優先用系統 ffmpeg。
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends ffmpeg \
+ && rm -rf /var/lib/apt/lists/*
+
 # 先裝依賴以利用 Docker layer cache
-# 注意：imageio-ffmpeg 的 wheel 自帶 Linux ffmpeg 執行檔，毋須 apt 安裝 ffmpeg；
-#       lxml 等套件在 3.12-slim 上有官方 manylinux wheel，毋須編譯工具。
+# lxml 等套件在 3.12-slim 上有官方 manylinux wheel，毋須編譯工具。
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
