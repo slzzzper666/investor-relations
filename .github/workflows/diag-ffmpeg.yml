@@ -1,0 +1,17 @@
+name: 診斷 irconference 海外連線（暫時）
+on: workflow_dispatch
+jobs:
+  diag:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          U=https://irconference.twse.com.tw/2329_14_20261002_ch.mp4
+          echo "== curl HEAD"; curl -sS -I -m 30 -A "Mozilla/5.0" "$U" | head -12 || echo "curl exit $?"
+          echo "== curl range 1KB"; curl -sS -m 30 -r 0-1023 -o /tmp/p.bin -w "http=%{http_code} size=%{size_download}\n" "$U" || echo "curl exit $?"
+          pip install -q imageio-ffmpeg==0.6.0
+          FF=$(python -c "import imageio_ffmpeg;print(imageio_ffmpeg.get_ffmpeg_exe())")
+          echo "== imageio ffmpeg: $FF"; $FF -hide_banner -version | head -1
+          $FF -hide_banner -y -i "$U" -vn -ac 1 -ar 16000 -b:a 32k -t 20 /tmp/a.mp3; echo "imageio rc=$?"; ls -la /tmp/a.mp3 || true
+          sudo apt-get -qq install -y ffmpeg >/dev/null 2>&1
+          echo "== apt ffmpeg"; ffmpeg -hide_banner -version | head -1
+          ffmpeg -hide_banner -y -i "$U" -vn -ac 1 -ar 16000 -b:a 32k -t 20 /tmp/b.mp3; echo "apt rc=$?"; ls -la /tmp/b.mp3 || true
