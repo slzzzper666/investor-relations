@@ -14,6 +14,7 @@ from google.genai import types
 import config
 from ir.gemini_util import generate_with_retry
 from ir.logger import get_logger
+from ir.stt_hints import SttHints
 
 log = get_logger("ir.stt")
 
@@ -79,12 +80,14 @@ def _get_local_model():
     raise RuntimeError("本地 Whisper 無法載入")
 
 
-def _transcribe_local(audio_path: Path) -> str:
+def _transcribe_local(audio_path: Path, hints: SttHints | None = None) -> str:
     model = _get_local_model()
-    # 不強制語言：自動偵測。法說會多為中文，但部分（-KY、國際科技股）為英語，
-    # 強制 zh 會把英語音檔轉成亂碼。
+    # 語言由 hints 指定（依錄影檔名 _ch／_en，見 ir/stt_hints）：自動偵測會把中英夾雜的
+    # 中文場判成英文並自行翻譯。initial_prompt 帶公司名與術語，降低同音錯字。
+    h = hints or SttHints()
     segments, info = model.transcribe(
-        str(audio_path), beam_size=1,
+        str(audio_path), beam_size=1, language=h.language,
+        initial_prompt=h.prompt or None,
         vad_filter=True, vad_parameters=dict(min_silence_duration_ms=500))
     text = "".join(seg.text for seg in segments).strip()
     if len(text) < 100:
@@ -94,11 +97,11 @@ def _transcribe_local(audio_path: Path) -> str:
     return _collapse_loops(text)
 
 
-def transcribe(audio_path: Path) -> str:
-    """音檔 → 繁體中文逐字稿。失敗丟例外。"""
+def transcribe(audio_path: Path, hints: SttHints | None = None) -> str:
+    """音檔 → 逐字稿。hints：語言與提示詞（見 ir/stt_hints）。失敗丟例外。"""
     if getattr(config, "USE_LOCAL_WHISPER", False):
         try:
-            return _transcribe_local(audio_path)
+            return _transcribe_local(audio_path, hints)
         except Exception as e:
             log.warning("本地 Whisper 失敗，改用雲端 STT：%s", e)
 
@@ -106,8 +109,8 @@ def transcribe(audio_path: Path) -> str:
         try:
             size_mb = audio_path.stat().st_size / 1e6
             if size_mb < 24:  # Groq 免費版單檔上限 25MB
-                return _collapse_loops(_transcribe_groq(audio_path))
-            return _collapse_loops(_transcribe_groq_chunked(audio_path))
+                return _collapse_loops(_transcribe_groq(audio_path, hints))
+            return _collapse_loops(_transcribe_groq_chunked(audio_path, hints=hints))
         except Exception as e:
             log.warning("Groq 轉錄失敗，改用 Gemini：%s", e)
 
@@ -119,10 +122,12 @@ def transcribe(audio_path: Path) -> str:
     # gemini_util 每組金鑰只會呼叫一次。
     uploaded: list[tuple] = []
 
+    prompt = _PROMPT + (f"\n5. 專有名詞參考：{hints.prompt}" if hints and hints.prompt else "")
+
     def _build(client):
         f = _upload_and_wait(client, audio_path)
         uploaded.append((client, f))
-        return [f, _PROMPT]
+        return [f, prompt]
 
     try:
         resp = generate_with_retry(
@@ -161,7 +166,8 @@ def _collapse_loops(text: str) -> str:
     return collapsed
 
 
-def _transcribe_groq_chunked(audio_path: Path, segment_sec: int = 1200) -> str:
+def _transcribe_groq_chunked(audio_path: Path, segment_sec: int = 1200,
+                             hints: SttHints | None = None) -> str:
     """大檔切成 20 分鐘段落逐段轉錄（64kbps 下每段約 9.6MB）。"""
     import imageio_ffmpeg
 
@@ -177,21 +183,25 @@ def _transcribe_groq_chunked(audio_path: Path, segment_sec: int = 1200) -> str:
             raise RuntimeError(f"音檔切段失敗：{r.stderr[-200:]}")
         chunks = sorted(Path(td).glob("chunk_*.mp3"))
         log.info("%s 切成 %d 段逐段轉錄", audio_path.name, len(chunks))
-        parts = [_transcribe_groq(c) for c in chunks]
+        parts = [_transcribe_groq(c, hints) for c in chunks]
     return "\n".join(parts)
 
 
-def _transcribe_groq(audio_path: Path) -> str:
+def _transcribe_groq(audio_path: Path, hints: SttHints | None = None) -> str:
     """Groq Whisper（whisper-large-v3-turbo）。檔案上限 25MB。"""
     import requests
 
+    data = {"model": "whisper-large-v3-turbo", "response_format": "text"}
+    if hints and hints.language:
+        data["language"] = hints.language     # 不給就自動偵測，中英夾雜時會誤判成英文並翻譯
+    if hints and hints.prompt:
+        data["prompt"] = hints.prompt
     with open(audio_path, "rb") as fh:
         r = requests.post(
             "https://api.groq.com/openai/v1/audio/transcriptions",
             headers={"Authorization": f"Bearer {config.GROQ_API_KEY}"},
             files={"file": (audio_path.name, fh, "audio/mpeg")},
-            data={"model": "whisper-large-v3-turbo",
-                  "response_format": "text"},  # 不強制語言，自動偵測中／英
+            data=data,
             timeout=600,
         )
     r.raise_for_status()

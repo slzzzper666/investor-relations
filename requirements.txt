@@ -11,3 +11,4 @@ pypdf
 pandas
 yfinance
 opencc-python-reimplemented
+pypinyin

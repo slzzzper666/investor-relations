@@ -23,7 +23,9 @@ from ir.logger import get_logger
 from ir.media import get_audio
 from ir.mops import get_conferences_in_range
 from ir.notion_db import status as notion_status, upsert_conference
+from ir.proofread import proofread
 from ir.segment import plan_segments
+from ir.stt_hints import hints_for
 
 log = get_logger("ir.backfill_tr")
 SITE = config.BASE_DIR / "site" / "public"
@@ -31,14 +33,14 @@ SITE = config.BASE_DIR / "site" / "public"
 _groq_ok = bool(config.GROQ_API_KEY)
 
 
-def _transcribe(audio_path) -> str:
-    """Groq 優先；429/額度錯誤後本次執行改走本機 GPU。"""
+def _transcribe(audio_path, hints=None) -> str:
+    """Groq 優先；429/額度錯誤後本次執行改走本機 GPU。hints：語言＋提示詞（ir/stt_hints）。"""
     global _groq_ok
     if _groq_ok:
         try:
             size_mb = audio_path.stat().st_size / 1e6
-            text = (stt._transcribe_groq(audio_path) if size_mb < 24
-                    else stt._transcribe_groq_chunked(audio_path))
+            text = (stt._transcribe_groq(audio_path, hints) if size_mb < 24
+                    else stt._transcribe_groq_chunked(audio_path, hints=hints))
             return stt._collapse_loops(text)
         except Exception as e:  # noqa: BLE001
             msg = str(e)
@@ -47,15 +49,18 @@ def _transcribe(audio_path) -> str:
                 log.warning("Groq 額度用盡，改用本機 GPU whisper：%s", msg[:100])
             else:
                 log.warning("Groq 轉錄失敗（%s），改用本機", msg[:100])
-    return stt._transcribe_local(audio_path)
+    return stt._transcribe_local(audio_path, hints)
 
 
-def _targets(since: str, until: str) -> list:
-    """站上 transcript_chars=0 且 MOPS 有登載影音的場次（Conference 物件）。"""
+def _targets(since: str, until: str, ids: set[str] | None = None) -> list:
+    """站上 transcript_chars=0 且 MOPS 有登載影音的場次（Conference 物件）。
+
+    ids：改為指定這些場次（{code}_{date}），不管有沒有逐字稿——重聽用。
+    """
     items = json.loads((SITE / "list.json").read_text(encoding="utf-8"))["items"]
     want = {(x["code"], x["date"]): x.get("market_cap") or 0 for x in items
-            if since <= x["date"] <= until and not x.get("transcript_chars")
-            and x.get("code")}
+            if since <= x["date"] <= until and x.get("code")
+            and (x["id"] in ids if ids else not x.get("transcript_chars"))}
     confs = get_conferences_in_range(date.fromisoformat(since), date.fromisoformat(until))
     out = [c for c in confs
            if (c.stock_code, c.date.isoformat()) in want and c.video_urls]
@@ -70,13 +75,19 @@ def main() -> None:
     ap.add_argument("--until", default=date.today().isoformat())
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--ids-file", default="",
+                    help="只重做檔案裡列的場次（每行 {code}_{date}），已有逐字稿也重聽——"
+                         "用於 Whisper 誤判語言、亂翻英文的舊稿")
     ap.add_argument("--shard", default="", help="平行分工 K/N：只做第 K 份（0 起算），例如 0/3")
     ap.add_argument("--reverse", action="store_true",
                     help="從清單尾端往前做：與同一份的正向程序兩頭夾擊、在中間會合"
                          "（每場開工前都先查 Notion，已補的會跳過）")
     args = ap.parse_args()
 
-    targets = _targets(args.since, args.until)
+    ids = None
+    if args.ids_file:
+        ids = {l.strip() for l in open(args.ids_file, encoding="utf-8") if l.strip()}
+    targets = _targets(args.since, args.until, ids)
     if args.shard:                       # 多個程序各做一份，互不重疊
         k, n = map(int, args.shard.split("/"))
         targets = targets[k::n]
@@ -98,9 +109,12 @@ def main() -> None:
         tag = f"{c.stock_code} {c.company_name} {c.date}"
         try:
             st = notion_status(c)
-            if st is None or st["has_transcript"]:
+            if st is None or (st["has_transcript"] and not ids):
                 skip += 1
                 continue
+            t_old = config.TRANSCRIPT_DIR / f"{c.stock_code}_{c.date.isoformat()}.txt"
+            if ids and t_old.exists():
+                t_old.unlink()                    # 重聽：舊的本機快取稿就是要換掉的那份
             audio_path, video_url = get_audio(c, config.AUDIO_DIR)
             if not audio_path:
                 no_audio += 1
@@ -110,7 +124,14 @@ def main() -> None:
             if t_file.exists() and t_file.stat().st_size > 300:
                 transcript = t_file.read_text(encoding="utf-8")
             else:
-                transcript = _transcribe(audio_path)
+                hints = hints_for(c.company_name, c.stock_code, c.date.isoformat(), video_url)
+                transcript = _transcribe(audio_path, hints)
+                try:
+                    transcript, _rep = proofread(transcript, c.company_name, c.stock_code,
+                                                 c.date.isoformat(),
+                                                 also=[x.company_name for x in targets if x.date == c.date])
+                except Exception as e:  # noqa: BLE001
+                    log.warning("%s：文字校對略過（%s）", tag, str(e)[:100])
                 t_file.write_text(transcript, encoding="utf-8")
             analysis = analyze(c.company_name, c.stock_code, c.date.isoformat(),
                                transcript=transcript)

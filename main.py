@@ -20,7 +20,9 @@ from ir.logger import TAIPEI, get_logger
 from ir.mops import (Conference, download_pdf, get_conferences,
                      get_conferences_in_range)
 from ir.media import get_audio
+from ir.proofread import proofread
 from ir.stt import transcribe
+from ir.stt_hints import hints_for
 from ir.analyze import analyze
 from ir.compare import compare as compare_conferences
 from ir.notion_db import analysis_texts, previous_conference, upsert_conference
@@ -66,7 +68,7 @@ def process_one(conf: Conference, push: bool = True, audio: bool = True) -> bool
             log.info("%s：使用既有逐字稿（%d 字）", tag, len(transcript))
         else:
             try:
-                transcript = transcribe(audio_path)
+                transcript = transcribe_clean(conf, audio_path, video_url)
                 t_file.write_text(transcript, encoding="utf-8")
             except Exception as e:
                 log.warning("%s：STT 失敗（%s），降級用 PDF 分析", tag, e)
@@ -116,7 +118,7 @@ def enrich_transcript(conf: Conference) -> bool:
     if t_file.exists():
         transcript = t_file.read_text(encoding="utf-8")
     else:
-        transcript = transcribe(audio_path)
+        transcript = transcribe_clean(conf, audio_path, video_url)
         t_file.write_text(transcript, encoding="utf-8")
     analysis = analyze(conf.company_name, conf.stock_code, conf.date.isoformat(),
                        transcript=transcript)
@@ -125,6 +127,28 @@ def enrich_transcript(conf: Conference) -> bool:
                       compare=_compare_safe(conf, analysis, transcript))
     log.info("%s：逐字稿已補上（%d 字）並重新分析", tag, len(transcript))
     return True
+
+
+_SAME_DAY: dict = {}   # 日期 → 當天開法說會的公司名（run() 設定；聯合法說會的同音比對用）
+
+
+def transcribe_clean(conf: Conference, audio_path, video_url: str) -> str:
+    """語音辨識（指定語言＋提示詞）→ 文字校對。校對失敗或額度用盡就用辨識原稿，不擋主流程。
+
+    兩步都在分析／分段之前做，AI 摘要與分段錨點才會建立在校對後的稿子上。
+    """
+    hints = hints_for(conf.company_name, conf.stock_code, conf.date.isoformat(), video_url)
+    raw = transcribe(audio_path, hints)
+    try:
+        fixed, rep = proofread(raw, conf.company_name, conf.stock_code, conf.date.isoformat(),
+                               also=_SAME_DAY.get(conf.date, []))
+        for h in rep.get("held", []):
+            log.info("%s 校對待確認（改到數字，未套用）：%s → %s",
+                     conf.stock_code, h["wrong"], h["right"])
+        return fixed
+    except Exception as e:  # noqa: BLE001
+        log.warning("%s %s：文字校對略過（%s）", conf.stock_code, conf.company_name, str(e)[:120])
+        return raw
 
 
 def _compare_safe(conf: Conference, analysis: dict, transcript: str) -> dict | None:
@@ -181,6 +205,8 @@ def run(target: date, limit: int = 0, push: bool = True, audio: bool = True,
     if not confs:
         log.info("%s 沒有法說會，結束", target.isoformat())
         return
+    for c in confs:
+        _SAME_DAY.setdefault(c.date, []).append(c.company_name)
 
     processed = _load_processed()
     ok = fail = skip = enriched = capped = 0

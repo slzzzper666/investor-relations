@@ -6,7 +6,14 @@ OpenCC 會把「台」轉成「臺」，站上與公司名稱慣用「台」（�
 
 已是繁體的文字再轉一次結果不變（冪等），可以放心對任何文字重複套用。
 """
+import re
 from functools import lru_cache
+
+
+_CJK = "一-鿿"
+_PUNCT = {",": "，", "?": "？", "!": "！", ";": "；", ":": "："}
+# 只換「緊鄰中文字」的半形標點：Whisper 在中文裡用半形逗號；數字（1,234、13:30）與英文句子不動
+_PUNCT_RE = re.compile(rf"(?<=[{_CJK}])\s*([,?!;:])\s*|\s*([,?!;:])\s*(?=[{_CJK}])")
 
 
 @lru_cache(maxsize=1)
@@ -18,7 +25,8 @@ def _cc():
 def to_tw(text: str) -> str:
     if not text:
         return text
-    return _cc().convert(text).replace("臺", "台")
+    out = _cc().convert(text).replace("臺", "台")
+    return _PUNCT_RE.sub(lambda m: _PUNCT[m.group(1) or m.group(2)], out)
 
 
 def segments_to_tw(plan: dict | None) -> dict | None:

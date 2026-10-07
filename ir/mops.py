@@ -5,10 +5,12 @@
 涵蓋上市(sii)與上櫃(otc)，依日期過濾出目標日的法說會。
 """
 import re
+import time
 from dataclasses import dataclass, field
 from datetime import date, timedelta
 from pathlib import Path
 
+import requests
 from bs4 import BeautifulSoup
 
 from ir.logger import get_logger
@@ -72,11 +74,21 @@ def _parse_date(roc_str: str) -> date | None:
 def _fetch_month(market: str, target: date) -> list[Conference]:
     year, month = _roc(target)
     s = get_session()
-    r = s.post(AJAX_URL, data={
-        "encodeURIComponent": "1", "step": "1", "firstin": "1", "off": "1",
-        "TYPEK": market, "year": year, "month": month,
-    }, timeout=60)
-    r.raise_for_status()
+    # MOPS 偶爾讀取逾時／重置連線（2026-10 一天內遇到多次），整個流程不該因此中斷：重試 3 次
+    for attempt in range(3):
+        try:
+            r = s.post(AJAX_URL, data={
+                "encodeURIComponent": "1", "step": "1", "firstin": "1", "off": "1",
+                "TYPEK": market, "year": year, "month": month,
+            }, timeout=60)
+            r.raise_for_status()
+            break
+        except requests.RequestException as e:
+            if attempt == 2:
+                raise
+            log.warning("MOPS %s %s/%s 查詢失敗（第 %d 次），重試：%s",
+                        market, year, month, attempt + 1, str(e)[:100])
+            time.sleep(10 * (attempt + 1))
     r.encoding = "utf-8"
     soup = BeautifulSoup(r.text, "lxml")
 

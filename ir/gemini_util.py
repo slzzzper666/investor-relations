@@ -80,8 +80,14 @@ def quota_status() -> str:
     return f"{len(keys)} 組金鑰 × {len(MODEL_CHAIN)} 個模型＝{total} 組，剩 {left} 組可用"
 
 
+def exhausted_for(models: list[str]) -> bool:
+    """指定的模型在所有金鑰上都已耗盡／不可用。"""
+    keys = _keys()
+    return all((k, m) in _exhausted for k in range(len(keys)) for m in models)
+
+
 def generate_with_retry(contents, *, config_=None, attempts: int = 2,
-                        timeout_ms: int = 600_000, **kwargs):
+                        timeout_ms: int = 600_000, models: list[str] | None = None, **kwargs):
     """掃過所有（金鑰 × 模型）組合產生內容，失敗就換下一組。
 
     contents 可以是內容本身，也可以是 callable(client) -> contents。
@@ -89,6 +95,7 @@ def generate_with_retry(contents, *, config_=None, attempts: int = 2,
     上傳的檔案綁定該金鑰，換金鑰就得重新上傳）；每組金鑰只解析一次。
     PDF 之類 20MB 以內的檔案建議直接用 types.Part.from_bytes 走 inline，
     沒有金鑰綁定問題也省一趟上傳。
+    models：只用這些模型（依 MODEL_CHAIN 順序）；品質敏感的工作（如逐字稿校對）用來排除 lite。
     """
     cfg = config_ if config_ is not None else kwargs.pop("config", None)
     kwargs.pop("model", None)          # 一律走 MODEL_CHAIN，忽略呼叫端指定
@@ -102,7 +109,7 @@ def generate_with_retry(contents, *, config_=None, attempts: int = 2,
         for key_idx in range(len(keys)):
             client = _client(key_idx, timeout_ms)
             body = None                # 每組金鑰只解析（上傳）一次
-            for model in MODEL_CHAIN:
+            for model in (m for m in MODEL_CHAIN if not models or m in models):
                 slot = (key_idx, model)
                 if slot in _exhausted:
                     continue
