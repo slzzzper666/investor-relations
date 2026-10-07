@@ -144,6 +144,16 @@ def main() -> None:
             ok += 1
             log.info("%s：逐字稿 %d 字，已更新 Notion（%d/%d）", tag, len(transcript),
                      ok, len(targets))
+            if ids:                               # 重聽成功：記下來（下次不重做），也算已校對
+                cid = f"{c.stock_code}_{c.date.isoformat()}"
+                pf = config.DATA_DIR / "proofread"
+                pf.mkdir(parents=True, exist_ok=True)
+                with (pf / "retranscribed.txt").open("a", encoding="utf-8") as fh:
+                    fh.write(cid + "\n")
+                done_f = pf / "done.json"
+                done = set(json.loads(done_f.read_text(encoding="utf-8"))) if done_f.exists() else set()
+                done_f.write_text(json.dumps(sorted(done | {cid}), ensure_ascii=False, indent=0),
+                                  encoding="utf-8")
         except KeyboardInterrupt:
             break
         except Exception as e:  # noqa: BLE001
