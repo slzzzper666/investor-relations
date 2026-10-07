@@ -333,15 +333,19 @@
      往上捲時反向回到 top:GAP。內容比視窗矮時就是原本的行為。 */
   function followSide(el) {
     if (!el || !window.requestAnimationFrame) return;
-    var GAP = 24, cur = GAP, lastY = window.pageYOffset, raf = 0;
+    // 上方要讓開固定的頂部列（高度含 iPhone 安全區域，所以用量的）
+    var tape = document.querySelector(".tape");
+    var GAP = 24, TOP = GAP, cur = GAP, lastY = window.pageYOffset, raf = 0;
     function apply() {
       raf = 0;
+      var top = (tape ? tape.offsetHeight : 0) + 16;
+      if (top !== TOP) { cur += top - TOP; TOP = top; }
       var y = window.pageYOffset;
       var dy = y - lastY;
       lastY = y;
       var min = window.innerHeight - el.offsetHeight - GAP;
-      cur = min >= GAP ? GAP                      // 側欄比視窗矮：維持釘在上方
-                       : Math.max(min, Math.min(GAP, cur - dy));
+      cur = min >= TOP ? TOP                      // 側欄比視窗矮：維持釘在頂部列下方
+                       : Math.max(min, Math.min(TOP, cur - dy));
       el.style.top = Math.round(cur) + "px";
     }
     function onScroll() { if (!raf) raf = window.requestAnimationFrame(apply); }

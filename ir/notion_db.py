@@ -16,6 +16,7 @@ import config
 from ir.logger import get_logger
 from ir.mops import Conference
 from ir.season import MIN_GAP_DAYS, pick_previous, season_of
+from ir.zh import segments_to_tw, to_tw
 
 log = get_logger("ir.notion")
 
@@ -160,7 +161,7 @@ def segments_to_text(plan: dict | None) -> str:
 
 def save_segments(conf: Conference, plan: dict | None) -> bool:
     """只更新「分段」欄位（逐字稿補段用）。頁面不存在回 False。"""
-    text = segments_to_text(plan)
+    text = segments_to_text(segments_to_tw(plan))
     if not text:
         return False
     n, ds_id = _get()
@@ -197,8 +198,9 @@ def upsert_conference(conf: Conference, analysis: dict, transcript: str,
     if video_url:
         props["YT"] = {"url": video_url}
     if transcript:
-        props["逐字稿"] = {"rich_text": _rich_chunks(transcript)}
-        seg_text = segments_to_text(segments)
+        # 逐字稿一律存台灣繁體（Whisper 常吐簡體）；錨點同步轉，前端才 find 得到切點
+        props["逐字稿"] = {"rich_text": _rich_chunks(to_tw(transcript))}
+        seg_text = segments_to_text(segments_to_tw(segments))
         if seg_text:
             props["分段"] = {"rich_text": _rich_chunks(seg_text)}
     cmp_text = compare_to_text(compare)

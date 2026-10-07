@@ -70,9 +70,20 @@ def main() -> None:
     ap.add_argument("--until", default=date.today().isoformat())
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--shard", default="", help="平行分工 K/N：只做第 K 份（0 起算），例如 0/3")
+    ap.add_argument("--reverse", action="store_true",
+                    help="從清單尾端往前做：與同一份的正向程序兩頭夾擊、在中間會合"
+                         "（每場開工前都先查 Notion，已補的會跳過）")
     args = ap.parse_args()
 
     targets = _targets(args.since, args.until)
+    if args.shard:                       # 多個程序各做一份，互不重疊
+        k, n = map(int, args.shard.split("/"))
+        targets = targets[k::n]
+        log.info("分工 %d/%d", k, n)
+    if args.reverse:
+        targets = targets[::-1]
+        log.info("反向：從尾端往前做")
     log.info("%s ~ %s：有影音、無逐字稿的場次 %d 場", args.since, args.until, len(targets))
     if args.dry_run:
         for c in targets[:30]:

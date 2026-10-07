@@ -10,3 +10,4 @@ notion-client
 pypdf
 pandas
 yfinance
+opencc-python-reimplemented

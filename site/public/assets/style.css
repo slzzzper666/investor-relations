@@ -28,7 +28,11 @@
 
 [hidden] { display: none !important; }
 
-html { -webkit-text-size-adjust: 100%; }
+html {
+  -webkit-text-size-adjust: 100%;
+  /* 頂部列固定後，錨點跳轉／scrollIntoView 要讓開它的高度 */
+  scroll-padding-top: calc(44px + env(safe-area-inset-top, 0px));
+}
 
 body {
   background: var(--bg);
@@ -59,12 +63,24 @@ a { color: inherit; }
 
 /* ---------- 頂部狀態列 ---------- */
 
+/* 頂部列（首頁：更新時間／收錄場數；內頁：返回清單）固定在畫面上方，
+   讀到一半要回清單不必捲回頂端。z-index 低於下拉選單（40）、當日視窗（50）、籌碼浮層（90）。
+   iPhone：上緣與左右加上安全區域（瀏海／動態島、橫向時的側邊）。 */
 .tape {
+  position: sticky;
+  top: 0;
+  z-index: 30;
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 9px 28px;
+  padding: calc(9px + env(safe-area-inset-top, 0px))
+           max(28px, env(safe-area-inset-right, 0px))
+           9px
+           max(28px, env(safe-area-inset-left, 0px));
   border-bottom: 1px solid var(--line-soft);
+  background: rgba(11, 14, 19, 0.92);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
   font-family: var(--mono);
   font-size: 12px;
   letter-spacing: 0.04em;
@@ -1181,7 +1197,7 @@ a.m-row:hover {
 
 .doc-side {
   position: sticky;
-  top: 24px;
+  top: 64px;               /* 頂部列高度＋間距；實際值由 panels.followSide 依頂部列量測後設定 */
   display: flex;
   flex-direction: column;
   gap: 16px;
