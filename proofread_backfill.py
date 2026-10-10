@@ -21,7 +21,7 @@ from ir.gemini_util import exhausted_for
 from ir.logger import get_logger
 from ir.mops import Conference
 from ir.notion_db import _find_page, _get, _rich_chunks, segments_to_text
-from ir.proofread import PROOF_MODELS, proofread, replay_on_segments
+from ir.proofread import PROOF_MODELS, _ctx, candidates_for, proofread, replay_on_segments
 from ir.segment import plan_segments
 from ir.zh import segments_to_tw, to_tw
 
@@ -30,6 +30,8 @@ PUBLIC = config.BASE_DIR / "site" / "public"
 STATE_DIR = config.DATA_DIR / "proofread"
 DONE = STATE_DIR / "done.json"
 REVIEW = STATE_DIR / "review.jsonl"
+CLAUDE_IN = STATE_DIR / "claude_in"        # --export：給 Claude 逐篇校對的輸入（背景資料＋全文）
+CLAUDE_FIX = STATE_DIR / "claude_fixes"    # Claude 寫回的修正清單 {cid}.json，--claude 套用
 ENGLISH_RUN = re.compile(r"(?:[A-Za-z']+[\s,.]+){8,}")
 
 
@@ -73,6 +75,10 @@ def main() -> None:
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--id", default="", help="只做這一場（測試用）")
+    ap.add_argument("--export", type=int, default=0,
+                    help="匯出下 N 篇待校對稿到 data/proofread/claude_in/，給 Claude 人工校對")
+    ap.add_argument("--claude", action="store_true",
+                    help="不呼叫 Gemini，只套用 data/proofread/claude_fixes/ 裡 Claude 寫好的修正清單")
     args = ap.parse_args()
     STATE_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -85,6 +91,29 @@ def main() -> None:
         same_day.setdefault(x["date"], []).append(x["company"])
     done = _load_done()
     log.info("有逐字稿 %d 篇，已校對 %d 篇", len(todo), len(done & {x["id"] for x in todo}))
+
+    if args.export:
+        CLAUDE_IN.mkdir(parents=True, exist_ok=True)
+        k = 0
+        for it in todo:
+            cid = it["id"]
+            if k >= args.export:
+                break
+            f = PUBLIC / "detail" / f"{cid}.json"
+            if cid in done or (CLAUDE_FIX / f"{cid}.json").exists() or not f.exists():
+                continue
+            text = json.loads(f.read_text(encoding="utf-8")).get("transcript") or ""
+            if suspect_english(text):
+                continue
+            cands = candidates_for(text, it["company"], same_day.get(it["date"], []))
+            homo = "、".join(f"{w}（{c} 次，音同{nm}）" for w, (c, nm) in list(cands.items())[:12])
+            peers = "、".join(same_day.get(it["date"], []))[:300]
+            (CLAUDE_IN / f"{cid}.txt").write_text(
+                f"{it['date']}\n{_ctx(it['company'], it['code'])}\n同日法說會：{peers}\n"
+                f"同音候選：{homo or '—'}\n=====\n{text}", encoding="utf-8")
+            k += 1
+        log.info("已匯出 %d 篇到 %s", k, CLAUDE_IN)
+        return
 
     n, ds_id = _get()
     ok = skipped = english = failed = 0
@@ -103,10 +132,16 @@ def main() -> None:
         if suspect_english(text):
             english += 1
             continue
+        fx = None
+        if args.claude:
+            ff = CLAUDE_FIX / f"{cid}.json"
+            if not ff.exists():
+                continue
+            fx = json.loads(ff.read_text(encoding="utf-8"))
         if args.dry_run:
             ok += 1
             continue
-        if exhausted_for(PROOF_MODELS):
+        if fx is None and exhausted_for(PROOF_MODELS):
             log.warning("Gemini 主力模型今日額度已用完，停在這裡（明天續跑）")
             break
         y, m, dd = map(int, it["date"].split("-"))
@@ -114,7 +149,8 @@ def main() -> None:
                           date=date(y, m, dd), time="", location="", summary="")
         try:
             new, rep = proofread(text, it["company"], it["code"], it["date"],
-                                 also=same_day.get(it["date"], []))
+                                 also=same_day.get(it["date"], []),
+                                 fixes=fx, model="claude" if fx is not None else "")
             new = to_tw(new)
             with REVIEW.open("a", encoding="utf-8") as fh:
                 for kind in ("held", "rejected"):

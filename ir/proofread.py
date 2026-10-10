@@ -171,22 +171,35 @@ def replay_on_segments(plan: dict | None, applied: list, new_text: str) -> tuple
     return {**plan, "segments": kept}, lost
 
 
-def proofread(transcript: str, company: str, code: str, conf_date: str,
-              who: str = "", also: list[str] | None = None) -> tuple[str, dict]:
-    """回 (校對後逐字稿, 報告 {applied, held, rejected, model})。額度用盡丟 RuntimeError。"""
-    if len(transcript) < 300:
-        return transcript, {"applied": [], "held": [], "rejected": []}
-    if exhausted_for(PROOF_MODELS):
-        raise RuntimeError("Gemini 非 lite 模型今日額度已耗盡")
-    names = company_names()
+def candidates_for(transcript: str, company: str, also: list[str] | None = None) -> dict:
     # 同音比對的名稱：本場公司＋同一天開法說會的公司（聯合法說會的另一家一定在其中）
     clean = lambda s: re.sub(r"[*＊]|-KY$", "", s).strip()     # noqa: E731
     pool = list(dict.fromkeys(clean(n) for n in [company] + list(also or []) if n))
     try:
-        cands = homophone_candidates(transcript, pool)
+        return homophone_candidates(transcript, pool)
     except Exception as e:  # noqa: BLE001  拼音套件缺或異常不影響校對
         log.warning("同音候選計算失敗：%s", e)
-        cands = {}
+        return {}
+
+
+def proofread(transcript: str, company: str, code: str, conf_date: str,
+              who: str = "", also: list[str] | None = None,
+              fixes: dict | None = None, model: str = "") -> tuple[str, dict]:
+    """回 (校對後逐字稿, 報告 {applied, held, rejected, model})。額度用盡丟 RuntimeError。
+
+    fixes：外部已產生的修正清單（例如 Claude 人工逐篇校對），直接套用、不呼叫 Gemini。
+    """
+    if len(transcript) < 300:
+        return transcript, {"applied": [], "held": [], "rejected": []}
+    names = company_names()
+    if fixes is not None:
+        new, applied, held, rejected = apply_fixes(transcript, fixes, names)
+        log.info("校對 %s %s：套用 %d 筆（全文替換 %d 處）、待確認 %d、拒絕 %d｜%s", code, company,
+                 len(applied), sum(a.get("n", 1) for a in applied), len(held), len(rejected), model)
+        return new, {"applied": applied, "held": held, "rejected": rejected, "model": model}
+    if exhausted_for(PROOF_MODELS):
+        raise RuntimeError("Gemini 非 lite 模型今日額度已耗盡")
+    cands = candidates_for(transcript, company, also)
     homo = ""
     if cands:
         homo = ("\n疑似公司名稱的同音辨識錯誤（出現次數，音同哪家公司）："
