@@ -77,6 +77,7 @@ def main() -> None:
     ap.add_argument("--id", default="", help="只做這一場（測試用）")
     ap.add_argument("--export", type=int, default=0,
                     help="匯出下 N 篇待校對稿到 data/proofread/claude_in/，給 Claude 人工校對")
+    ap.add_argument("--by-cap", action="store_true", help="--export 依市值大→小挑")
     ap.add_argument("--claude", action="store_true",
                     help="不呼叫 Gemini，只套用 data/proofread/claude_fixes/ 裡 Claude 寫好的修正清單")
     args = ap.parse_args()
@@ -93,6 +94,8 @@ def main() -> None:
     log.info("有逐字稿 %d 篇，已校對 %d 篇", len(todo), len(done & {x["id"] for x in todo}))
 
     if args.export:
+        if args.by_cap:                       # 先做市值大的（最多人看）
+            todo.sort(key=lambda x: -(x.get("market_cap") or 0))
         CLAUDE_IN.mkdir(parents=True, exist_ok=True)
         k = 0
         for it in todo:
@@ -108,9 +111,11 @@ def main() -> None:
             cands = candidates_for(text, it["company"], same_day.get(it["date"], []))
             homo = "、".join(f"{w}（{c} 次，音同{nm}）" for w, (c, nm) in list(cands.items())[:12])
             peers = "、".join(same_day.get(it["date"], []))[:300]
+            # 每 300 字斷一行：逐字稿常是一整行，太長的行讀檔工具會截斷
+            body = "\n".join(text[i:i + 300] for i in range(0, len(text), 300))
             (CLAUDE_IN / f"{cid}.txt").write_text(
                 f"{it['date']}\n{_ctx(it['company'], it['code'])}\n同日法說會：{peers}\n"
-                f"同音候選：{homo or '—'}\n=====\n{text}", encoding="utf-8")
+                f"同音候選：{homo or '—'}\n=====\n{body}", encoding="utf-8")
             k += 1
         log.info("已匯出 %d 篇到 %s", k, CLAUDE_IN)
         return
