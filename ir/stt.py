@@ -154,7 +154,10 @@ def transcribe(audio_path: Path, hints: SttHints | None = None) -> str:
 HALLUCINATIONS = re.compile(
     r"請不吝點[贊讚]\s*訂閱\s*轉發\s*打賞支持明鏡與點點欄目"
     r"|请不吝点[赞讚]\s*订阅\s*转发\s*打赏支持明镜与点点栏目"
-    r"|字幕由\s*Amara\.org\s*社[群区區]提供|(?:中文)?字幕提供")
+    r"|字幕由\s*Amara\.org\s*社[群区區]提供|(?:中文)?字幕提供"
+    # 2026-06 舊版本機 whisper 提示詞「台灣上市櫃公司法人說明會的繁體中文逐字稿。」被原樣吐回稿中
+    r"|(?:台灣)?(?:上市櫃)?公司法人說明會的繁體中文(?:逐字稿|字幕|字)?。?"
+    r"|的繁體中文逐字稿。?")
 
 
 def strip_hallucinations(text: str) -> str:
