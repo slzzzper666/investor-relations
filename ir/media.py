@@ -60,7 +60,16 @@ def _pick_source(conf: Conference) -> tuple[str, str] | None:
     return None
 
 
-_OFFICIAL_CHANNELS = ("證券交易所", "櫃買", "TWSE", "TPEx", "證券", "Securities", "IR")
+_OFFICIAL_CHANNELS = ("證券交易所", "櫃買", "TWSE", "TPEx", "證券", "Securities", "IR",
+                      "新聞", "NEWS", "News", "電視")
+
+
+def official_channel(channel: str, company: str) -> bool:
+    """公司／交易所／券商／電視新聞頻道才收。公司頻道常是英文名（ICP DAS、AAEON、Swancor），
+    所以「完全沒有中文字」的頻道也收；評論頻道（價值股雷達、恥股夯妮、艾伯納的投資筆記…）都是中文名。"""
+    short = re.sub(r"[*＊]|-KY$", "", company)
+    return (short in channel or any(k in channel for k in _OFFICIAL_CHANNELS)
+            or not re.search(r"[一-鿿]", channel))
 
 
 def _yt_search_pick(conf: Conference) -> str | None:
@@ -90,8 +99,7 @@ def _yt_search_pick(conf: Conference) -> str | None:
         # 上傳頻道必須是公司本身或交易所／券商：2026-10 查到「價值股雷達」等評論頻道
         # 標題寫「穩懋 法說會」，被當成法說會錄影轉成逐字稿（穩懋 5 場全是評論片）
         channel = (entry.get("channel") or entry.get("uploader") or "")
-        short = re.sub(r"[*＊]|-KY$", "", conf.company_name)
-        if not (short in channel or any(k in channel for k in _OFFICIAL_CHANNELS)):
+        if not official_channel(channel, conf.company_name):
             log.info("%s %s：略過非官方頻道「%s」的影片「%s」", conf.stock_code,
                      conf.company_name, channel, title)
             continue
