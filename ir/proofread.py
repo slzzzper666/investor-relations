@@ -111,7 +111,9 @@ def homophone_candidates(text: str, names: list[str], min_count: int = 2) -> dic
 
 
 def _digits(s: str) -> list[str]:
-    return re.findall(r"\d+(?:\.\d+)?", s)
+    # 只看「獨立的數字」：黏著英文字母的型號（M31、G2C、CD47、N3E）不算數字，
+    # 否則「M3E→M31」「G土系→G2C」這類代號錯字永遠改不了
+    return re.findall(r"(?<![A-Za-z\d.])\d+(?:\.\d+)?(?![A-Za-z\d])", s)
 
 
 def apply_fixes(text: str, fixes: dict, names: tuple[str, ...] = ()) -> tuple[str, list, list, list]:
