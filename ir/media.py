@@ -60,6 +60,9 @@ def _pick_source(conf: Conference) -> tuple[str, str] | None:
     return None
 
 
+_OFFICIAL_CHANNELS = ("證券交易所", "櫃買", "TWSE", "TPEx", "證券", "Securities", "IR")
+
+
 def _yt_search_pick(conf: Conference) -> str | None:
     """ytsearch 搜 5 筆，挑標題含公司名且像法說會的影片，回傳影片 URL。"""
     import yt_dlp
@@ -83,6 +86,14 @@ def _yt_search_pick(conf: Conference) -> str | None:
         if not any(k in title.lower() for k in keywords):
             continue
         if duration and duration < 600:  # 短於 10 分鐘的多半是新聞剪輯
+            continue
+        # 上傳頻道必須是公司本身或交易所／券商：2026-10 查到「價值股雷達」等評論頻道
+        # 標題寫「穩懋 法說會」，被當成法說會錄影轉成逐字稿（穩懋 5 場全是評論片）
+        channel = (entry.get("channel") or entry.get("uploader") or "")
+        short = re.sub(r"[*＊]|-KY$", "", conf.company_name)
+        if not (short in channel or any(k in channel for k in _OFFICIAL_CHANNELS)):
+            log.info("%s %s：略過非官方頻道「%s」的影片「%s」", conf.stock_code,
+                     conf.company_name, channel, title)
             continue
         url = entry.get("url") or entry.get("webpage_url")
         if not url or not _upload_date_ok(url, conf):
