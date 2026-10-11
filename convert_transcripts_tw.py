@@ -1,4 +1,4 @@
-"""既有逐字稿全面轉台灣繁體（一次性遷移，可重跑）。
+"""既有逐字稿全面轉台灣繁體＋刪 Whisper 幻聽字樣（一次性遷移，可重跑）。
 
 掃 Notion 全部有「逐字稿」的頁面：轉換後有變才寫回（逐字稿＋分段錨點一起轉）。
 已是繁體的會被跳過，所以可以隨時重跑——例如回補程序還在跑時先跑一次，
@@ -15,6 +15,7 @@ from notion_client import Client
 import config
 from ir.logger import get_logger
 from ir.notion_db import _rich_chunks
+from ir.stt import strip_hallucinations
 from ir.zh import segments_to_tw, to_tw
 
 log = get_logger("ir.zh_migrate")
@@ -71,13 +72,16 @@ def main() -> None:
             seen += 1
             pr = page["properties"]
             tr = _plain(pr.get("逐字稿", {}))
-            new_tr = to_tw(tr)
+            new_tr = strip_hallucinations(to_tw(tr))   # 順便刪 Whisper 幻聽字樣（明鏡與點點欄目…）
             seg_raw = _plain(pr.get("分段", {}))
             new_seg = seg_raw
             if seg_raw:
                 try:
                     d = json.loads(seg_raw)
-                    new_seg = json.dumps(segments_to_tw(d), ensure_ascii=False, separators=(",", ":"))
+                    d = segments_to_tw(d)
+                    for sg in (d or {}).get("segments") or []:
+                        sg["start"] = strip_hallucinations(sg.get("start", ""))
+                    new_seg = json.dumps(d, ensure_ascii=False, separators=(",", ":"))
                 except ValueError:
                     pass
             if new_tr == tr and (not seg_raw or json.loads(new_seg) == json.loads(seg_raw)):

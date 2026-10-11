@@ -149,8 +149,21 @@ def transcribe(audio_path: Path, hints: SttHints | None = None) -> str:
     return _collapse_loops(text)
 
 
+# Whisper 在靜音／音樂段會吐出訓練資料裡的影片片尾字樣（2026-10 查到 169 篇有）。
+# 只列「法說會不可能出現」的固定字串，逐字比對刪除。
+HALLUCINATIONS = re.compile(
+    r"請不吝點[贊讚]\s*訂閱\s*轉發\s*打賞支持明鏡與點點欄目"
+    r"|请不吝点[赞讚]\s*订阅\s*转发\s*打赏支持明镜与点点栏目"
+    r"|字幕由\s*Amara\.org\s*社[群区區]提供|(?:中文)?字幕提供")
+
+
+def strip_hallucinations(text: str) -> str:
+    return HALLUCINATIONS.sub("", text or "")
+
+
 def _collapse_loops(text: str) -> str:
-    """模型轉錄長音檔偶爾會陷入重複迴圈，把連續重複的行壓成一行。"""
+    """模型轉錄長音檔偶爾會陷入重複迴圈，把連續重複的行壓成一行；順便刪掉幻聽字樣。"""
+    text = strip_hallucinations(text)
     lines = text.split("\n")
     out: list[str] = []
     for line in lines:
