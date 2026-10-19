@@ -78,6 +78,8 @@ def main() -> None:
     ap.add_argument("--export", type=int, default=0,
                     help="匯出下 N 篇待校對稿到 data/proofread/claude_in/，給 Claude 人工校對")
     ap.add_argument("--by-cap", action="store_true", help="--export 依市值大→小挑")
+    ap.add_argument("--allow-english", action="store_true",
+                    help="中英夾雜的稿也照做（英文問答是真的、或錄影已下架只能校中文部分）")
     ap.add_argument("--claude", action="store_true",
                     help="不呼叫 Gemini，只套用 data/proofread/claude_fixes/ 裡 Claude 寫好的修正清單")
     args = ap.parse_args()
@@ -106,7 +108,7 @@ def main() -> None:
             if cid in done or (CLAUDE_FIX / f"{cid}.json").exists() or not f.exists():
                 continue
             text = json.loads(f.read_text(encoding="utf-8")).get("transcript") or ""
-            if suspect_english(text):
+            if suspect_english(text) and not args.allow_english:
                 continue
             cands = candidates_for(text, it["company"], same_day.get(it["date"], []))
             homo = "、".join(f"{w}（{c} 次，音同{nm}）" for w, (c, nm) in list(cands.items())[:12])
@@ -134,7 +136,7 @@ def main() -> None:
             continue
         d = json.loads(f.read_text(encoding="utf-8"))
         text = d.get("transcript") or ""
-        if suspect_english(text):
+        if suspect_english(text) and not args.allow_english:
             english += 1
             continue
         fx = None
